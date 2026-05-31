@@ -5,12 +5,12 @@ title: Romero
 status: published
 featured: true
 excerpt: >-
-  The world premiere of Romero was staged as a ritual container for memory, rupture, and spiritual reckoning rather than
-  a literal historical reconstruction.
+  The world premiere of Romero was staged as a ritual container for memory, rupture, and spiritual
+  reckoning rather than a literal historical reconstruction.
 seoTitle: Romero Scenic Design | University of Missouri
 seoDescription: >-
-  Scenic design for the world-premiere Romero at the University of Missouri, building a ritualized environment for
-  memory, witness, political violence, and spiritual reckoning.
+  Scenic design for the world-premiere Romero at the University of Missouri, building a ritualized
+  environment for memory, witness, political violence, and spiritual reckoning.
 seoKeywords:
   - Romero scenic design
   - University of Missouri theatre
@@ -18,7 +18,8 @@ seoKeywords:
   - Brandon PT Davis
   - ritual staging
 client: University of Missouri
-clientUrl: https://www.kbia.org/show/the-daily-blend/2025-04-18/the-daily-blend-w-ac-dr-david-crespy-mizzou-theatre-opens-romero
+clientUrl: >-
+  https://www.kbia.org/show/the-daily-blend/2025-04-18/the-daily-blend-w-ac-dr-david-crespy-mizzou-theatre-opens-romero
 location: Columbia, MO
 year: 2025
 month: 1
@@ -26,7 +27,7 @@ subcategory: Drama
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp
-  alt: Romero scenic design cover at the University of Missouri, framing the world premiere as a ritual memory space.
+  alt: The world premiere as a ritual memory space.
 team:
   - role: Playwright
     name: Xiomara Cornejo
@@ -57,4 +58,4 @@ links:
   - label: KBIA Interview
     url: >-
       https://www.kbia.org/show/the-daily-blend/2025-04-18/the-daily-blend-w-ac-dr-david-crespy-mizzou-theatre-opens-romero
-updatedAt: '2026-02-12T15:03:57+00:00'
+updatedAt: "2026-02-12T15:03:57+00:00"

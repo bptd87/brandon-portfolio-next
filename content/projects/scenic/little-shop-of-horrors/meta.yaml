@@ -5,12 +5,12 @@ title: Little Shop of Horrors
 status: published
 featured: false
 excerpt: >-
-  A weathered, believable Skid Row storefront grounds Little Shop of Horrors, using brick, patched trim, and a
-  compressed frame to support the show’s darker sci-fi stakes.
+  A weathered, believable Skid Row storefront grounds Little Shop of Horrors, using brick, patched
+  trim, and a compressed frame to support the show’s darker sci-fi stakes.
 seoTitle: Little Shop of Horrors | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for Little Shop of Horrors at Okoboji Summer Theatre, creating a gritty Skid Row storefront with real
-  pressure, texture, and claustrophobic tension.
+  Scenic design for Little Shop of Horrors at Okoboji Summer Theatre, creating a gritty Skid Row
+  storefront with real pressure, texture, and claustrophobic tension.
 seoKeywords:
   - Little Shop of Horrors
   - scenic design
@@ -25,7 +25,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp
-  alt: Little Shop of Horrors scenic design cover at Okoboji Summer Theatre, showing a gritty Skid Row storefront.
+  alt: A gritty Skid Row storefront.
 team:
   - role: Written by
     name: Howard Ashman
@@ -53,4 +53,4 @@ tags:
   - name: Horror Comedy
     slug: horror-comedy
 links: []
-updatedAt: '2026-02-28T11:19:53.894921+00:00'
+updatedAt: "2026-02-28T11:19:53.894921+00:00"

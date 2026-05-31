@@ -1,16 +1,16 @@
 type: project
 discipline: scenic
 slug: the-marvelous-wonderettes-dream-on
-title: 'The Marvelous Wonderettes: Dream On'
+title: "The Marvelous Wonderettes: Dream On"
 status: published
 featured: false
 excerpt: >-
-  A familiar high school gym stage becomes a container for time, letting 1960s polish shift into 1970s warmth,
-  nostalgia, and reunion energy in Wonderettes: Dream On.
-seoTitle: 'The Marvelous Wonderettes: Dream On | Scenic Design by Brandon PT Davis'
+  A familiar high school gym stage becomes a container for time, letting 1960s polish shift into
+  1970s warmth, nostalgia, and reunion energy in Wonderettes: Dream On.
+seoTitle: "The Marvelous Wonderettes: Dream On | Scenic Design by Brandon PT Davis"
 seoDescription: >-
-  Scenic design for The Marvelous Wonderettes: Dream On at Okoboji Summer Theatre, using a high school reunion gym that
-  evolves from early-1960s polish into 1970s nostalgia.
+  Scenic design for The Marvelous Wonderettes: Dream On at Okoboji Summer Theatre, using a high
+  school reunion gym that evolves from early-1960s polish into 1970s nostalgia.
 seoKeywords:
   - The Marvelous Wonderettes Dream On
   - scenic design
@@ -25,7 +25,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp
-  alt: 'Scenic design for The Marvelous Wonderettes: Dream On by Brandon PT Davis.'
+  alt: The reunion stage and period details visible.
 team:
   - role: Written by
     name: Roger Bean
@@ -48,7 +48,7 @@ tags:
     slug: jukebox-musical
   - name: Okoboji Summer Theatre
     slug: okoboji-summer-theatre
-  - name: 'The Marvelous Wonderettes: Dream On'
+  - name: "The Marvelous Wonderettes: Dream On"
     slug: the-marvelous-wonderettes-dream-on
 links: []
-updatedAt: '2026-02-28T21:00:18.614718+00:00'
+updatedAt: "2026-02-28T21:00:18.614718+00:00"

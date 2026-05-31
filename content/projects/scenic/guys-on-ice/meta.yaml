@@ -5,12 +5,12 @@ title: Guys on Ice
 status: published
 featured: true
 excerpt: >-
-  A playable frozen-lake environment for Guys on Ice, balancing broad musical comedy with the quiet sincerity of
-  Midwestern winter life.
+  A playable frozen-lake environment for Guys on Ice, balancing broad musical comedy with the quiet
+  sincerity of Midwestern winter life.
 seoTitle: Guys on Ice Scenic Design | The Great American Melodrama
 seoDescription: >-
-  Scenic design for Guys on Ice at The Great American Melodrama, balancing a playable frozen-lake comedy world with
-  Midwestern specificity, winter texture, and a clear performance environment.
+  Scenic design for Guys on Ice at The Great American Melodrama, balancing a playable frozen-lake
+  comedy world with Midwestern specificity, winter texture, and a clear performance environment.
 seoKeywords:
   - Guys on Ice
   - scenic design
@@ -27,9 +27,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-cover-ef6d8f84.webp
-  alt: >-
-    Guys on Ice scenic design cover at The Great American Melodrama, presenting a frozen-lake comic world with winter
-    texture.
+  alt: A frozen-lake comic world with winter texture.
 team:
   - role: Book & Lyrics
     name: Fred Alley
@@ -59,4 +57,4 @@ tags:
 links:
   - label: SLO Review
     url: https://sloreview.org/2025/02/15/guys-on-ice-is-warm-and-funny/
-updatedAt: '2026-02-12T15:03:57+00:00'
+updatedAt: "2026-02-12T15:03:57+00:00"

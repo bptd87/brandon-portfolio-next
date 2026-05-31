@@ -5,12 +5,12 @@ title: The Complete Works of William Shakespeare (abridged)
 status: published
 featured: false
 excerpt: >-
-  A playful, modular comic set built for speed, theatrical irreverence, and rapid-fire transitions through Shakespeare’s
-  canon.
+  A playful, modular comic set built for speed, theatrical irreverence, and rapid-fire transitions
+  through Shakespeare’s canon.
 seoTitle: The Complete Works of William Shakespeare (abridged) | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, featuring a playful
-  and modular set built for fast transitions and comic energy.
+  Scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre,
+  featuring a playful and modular set built for fast transitions and comic energy.
 seoKeywords:
   - The Complete Works of William Shakespeare abridged
   - scenic design
@@ -26,7 +26,7 @@ subcategory: Comedy
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f-4c52fd98.jpg
-  alt: Scenic design for The Complete Works of William Shakespeare (abridged) by Brandon PT Davis.
+  alt: The modular comic stage environment.
 team:
   - role: Written By
     name: Adam Long, Daniel Singer, and Jess Winfield
@@ -50,4 +50,4 @@ tags:
   - name: The Complete Works of William Shakespeare (abridged)
     slug: the-complete-works-of-william-shakespeare-abridged
 links: []
-updatedAt: '2026-03-23T19:28:00.000Z'
+updatedAt: "2026-03-23T19:28:00.000Z"

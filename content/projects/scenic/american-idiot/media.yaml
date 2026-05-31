@@ -3,68 +3,50 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-cover-6c8f8ee1.webp
-    alt: Scenic design for American Idiot by Brandon PT Davis.
+    alt: The modular concrete environment and ensemble staging.
   - id: idiot-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150011-0658b26b.webp
-    alt: >-
-      Production image from American Idiot showing the modular concrete environment and ensemble staging, scenic design
-      by Brandon PT Davis.
+    alt: The modular concrete environment and ensemble staging.
   - id: idiot-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150036-d4003d4b.webp
-    alt: >-
-      Production image from American Idiot emphasizing the hard-edged architectural world and rebellious energy, scenic
-      design by Brandon PT Davis.
+    alt: The hard-edged architectural world and rebellious energy.
   - id: idiot-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150065-a0cd87d4.webp
-    alt: >-
-      Production still from American Idiot showing industrial forms and the show's kinetic physicality, scenic design by
-      Brandon PT Davis.
+    alt: Industrial forms and the show's kinetic physicality.
   - id: idiot-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150066-fc967fed.webp
-    alt: >-
-      Production image from American Idiot highlighting the concrete framework and projection atmosphere, scenic design
-      by Brandon PT Davis.
+    alt: The concrete framework and projection atmosphere.
   - id: idiot-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150094-386d8ea8.webp
-    alt: >-
-      Production image from American Idiot showing the conflict between space and identity, scenic design by Brandon PT
-      Davis.
+    alt: The modular concrete environment and ensemble staging.
   - id: idiot-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150105-855dc2cb.webp
-    alt: >-
-      Production image from American Idiot reinforcing the score's raw energy within a minimalist industrial frame,
-      scenic design by Brandon PT Davis.
+    alt: The score's raw energy within a minimalist industrial frame.
   - id: idiot-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150152-33062a7e.webp
-    alt: >-
-      Production still from American Idiot with projection and concrete forms supporting emotional transition, scenic
-      design by Brandon PT Davis.
+    alt: Projection and concrete forms supporting emotional transition.
   - id: idiot-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp
-    alt: >-
-      Rendering for American Idiot exploring the Southern California concrete metaphor and industrial scenic world,
-      scenic design by Brandon PT Davis.
+    alt: Rendering of the Southern California concrete metaphor and industrial scenic world.
   - id: idiot-prod-8
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150196-ae0b4a4b.webp
-    alt: >-
-      Final production image from American Idiot showing the full scenic environment in performance, scenic design by
-      Brandon PT Davis.
+    alt: Full-stage view of the set in performance.
 videos: []

@@ -3,41 +3,35 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp
-    alt: >-
-      All's Well That Ends Well scenic design cover at New Swan Theatre Festival, with drapery, heraldic detail, and a
-      world that moves between Roussillon and Florence.
+    alt: Drapery, heraldic detail, and a world that moves between Roussillon and Florence.
   - id: aw-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150012-b2c92b49.webp
-    alt: Production image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+    alt: Drapery, heraldic detail, and a world that moves between Roussillon and Florence.
   - id: aw-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150047-919d0e10.webp
-    alt: >-
-      Performance image from All's Well That Ends Well with the New Swan stage world visible, scenic design by Brandon
-      PT Davis.
+    alt: The New Swan stage world visible.
   - id: aw-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150057-702f2abc.webp
-    alt: Stage picture from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+    alt: Drapery, heraldic detail, and a world that moves between Roussillon and Florence.
   - id: aw-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150162-81976b2e.webp
-    alt: Stage image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+    alt: Drapery, heraldic detail, and a world that moves between Roussillon and Florence.
   - id: aw-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150178-4ad34fa7.webp
-    alt: Performance image from All's Well That Ends Well with actor pathways visible, scenic design by Brandon PT Davis.
+    alt: Actor pathways visible.
   - id: aw-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150229-a8aaa5e2.webp
-    alt: >-
-      Production image from All's Well That Ends Well at New Swan with cast and scenic world visible, scenic design by
-      Brandon PT Davis.
+    alt: Cast and scenic world visible. at New Swan.
 videos: []

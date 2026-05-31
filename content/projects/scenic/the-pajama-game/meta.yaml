@@ -5,12 +5,12 @@ title: The Pajama Game
 status: published
 featured: false
 excerpt: >-
-  Bold signage, modular factory architecture, and mid-century graphic energy support both romance and labor tension in
-  The Pajama Game.
+  Bold signage, modular factory architecture, and mid-century graphic energy support both romance
+  and labor tension in The Pajama Game.
 seoTitle: The Pajama Game | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for The Pajama Game at University of California Irvine, using bold factory signage, modular staging, and
-  1950s graphic language to support dance, romance, and labor conflict.
+  Scenic design for The Pajama Game at University of California Irvine, using bold factory signage,
+  modular staging, and 1950s graphic language to support dance, romance, and labor conflict.
 seoKeywords:
   - The Pajama Game
   - scenic design
@@ -25,7 +25,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-cover-31192793.webp
-  alt: Scenic design for The Pajama Game by Brandon PT Davis.
+  alt: The Sleep-Tite factory world and ensemble staging.
 team:
   - role: Book By
     name: George Abbott & Richard Bissell
@@ -57,4 +57,4 @@ tags:
 links:
   - label: Listing
     url: https://drama.arts.uci.edu/events/pajama-game
-updatedAt: '2026-02-12T15:03:56+00:00'
+updatedAt: "2026-02-12T15:03:56+00:00"

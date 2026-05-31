@@ -1,37 +1,24 @@
 - type: text
-  heading: A Distorted Drawing Room
   content:
     - >-
-      The Bald Soprano called for a domestic world that felt recognizable at first glance, then increasingly unstable
-      the longer the audience sat with it. For Stephens College, the scenic and lighting design approached the room as
-      an absurd drawing-room interior pushed slightly out of alignment, a polite domestic setting that could no longer
-      support the logic it claimed to represent.
+      The Bald Soprano needed a domestic room that looked recognizable at first glance, then became less
+      stable the longer the audience sat with it. At Stephens College, the scenic and lighting design treated
+      the drawing room as a polite interior that could no longer support logic.
+    - >-
+      Because the play is built on repetition, interruption, and the collapse of language, proportion and
+      composition became central. Furniture, architecture, and light leaned into distortion rather than strict
+      realism.
+    - >-
+      Lighting worked as part of the architecture, sharpening awkward pauses and tonal shifts. The design let
+      absurdity live in plain sight, inside a room still trying to behave as if everything were normal.
 - type: gallery
   mediaIds:
     - bald-prod-2
     - bald-prod-3
-- type: text
-  heading: Miscommunication in Space
-  content:
-    - >-
-      Because the play is built on repetition, interruption, and the collapse of ordinary language, proportion and
-      composition became central design tools. The environment leaned into distortion rather than realism, allowing
-      furniture, architecture, and light to reinforce the feeling that communication had broken down inside a room still
-      trying to perform civility.
-    - >-
-      Lighting was treated as part of that same architecture. Instead of simply illuminating the room, it sharpened
-      awkward pauses, exaggerated tonal shifts, and helped the domestic image slide from familiar to surreal.
 - type: gallery
   mediaIds:
     - bald-prod-4
     - bald-prod-5
-- type: text
-  heading: Absurdity in Plain Sight
-  content:
-    - >-
-      The goal was to build an absurdist environment that could hold both comedy and unease. The world needed to feel
-      visually coherent enough for the audience to enter it, but unstable enough to reflect the play's deeper concern
-      with ritualized speech, failed understanding, and the breakdown of meaning itself.
 - type: gallery
   mediaIds:
     - bald-prod-6

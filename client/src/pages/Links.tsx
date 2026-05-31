@@ -2,22 +2,7 @@
 
 import Image from "next/image";
 import { useMemo } from "react";
-import {
-  ArrowUpRight,
-  BookOpen,
-  Briefcase,
-  CalendarDays,
-  ExternalLink,
-  Image as ImageIcon,
-  Instagram,
-  Layers,
-  Linkedin,
-  Mail,
-  Newspaper,
-  Palette,
-  PenTool,
-  Video,
-} from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
 import { Link } from "wouter";
 
 import { SEO } from "@/components/SEO";
@@ -27,12 +12,36 @@ import {
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
 } from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
-import { getLocalExperientialProjectHref, getLocalExperientialProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import { getLocalTutorials } from "@shared/localStudio";
+import { upcomingProductions } from "@shared/upcomingProductions";
 
 const ABOUT_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
+
+const STUDIO_APP_TILES: FeedTile[] = [
+  {
+    id: "app-scale-calculator",
+    title: "Scale Calculator",
+    label: "Scenic Tool",
+    href: "/studio/apps/scale-calculator",
+    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+  },
+  {
+    id: "app-dimension-reference",
+    title: "Dimension Reference",
+    label: "Scenic Tool",
+    href: "/studio/apps/dimension-reference",
+    image: "/assets/studio-apps/icons/dimension-reference.jpg",
+  },
+  {
+    id: "app-rosco-paint-calculator",
+    title: "Rosco Paint Calculator",
+    label: "Paint Shop",
+    href: "/studio/apps/rosco-paint-calculator",
+    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
+  },
+];
 
 const TUTORIAL_COVER_VARIANTS = {
   "getting-started": [
@@ -50,32 +59,16 @@ const TUTORIAL_COVER_VARIANTS = {
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-2.png",
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-3.png",
   ],
-  rendering: [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-3.png",
-  ],
 } as const;
 
-type IconComponent = typeof Briefcase;
-
-type LinkItem = {
+type FeedTile = {
   id: string;
   title: string;
-  subtitle: string;
-  href: string;
-  icon: IconComponent;
-  external?: boolean;
-};
-
-type PreviewItem = {
-  id: string;
-  title: string;
-  eyebrow: string;
-  subtitle?: string;
+  label: string;
   href: string;
   image?: string | null;
   external?: boolean;
+  timestamp?: number;
 };
 
 function PinterestIcon({ className }: { className?: string }) {
@@ -97,6 +90,11 @@ const normalizeToken = (value: string | null | undefined) =>
 const getStableVariantIndex = (value: string, total: number) => {
   const hash = value.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
   return hash % total;
+};
+
+const isRenderingContent = (value: { title?: string | null; slug?: string | null; category?: string | null; categoryName?: string | null }) => {
+  const text = `${value.title || ""} ${value.slug || ""} ${value.category || ""} ${value.categoryName || ""}`;
+  return /\brender(ing|ings)?\b/i.test(text);
 };
 
 const getTutorialCoverImage = (tutorial: { id: number | string; slug?: string | null; category?: string | null }) => {
@@ -150,261 +148,175 @@ function SmartLink({
   );
 }
 
-function PrimaryLinkRow({ item }: { item: LinkItem }) {
-  const Icon = item.icon;
-
+function FeedCard({ item, priority }: { item: FeedTile; priority?: boolean }) {
   return (
     <SmartLink
       href={item.href}
       external={item.external}
-      className="group flex items-center justify-between gap-5 border-t border-border/24 py-4 transition-colors last:border-b hover:border-foreground/36"
+      className="group flex h-full min-w-0 flex-col border-b border-r border-black/8 bg-[#f4f5f7] outline-none ring-0 transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-black/70"
     >
-      <span className="flex min-w-0 items-center gap-4">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/28 text-foreground/58 transition-colors group-hover:border-foreground/40 group-hover:text-foreground">
-          <Icon className="h-4 w-4" />
-        </span>
-        <span className="min-w-0">
-          <span className="block truncate text-[1.08rem] font-medium leading-tight tracking-[-0.025em] text-foreground">
-            {item.title}
-          </span>
-          <span className="mt-1 block truncate text-[0.76rem] uppercase tracking-[0.16em] text-foreground/42">
-            {item.subtitle}
-          </span>
-        </span>
-      </span>
-      <ArrowUpRight className="h-4 w-4 shrink-0 text-foreground/35 transition-colors group-hover:text-foreground/72" />
-    </SmartLink>
-  );
-}
-
-function PreviewRow({ item, priority }: { item: PreviewItem; priority?: boolean }) {
-  return (
-    <SmartLink
-      href={item.href}
-      external={item.external}
-      className="group grid gap-4 border-t border-border/20 py-4 transition-colors last:border-b hover:border-foreground/34 sm:grid-cols-[7rem_1fr_auto] sm:items-center"
-    >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-card/20 sm:w-28">
+      <div className="site-media-square relative aspect-[4/5] w-full overflow-hidden border-b border-black/8 bg-black/[0.035] [border-radius:0]">
         {item.image ? (
           <Image
             src={item.image}
-            alt={item.title}
+            alt=""
             fill
             unoptimized
-            sizes="(max-width: 640px) 100vw, 7rem"
+            sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 16vw"
             loading={priority ? "eager" : "lazy"}
             fetchPriority={priority ? "high" : "auto"}
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+            className="site-media-square object-cover [border-radius:0]"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-foreground/28">
-            <ImageIcon className="h-4 w-4" />
-          </div>
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(17,17,17,0.08),rgba(17,17,17,0.025))]" />
         )}
       </div>
-      <div className="min-w-0">
-        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-foreground/38">
-          {item.eyebrow}
+      <div className="flex min-h-[4.85rem] flex-1 flex-col px-2 py-2.5 sm:min-h-[6.4rem] sm:px-3 sm:py-3.5 md:min-h-[7.25rem] md:px-4 md:py-4">
+        <p className="truncate text-[0.46rem] font-semibold uppercase tracking-[0.12em] text-black/42 sm:text-[0.58rem]">
+          {item.label}
         </p>
-        <div
-          role="heading"
-          aria-level={3}
-          className="mt-2 text-[1.05rem] font-medium leading-[1.08] tracking-[-0.03em] text-foreground sm:text-[1.18rem]"
-        >
+        <div className="mt-1.5 line-clamp-2 text-[0.72rem] font-medium leading-[0.92] tracking-[-0.05em] text-black transition-colors group-hover:text-black/62 sm:text-[1rem] md:text-[1.22rem]">
           {item.title}
         </div>
-        {item.subtitle ? (
-          <p className="mt-2 max-w-xl text-[0.88rem] leading-6 text-foreground/54">{item.subtitle}</p>
-        ) : null}
       </div>
-      <ArrowUpRight className="hidden h-4 w-4 text-foreground/34 transition-colors group-hover:text-foreground/72 sm:block" />
     </SmartLink>
-  );
-}
-
-function SectionHeader({ kicker, title }: { kicker: string; title: string }) {
-  return (
-    <div className="mb-5">
-      <p className="text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-foreground/36">{kicker}</p>
-      <div
-        role="heading"
-        aria-level={2}
-        className="mt-2 text-[1.35rem] font-medium leading-tight tracking-[-0.04em] text-foreground sm:text-[1.6rem]"
-      >
-        {title}
-      </div>
-    </div>
   );
 }
 
 export default function Links() {
-  const { primaryLinks, recentProjects, studioLinks } = useMemo(() => {
-    const primaryLinks: LinkItem[] = [
-      {
-        id: "scenic-design",
-        title: "Scenic Design Portfolio",
-        subtitle: "Production work",
-        href: "/projects",
-        icon: Briefcase,
-      },
-      {
-        id: "rendering",
-        title: "Rendering",
-        subtitle: "Concept and visualization",
-        href: "/projects/rendering",
-        icon: Palette,
-      },
-      {
-        id: "experiential",
-        title: "Experiential Design",
-        subtitle: "Events, exhibits, environments",
-        href: "/projects/experiential",
-        icon: Layers,
-      },
-      {
-        id: "upcoming",
-        title: "Upcoming Productions",
-        subtitle: "Current calendar",
-        href: "/upcoming-productions",
-        icon: CalendarDays,
-      },
-      {
-        id: "publish",
-        title: "Publish",
-        subtitle: "Articles and tutorials",
-        href: "/studio",
-        icon: BookOpen,
-      },
-      {
-        id: "contact",
-        title: "Contact",
-        subtitle: "Start a conversation",
-        href: "/contact",
-        icon: Mail,
-      },
-    ];
-
-    const recentProjects = getLocalScenicProjects()
+  const feedTiles = useMemo(() => {
+    const scenicProjects = getLocalScenicProjects()
       .filter((project) => project.coverImageUrl)
       .sort((a, b) => timestampForPortfolioItem(b) - timestampForPortfolioItem(a))
-      .slice(0, 4)
-      .map<PreviewItem>((project) => ({
+      .slice(0, 12)
+      .map<FeedTile>((project) => ({
         id: `scenic-${project.slug}`,
         title: project.title,
-        eyebrow: project.client || "Scenic Design",
-        subtitle: project.year ? String(project.year) : "Selected production",
+        label: project.client || "Scenic Design",
         href: `/project/${project.slug}`,
         image: project.coverImageUrl,
+        timestamp: timestampForPortfolioItem(project),
       }));
 
-    const experientialLinks = getLocalExperientialProjects()
-      .filter((project) => project.coverImageUrl)
-      .sort((a, b) =>
-        timestampForPortfolioItem({ updatedAt: b.updatedAt, year: b.year, month: b.month }) -
-        timestampForPortfolioItem({ updatedAt: a.updatedAt, year: a.year, month: a.month })
-      )
-      .slice(0, 1)
-      .map<PreviewItem>((project) => ({
-        id: `experience-${project.slug}`,
-        title: project.title,
-        eyebrow: "Experiential",
-        subtitle: project.year ? String(project.year) : "Selected work",
-        href: getLocalExperientialProjectHref(project),
-        image: project.coverImageUrl,
-      }));
+    const latestScenicImage = scenicProjects[0]?.image || ABOUT_HEADSHOT_URL;
+    const nextUpcomingProduction = [...upcomingProductions]
+      .filter((production) => production.imageUrl)
+      .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())[0];
 
     const articles = getLocalArticles();
-    const articleLinks = articles
+    const articleTiles = articles
       .filter(
         (article) =>
           !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug) &&
-          !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug)
+          !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug) &&
+          !isRenderingContent(article)
       )
       .sort((a, b) => timestampForPortfolioItem(b) - timestampForPortfolioItem(a))
-      .slice(0, 2)
-      .map<PreviewItem>((article) => ({
+      .filter((article) => article.coverImageUrl)
+      .slice(0, 4)
+      .map<FeedTile>((article) => ({
         id: `article-${article.slug}`,
         title: article.title,
-        eyebrow: article.categoryName || "Article",
-        subtitle: article.excerpt,
+        label: "Scenic Design Article",
         href: `/articles/${article.slug}`,
         image: article.coverImageUrl,
+        timestamp: timestampForPortfolioItem(article),
       }));
 
-    const learningArticleLinks = articles
+    const learningArticleTiles = articles
       .filter((article) => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+      .filter((article) => !isRenderingContent(article))
       .sort((a, b) => timestampForPortfolioItem(b) - timestampForPortfolioItem(a))
+      .filter((article) => article.coverImageUrl)
       .slice(0, 2)
-      .map<PreviewItem>((article) => ({
+      .map<FeedTile>((article) => ({
         id: `learning-${article.slug}`,
         title: article.title,
-        eyebrow: LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG[article.slug] || article.categoryName || "Tutorial",
-        subtitle: article.excerpt,
+        label: LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG[article.slug] || "Tutorial",
         href: `/studio/tutorials/${article.slug}`,
         image: article.coverImageUrl,
+        timestamp: timestampForPortfolioItem(article),
       }));
 
-    const tutorialLinks = getLocalTutorials()
-      .slice(0, 1)
-      .map<PreviewItem>((tutorial) => ({
+    const tutorialTiles = getLocalTutorials()
+      .filter((tutorial) => !isRenderingContent(tutorial))
+      .sort((a, b) =>
+        timestampForPortfolioItem({
+          publishedAt: b.published_at,
+          updatedAt: b.updated_at,
+          createdAt: b.created_at,
+        }) -
+        timestampForPortfolioItem({
+          publishedAt: a.published_at,
+          updatedAt: a.updated_at,
+          createdAt: a.created_at,
+        })
+      )
+      .slice(0, 2)
+      .map<FeedTile>((tutorial) => ({
         id: `tutorial-${tutorial.slug}`,
         title: tutorial.title,
-        eyebrow: tutorial.category || "Tutorial",
-        subtitle: tutorial.description || tutorial.overview || "A practical scenic design learning resource.",
+        label: tutorial.category || "Tutorial",
         href: `/studio/tutorials/${tutorial.slug}`,
-        image: getTutorialCoverImage(tutorial),
+        image: tutorial.cover_image || getTutorialCoverImage(tutorial),
+        timestamp: timestampForPortfolioItem({
+          publishedAt: tutorial.published_at,
+          updatedAt: tutorial.updated_at,
+          createdAt: tutorial.created_at,
+        }),
       }));
 
-    return {
-      primaryLinks,
-      recentProjects: [...recentProjects, ...experientialLinks].slice(0, 5),
-      studioLinks: [...articleLinks, ...learningArticleLinks, ...tutorialLinks].slice(0, 5),
-    };
+    const upcomingTile: FeedTile[] = nextUpcomingProduction
+      ? [{
+        id: "upcoming",
+        title: nextUpcomingProduction?.title || "Upcoming Scenic Design",
+        label: "Upcoming",
+        href: nextUpcomingProduction ? `/upcoming-productions/${nextUpcomingProduction.id}` : "/upcoming-productions",
+        image: nextUpcomingProduction?.imageUrl || latestScenicImage,
+        timestamp: 0,
+      }]
+      : [];
+
+    const datedTiles = [
+      ...scenicProjects,
+      ...articleTiles,
+      ...learningArticleTiles,
+      ...tutorialTiles,
+    ].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+    return [...datedTiles, ...upcomingTile, ...STUDIO_APP_TILES];
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title="Links | Brandon PT Davis"
         description="Social links, portfolio, articles, tutorials, and current work from scenic designer Brandon PT Davis."
       />
 
-      <main className="mx-auto w-full max-w-3xl px-5 pb-18 pt-10 sm:px-7 sm:pt-14">
-        <section className="pb-8 text-center">
-          <div className="mx-auto h-24 w-24 overflow-hidden rounded-full border border-border/30 bg-card/20 sm:h-28 sm:w-28">
-            <div className="relative h-full w-full">
-              <Image
-                src={ABOUT_HEADSHOT_URL}
-                alt="Brandon PT Davis"
-                fill
-                priority
-                quality={82}
-                sizes="7rem"
-                className="translate-y-[16%] scale-[1.34] object-cover object-center"
-              />
-            </div>
-          </div>
-          <p className="mt-6 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-foreground/40">
+      <main className="w-full pb-16 pt-5 sm:pt-8">
+        <section className="mx-auto flex max-w-xl flex-col items-center px-5 pb-5 text-center sm:pb-7">
+          <p className="text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-black/42">
             Scenic Design
           </p>
           <div
             role="heading"
             aria-level={1}
-            className="mt-3 text-[clamp(2.6rem,12vw,5.6rem)] font-medium leading-[0.9] tracking-[-0.07em] text-foreground"
+            className="mt-2 text-[clamp(2rem,9vw,4rem)] font-medium leading-[0.92] tracking-[-0.065em] text-black"
           >
             Brandon PT Davis
           </div>
-          <p className="mx-auto mt-5 max-w-[25rem] text-[1rem] leading-7 text-foreground/58">
-            Portfolio, current productions, published writing, and contact links collected for social profiles.
+          <p className="mt-3 max-w-[21rem] text-[0.88rem] leading-6 text-black/58">
+            Recent scenic design work, production photos, process notes, and studio updates.
           </p>
 
-          <div className="mt-7 flex items-center justify-center gap-2.5">
+          <div className="mt-5 flex items-center justify-center gap-2">
             <a
               href="https://instagram.com/brandonptdavisdesign"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/24 text-foreground/62 transition-colors hover:border-border/44 hover:text-foreground"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-black/58 transition-colors hover:border-black/24 hover:text-black"
             >
               <Instagram className="h-4 w-4" />
             </a>
@@ -413,7 +325,7 @@ export default function Links() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/24 text-foreground/62 transition-colors hover:border-border/44 hover:text-foreground"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-black/58 transition-colors hover:border-black/24 hover:text-black"
             >
               <Linkedin className="h-4 w-4" />
             </a>
@@ -422,77 +334,27 @@ export default function Links() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Pinterest"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/24 text-foreground/62 transition-colors hover:border-border/44 hover:text-foreground"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-black/58 transition-colors hover:border-black/24 hover:text-black"
             >
               <PinterestIcon className="h-4 w-4" />
             </a>
             <a
               href="mailto:info@brandonptdavis.com"
-              className="inline-flex h-10 items-center gap-2 rounded-full bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/88"
+              className="inline-flex h-9 items-center gap-2 rounded-full bg-black px-3.5 text-[0.82rem] font-medium text-white transition-colors hover:bg-black/80"
             >
               Contact
-              <Mail className="h-4 w-4" />
+              <Mail className="h-3.5 w-3.5" />
             </a>
           </div>
         </section>
 
-        <section className="py-6">
-          <SectionHeader kicker="Start Here" title="Primary links" />
-          <div>
-            {primaryLinks.map((item) => (
-              <PrimaryLinkRow key={item.id} item={item} />
-            ))}
-          </div>
-        </section>
-
-        <section className="py-8">
-          <SectionHeader kicker="Recent Work" title="Selected portfolio entries" />
-          <div>
-            {recentProjects.map((item, index) => (
-              <PreviewRow key={item.id} item={item} priority={index < 2} />
-            ))}
-          </div>
-          <div className="pt-5">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.18em] text-foreground/58 transition-colors hover:text-foreground"
-            >
-              View full portfolio
-              <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-        </section>
-
-        <section className="py-8">
-          <SectionHeader kicker="Studio" title="Articles and tutorials" />
-          <div>
-            {studioLinks.map((item) => (
-              <PreviewRow key={item.id} item={item} />
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 pt-5">
-            <Link
-              href="/articles"
-              className="inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.18em] text-foreground/58 transition-colors hover:text-foreground"
-            >
-              <Newspaper className="h-3.5 w-3.5" />
-              Articles
-            </Link>
-            <Link
-              href="/studio/tutorials"
-              className="inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.18em] text-foreground/58 transition-colors hover:text-foreground"
-            >
-              <Video className="h-3.5 w-3.5" />
-              Tutorials
-            </Link>
-            <Link
-              href="/assistant-scenic-design"
-              className="inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.18em] text-foreground/58 transition-colors hover:text-foreground"
-            >
-              <PenTool className="h-3.5 w-3.5" />
-              Assistant scenic design
-            </Link>
-          </div>
+        <section
+          aria-label="Latest scenic design updates"
+          className="grid grid-cols-3 border-l border-t border-black/8 bg-[#f4f5f7] [grid-auto-rows:1fr] md:grid-cols-4"
+        >
+          {feedTiles.map((item, index) => (
+            <FeedCard key={item.id} item={item} priority={index < 6} />
+          ))}
         </section>
       </main>
     </div>

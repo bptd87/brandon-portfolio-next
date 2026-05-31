@@ -1,16 +1,17 @@
 type: project
 discipline: scenic
 slug: loteria-game-on
-title: '¡LOTERIA: GAME ON!'
+title: "¡LOTERIA: GAME ON!"
 status: published
 featured: false
 excerpt: >-
-  Beginning in a suburban basement family room, the design transforms into a vivid Loteria card-world where childhood
-  play, digital spectacle, and cultural memory collide in full view of the audience.
-seoTitle: '¡LOTERIA: GAME ON! | Scenic Design by Brandon PT Davis'
+  Beginning in a suburban basement family room, the design transforms into a vivid Loteria
+  card-world where childhood play, digital spectacle, and cultural memory collide in full view of
+  the audience.
+seoTitle: "¡LOTERIA: GAME ON! | Scenic Design by Brandon PT Davis"
 seoDescription: >-
-  Scenic design for ¡LOTERIA: GAME ON! at Theatre SilCo, moving from a suburban family basement into a bright,
-  8-bit-inspired Loteria universe built for theatrical play and young audiences.
+  Scenic design for ¡LOTERIA: GAME ON! at Theatre SilCo, moving from a suburban family basement into
+  a bright, 8-bit-inspired Loteria universe built for theatrical play and young audiences.
 seoKeywords:
   - Loteria Game On
   - scenic design
@@ -26,7 +27,7 @@ subcategory: Theatre for Young Audiences
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp
-  alt: 'Scenic design for ¡LOTERIA: GAME ON! by Brandon PT Davis.'
+  alt: The basement family-room world.
 team:
   - role: Playwright
     name: Mabelle Reynoso
@@ -56,4 +57,4 @@ tags:
 links:
   - label: Mabelle Reynoso Play Page
     url: https://www.mabellereynoso.com/loteria-game-on
-updatedAt: '2026-02-12T15:03:56+00:00'
+updatedAt: "2026-02-12T15:03:56+00:00"

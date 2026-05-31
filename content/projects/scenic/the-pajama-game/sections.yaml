@@ -1,32 +1,25 @@
 - type: text
-  heading: A Factory with Personality
   content:
     - >-
-      The Pajama Game needed a world that could move as fast as the score. Bold signage and shifting factory elements
-      framed the 1950s Sleep-Tite Pajama Factory, giving the stage a strong graphic identity while keeping transitions
-      quick and dance-friendly.
+      The Pajama Game needed a world that could move as fast as the score. At UC Irvine, bold signage and
+      shifting factory elements framed the Sleep-Tite Pajama Factory, giving the stage a clear graphic
+      identity and room for dance.
+    - >-
+      The story balances romance with a labor dispute, so the world had to support both pleasure and pressure.
+      Repeating structures, workplace signage, and a vibrant period palette suggested postwar optimism while
+      keeping the conflict over wages visible.
+    - >-
+      A modular approach allowed quick transformations from intimate encounters to full-ensemble numbers. The
+      result was a scenic world that felt playful and pointed, period-specific and theatrical at the same
+      time.
 - type: gallery
   mediaIds:
     - pajama-prod-1
     - pajama-prod-2
-- type: text
-  heading: Romance and Labor in the Same Space
-  content:
-    - >-
-      The story balances spirited romance with a sharp labor dispute, so the scenic world had to support both. Repeating
-      structures and a vibrant factory palette suggested postwar optimism, while signage and movable units emphasized
-      workplace mechanics and the conflict over fair wages driving the plot.
 - type: gallery
   mediaIds:
     - pajama-prod-3
     - pajama-prod-4
-- type: text
-  heading: Work, Play, and Friction
-  content:
-    - >-
-      A modular approach supported dance-heavy staging, allowing rolling units to transform quickly from intimate
-      encounters to full-ensemble numbers. The result was a world that felt playful yet pointed: period-authentic enough
-      to ground the audience, theatrical enough to energize a story about love, labor, and finding joy amid conflict.
 - type: gallery
   mediaIds:
     - pajama-prod-5

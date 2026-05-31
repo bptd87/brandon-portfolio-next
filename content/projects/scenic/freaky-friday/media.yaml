@@ -3,63 +3,55 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-friday-cover.webp
-    alt: >-
-      Freaky Friday scenic design cover at Okoboji Summer Theatre, using modular zones for a fast-changing body-swap
-      story.
+    alt: Modular zones for a fast-changing body-swap story.
   - id: freaky-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-1.webp
-    alt: Production image from Freaky Friday showing the scenic environment in action, scenic design by Brandon PT Davis.
+    alt: Contemporary modular set with fast-changing school and home zones.
   - id: freaky-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-2.webp
-    alt: Scene from Freaky Friday framed by the modular scenic system, scenic design by Brandon PT Davis.
+    alt: Actors framed by the modular scenic system.
   - id: freaky-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-3.webp
-    alt: Production still emphasizing transitions and stage zones in Freaky Friday, scenic design by Brandon PT Davis.
+    alt: Scene emphasizing transitions and stage zones in Freaky Friday.
   - id: freaky-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-4.webp
-    alt: >-
-      Performance image from Freaky Friday showing scenic flexibility for musical staging, scenic design by Brandon PT
-      Davis.
+    alt: Scenic flexibility for musical staging.
   - id: freaky-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-5.webp
-    alt: >-
-      Freaky Friday production moment using the set’s contemporary domestic and school cues, scenic design by Brandon PT
-      Davis.
+    alt: Freaky Friday production moment using the set’s contemporary domestic and school cues.
   - id: freaky-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-6.webp
-    alt: Production still highlighting ensemble flow through the Freaky Friday set, scenic design by Brandon PT Davis.
+    alt: Scene highlighting ensemble flow through the Freaky Friday set.
   - id: freaky-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-7.webp
-    alt: Final production image from Freaky Friday, scenic design by Brandon PT Davis.
+    alt: Final scene from Freaky Friday.
   - id: freaky-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-1.webp
-    alt: Scenic rendering for Freaky Friday testing scenic zones and movement paths, scenic design by Brandon PT Davis.
+    alt: Rendering for Freaky Friday testing scenic zones and movement paths.
   - id: freaky-render-2
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-2.webp
-    alt: Rendering pass for Freaky Friday showing transformation-based scene logic, scenic design by Brandon PT Davis.
+    alt: Rendering pass for Freaky Friday showing transformation-based scene logic.
   - id: freaky-render-3
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-3.webp
-    alt: >-
-      Perspective rendering for Freaky Friday exploring modular units and tonal contrast, scenic design by Brandon PT
-      Davis.
+    alt: Perspective rendering for Freaky Friday exploring modular units and tonal contrast.
 videos: []

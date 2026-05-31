@@ -1,35 +1,25 @@
 - type: text
-  heading: A World Built in Front of Us
   content:
     - >-
-      For The Man of La Mancha at Lake Dillon Theatre Company, I didn’t want to build a picturesque Spain. The director
-      and I talked early about the story living inside a warehouse, a space where actors could assemble the world in
-      front of us. That idea shaped everything, making the environment feel raw, performative, and always on the edge of
-      transformation.
+      I did not want The Man of La Mancha to live in a picturesque Spain. At Lake Dillon Theatre Company, the
+      director and I talked early about the story existing inside a warehouse, a space where actors could
+      assemble the world in front of us.
+    - >-
+      Brick walls, exposed piping, and a steel stair structure grounded the room in an honest industrial
+      vocabulary. A circular pattern cut into the floor created a playing arena that felt part ritual space
+      and part proving ground.
+    - >-
+      The windmill, traced in industrial pipe, was never meant to feel literal. It worked more like an idea
+      projected onto the room, allowing imagination and harsh reality to occupy the same space as the
+      performers built the story in real time.
 - type: gallery
   mediaIds:
     - lamancha-prod-1
     - lamancha-prod-2
-- type: text
-  heading: Industrial Ritual
-  content:
-    - >-
-      The brick walls, exposed piping, and steel stair structure weren’t decorative. They grounded the room in something
-      honest and industrial. At the center of the stage, a circular pattern scored into the floor created a playing
-      arena that felt part ritual space and part proving ground. The musicians lived inside the environment rather than
-      outside it, reinforcing the sense that this world was being made in real time.
 - type: gallery
   mediaIds:
     - lamancha-prod-3
     - lamancha-prod-4
-- type: text
-  heading: Imagination Against the Real
-  content:
-    - >-
-      Upstage, a windmill traced out of industrial pipe was never meant to feel literal. It worked more like an idea
-      projected onto reality, the image of Quixote rather than an object itself. Distressed textures, modular crates,
-      and repurposed materials let transformation come from performance and light rather than scene changes. The set
-      didn’t illustrate fantasy; it asked the audience to create it with us.
 - type: gallery
   mediaIds:
     - lamancha-prod-5

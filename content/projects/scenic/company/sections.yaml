@@ -1,34 +1,25 @@
 - type: text
-  heading: A New York of Exterior Lives
   content:
     - >-
-      For Company at UCI, the design grew out of observation. A solo trip to New York the spring before the production
-      became the seed: white or cream walls, trim layered in decades of paint, and buildings that felt strangely
-      uninhabited because life seemed to happen outside, in motion, in the city itself.
+      Company grew out of my own observations of New York: pale exterior walls, layers of old trim, fire
+      escapes, stoops, and buildings that felt inhabited by lives just out of reach. At UC Irvine, that sense
+      of exterior life became the heart of the scenic design.
+    - >-
+      Two coupled buildings framed one side of the stage, linked like partnership, while a lone red-brick
+      building stood apart to reflect Bobby's solitude. Ladders, stairs, and fire escapes created both
+      physical movement and emotional distance.
+    - >-
+      Backlit windows in purples, pinks, and blues suggested private lives behind the architecture. By
+      treating New York as a landscape of longing, the scenic design gave Bobby's isolation a physical shape
+      without closing the city down.
 - type: gallery
   mediaIds:
     - company-prod-1
     - company-prod-2
-- type: text
-  heading: Coupled Buildings and Solitude
-  content:
-    - >-
-      That sensibility shaped the architecture. Two coupled buildings framed stage right, linked structures echoing
-      partnership, while a lone red-brick building stood apart at stage left, reflecting Bobby's solitude. Fire escapes,
-      stoops, and ladders climbed throughout the composition, offering both physical and metaphorical mobility.
 - type: gallery
   mediaIds:
     - company-prod-3
     - company-prod-4
-- type: text
-  heading: A Skyline of Longing
-  content:
-    - >-
-      Backlit windows in purples, pinks, and blues hint at private lives just out of reach, while the shifting skyline
-      moves with mood and music.
-    - >-
-      By treating New York as an exterior landscape of longing, the design gives Bobby's isolation and the show's
-      emotional drift a clear visual shape.
 - type: gallery
   mediaIds:
     - company-prod-5

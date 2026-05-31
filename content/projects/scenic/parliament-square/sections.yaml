@@ -1,33 +1,24 @@
 - type: text
-  heading: A Ritual Path Through the Stage
   content:
     - >-
-      A circular stone path cut through the stage, anchoring Parliament Square in a space that felt both ritualistic and
-      inescapable. That central image became a symbol of repetition, echoing cycles of social struggle while reflecting
-      Kat's inner journey toward her final act of protest.
+      A circular stone path cutting through the stage anchored Parliament Square at UC Irvine. That image gave
+      the scenic design a sense of repetition and ritual, echoing cycles of social struggle and Kat's movement
+      toward her final act of protest.
+    - >-
+      Concrete, fractured surfaces, and a cold gray palette stripped comfort from the room. The environment
+      felt public and isolating at the same time, pressing political action against private despair.
+    - >-
+      By keeping the design minimal, the stage could hold a meditative rhythm with a sharp edge. The stone
+      circle, decayed textures, and empty space became more than backdrop; they gave sacrifice, resilience,
+      and institutional pressure a physical form.
 - type: gallery
   mediaIds:
     - parliament-prod-1
     - parliament-prod-2
-- type: text
-  heading: Concrete, Decay, and Isolation
-  content:
-    - >-
-      Concrete and fractured surfaces shaped the environment, their erosion mirroring Kat's unraveling faith in
-      institutions. A cold, gray palette stripped away comfort and created a setting that felt both public and
-      isolating, pressing the political against private despair.
 - type: gallery
   mediaIds:
     - parliament-prod-3
     - parliament-prod-4
-- type: text
-  heading: Public Space, Private Pressure
-  content:
-    - >-
-      By keeping the design minimal, the focus stayed on action and the questions the play demands. Without
-      ornamentation, the stage invited a meditative rhythm with a sharp edge of confrontation. The scenic world became
-      more than backdrop: stone circle, textures of decay, and empty expanse together embodied sacrifice and resilience
-      long after the final scene.
 - type: gallery
   mediaIds:
     - parliament-prod-5

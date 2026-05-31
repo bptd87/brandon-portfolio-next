@@ -3,87 +3,65 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-cover-42d5b1b2.webp
-    alt: >-
-      Company scenic design cover at University of California Irvine, using a cityscape of longing and shifting
-      emotional rhythm.
+    alt: A cityscape of longing and shifting emotional rhythm.
   - id: company-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150026-decccaaf.webp
-    alt: >-
-      Production image from Company showing the coupled buildings and urban scenic composition, scenic design by Brandon
-      PT Davis.
+    alt: The coupled buildings and urban scenic composition.
   - id: company-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150028-e1310148.webp
-    alt: >-
-      Production image from Company highlighting the exterior city world and embedded orchestra, scenic design by
-      Brandon PT Davis.
+    alt: The exterior city world and embedded orchestra.
   - id: company-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150031-f649799f.webp
-    alt: >-
-      Production still from Company emphasizing architectural contrast and stage movement, scenic design by Brandon PT
-      Davis.
+    alt: Architectural contrast and stage movement.
   - id: company-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150033-3c025c2d.webp
-    alt: >-
-      Performance image from Company showing stoops, levels, and shifting emotional proximity, scenic design by Brandon
-      PT Davis.
+    alt: Stoops, levels, and shifting emotional proximity.
   - id: company-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150076-4c345fa6.webp
-    alt: >-
-      Production image from Company with backlit windows and skyline color shaping the mood, scenic design by Brandon PT
-      Davis.
+    alt: Backlit windows and skyline color shaping the mood.
   - id: company-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150100-4c863819.webp
-    alt: Production image from Company showing the cityscape as a landscape of longing, scenic design by Brandon PT Davis.
+    alt: The cityscape as a landscape of longing.
   - id: company-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp
-    alt: >-
-      Rendering for Company exploring the coupled buildings, lone brick structure, and skyline rhythm, scenic design by
-      Brandon PT Davis.
+    alt: Rendering of the coupled buildings, lone brick structure, and skyline rhythm.
   - id: company-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150116-9e1fc6e6.webp
-    alt: >-
-      Production image from Company highlighting ladders, escapes, and movement through the city, scenic design by
-      Brandon PT Davis.
+    alt: Ladders, escapes, and movement through the city.
   - id: company-prod-8
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150125-94768884.webp
-    alt: >-
-      Performance image from Company reinforcing the exterior architecture and ensemble relationships, scenic design by
-      Brandon PT Davis.
+    alt: The exterior architecture and ensemble relationships.
   - id: company-prod-9
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150165-d25ef8d3.webp
-    alt: >-
-      Production still from Company with the glowing skyline and nonlinear emotional rhythm in view, scenic design by
-      Brandon PT Davis.
+    alt: A cityscape of longing and shifting emotional rhythm.
   - id: company-prod-10
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150208-88a9e2cc.webp
-    alt: >-
-      Production image from Company emphasizing the set's view of intimacy from the outside looking in, scenic design by
-      Brandon PT Davis.
+    alt: The set's view of intimacy from the outside looking in.
   - id: company-prod-11
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150240-c1ace8a3.webp
-    alt: Final production image from Company showing the complete New York scenic world, scenic design by Brandon PT Davis.
+    alt: Full-stage view of the complete New York scenic world.
 videos: []

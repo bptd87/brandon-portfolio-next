@@ -5,12 +5,12 @@ title: The Liar
 status: published
 featured: false
 excerpt: >-
-  A classical comic world built with elegance, color, and playful exaggeration, giving The Liar a refined environment
-  that could support wit, deception, and fast-moving farce.
+  A classical comic world built with elegance, color, and playful exaggeration, giving The Liar a
+  refined environment that could support wit, deception, and fast-moving farce.
 seoTitle: The Liar | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for The Liar at Okoboji Summer Theatre, blending classical elegance with bold playful elements to
-  heighten the comedy's wit and charm.
+  Scenic design for The Liar at Okoboji Summer Theatre, blending classical elegance with bold
+  playful elements to heighten the comedy's wit and charm.
 seoKeywords:
   - The Liar
   - David Ives
@@ -27,7 +27,7 @@ subcategory: Comedy
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg
-  alt: Scenic design for The Liar by Brandon PT Davis.
+  alt: Comic set with bold movement, period detail, and flexible entrances.
 team:
   - role: Written By
     name: David Ives (adapted from Pierre Corneille)
@@ -51,4 +51,4 @@ tags:
   - name: The Liar
     slug: the-liar
 links: []
-updatedAt: '2026-03-23T20:12:00.000Z'
+updatedAt: "2026-03-23T20:12:00.000Z"

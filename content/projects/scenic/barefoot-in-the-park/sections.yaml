@@ -1,32 +1,24 @@
 - type: text
-  heading: A New York Walk-Up
   content:
     - >-
-      The design for Barefoot in the Park centered on a compact New York walk-up that amplifies the play’s emotional
-      temperature through scale, proximity, and verticality. Tight architectural boundaries and selective furnishing
-      choices helped stage the couple’s shifting rhythms while preserving clarity for fast comic timing.
+      A compact New York walk-up became the pressure point for Barefoot in the Park at Okoboji Summer Theatre.
+      Scale, proximity, stairs, doors, and windows all shaped the scenic design's comic rhythm and emotional
+      temperature.
+    - >-
+      Rather than over-rendering period detail, I prioritized playable geometry. The apartment needed to
+      support quick entrances, reversals, intimacy, and friction while always remaining clear to the audience.
+    - >-
+      The design tracks the couple's movement from romantic idealism toward negotiated partnership. It works
+      less as a neutral apartment and more as a pressure system, turning everyday domestic life into a precise
+      comic engine.
 - type: gallery
   mediaIds:
     - barefoot-prod-1
     - barefoot-prod-2
-- type: text
-  heading: Geometry for Comedy
-  content:
-    - >-
-      Rather than over-rendering period detail, the scenic approach prioritized playable geometry and social pressure.
-      Doors, stairs, and window relationships all functioned as storytelling tools, giving actors clean pathways for
-      entrances, reversals, and escalating comic friction.
 - type: gallery
   mediaIds:
     - barefoot-prod-3
     - barefoot-prod-4
-- type: text
-  heading: A Walk-Up with Pressure
-  content:
-    - >-
-      The apartment needed to track the movement from romantic idealism to negotiated partnership without losing the wit
-      of the play. The set works less as a realistic container than as a pressure system, shaping tempo, intimacy, and
-      the comic stakes of everyday domestic life.
 - type: gallery
   mediaIds:
     - barefoot-prod-5

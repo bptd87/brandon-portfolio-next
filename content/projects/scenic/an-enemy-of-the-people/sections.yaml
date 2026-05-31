@@ -1,37 +1,25 @@
 - type: text
-  heading: A World Without Comfort
   content:
     - >-
-      For An Enemy of the People at Stephens College, I wanted the world to feel stripped down and confrontational. I
-      kept the entire environment in grayscale, walls, architecture, and floor, treating the space almost like a
-      three-dimensional drawing. The inspiration came from Tokyo’s 2D Cafe, where depth feels flattened and reality
-      feels slightly unstable.
+      The world of An Enemy of the People needed to feel stripped down, confrontational, and a little
+      unstable. At Stephens College, I held the environment in grayscale, with architecture and floor treated
+      almost like a three-dimensional drawing.
+    - >-
+      The inspiration came from spaces where perspective feels flattened and reality becomes slightly
+      uncertain. Rough line work suggested walls and structure without offering comfort, which felt right for
+      a play centered on truth, public scrutiny, and civic denial.
+    - >-
+      The only strong color came from the red furniture. Those pieces cut through the monochrome world like
+      pressure points: danger, accusation, and interruption. The minimal palette forced attention onto the
+      actors while making the room feel like an argument the audience could not step away from.
 - type: gallery
   mediaIds:
     - enemy-prod-1
     - enemy-prod-2
-- type: text
-  heading: Architecture as Exposure
-  content:
-    - >-
-      The backdrop included rough, sketch-like line work that suggested architecture without fully rendering it. It
-      wasn’t about realism. It was about exposure. In a play centered on truth and public scrutiny, I didn’t want the
-      room to provide comfort.
 - type: gallery
   mediaIds:
     - enemy-prod-3
     - enemy-prod-4
-- type: text
-  heading: Red as Interruption
-  content:
-    - >-
-      The only real color in the space comes from the red furniture, and those pieces puncture the monochrome world. Red
-      becomes a visual interruption: pressure, danger, accusation. It makes the actors feel like they are standing
-      inside an argument.
-    - >-
-      The minimal palette forces focus onto performance and language. There is nowhere to hide. The environment feels
-      stark, almost clinical, but still theatrical, and the design works as a frame that amplifies the play’s themes of
-      power, resistance, and the cost of speaking out.
 - type: gallery
   mediaIds:
     - enemy-prod-5

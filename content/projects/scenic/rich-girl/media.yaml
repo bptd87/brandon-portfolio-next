@@ -3,52 +3,40 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094-bd9037d8.webp
-    alt: Scenic design for Rich Girl by Brandon PT Davis.
+    alt: The contemporary penthouse environment.
   - id: rich-girl-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-3670-51246a14.webp
-    alt: Production image from Rich Girl showing the contemporary penthouse environment, scenic design by Brandon PT Davis.
+    alt: The contemporary penthouse environment.
   - id: rich-girl-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/rich-girl-5-3670-a9dce5ca.webp
-    alt: >-
-      Production image from Rich Girl highlighting the sleek domestic architecture and polished palette, scenic design
-      by Brandon PT Davis.
+    alt: The sleek domestic architecture and polished palette.
   - id: rich-girl-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-4-of-8-3670-aee16070.webp
-    alt: >-
-      Production image from Rich Girl emphasizing openness, scale, and emotional distance, scenic design by Brandon PT
-      Davis.
+    alt: The contemporary penthouse environment.
   - id: rich-girl-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-5-of-8-3670-314a2c6a.webp
-    alt: >-
-      Production still from Rich Girl showing the refined interior shell and city-facing atmosphere, scenic design by
-      Brandon PT Davis.
+    alt: The refined interior shell and city-facing atmosphere.
   - id: rich-girl-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-6-of-8-3707-4626e751.webp
-    alt: >-
-      Production image from Rich Girl highlighting the elegant restraint of the penthouse world, scenic design by
-      Brandon PT Davis.
+    alt: The elegant restraint of the penthouse world.
   - id: rich-girl-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-7-of-8-3759-f6de54ee.webp
-    alt: >-
-      Final production image from Rich Girl showing the complete scenic environment in performance, scenic design by
-      Brandon PT Davis.
+    alt: Full-stage view of the complete set in performance.
   - id: rich-girl-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/rich-girl-sketch-large-3759-550cb2db.webp
-    alt: >-
-      Rendering for Rich Girl exploring the penthouse composition, furnishings, and emotional restraint, scenic design
-      by Brandon PT Davis.
+    alt: Rendering of the penthouse composition, furnishings, and emotional restraint.
 videos: []

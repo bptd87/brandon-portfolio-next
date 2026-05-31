@@ -15,7 +15,7 @@ import {
   type LocalScenicProjectMedia,
 } from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
-import { Check, ChevronRight, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
+import { Check, ChevronDown, ChevronRight, ChevronUp, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
 
 type ScenicProjectDetailProps = {
   slug?: string;
@@ -218,10 +218,21 @@ export default function ScenicProjectDetail({
   const [linkCopied, setLinkCopied] = useState(false);
   const [heroScrollProgress, setHeroScrollProgress] = useState(0);
   const [heroIntroProgress, setHeroIntroProgress] = useState(0);
+  const [isMobileHero, setIsMobileHero] = useState(false);
   const [activeRenderingIndex, setActiveRenderingIndex] = useState(0);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const heroIntroProgressRef = useRef(0);
   const introTouchYRef = useRef<number | null>(null);
   const allScenicProjects = getLocalScenicProjects();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateMobileHero = () => setIsMobileHero(mediaQuery.matches);
+
+    updateMobileHero();
+    mediaQuery.addEventListener("change", updateMobileHero);
+    return () => mediaQuery.removeEventListener("change", updateMobileHero);
+  }, []);
 
   useEffect(() => {
     const updateHeroScrollProgress = () => {
@@ -234,8 +245,15 @@ export default function ScenicProjectDetail({
   }, []);
 
   useEffect(() => {
+    if (isMobileHero) {
+      heroIntroProgressRef.current = 1;
+      setHeroIntroProgress(1);
+      return;
+    }
+
     heroIntroProgressRef.current = 0;
     setHeroIntroProgress(0);
+    setIsDescriptionExpanded(false);
 
     const advanceIntro = (delta: number) => {
       if (delta <= 0 || window.scrollY > 2 || heroIntroProgressRef.current >= 1) {
@@ -278,7 +296,7 @@ export default function ScenicProjectDetail({
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [normalizedSlug]);
+  }, [isMobileHero, normalizedSlug]);
 
   if (!project) {
     return (
@@ -364,10 +382,11 @@ export default function ScenicProjectDetail({
     ]
       .filter(Boolean)
       .join(", ");
-  const heroProgress = Math.max(heroScrollProgress, heroIntroProgress);
-  const heroTitleProgress = Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
+  const rawHeroProgress = Math.max(heroScrollProgress, heroIntroProgress);
+  const heroProgress = isMobileHero ? 1 : rawHeroProgress;
+  const heroTitleProgress = isMobileHero ? 1 : Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
   const projectMetaItems = [
-    project.client ? { label: "Client", value: project.client } : null,
+    project.client ? { label: "Company", value: project.client } : null,
     project.location ? { label: "Location", value: project.location } : null,
     project.year ? { label: "Year", value: String(project.year) } : null,
     project.subcategory ? { label: "Type", value: project.subcategory } : null,
@@ -412,6 +431,13 @@ export default function ScenicProjectDetail({
     }
     return [];
   });
+  const hasNarrativeHeadings = projectNarrativeSections.some((section) => Boolean(section.heading));
+  const projectNarrativeParagraphs = projectNarrativeSections.flatMap((section) => section.content);
+  const shouldClampNarrative = !hasNarrativeHeadings && projectNarrativeParagraphs.length > 2;
+  const visibleNarrativeParagraphs =
+    shouldClampNarrative && !isDescriptionExpanded
+      ? projectNarrativeParagraphs.slice(0, 2)
+      : projectNarrativeParagraphs;
   const visualSections = project.sections.filter((section) => section.type !== "text");
   const visualMediaItems: VisualMediaItem[] = visualSections.flatMap<VisualMediaItem>((section, sectionIndex) => {
     if (section.type === "gallery") {
@@ -503,9 +529,9 @@ export default function ScenicProjectDetail({
       />
       <Header />
 
-      <main className="bg-[#111111] pb-20">
+      <main className="bg-[#111111]">
         <section
-          className="project-hero-media site-media-square relative min-h-[calc(100svh-74px)] overflow-hidden border-b border-white/10 bg-black"
+          className="project-hero-media site-media-square relative min-h-[64svh] overflow-hidden border-b border-white/10 bg-black md:min-h-[calc(100svh-74px)]"
           style={{ borderRadius: 0 }}
         >
           {project.coverImageUrl ? (
@@ -524,7 +550,7 @@ export default function ScenicProjectDetail({
             className="absolute inset-0 transition-colors duration-200"
             style={{ backgroundColor: `rgba(0, 0, 0, ${heroProgress * 0.52})` }}
           />
-          <header className="relative flex min-h-[calc(100svh-74px)] w-full items-center justify-center px-[clamp(1.5rem,5vw,5.5rem)] py-20 text-center">
+          <header className="relative flex min-h-[64svh] w-full items-center justify-center px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center md:min-h-[calc(100svh-74px)] md:py-20">
             <div
               className="mx-auto max-w-[58rem] transition-opacity duration-150"
               style={{ opacity: heroTitleProgress }}
@@ -604,21 +630,55 @@ export default function ScenicProjectDetail({
               </div>
 
               <div>
-                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
-                  Description
-                </p>
-                <div className="space-y-6">
+                <div className="text-[0.9rem] leading-[1.48] text-white">
                   {projectNarrativeSections.length ? (
-                    projectNarrativeSections.map((section, sectionIndex) => (
-                      <div key={`${section.heading || "description"}-${sectionIndex}`} className="space-y-3">
-                        {section.heading ? <p className="font-medium">{section.heading}</p> : null}
-                        {section.content.map((paragraph, paragraphIndex) => (
-                          <p key={paragraphIndex}>{paragraph}</p>
+                    hasNarrativeHeadings ? (
+                      <div className="space-y-5">
+                        {projectNarrativeSections.map((section, sectionIndex) => (
+                          <div key={`${section.heading || "description"}-${sectionIndex}`} className="space-y-2.5">
+                            {section.heading ? <p className="font-medium text-white">{section.heading}</p> : null}
+                            {section.content.map((paragraph, paragraphIndex) => (
+                              <p key={paragraphIndex}>{paragraph}</p>
+                            ))}
+                          </div>
                         ))}
                       </div>
-                    ))
+                    ) : (
+                      <div className="space-y-4 text-justify hyphens-auto [text-wrap:pretty]">
+                        <p className="text-left">
+                          <span className="text-[0.82rem] font-medium uppercase tracking-[0.08em] text-white">
+                            Description
+                          </span>
+                        </p>
+                        {visibleNarrativeParagraphs.map((paragraph, paragraphIndex) => (
+                          <p key={paragraphIndex}>{paragraph}</p>
+                        ))}
+                        {shouldClampNarrative ? (
+                          <button
+                            type="button"
+                            onClick={() => setIsDescriptionExpanded((expanded) => !expanded)}
+                            className="inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 pt-1 text-left text-[0.72rem] font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
+                            aria-expanded={isDescriptionExpanded}
+                          >
+                            {isDescriptionExpanded ? "Show less" : "Show more"}
+                            {isDescriptionExpanded ? (
+                              <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" />
+                            ) : (
+                              <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
+                            )}
+                          </button>
+                        ) : null}
+                      </div>
+                    )
                   ) : (
-                    <p>{project.excerpt}</p>
+                    <div className="space-y-4 text-justify hyphens-auto [text-wrap:pretty]">
+                      <p className="text-left">
+                        <span className="text-[0.82rem] font-medium uppercase tracking-[0.08em] text-white">
+                          Description
+                        </span>
+                      </p>
+                      <p>{project.excerpt}</p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -711,7 +771,7 @@ export default function ScenicProjectDetail({
           </AnimatedSection>
         </section>
 
-        <section id="project-process" className="scroll-mt-28 bg-[#111111] pb-[clamp(7rem,14vw,15rem)]">
+        <section id="project-process" className="scroll-mt-28 bg-[#111111]">
           <div className="relative left-1/2 w-screen -translate-x-1/2">
             <div>
               {visualMediaItems.map((item, index) => {
@@ -791,7 +851,7 @@ export default function ScenicProjectDetail({
         </section>
 
         {moreScenicProjects.length > 0 ? (
-          <section className="bg-[#111111] pt-16 text-white md:pt-24">
+          <section className="bg-[#111111] border-t border-white/12 pt-16 text-white md:pt-24">
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">

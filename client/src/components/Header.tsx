@@ -98,14 +98,14 @@ function DesktopMenuPanel({
           <div className="grid gap-4 md:grid-cols-3">
             {recentScenicProjects.map((project) => (
               <Link key={project.href} href={project.href} onClick={onClose} className="group block">
-                <div className={`relative aspect-[16/9] overflow-hidden rounded-[0.85rem] border ${isLight ? "border-black/10 bg-black/[0.035]" : "border-white/10 bg-white/[0.035]"}`}>
+                <div className={`site-media-square relative aspect-[16/9] overflow-hidden border ${isLight ? "border-black/10 bg-black/[0.035]" : "border-white/10 bg-white/[0.035]"}`}>
                   <Image
                     src={project.imageUrl}
                     alt={project.imageAlt}
                     fill
                     quality={78}
                     sizes="(max-width: 1024px) 30vw, 28vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="site-media-square object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
                 <div className="mt-2.5">
@@ -176,7 +176,8 @@ export default function Header() {
     location === "/terms" ||
     location === "/faq" ||
     location === "/accessibility" ||
-    location === "/sitemap";
+    location === "/sitemap" ||
+    location === "/404";
   const isProfileLightRoute =
     location === "/about" ||
     location === "/resume" ||

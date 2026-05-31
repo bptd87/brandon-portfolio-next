@@ -3,36 +3,30 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg
-    alt: Scenic design for The Liar by Brandon PT Davis.
+    alt: Comic set with bold movement, period detail, and flexible entrances.
   - id: liar-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-214d560e4b-80e3c3aa.jpg
-    alt: Production image from The Liar showing the classical comic setting and staging, scenic design by Brandon PT Davis.
+    alt: The classical comic setting and staging.
   - id: liar-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-c183f7b9fc-5e5aa5bc.jpg
-    alt: >-
-      Stage image from The Liar emphasizing wit, movement, and the scenic environment, scenic design by Brandon PT
-      Davis.
+    alt: Comic set with bold movement, period detail, and flexible entrances.
   - id: liar-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-cc3083db71-88cf4ecf.jpg
-    alt: >-
-      Production still from The Liar highlighting the playful period world and comic staging, scenic design by Brandon
-      PT Davis.
+    alt: The playful period world and comic staging.
   - id: liar-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-edc3844ade-3cb3266a.jpg
-    alt: >-
-      Performance image from The Liar reinforcing the bold visual rhythm of the comic setting, scenic design by Brandon
-      PT Davis.
+    alt: Comic set with bold movement, period detail, and flexible entrances.
   - id: liar-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-fe95892931-5d621e18.jpg
-    alt: Final production image from The Liar showing the full comic environment, scenic design by Brandon PT Davis.
+    alt: Full-stage view of the full comic environment.
 videos: []

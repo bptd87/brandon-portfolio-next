@@ -226,14 +226,14 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
               <div className="grid grid-cols-2 gap-3">
                 {recentScenicProjects.slice(0, 2).map((project) => (
                   <Link key={project.href} href={project.href} onClick={onClose} className="group block">
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[0.75rem] border border-border/35 bg-foreground/[0.035]">
+                    <div className="site-media-square relative aspect-[4/3] overflow-hidden border border-border/35 bg-foreground/[0.035]">
                       <Image
                         src={project.imageUrl}
                         alt={project.imageAlt}
                         fill
                         quality={74}
                         sizes="96px"
-                        className="object-cover"
+                        className="site-media-square object-cover"
                       />
                     </div>
                   </Link>

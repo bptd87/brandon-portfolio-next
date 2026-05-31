@@ -1,32 +1,25 @@
 - type: text
-  heading: Compressing the Proscenium
   content:
     - >-
-      For Last Train to Nibroc, scale was the first problem to solve. The script is intimate. The proscenium was not. I
-      built a smaller, textured frame inside the larger architecture using reclaimed Kentucky barn wood, immediately
-      compressing the stage into a world that felt personal rather than theatrical.
+      Scale was the first design problem on Last Train to Nibroc. The script is intimate, but the Okoboji
+      Summer Theatre proscenium was large, so I built a smaller textured frame inside the theatre using
+      reclaimed Kentucky barn wood.
+    - >-
+      That frame immediately compressed the stage into something more personal. A slight rake improved
+      sightlines and gave the environment a quiet forward pressure, while the barn wood carried warmth,
+      history, and rural honesty.
+    - >-
+      A 30-foot backdrop supported the journey between locations without breaking the rhythm of the
+      conversations. The scenic design was not about spectacle. It was about proximity, memory, and giving
+      stillness enough architecture to hold.
 - type: gallery
   mediaIds:
     - nibroc-prod-1
     - nibroc-prod-2
-- type: text
-  heading: Warmth, Sightlines, and Quiet Tension
-  content:
-    - >-
-      The stage was raked slightly to focus sightlines and give the environment a gentle push forward. It added subtle
-      tension without feeling stylized. The barn wood brought warmth and history into the room, something grounded and
-      honest that reflected the play's rural setting and emotional vulnerability.
 - type: gallery
   mediaIds:
     - nibroc-prod-3
     - nibroc-prod-4
-- type: text
-  heading: Travel, Memory, and Waiting
-  content:
-    - >-
-      A 30-foot backdrop carried the journey between locations, allowing transitions to remain fluid without breaking
-      the rhythm of the characters' conversations. This design wasn't about spectacle. It was about proximity. The
-      architecture supported stillness, and the materials carried nostalgia without becoming sentimental.
 - type: gallery
   mediaIds:
     - nibroc-prod-5

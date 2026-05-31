@@ -5,12 +5,12 @@ title: Bell, Book, and Candle
 status: published
 featured: false
 excerpt: >-
-  A grounded mid-century apartment for Bell, Book, and Candle, built to let wit, intimacy, and supernatural undertones
-  emerge from a believable domestic interior.
+  A grounded mid-century apartment for Bell, Book, and Candle, built to let wit, intimacy, and
+  supernatural undertones emerge from a believable domestic interior.
 seoTitle: Bell, Book, and Candle Scenic Design | Okoboji Summer Theatre
 seoDescription: >-
-  Scenic design for Bell, Book, and Candle at Okoboji Summer Theatre, built as a grounded mid-century apartment that
-  supports intimacy, wit, and subtle magical undertones.
+  Scenic design for Bell, Book, and Candle at Okoboji Summer Theatre, built as a grounded
+  mid-century apartment that supports intimacy, wit, and subtle magical undertones.
 seoKeywords:
   - Bell
   - Book
@@ -27,11 +27,8 @@ year: 2025
 month: 7
 subcategory: Comedy
 cover:
-  asset: >-
-    /assets/projects/scenic/bell-book-and-candle/cover.webp
-  alt: >-
-    Bell, Book, and Candle scenic design cover at Okoboji Summer Theatre, with a grounded mid-century apartment and
-    subtle magical atmosphere.
+  asset: /assets/projects/scenic/bell-book-and-candle/cover.webp
+  alt: A grounded mid-century apartment and subtle magical atmosphere.
 team:
   - role: Playwright
     name: John Van Druten
@@ -57,4 +54,4 @@ tags:
 links:
   - label: Vacation Okoboji Listing
     url: https://vacationokoboji.com/event/bell-book-and-candle/
-updatedAt: '2026-02-12T15:03:59+00:00'
+updatedAt: "2026-02-12T15:03:59+00:00"

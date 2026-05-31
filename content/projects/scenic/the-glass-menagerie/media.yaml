@@ -1,81 +1,86 @@
 gallery:
   - id: gm-cover
     kind: cover
-    asset: >-
-      /assets/projects/scenic/the-glass-menagerie/glass-menagerie-maples-cover-2026.webp
-    alt: >-
-      Laura and Tom framed by candlelight and the glass unicorn in The Glass Menagerie at Maples Repertory Theatre,
-      scenic design by Brandon PT Davis.
+    asset: /assets/projects/scenic/the-glass-menagerie/glass-menagerie-maples-cover-2026.webp
+    alt: Laura and Tom framed by candlelight and the glass unicorn in The Glass Menagerie.
   - id: gm-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150121-18849ccd.webp
-    alt: Production photo from The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.
+    alt: >-
+      Laura and Tom in the elevated Wingfield apartment for The Glass Menagerie, with warm
+      candlelight and the glass collection in the foreground.
   - id: gm-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150167-705248fb.webp
     alt: >-
-      Wide production view of The Glass Menagerie at Maples Repertory Theatre in Macon, scenic design by Brandon PT
-      Davis.
+      Wide view of the elevated Wingfield apartment, open thresholds, and surrounding city
+      fragments.
   - id: gm-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150147-80530627.webp
     alt: >-
-      Performance moment centered in the fragile interior world of The Glass Menagerie, scenic design by Brandon PT
-      Davis.
+      Actors inside the fragile interior world of The Glass Menagerie, framed by the platform,
+      practical furniture, and memory wall.
   - id: gm-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150109-a740442f.webp
-    alt: Scene work across the primary platform system in The Glass Menagerie, scenic design by Brandon PT Davis.
+    alt: >-
+      Actors across the primary platform system in The Glass Menagerie showing how the elevated
+      apartment frames the family's enclosed domestic world.
   - id: gm-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150052-9b675ddb.webp
-    alt: Audience perspective of The Glass Menagerie with layered scenic planes, scenic design by Brandon PT Davis.
+    alt: >-
+      View of The Glass Menagerie with layered scenic planes, exposed thresholds, and negative space
+      around the Wingfield apartment.
   - id: gm-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150084-22778dc8.webp
-    alt: Actors framed by the memory-play architecture in The Glass Menagerie, scenic design by Brandon PT Davis.
+    alt: >-
+      Actors framed by fragmented walls and doorways that open the apartment into the remembered
+      city.
   - id: gm-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp
     alt: >-
-      Concept rendering for The Glass Menagerie exploring atmosphere and spatial drift, scenic design by Brandon PT
-      Davis.
+      Concept rendering of the elevated apartment, soft architectural fragments, and atmospheric
+      drift that shaped memory-play setting.
   - id: gm-prod-8
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp
     alt: >-
-      Production still emphasizing sightlines and negative space in The Glass Menagerie, scenic design by Brandon PT
-      Davis.
+      Scene emphasizing sightlines, negative space, and the elevated platform relationship in The
+      Glass Menagerie.
   - id: gm-prod-9
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150106-9de48421.webp
-    alt: >-
-      Production photo from The Glass Menagerie at Maples Repertory Theatre, showing the memory-play apartment, scenic
-      design by Brandon PT Davis.
+    alt: The memory-play apartment, framed images, and warm domestic light.
   - id: gm-prod-10
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150095-1deb7561.webp
     alt: >-
-      Full-stage composition showing layered depth in The Glass Menagerie at Maples Repertory Theatre, scenic design by
-      Brandon PT Davis.
+      Full-stage view showing layered depth, the Wingfield apartment platform, and the surrounding
+      cityscape in The Glass Menagerie.
   - id: gm-prod-11
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150022-df9b68ff.webp
-    alt: House view of the scenic environment for The Glass Menagerie in Macon, scenic design by Brandon PT Davis.
+    alt: >-
+      Platform, memory wall, and open architectural edges in the Wingfield apartment.
   - id: gm-prod-12
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150211-d9f6b2ed.webp
-    alt: Ensemble stage picture inside the poetic world of The Glass Menagerie, scenic design by Brandon PT Davis.
+    alt: >-
+      Ensemble arranged across the elevated apartment and surrounding memory architecture.
 videos: []

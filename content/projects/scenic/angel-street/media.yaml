@@ -3,61 +3,45 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp
-    alt: Scenic design for Angel Street by Brandon PT Davis.
+    alt: The Victorian drawing room and formal architecture.
   - id: angel-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150025-e9797b75.webp
-    alt: >-
-      Production image from Angel Street showing the Victorian drawing room and formal architecture, scenic design by
-      Brandon PT Davis.
+    alt: The Victorian drawing room and formal architecture.
   - id: angel-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150110-b9e8d99e.webp
-    alt: >-
-      Production image from Angel Street highlighting wainscoting, staircase, and enclosed domestic atmosphere, scenic
-      design by Brandon PT Davis.
+    alt: Wainscoting, staircase, and enclosed domestic atmosphere.
   - id: angel-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150129-0d9bf5e0.webp
-    alt: >-
-      Production still from Angel Street showing period furnishings and practical lighting, scenic design by Brandon PT
-      Davis.
+    alt: Period furnishings and practical lighting.
   - id: angel-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150215-12788cb7.webp
-    alt: >-
-      Production image from Angel Street emphasizing domestic control and observation in the drawing room, scenic design
-      by Brandon PT Davis.
+    alt: Domestic control and observation in the drawing room.
   - id: angel-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp
-    alt: >-
-      Rendering for Angel Street exploring the formal Victorian room and psychological tension, scenic design by Brandon
-      PT Davis.
+    alt: Rendering of the formal Victorian room and psychological tension.
   - id: angel-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150142-4a0cde35.webp
-    alt: >-
-      Production image from Angel Street reinforcing the density and enclosure of the room, scenic design by Brandon PT
-      Davis.
+    alt: The density and enclosure of the room.
   - id: angel-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150155-077d718a.webp
-    alt: >-
-      Production still from Angel Street showing shifts in power within a stable realistic environment, scenic design by
-      Brandon PT Davis.
+    alt: Shifts in power within a stable realistic environment.
   - id: angel-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150194-b65bff28.webp
-    alt: >-
-      Final production image from Angel Street showing the complete drawing room world in performance, scenic design by
-      Brandon PT Davis.
+    alt: Full-stage view of the complete drawing room world in performance.
 videos: []

@@ -5,12 +5,12 @@ title: Not Now, Darling
 status: published
 featured: false
 excerpt: >-
-  A British boutique interior sharpened with Wes Anderson-inspired color and farce-ready door logic, giving Not Now,
-  Darling a polished comic world built for speed, confusion, and precision.
+  A British boutique interior sharpened with Wes Anderson-inspired color and farce-ready door logic,
+  giving Not Now, Darling a polished comic world built for speed, confusion, and precision.
 seoTitle: Not Now, Darling | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for Not Now, Darling at Okoboji Summer Theatre, blending British elegance with Wes Anderson-inspired
-  color and farce-ready architecture.
+  Scenic design for Not Now, Darling at Okoboji Summer Theatre, blending British elegance with Wes
+  Anderson-inspired color and farce-ready architecture.
 seoKeywords:
   - Not Now
   - Darling
@@ -27,7 +27,7 @@ subcategory: Comedy
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg
-  alt: Scenic design for Not Now, Darling by Brandon PT Davis.
+  alt: The polished boutique interior and farce architecture.
 team:
   - role: Written By
     name: Ray Cooney and John Chapman
@@ -51,4 +51,4 @@ tags:
   - name: Not Now, Darling
     slug: not-now-darling
 links: []
-updatedAt: '2026-03-23T19:05:00.000Z'
+updatedAt: "2026-03-23T19:05:00.000Z"

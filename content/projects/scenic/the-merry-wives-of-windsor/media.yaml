@@ -3,75 +3,59 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-cover-4f96e9e8.webp
-    alt: Scenic design for The Merry Wives of Windsor by Brandon PT Davis.
+    alt: Shared civic playing space with open comic architecture.
   - id: wives-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp
-    alt: >-
-      Rendering for The Merry Wives of Windsor exploring the comic civic world and open architecture, scenic design by
-      Brandon PT Davis.
+    alt: Rendering of the comic civic world and open architecture.
   - id: wives-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150051-f5bf5fb6.webp
-    alt: >-
-      Production image from The Merry Wives of Windsor showing the shared scenic environment, scenic design by Brandon
-      PT Davis.
+    alt: Shared civic playing space with open comic architecture.
   - id: wives-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150074-573bc38e.webp
-    alt: >-
-      Performance image from The Merry Wives of Windsor with actors moving through the public playing space, scenic
-      design by Brandon PT Davis.
+    alt: Actors moving through the public playing space.
   - id: wives-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150170-afa39912.webp
-    alt: >-
-      Production still from The Merry Wives of Windsor highlighting doorways, concealment, and comic staging, scenic
-      design by Brandon PT Davis.
+    alt: Doorways, concealment, and comic staging.
   - id: wives-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150181-d24832cb.webp
-    alt: >-
-      Stage image from The Merry Wives of Windsor showing architectural framing and ensemble action, scenic design by
-      Brandon PT Davis.
+    alt: Architectural framing and ensemble action.
   - id: wives-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp
-    alt: >-
-      Production image from The Merry Wives of Windsor emphasizing shared civic space and comic movement, scenic design
-      by Brandon PT Davis.
+    alt: Shared civic space and comic movement.
   - id: wives-render-2
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150212-1de109ac.webp
     alt: >-
-      Rendering for The Merry Wives of Windsor studying the scenic composition and pathways for farce, scenic design by
-      Brandon PT Davis.
+      Rendering for The Merry Wives of Windsor studying the scenic composition and pathways for
+      farce.
   - id: wives-render-3
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150218-e5e62fe2.webp
     alt: >-
-      Rendering for The Merry Wives of Windsor showing the social world and threshold-driven scenic logic, scenic design
-      by Brandon PT Davis.
+      Rendering for The Merry Wives of Windsor showing the social world and threshold-driven scenic
+      logic.
   - id: wives-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150237-9026dda3.webp
-    alt: >-
-      Production image from The Merry Wives of Windsor highlighting the playful public atmosphere, scenic design by
-      Brandon PT Davis.
+    alt: The playful public atmosphere.
   - id: wives-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150250-14ae5400.webp
-    alt: >-
-      Final production image from The Merry Wives of Windsor showing the complete scenic world, scenic design by Brandon
-      PT Davis.
+    alt: Full-stage view of the complete scenic world.
 videos: []

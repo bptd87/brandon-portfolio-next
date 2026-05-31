@@ -1,33 +1,25 @@
 - type: text
-  heading: A Grounded Skid Row
   content:
     - >-
-      For Little Shop of Horrors at Okoboji Summer Theatre, I didn't want to lean into camp. The script is funny, but
-      the stakes are real. The design was grounded in a worn, urban storefront that felt structurally honest: brick,
-      aging trim, patched surfaces, and practical doors that made the space believable.
+      Little Shop of Horrors is funny, but I did not want the design to lean only into camp. At Okoboji Summer
+      Theatre, Skid Row began as a worn urban storefront with brick, aging trim, patched surfaces, and
+      practical doors so the stakes could feel real.
+    - >-
+      The flower shop sat inside a slightly compressed proscenium frame, giving Seymour's world a boxed-in
+      quality before Audrey II made it dangerous. A gritty, desaturated palette let the plant and costumes
+      carry contrast while keeping the environment honest.
+    - >-
+      The design supported the musical's humor by making the world believable first. That pressure made the
+      plant's growth feel more invasive, turning a small shop into a space where desire, desperation, and
+      horror could keep tightening.
 - type: gallery
   mediaIds:
     - little-shop-prod-1
     - little-shop-prod-2
-- type: text
-  heading: Pressure Inside the Shop
-  content:
-    - >-
-      The flower shop sat inside a slightly compressed proscenium frame, giving the environment a boxed-in quality. That
-      pressure mattered. Seymour's world needed to feel small before Audrey II made it feel dangerous. The palette
-      stayed gritty and desaturated so the plant and costumes could carry visual contrast while the realism gave the
-      horror weight.
 - type: gallery
   mediaIds:
     - little-shop-prod-3
     - little-shop-prod-4
-- type: text
-  heading: A Shop That Tightens
-  content:
-    - >-
-      Details are specific: layered brick texture, working windows, period signage, and practical counters that allow
-      choreography to move cleanly through the shop. The goal is not nostalgia for a 1960s musical. It is tension. As
-      the plant grows, the environment does not become bigger. It becomes more claustrophobic.
 - type: gallery
   mediaIds:
     - little-shop-prod-5

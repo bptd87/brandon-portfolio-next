@@ -5,12 +5,12 @@ title: American Idiot
 status: published
 featured: false
 excerpt: >-
-  Southern California concrete infrastructure fused with Green Day’s pulse, creating a stark environment of suburban
-  monotony, urban decay, and restless transformation in American Idiot.
+  Southern California concrete infrastructure fused with Green Day’s pulse, creating a stark
+  environment of suburban monotony, urban decay, and restless transformation in American Idiot.
 seoTitle: American Idiot | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for American Idiot at University of California Irvine, using modular concrete architecture, projection,
-  and industrial atmosphere to support rebellion and transformation.
+  Scenic design for American Idiot at University of California Irvine, using modular concrete
+  architecture, projection, and industrial atmosphere to support rebellion and transformation.
 seoKeywords:
   - American Idiot
   - scenic design
@@ -26,7 +26,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-cover-6c8f8ee1.webp
-  alt: Scenic design for American Idiot by Brandon PT Davis.
+  alt: The modular concrete environment and ensemble staging.
 team:
   - role: Book By
     name: Billie Joe Armstrong & Michael Mayer
@@ -62,4 +62,4 @@ tags:
 links:
   - label: Listing
     url: https://drama.arts.uci.edu/events/american-idiot
-updatedAt: '2026-02-12T15:04:00+00:00'
+updatedAt: "2026-02-12T15:04:00+00:00"

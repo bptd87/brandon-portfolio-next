@@ -3,54 +3,40 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp
-    alt: 'Scenic design for The Marvelous Wonderettes: Dream On by Brandon PT Davis.'
+    alt: The reunion stage and period details visible.
   - id: wonderettes-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-1-of-10-5746-7d654713.webp
-    alt: >-
-      Production image from The Marvelous Wonderettes: Dream On showing the reunion gym stage, scenic design by Brandon
-      PT Davis.
+    alt: The reunion gym stage.
   - id: wonderettes-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-5746-7f198da3.webp
-    alt: >-
-      Production image from The Marvelous Wonderettes: Dream On highlighting the polished 1960s reunion atmosphere,
-      scenic design by Brandon PT Davis.
+    alt: The polished 1960s reunion atmosphere.
   - id: wonderettes-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-3-of-10-5785-fe457f00.webp
-    alt: >-
-      Performance image from The Marvelous Wonderettes: Dream On with the reunion stage and period details visible,
-      scenic design by Brandon PT Davis.
+    alt: The reunion stage and period details visible.
   - id: wonderettes-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-4-of-10-5870-ee71ba3d.webp
-    alt: >-
-      Production still from The Marvelous Wonderettes: Dream On emphasizing the gym architecture and stage composition,
-      scenic design by Brandon PT Davis.
+    alt: The gym architecture and stage composition.
   - id: wonderettes-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-6-of-10-5870-2084a115.webp
-    alt: >-
-      Production image from The Marvelous Wonderettes: Dream On showing the warmer later-decade palette and reunion
-      staging, scenic design by Brandon PT Davis.
+    alt: The warmer later-decade palette and reunion staging.
   - id: wonderettes-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-8-of-10-5870-13e8412e.webp
-    alt: >-
-      Final production image from The Marvelous Wonderettes: Dream On showing the complete reunion environment, scenic
-      design by Brandon PT Davis.
+    alt: Full-stage view of the complete reunion environment.
   - id: wonderettes-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-7-of-10-5870-1cd71a3d.webp
-    alt: >-
-      Rendering for The Marvelous Wonderettes: Dream On exploring the reunion stage environment and period atmosphere,
-      scenic design by Brandon PT Davis.
+    alt: Rendering of the reunion stage environment and period atmosphere.
 videos: []

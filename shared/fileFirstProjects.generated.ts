@@ -2182,7 +2182,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-glass-menagerie": {
   "title": "The Glass Menagerie",
-  "excerpt": "A memory-driven Wingfield apartment for Maples Repertory Theatre, shaped to let fragility, longing, and escape coexist within the same haunted domestic space.",
+  "excerpt": "A memory-play scenic design for The Glass Menagerie at Maples Repertory Theatre, built around an elevated Wingfield apartment, porous thresholds, and visual traces of Tom's narration.",
   "subcategory": "Drama",
   "client": "Maples Repertory Theatre",
   "location": "Macon, MO",
@@ -2190,9 +2190,9 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 10,
   "status": "published",
   "featured": true,
-  "seoTitle": "The Glass Menagerie Scenic Design | Maples Repertory Theatre",
-  "seoDescription": "Scenic design for The Glass Menagerie at Maples Repertory Theatre, framing the Wingfield apartment as memory architecture caught between domestic confinement, fragility, and escape.",
-  "seoKeywords": "The Glass Menagerie, scenic design, Maples Repertory Theatre, Tennessee Williams, Brandon PT Davis, memory play, theatre design",
+  "seoTitle": "The Glass Menagerie Scenic Design | Memory Play Set",
+  "seoDescription": "The Glass Menagerie scenic design by Brandon PT Davis for Maples Repertory Theatre, using an elevated Wingfield apartment, memory-play architecture, and layered thresholds to support Tom's narration.",
+  "seoKeywords": "The Glass Menagerie, The Glass Menagerie scenic design, Tennessee Williams scenic design, memory play set design, scenic design, regional theatre scenic design, Maples Repertory Theatre, Tennessee Williams, Brandon PT Davis, Scenic designer Brandon PT Davis, memory play, theatre design",
   "creativeTeam": [
     {
       "role": "By",
@@ -3015,42 +3015,42 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "forum-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-cover-3094f147.webp",
-    "altText": "Scenic design for A Funny Thing Happened on the Way to the Forum by Brandon PT Davis.",
+    "altText": "The trio of Roman house façades.",
     "kind": "cover"
   },
   {
     "id": "forum-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150103-64738161.webp",
-    "altText": "Production image from Forum showing the trio of Roman house façades, scenic design by Brandon PT Davis.",
+    "altText": "The trio of Roman house façades.",
     "kind": "production"
   },
   {
     "id": "forum-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150216-1cca291c.webp",
-    "altText": "Performance image from Forum with actors moving through the farce-driven Roman architecture, scenic design by Brandon PT Davis.",
+    "altText": "Actors moving through the farce-driven Roman architecture.",
     "kind": "production"
   },
   {
     "id": "forum-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150228-f76dbf29.webp",
-    "altText": "Production still from Forum highlighting the exaggerated façades and playful classical motifs, scenic design by Brandon PT Davis.",
+    "altText": "The exaggerated façades and playful classical motifs.",
     "kind": "production"
   },
   {
     "id": "forum-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150235-825d9c24.webp",
-    "altText": "Final production image from Forum showing the full scenic environment and comic staging, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the Roman house facades and comic staging.",
     "kind": "production"
   },
   {
     "id": "forum-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp",
-    "altText": "Rendering for Forum exploring the trio of Roman houses and the heightened comic world, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the trio of Roman houses and the heightened comic world.",
     "kind": "rendering"
   }
 ],
@@ -3059,28 +3059,28 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "smalltowne-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-9717e6782b-8c625df9.jpg",
-    "altText": "Scenic design for A Smalltowne Christmas by Brandon PT Davis.",
+    "altText": "Festive town set with holiday color and community-stage detail.",
     "kind": "cover"
   },
   {
     "id": "smalltowne-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-384b222098-e5143cc7.jpg",
-    "altText": "Production image from A Smalltowne Christmas showing the festive scenic environment, scenic design by Brandon PT Davis.",
+    "altText": "Festive town set with holiday color and community-stage detail.",
     "kind": "production"
   },
   {
     "id": "smalltowne-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-3691d27c7b-5598713b.jpg",
-    "altText": "Production still from A Smalltowne Christmas highlighting holiday staging and scenic warmth, scenic design by Brandon PT Davis.",
+    "altText": "Holiday staging and scenic warmth.",
     "kind": "production"
   },
   {
     "id": "smalltowne-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-be19cc2be0-0b29fd45.jpg",
-    "altText": "Final production image from A Smalltowne Christmas showing the complete holiday world, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete holiday world.",
     "kind": "production"
   }
 ],
@@ -3089,63 +3089,63 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "sons-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp",
-    "altText": "Scenic design for All My Sons by Brandon PT Davis.",
+    "altText": "The postwar suburban house and yard.",
     "kind": "cover"
   },
   {
     "id": "sons-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150013-2dc9c7df.webp",
-    "altText": "Production image from All My Sons showing the postwar suburban house and yard, scenic design by Brandon PT Davis.",
+    "altText": "The postwar suburban house and yard.",
     "kind": "production"
   },
   {
     "id": "sons-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150018-16235fd3.webp",
-    "altText": "Production image from All My Sons highlighting the open porch and domestic realism, scenic design by Brandon PT Davis.",
+    "altText": "The open porch and domestic realism.",
     "kind": "production"
   },
   {
     "id": "sons-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150054-a4cbbf69.webp",
-    "altText": "Production still from All My Sons emphasizing the ordered suburban environment, scenic design by Brandon PT Davis.",
+    "altText": "The ordered suburban environment.",
     "kind": "production"
   },
   {
     "id": "sons-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150070-34f3888b.webp",
-    "altText": "Production image from All My Sons showing how the open setting exposes private conflict, scenic design by Brandon PT Davis.",
+    "altText": "The postwar suburban house and yard.",
     "kind": "production"
   },
   {
     "id": "sons-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150078-86884a86.webp",
-    "altText": "Production image from All My Sons reinforcing the tension between comfort and moral collapse, scenic design by Brandon PT Davis.",
+    "altText": "The postwar suburban house and yard.",
     "kind": "production"
   },
   {
     "id": "sons-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150175-668ab496.webp",
-    "altText": "Production still from All My Sons showing the suburban framework for the play's emotional shifts, scenic design by Brandon PT Davis.",
+    "altText": "The postwar suburban house and yard.",
     "kind": "production"
   },
   {
     "id": "sons-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150182-c867246e.webp",
-    "altText": "Final production image from All My Sons showing the complete family home in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete family home in performance.",
     "kind": "production"
   },
   {
     "id": "sons-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp",
-    "altText": "Rendering for All My Sons exploring the porch, yard, and postwar suburban composition, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the porch, yard, and postwar suburban composition.",
     "kind": "rendering"
   }
 ],
@@ -3154,49 +3154,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "aw-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp",
-    "altText": "All's Well That Ends Well scenic design cover at New Swan Theatre Festival, with drapery, heraldic detail, and a world that moves between Roussillon and Florence.",
+    "altText": "Drapery, heraldic detail, and a world that moves between Roussillon and Florence.",
     "kind": "cover"
   },
   {
     "id": "aw-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150012-b2c92b49.webp",
-    "altText": "Production image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
+    "altText": "Drapery, heraldic detail, and a world that moves between Roussillon and Florence.",
     "kind": "production"
   },
   {
     "id": "aw-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150047-919d0e10.webp",
-    "altText": "Performance image from All's Well That Ends Well with the New Swan stage world visible, scenic design by Brandon PT Davis.",
+    "altText": "The New Swan stage world visible.",
     "kind": "production"
   },
   {
     "id": "aw-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150057-702f2abc.webp",
-    "altText": "Stage picture from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
+    "altText": "Drapery, heraldic detail, and a world that moves between Roussillon and Florence.",
     "kind": "production"
   },
   {
     "id": "aw-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150162-81976b2e.webp",
-    "altText": "Stage image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
+    "altText": "Drapery, heraldic detail, and a world that moves between Roussillon and Florence.",
     "kind": "production"
   },
   {
     "id": "aw-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150178-4ad34fa7.webp",
-    "altText": "Performance image from All's Well That Ends Well with actor pathways visible, scenic design by Brandon PT Davis.",
+    "altText": "Actor pathways visible.",
     "kind": "production"
   },
   {
     "id": "aw-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150229-a8aaa5e2.webp",
-    "altText": "Production image from All's Well That Ends Well at New Swan with cast and scenic world visible, scenic design by Brandon PT Davis.",
+    "altText": "Cast and scenic world visible. at New Swan.",
     "kind": "production"
   }
 ],
@@ -3205,70 +3205,70 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "idiot-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-cover-6c8f8ee1.webp",
-    "altText": "Scenic design for American Idiot by Brandon PT Davis.",
+    "altText": "The modular concrete environment and ensemble staging.",
     "kind": "cover"
   },
   {
     "id": "idiot-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150011-0658b26b.webp",
-    "altText": "Production image from American Idiot showing the modular concrete environment and ensemble staging, scenic design by Brandon PT Davis.",
+    "altText": "The modular concrete environment and ensemble staging.",
     "kind": "production"
   },
   {
     "id": "idiot-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150036-d4003d4b.webp",
-    "altText": "Production image from American Idiot emphasizing the hard-edged architectural world and rebellious energy, scenic design by Brandon PT Davis.",
+    "altText": "The hard-edged architectural world and rebellious energy.",
     "kind": "production"
   },
   {
     "id": "idiot-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150065-a0cd87d4.webp",
-    "altText": "Production still from American Idiot showing industrial forms and the show's kinetic physicality, scenic design by Brandon PT Davis.",
+    "altText": "Industrial forms and the show's kinetic physicality.",
     "kind": "production"
   },
   {
     "id": "idiot-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150066-fc967fed.webp",
-    "altText": "Production image from American Idiot highlighting the concrete framework and projection atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The concrete framework and projection atmosphere.",
     "kind": "production"
   },
   {
     "id": "idiot-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150094-386d8ea8.webp",
-    "altText": "Production image from American Idiot showing the conflict between space and identity, scenic design by Brandon PT Davis.",
+    "altText": "The modular concrete environment and ensemble staging.",
     "kind": "production"
   },
   {
     "id": "idiot-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150105-855dc2cb.webp",
-    "altText": "Production image from American Idiot reinforcing the score's raw energy within a minimalist industrial frame, scenic design by Brandon PT Davis.",
+    "altText": "The score's raw energy within a minimalist industrial frame.",
     "kind": "production"
   },
   {
     "id": "idiot-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150152-33062a7e.webp",
-    "altText": "Production still from American Idiot with projection and concrete forms supporting emotional transition, scenic design by Brandon PT Davis.",
+    "altText": "Projection and concrete forms supporting emotional transition.",
     "kind": "production"
   },
   {
     "id": "idiot-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
-    "altText": "Rendering for American Idiot exploring the Southern California concrete metaphor and industrial scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the Southern California concrete metaphor and industrial scenic world.",
     "kind": "rendering"
   },
   {
     "id": "idiot-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150196-ae0b4a4b.webp",
-    "altText": "Final production image from American Idiot showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the set in performance.",
     "kind": "production"
   }
 ],
@@ -3277,49 +3277,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "enemy-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-7499-f113149d.webp",
-    "altText": "Scenic design for An Enemy of the People by Brandon PT Davis.",
+    "altText": "The grayscale scenic world.",
     "kind": "cover"
   },
   {
     "id": "enemy-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-8866-f0c28220.webp",
-    "altText": "Production image from An Enemy of the People showing the grayscale scenic world, scenic design by Brandon PT Davis.",
+    "altText": "The grayscale scenic world.",
     "kind": "production"
   },
   {
     "id": "enemy-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-2-of-6-8866-2d074a16.webp",
-    "altText": "Scene from An Enemy of the People framed by the illustrated architecture, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by the illustrated architecture.",
     "kind": "production"
   },
   {
     "id": "enemy-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-1-of-6-8866-b0007652.webp",
-    "altText": "Production still emphasizing the monochrome visual language in An Enemy of the People, scenic design by Brandon PT Davis.",
+    "altText": "The grayscale scenic world.",
     "kind": "production"
   },
   {
     "id": "enemy-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-3-of-6-8866-71ade6c1.webp",
-    "altText": "Performance image from An Enemy of the People showing the red furniture against the grayscale world, scenic design by Brandon PT Davis.",
+    "altText": "The red furniture against the grayscale world.",
     "kind": "production"
   },
   {
     "id": "enemy-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-4-of-6-8866-0424e2d5.webp",
-    "altText": "Final production image from An Enemy of the People, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from An Enemy of the People.",
     "kind": "production"
   },
   {
     "id": "enemy-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-5-of-6-8886-8cf30d1c.webp",
-    "altText": "Rendering for An Enemy of the People testing the flattened grayscale environment and red focal furniture, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for An Enemy of the People testing the flattened grayscale environment and red focal furniture.",
     "kind": "rendering"
   }
 ],
@@ -3328,42 +3328,42 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "inspector-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-cover-73346e1d.webp",
-    "altText": "Scenic design for An Inspector Calls by Brandon PT Davis.",
+    "altText": "The domestic world before it begins to fracture.",
     "kind": "cover"
   },
   {
     "id": "inspector-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150019-e62e8136.webp",
-    "altText": "Production image from An Inspector Calls showing the Birling interior, scenic design by Brandon PT Davis.",
+    "altText": "The Birling dining room interior.",
     "kind": "production"
   },
   {
     "id": "inspector-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150118-d9e60a33.webp",
-    "altText": "Performance image from An Inspector Calls highlighting the domestic world before it begins to fracture, scenic design by Brandon PT Davis.",
+    "altText": "The domestic world before it begins to fracture.",
     "kind": "production"
   },
   {
     "id": "inspector-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp",
-    "altText": "Rendering for An Inspector Calls exploring the poised but unstable domestic interior, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the poised but unstable domestic interior.",
     "kind": "rendering"
   },
   {
     "id": "inspector-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150183-8b902db4.webp",
-    "altText": "Production still from An Inspector Calls with actors framed by the controlled geometry of the set, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by the controlled geometry of the set.",
     "kind": "production"
   },
   {
     "id": "inspector-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150221-2fa31d56.webp",
-    "altText": "Final production image from An Inspector Calls showing the family under increasing pressure, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the family under increasing pressure.",
     "kind": "production"
   }
 ],
@@ -3372,63 +3372,63 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "angel-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp",
-    "altText": "Scenic design for Angel Street by Brandon PT Davis.",
+    "altText": "The Victorian drawing room and formal architecture.",
     "kind": "cover"
   },
   {
     "id": "angel-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150025-e9797b75.webp",
-    "altText": "Production image from Angel Street showing the Victorian drawing room and formal architecture, scenic design by Brandon PT Davis.",
+    "altText": "The Victorian drawing room and formal architecture.",
     "kind": "production"
   },
   {
     "id": "angel-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150110-b9e8d99e.webp",
-    "altText": "Production image from Angel Street highlighting wainscoting, staircase, and enclosed domestic atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "Wainscoting, staircase, and enclosed domestic atmosphere.",
     "kind": "production"
   },
   {
     "id": "angel-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150129-0d9bf5e0.webp",
-    "altText": "Production still from Angel Street showing period furnishings and practical lighting, scenic design by Brandon PT Davis.",
+    "altText": "Period furnishings and practical lighting.",
     "kind": "production"
   },
   {
     "id": "angel-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150215-12788cb7.webp",
-    "altText": "Production image from Angel Street emphasizing domestic control and observation in the drawing room, scenic design by Brandon PT Davis.",
+    "altText": "Domestic control and observation in the drawing room.",
     "kind": "production"
   },
   {
     "id": "angel-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp",
-    "altText": "Rendering for Angel Street exploring the formal Victorian room and psychological tension, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the formal Victorian room and psychological tension.",
     "kind": "rendering"
   },
   {
     "id": "angel-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150142-4a0cde35.webp",
-    "altText": "Production image from Angel Street reinforcing the density and enclosure of the room, scenic design by Brandon PT Davis.",
+    "altText": "The density and enclosure of the room.",
     "kind": "production"
   },
   {
     "id": "angel-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150155-077d718a.webp",
-    "altText": "Production still from Angel Street showing shifts in power within a stable realistic environment, scenic design by Brandon PT Davis.",
+    "altText": "Shifts in power within a stable realistic environment.",
     "kind": "production"
   },
   {
     "id": "angel-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150194-b65bff28.webp",
-    "altText": "Final production image from Angel Street showing the complete drawing room world in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete drawing room world in performance.",
     "kind": "production"
   }
 ],
@@ -3437,70 +3437,70 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "barefoot-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-cover-29f63e4a.webp",
-    "altText": "Barefoot in the Park scenic design cover at Okoboji Summer Theatre, centering the apartment world of the play.",
+    "altText": "The apartment world of the play.",
     "kind": "cover"
   },
   {
     "id": "barefoot-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150044-43d006c1.webp",
-    "altText": "Production image from Barefoot in the Park showing the apartment environment, scenic design by Brandon PT Davis.",
+    "altText": "The apartment environment.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150045-c738c03c.webp",
-    "altText": "Scene from Barefoot in the Park using the walk-up layout for comic staging, scenic design by Brandon PT Davis.",
+    "altText": "The walk-up layout for comic staging.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150048-d3621f09.webp",
-    "altText": "Production still emphasizing the apartment geometry in Barefoot in the Park, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing the apartment geometry in Barefoot in the Park.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150140-c45c03d1.webp",
-    "altText": "Barefoot in the Park production image with actors framed by the compact set, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by the compact set.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150158-cc147037.webp",
-    "altText": "Performance image from Barefoot in the Park showing the apartment in use, scenic design by Brandon PT Davis.",
+    "altText": "Actors using the compact walk-up apartment.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150161-2dfb7d1e.webp",
-    "altText": "Production still highlighting sightlines and furnishing relationships in Barefoot in the Park, scenic design by Brandon PT Davis.",
+    "altText": "Scene highlighting sightlines and furnishing relationships in Barefoot in the Park.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150193-5cbfaf9a.webp",
-    "altText": "Comedy scene from Barefoot in the Park staged through the apartment’s compressed architecture, scenic design by Brandon PT Davis.",
+    "altText": "Comedy scene from Barefoot in the Park staged through the apartment’s compressed architecture.",
     "kind": "production"
   },
   {
     "id": "barefoot-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150226-1095aa70.webp",
-    "altText": "Final production angle from Barefoot in the Park, scenic design by Brandon PT Davis.",
+    "altText": "Final production angle from Barefoot in the Park.",
     "kind": "production"
   },
   {
     "id": "barefoot-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp",
-    "altText": "Scenic rendering for Barefoot in the Park testing the walk-up apartment layout, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Barefoot in the Park testing the walk-up apartment layout.",
     "kind": "rendering"
   }
 ],
@@ -3509,49 +3509,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "bbc-cover",
     "type": "image",
     "imageUrl": "/assets/projects/scenic/bell-book-and-candle/cover.webp",
-    "altText": "Bell, Book, and Candle scenic design cover at Okoboji Summer Theatre, with a grounded mid-century apartment and subtle magical atmosphere.",
+    "altText": "A grounded mid-century apartment and subtle magical atmosphere.",
     "kind": "cover"
   },
   {
     "id": "bbc-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150114-59d7bd6e.webp",
-    "altText": "Production image from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.",
+    "altText": "A grounded mid-century apartment and subtle magical atmosphere.",
     "kind": "production"
   },
   {
     "id": "bbc-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150253-8fbdad21.webp",
-    "altText": "Stage image from Bell, Book, and Candle showing the domestic apartment world, scenic design by Brandon PT Davis.",
+    "altText": "The domestic apartment world.",
     "kind": "production"
   },
   {
     "id": "bbc-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150160-5c40af7a.webp",
-    "altText": "Performance image from Bell, Book, and Candle within the grounded interior setting, scenic design by Brandon PT Davis.",
+    "altText": "In the grounded interior setting.",
     "kind": "production"
   },
   {
     "id": "bbc-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150137-30da06e5.webp",
-    "altText": "Production view of Bell, Book, and Candle emphasizing furniture layout and actor pathways, scenic design by Brandon PT Davis.",
+    "altText": "A grounded mid-century apartment and subtle magical atmosphere.",
     "kind": "production"
   },
   {
     "id": "bbc-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150247-b5bae563.webp",
-    "altText": "Stage picture from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.",
+    "altText": "A grounded mid-century apartment and subtle magical atmosphere.",
     "kind": "production"
   },
   {
     "id": "bbc-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp",
-    "altText": "Rendering for Bell, Book, and Candle exploring the grounded apartment interior and green mid-century palette, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the grounded apartment interior and green mid-century palette.",
     "kind": "rendering"
   }
 ],
@@ -3560,28 +3560,28 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "bingo-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-dfa9f8cd99-91272f42.jpeg",
-    "altText": "Scenic design for Bingo: The Winning Musical by Brandon PT Davis.",
+    "altText": "The bright nautical-inspired scenic world.",
     "kind": "cover"
   },
   {
     "id": "bingo-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f0bb8f349b-4dab6b4f.jpg",
-    "altText": "Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic world, scenic design by Brandon PT Davis.",
+    "altText": "The bright nautical-inspired scenic world.",
     "kind": "production"
   },
   {
     "id": "bingo-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f4c0047f35-473dba87.jpg",
-    "altText": "Production still from Bingo: The Winning Musical emphasizing playful color and musical-theatre staging, scenic design by Brandon PT Davis.",
+    "altText": "Playful color and musical-theatre staging.",
     "kind": "production"
   },
   {
     "id": "bingo-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f7f07b768a-f5ae4421.jpg",
-    "altText": "Final production image from Bingo: The Winning Musical showing the full Okoboji-inspired environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the full Okoboji-inspired environment in performance.",
     "kind": "production"
   }
 ],
@@ -3590,56 +3590,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "boeing-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-cover-ff265a2b.webp",
-    "altText": "Scenic design for Boeing, Boeing by Brandon PT Davis.",
+    "altText": "The midcentury apartment interior.",
     "kind": "cover"
   },
   {
     "id": "boeing-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150017-1f2d32dc.webp",
-    "altText": "Production image from Boeing, Boeing showing the midcentury apartment interior, scenic design by Brandon PT Davis.",
+    "altText": "The midcentury apartment interior.",
     "kind": "production"
   },
   {
     "id": "boeing-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150104-e468bb20.webp",
-    "altText": "Performance image from Boeing, Boeing emphasizing the apartment layout and multiple entrances, scenic design by Brandon PT Davis.",
+    "altText": "The apartment layout and multiple entrances.",
     "kind": "production"
   },
   {
     "id": "boeing-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp",
-    "altText": "Rendering for Boeing, Boeing exploring the polished Paris apartment and farce-driven door layout, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the polished Paris apartment and farce-driven door layout.",
     "kind": "rendering"
   },
   {
     "id": "boeing-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150141-8576e570.webp",
-    "altText": "Production still from Boeing, Boeing highlighting the central living room composition, scenic design by Brandon PT Davis.",
+    "altText": "The central living room composition.",
     "kind": "production"
   },
   {
     "id": "boeing-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150185-8b4b4d28.webp",
-    "altText": "Scene from Boeing, Boeing showing actors moving through the apartment's choreographed doorways, scenic design by Brandon PT Davis.",
+    "altText": "Actors moving through the apartment's choreographed doorways.",
     "kind": "production"
   },
   {
     "id": "boeing-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150243-65d91900.webp",
-    "altText": "Production image from Boeing, Boeing with the apartment's furniture and graphic detail visible, scenic design by Brandon PT Davis.",
+    "altText": "The apartment's furniture and graphic detail visible.",
     "kind": "production"
   },
   {
     "id": "boeing-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150251-02683572.webp",
-    "altText": "Final production image from Boeing, Boeing showing the complete scenic environment, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete set.",
     "kind": "production"
   }
 ],
@@ -3648,63 +3648,63 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "cole-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-8632-b71c63cf.webp",
-    "altText": "Scenic design for Cole by Brandon PT Davis.",
+    "altText": "The jazz-age room and bar.",
     "kind": "cover"
   },
   {
     "id": "cole-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-9492-c82b3043.webp",
-    "altText": "Production image from Cole showing the jazz-age room and bar, scenic design by Brandon PT Davis.",
+    "altText": "The jazz-age room and bar.",
     "kind": "production"
   },
   {
     "id": "cole-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-1-of-8-9656-a755fc11.webp",
-    "altText": "Scene from Cole framed by the cabaret environment, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by the cabaret environment.",
     "kind": "production"
   },
   {
     "id": "cole-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-2-of-8-9656-47f4560a.webp",
-    "altText": "Production still emphasizing the integrated band and room layout in Cole, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing the integrated band and room layout in Cole.",
     "kind": "production"
   },
   {
     "id": "cole-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-4-of-8-9657-dd7dff5f.webp",
-    "altText": "Performance image from Cole showing art deco-inspired geometry and proximity, scenic design by Brandon PT Davis.",
+    "altText": "Art deco-inspired geometry and proximity.",
     "kind": "production"
   },
   {
     "id": "cole-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-5-of-8-9657-742ca04d.webp",
-    "altText": "Production image from Cole highlighting choreography and microphone work, scenic design by Brandon PT Davis.",
+    "altText": "Choreography and microphone work.",
     "kind": "production"
   },
   {
     "id": "cole-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-3-of-8-9657-637dfce3.webp",
-    "altText": "Cole production still showing the room’s texture and proportion, scenic design by Brandon PT Davis.",
+    "altText": "Cole production still showing the room’s texture and proportion.",
     "kind": "production"
   },
   {
     "id": "cole-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-6-of-8-9657-61c79fc7.webp",
-    "altText": "Final production image from Cole, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from Cole.",
     "kind": "production"
   },
   {
     "id": "cole-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-8-of-8-9688-141aefc1.webp",
-    "altText": "Rendering for Cole testing the jazz-age room, onstage band, and bar geometry, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Cole testing the jazz-age room, onstage band, and bar geometry.",
     "kind": "rendering"
   }
 ],
@@ -3713,91 +3713,91 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "company-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-cover-42d5b1b2.webp",
-    "altText": "Company scenic design cover at University of California Irvine, using a cityscape of longing and shifting emotional rhythm.",
+    "altText": "A cityscape of longing and shifting emotional rhythm.",
     "kind": "cover"
   },
   {
     "id": "company-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150026-decccaaf.webp",
-    "altText": "Production image from Company showing the coupled buildings and urban scenic composition, scenic design by Brandon PT Davis.",
+    "altText": "The coupled buildings and urban scenic composition.",
     "kind": "production"
   },
   {
     "id": "company-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150028-e1310148.webp",
-    "altText": "Production image from Company highlighting the exterior city world and embedded orchestra, scenic design by Brandon PT Davis.",
+    "altText": "The exterior city world and embedded orchestra.",
     "kind": "production"
   },
   {
     "id": "company-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150031-f649799f.webp",
-    "altText": "Production still from Company emphasizing architectural contrast and stage movement, scenic design by Brandon PT Davis.",
+    "altText": "Architectural contrast and stage movement.",
     "kind": "production"
   },
   {
     "id": "company-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150033-3c025c2d.webp",
-    "altText": "Performance image from Company showing stoops, levels, and shifting emotional proximity, scenic design by Brandon PT Davis.",
+    "altText": "Stoops, levels, and shifting emotional proximity.",
     "kind": "production"
   },
   {
     "id": "company-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150076-4c345fa6.webp",
-    "altText": "Production image from Company with backlit windows and skyline color shaping the mood, scenic design by Brandon PT Davis.",
+    "altText": "Backlit windows and skyline color shaping the mood.",
     "kind": "production"
   },
   {
     "id": "company-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150100-4c863819.webp",
-    "altText": "Production image from Company showing the cityscape as a landscape of longing, scenic design by Brandon PT Davis.",
+    "altText": "The cityscape as a landscape of longing.",
     "kind": "production"
   },
   {
     "id": "company-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp",
-    "altText": "Rendering for Company exploring the coupled buildings, lone brick structure, and skyline rhythm, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the coupled buildings, lone brick structure, and skyline rhythm.",
     "kind": "rendering"
   },
   {
     "id": "company-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150116-9e1fc6e6.webp",
-    "altText": "Production image from Company highlighting ladders, escapes, and movement through the city, scenic design by Brandon PT Davis.",
+    "altText": "Ladders, escapes, and movement through the city.",
     "kind": "production"
   },
   {
     "id": "company-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150125-94768884.webp",
-    "altText": "Performance image from Company reinforcing the exterior architecture and ensemble relationships, scenic design by Brandon PT Davis.",
+    "altText": "The exterior architecture and ensemble relationships.",
     "kind": "production"
   },
   {
     "id": "company-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150165-d25ef8d3.webp",
-    "altText": "Production still from Company with the glowing skyline and nonlinear emotional rhythm in view, scenic design by Brandon PT Davis.",
+    "altText": "A cityscape of longing and shifting emotional rhythm.",
     "kind": "production"
   },
   {
     "id": "company-prod-10",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150208-88a9e2cc.webp",
-    "altText": "Production image from Company emphasizing the set's view of intimacy from the outside looking in, scenic design by Brandon PT Davis.",
+    "altText": "The set's view of intimacy from the outside looking in.",
     "kind": "production"
   },
   {
     "id": "company-prod-11",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150240-c1ace8a3.webp",
-    "altText": "Final production image from Company showing the complete New York scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete New York scenic world.",
     "kind": "production"
   }
 ],
@@ -3806,63 +3806,63 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "dialm-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-0343-ca01b79d.webp",
-    "altText": "Scenic design for Dial M for Murder by Brandon PT Davis.",
+    "altText": "The apartment set in performance.",
     "kind": "cover"
   },
   {
     "id": "dialm-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-1391-1cdcb77f.webp",
-    "altText": "Production image from Dial M for Murder showing the apartment set in performance, scenic design by Brandon PT Davis.",
+    "altText": "The apartment set in performance.",
     "kind": "production"
   },
   {
     "id": "dialm-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-2-of-9-1570-35478f40.webp",
-    "altText": "Scene from Dial M for Murder framed by the apartment architecture, scenic design by Brandon PT Davis.",
+    "altText": "The apartment set in performance.",
     "kind": "production"
   },
   {
     "id": "dialm-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-5-of-9-1570-00f90098.webp",
-    "altText": "Production still emphasizing the controlled apartment palette in Dial M for Murder, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing the controlled apartment palette in Dial M for Murder.",
     "kind": "production"
   },
   {
     "id": "dialm-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-7-of-9-1570-b27c01bf.webp",
-    "altText": "Performance image from Dial M for Murder using doors and sightlines to build suspense, scenic design by Brandon PT Davis.",
+    "altText": "The apartment set in performance.",
     "kind": "production"
   },
   {
     "id": "dialm-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-4-of-9-1570-a0144edb.webp",
-    "altText": "Dial M for Murder production image showing the room’s centered fireplace and formal composition, scenic design by Brandon PT Davis.",
+    "altText": "Room’s centered fireplace and formal apartment composition.",
     "kind": "production"
   },
   {
     "id": "dialm-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/lindsey-21-1750-2fb70691.webp",
-    "altText": "Production still highlighting the isolated apartment environment in Dial M for Murder, scenic design by Brandon PT Davis.",
+    "altText": "Scene highlighting the isolated apartment environment in Dial M for Murder.",
     "kind": "production"
   },
   {
     "id": "dialm-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-6-of-9-1570-4c34d185.webp",
-    "altText": "Final production image from Dial M for Murder, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from Dial M for Murder.",
     "kind": "production"
   },
   {
     "id": "dialm-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-1-of-9-1570-44e29126.webp",
-    "altText": "Rendering for Dial M for Murder testing the apartment layout and negative space, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Dial M for Murder testing the apartment layout and negative space.",
     "kind": "rendering"
   }
 ],
@@ -3871,56 +3871,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "dinner-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733-2a2cf2a4.webp",
-    "altText": "Scenic design for Don't Dress for Dinner by Brandon PT Davis.",
+    "altText": "The restored French farmhouse environment.",
     "kind": "cover"
   },
   {
     "id": "dinner-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-7-of-7-5278-627ee2db.webp",
-    "altText": "Production image from Don't Dress for Dinner showing the restored French farmhouse environment, scenic design by Brandon PT Davis.",
+    "altText": "The restored French farmhouse environment.",
     "kind": "production"
   },
   {
     "id": "dinner-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-6-of-7-5280-a6012fc3.webp",
-    "altText": "Production image from Don't Dress for Dinner highlighting exposed timber beams and rustic architectural detail, scenic design by Brandon PT Davis.",
+    "altText": "Exposed timber beams and rustic architectural detail.",
     "kind": "production"
   },
   {
     "id": "dinner-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-5333-b089c7cc.webp",
-    "altText": "Production image from Don't Dress for Dinner emphasizing layered depth and door placement for farce, scenic design by Brandon PT Davis.",
+    "altText": "Layered depth and door placement for farce.",
     "kind": "production"
   },
   {
     "id": "dinner-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-2-of-7-5502-091af54f.webp",
-    "altText": "Production still from Don't Dress for Dinner showing the farmhouse interior as romantic setting and comic engine, scenic design by Brandon PT Davis.",
+    "altText": "The farmhouse interior as romantic setting and comic engine.",
     "kind": "production"
   },
   {
     "id": "dinner-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-3-of-7-5321-51819b0e.webp",
-    "altText": "Production image from Don't Dress for Dinner reinforcing sightlines and timing within the scenic layout, scenic design by Brandon PT Davis.",
+    "altText": "Sightlines and timing within the scenic layout.",
     "kind": "production"
   },
   {
     "id": "dinner-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-4-of-7-5292-2be249a4.webp",
-    "altText": "Production image from Don't Dress for Dinner highlighting warmth, elegance, and ensemble movement, scenic design by Brandon PT Davis.",
+    "altText": "Warmth, elegance, and ensemble movement.",
     "kind": "production"
   },
   {
     "id": "dinner-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-5-of-7-5280-9f703f75.webp",
-    "altText": "Final production image from Don't Dress for Dinner showing the complete French farmhouse world in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete French farmhouse world in performance.",
     "kind": "production"
   }
 ],
@@ -3929,77 +3929,77 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "freaky-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-friday-cover.webp",
-    "altText": "Freaky Friday scenic design cover at Okoboji Summer Theatre, using modular zones for a fast-changing body-swap story.",
+    "altText": "Modular zones for a fast-changing body-swap story.",
     "kind": "cover"
   },
   {
     "id": "freaky-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-1.webp",
-    "altText": "Production image from Freaky Friday showing the scenic environment in action, scenic design by Brandon PT Davis.",
+    "altText": "Contemporary modular set with fast-changing school and home zones.",
     "kind": "production"
   },
   {
     "id": "freaky-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-2.webp",
-    "altText": "Scene from Freaky Friday framed by the modular scenic system, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by the modular scenic system.",
     "kind": "production"
   },
   {
     "id": "freaky-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-3.webp",
-    "altText": "Production still emphasizing transitions and stage zones in Freaky Friday, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing transitions and stage zones in Freaky Friday.",
     "kind": "production"
   },
   {
     "id": "freaky-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-4.webp",
-    "altText": "Performance image from Freaky Friday showing scenic flexibility for musical staging, scenic design by Brandon PT Davis.",
+    "altText": "Scenic flexibility for musical staging.",
     "kind": "production"
   },
   {
     "id": "freaky-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-5.webp",
-    "altText": "Freaky Friday production moment using the set’s contemporary domestic and school cues, scenic design by Brandon PT Davis.",
+    "altText": "Freaky Friday production moment using the set’s contemporary domestic and school cues.",
     "kind": "production"
   },
   {
     "id": "freaky-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-6.webp",
-    "altText": "Production still highlighting ensemble flow through the Freaky Friday set, scenic design by Brandon PT Davis.",
+    "altText": "Scene highlighting ensemble flow through the Freaky Friday set.",
     "kind": "production"
   },
   {
     "id": "freaky-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-7.webp",
-    "altText": "Final production image from Freaky Friday, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from Freaky Friday.",
     "kind": "production"
   },
   {
     "id": "freaky-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-1.webp",
-    "altText": "Scenic rendering for Freaky Friday testing scenic zones and movement paths, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Freaky Friday testing scenic zones and movement paths.",
     "kind": "rendering"
   },
   {
     "id": "freaky-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-2.webp",
-    "altText": "Rendering pass for Freaky Friday showing transformation-based scene logic, scenic design by Brandon PT Davis.",
+    "altText": "Rendering pass for Freaky Friday showing transformation-based scene logic.",
     "kind": "rendering"
   },
   {
     "id": "freaky-render-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-3.webp",
-    "altText": "Perspective rendering for Freaky Friday exploring modular units and tonal contrast, scenic design by Brandon PT Davis.",
+    "altText": "Perspective rendering for Freaky Friday exploring modular units and tonal contrast.",
     "kind": "rendering"
   }
 ],
@@ -4008,49 +4008,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "goi-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-cover-ef6d8f84.webp",
-    "altText": "Guys on Ice scenic design cover at The Great American Melodrama, presenting a frozen-lake comic world with winter texture.",
+    "altText": "A frozen-lake comic world with winter texture.",
     "kind": "cover"
   },
   {
     "id": "goi-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150164-90d3ad5f.webp",
-    "altText": "Audience perspective of the completed Guys on Ice set at The Great American Melodrama, scenic design by Brandon PT Davis.",
+    "altText": "View of the completed Guys on Ice set.",
     "kind": "production"
   },
   {
     "id": "goi-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150062-599a4c3a.webp",
-    "altText": "Cast interaction framed by the cabin-inspired scenic world of Guys on Ice, scenic design by Brandon PT Davis.",
+    "altText": "A frozen-lake comic world with winter texture.",
     "kind": "production"
   },
   {
     "id": "goi-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150179-ab370422.webp",
-    "altText": "Wide stage view showing environment and actor pathways in Guys on Ice, scenic design by Brandon PT Davis.",
+    "altText": "Wide view showing environment and actor pathways in Guys on Ice.",
     "kind": "production"
   },
   {
     "id": "goi-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150163-52e755c3.webp",
-    "altText": "Performance moment across the central scenic playing area in Guys on Ice, scenic design by Brandon PT Davis.",
+    "altText": "A frozen-lake comic world with winter texture.",
     "kind": "production"
   },
   {
     "id": "goi-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150156-e63ffcd5.webp",
-    "altText": "Production image of Guys on Ice at The Great American Melodrama with full set context, scenic design by Brandon PT Davis.",
+    "altText": "Full view of the ice-fishing set and performance area.",
     "kind": "production"
   },
   {
     "id": "goi-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150050-41a996ef.webp",
-    "altText": "Scenic rendering for Guys on Ice with focus on atmosphere, structure, and sightlines, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Guys on Ice with focus on atmosphere, structure, and sightlines.",
     "kind": "rendering"
   }
 ],
@@ -4059,56 +4059,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "hoh-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp",
-    "altText": "Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.",
+    "altText": "The modular Arcadian world.",
     "kind": "cover"
   },
   {
     "id": "hoh-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp",
-    "altText": "Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.",
+    "altText": "The modular Arcadian world.",
     "kind": "production"
   },
   {
     "id": "hoh-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150127-19a4afbc.webp",
-    "altText": "Scene from Head Over Heels framed by vivid color and stylized architecture, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by vivid color and stylized architecture.",
     "kind": "production"
   },
   {
     "id": "hoh-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150148-e5dd8ca6.webp",
-    "altText": "Production still from Head Over Heels emphasizing club-inspired theatricality, scenic design by Brandon PT Davis.",
+    "altText": "Club-inspired theatricality.",
     "kind": "production"
   },
   {
     "id": "hoh-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150064-e710f8d3.webp",
-    "altText": "Head Over Heels performance image showing the set’s modular scene shifts, scenic design by Brandon PT Davis.",
+    "altText": "Head Over Heels performance image showing the set’s modular scene shifts.",
     "kind": "production"
   },
   {
     "id": "hoh-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150201-5af362e8.webp",
-    "altText": "Production image from Head Over Heels highlighting electric palette and theatrical rhythm, scenic design by Brandon PT Davis.",
+    "altText": "Electric palette and theatrical rhythm.",
     "kind": "production"
   },
   {
     "id": "hoh-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150231-8d50248c.webp",
-    "altText": "Final production image from Head Over Heels, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from Head Over Heels.",
     "kind": "production"
   },
   {
     "id": "hoh-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp",
-    "altText": "Rendering for Head Over Heels testing the modular, club-inspired Arcadian world, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Head Over Heels testing the modular, club-inspired Arcadian world.",
     "kind": "rendering"
   }
 ],
@@ -4117,77 +4117,77 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "nibroc-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-7894-558b9e2f.webp",
-    "altText": "Scenic design for Last Train to Nibroc by Brandon PT Davis.",
+    "altText": "The intimate barn-wood framed stage.",
     "kind": "cover"
   },
   {
     "id": "nibroc-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-1-of-10-9188-78d80ea0.webp",
-    "altText": "Production image from Last Train to Nibroc showing the intimate barn-wood framed stage, scenic design by Brandon PT Davis.",
+    "altText": "The intimate barn-wood framed stage.",
     "kind": "production"
   },
   {
     "id": "nibroc-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-1-of-1-9386-27475243.webp",
-    "altText": "Production image from Last Train to Nibroc highlighting the compressed proscenium and warm material palette, scenic design by Brandon PT Davis.",
+    "altText": "The compressed proscenium and warm material palette.",
     "kind": "production"
   },
   {
     "id": "nibroc-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-9188-2c3b6171.webp",
-    "altText": "Production still from Last Train to Nibroc showing the environment's closeness and stillness, scenic design by Brandon PT Davis.",
+    "altText": "The environment's closeness and stillness.",
     "kind": "production"
   },
   {
     "id": "nibroc-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-4-of-10-9386-ed54be72.webp",
-    "altText": "Production image from Last Train to Nibroc emphasizing the raked stage and intimate playing space, scenic design by Brandon PT Davis.",
+    "altText": "The raked stage and intimate playing space.",
     "kind": "production"
   },
   {
     "id": "nibroc-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-5-of-10-9386-3e89f0d9.webp",
-    "altText": "Production image from Last Train to Nibroc showing the long backdrop supporting fluid scene changes, scenic design by Brandon PT Davis.",
+    "altText": "The intimate barn-wood framed stage.",
     "kind": "production"
   },
   {
     "id": "nibroc-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-6-of-10-9386-d83750e4.webp",
-    "altText": "Production still from Last Train to Nibroc reinforcing the design's quiet emotional tone, scenic design by Brandon PT Davis.",
+    "altText": "The intimate barn-wood framed stage.",
     "kind": "production"
   },
   {
     "id": "nibroc-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-7-of-10-9386-fb7dcd85.webp",
-    "altText": "Production image from Last Train to Nibroc showing the architecture holding the characters gently, scenic design by Brandon PT Davis.",
+    "altText": "The architecture holding the characters gently.",
     "kind": "production"
   },
   {
     "id": "nibroc-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-9-of-10-9386-66e1d692.webp",
-    "altText": "Rendering for Last Train to Nibroc exploring the compressed proscenium and barn-wood material language, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the compressed proscenium and barn-wood material language.",
     "kind": "rendering"
   },
   {
     "id": "nibroc-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-8-of-10-9386-a2f7597b.webp",
-    "altText": "Rendering for Last Train to Nibroc showing the intimate scenic scale and backdrop system, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Last Train to Nibroc showing the intimate scenic scale and backdrop system.",
     "kind": "rendering"
   },
   {
     "id": "nibroc-render-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-10-of-10-9386-3fe47120.webp",
-    "altText": "Final rendering for Last Train to Nibroc capturing the quiet, close scenic atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "Final rendering for Last Train to Nibroc capturing the quiet, close scenic atmosphere.",
     "kind": "rendering"
   }
 ],
@@ -4196,56 +4196,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "little-shop-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp",
-    "altText": "Little Shop of Horrors scenic design cover at Okoboji Summer Theatre, showing a gritty Skid Row storefront.",
+    "altText": "A gritty Skid Row storefront.",
     "kind": "cover"
   },
   {
     "id": "little-shop-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-7-of-9-1481-6cd46cad.webp",
-    "altText": "Production image from Little Shop of Horrors showing the gritty flower shop and Skid Row environment, scenic design by Brandon PT Davis.",
+    "altText": "The gritty flower shop and Skid Row environment.",
     "kind": "production"
   },
   {
     "id": "little-shop-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-2-of-9-1481-9655ab32.webp",
-    "altText": "Production image from Little Shop of Horrors emphasizing the brick storefront and cramped scenic frame, scenic design by Brandon PT Davis.",
+    "altText": "The brick storefront and cramped scenic frame.",
     "kind": "production"
   },
   {
     "id": "little-shop-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-3-of-9-1481-ce2b1988.webp",
-    "altText": "Production still from Little Shop of Horrors highlighting the grounded storefront realism, scenic design by Brandon PT Davis.",
+    "altText": "The grounded storefront realism.",
     "kind": "production"
   },
   {
     "id": "little-shop-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-4-of-9-1481-4b2444d7.webp",
-    "altText": "Production image from Little Shop of Horrors showing practical counters, windows, and detailed shop textures, scenic design by Brandon PT Davis.",
+    "altText": "Practical counters, windows, and detailed shop textures.",
     "kind": "production"
   },
   {
     "id": "little-shop-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-6-of-9-1481-1c45a635.webp",
-    "altText": "Production image from Little Shop of Horrors reinforcing the claustrophobic tension of the small scenic world, scenic design by Brandon PT Davis.",
+    "altText": "The claustrophobic tension of the small scenic world.",
     "kind": "production"
   },
   {
     "id": "little-shop-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-8-of-9-1481-bb97ce55.webp",
-    "altText": "Production still from Little Shop of Horrors showing the world as danger increases around the shop, scenic design by Brandon PT Davis.",
+    "altText": "The world as danger increases around the shop.",
     "kind": "production"
   },
   {
     "id": "little-shop-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-1481-60179d7d.webp",
-    "altText": "Final production image from Little Shop of Horrors showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the set in performance.",
     "kind": "production"
   }
 ],
@@ -4254,84 +4254,84 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "loteria-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp",
-    "altText": "Scenic design for ¡LOTERIA: GAME ON! by Brandon PT Davis.",
+    "altText": "The basement family-room world.",
     "kind": "cover"
   },
   {
     "id": "loteria-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150069-841739b7.webp",
-    "altText": "Production image from ¡LOTERIA: GAME ON! showing the basement family-room world, scenic design by Brandon PT Davis.",
+    "altText": "The basement family-room world.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150072-b53ecf81.webp",
-    "altText": "Performance image from ¡LOTERIA: GAME ON! with the family-room environment and central playing space, scenic design by Brandon PT Davis.",
+    "altText": "The family-room environment and central playing space.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150075-da6650d9.webp",
-    "altText": "Production still from ¡LOTERIA: GAME ON! highlighting the domestic room before transformation, scenic design by Brandon PT Davis.",
+    "altText": "The domestic room before transformation.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150086-80b15030.webp",
-    "altText": "Stage image from ¡LOTERIA: GAME ON! featuring actors within the modular basement set, scenic design by Brandon PT Davis.",
+    "altText": "Actors within the modular basement set.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150115-e66396d4.webp",
-    "altText": "Production image from ¡LOTERIA: GAME ON! emphasizing the playful theatrical world of the show, scenic design by Brandon PT Davis.",
+    "altText": "The playful theatrical world of the show.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150122-101de9a7.webp",
-    "altText": "Performance image from ¡LOTERIA: GAME ON! showing scenic color and layered stage action, scenic design by Brandon PT Davis.",
+    "altText": "Scenic color and layered stage action.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150153-e0a05162.webp",
-    "altText": "Production still from ¡LOTERIA: GAME ON! highlighting theatrical play and audience-facing composition, scenic design by Brandon PT Davis.",
+    "altText": "Theatrical play and audience-facing composition.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150213-09af2504.webp",
-    "altText": "Image from ¡LOTERIA: GAME ON! showing the transformed game-inspired world, scenic design by Brandon PT Davis.",
+    "altText": "The basement family-room world.",
     "kind": "production"
   },
   {
     "id": "loteria-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150233-a285c5ac.webp",
-    "altText": "Production image from ¡LOTERIA: GAME ON! with performers inside the vibrant scenic environment, scenic design by Brandon PT Davis.",
+    "altText": "Performers inside the vibrant family-room set.",
     "kind": "production"
   },
   {
     "id": "loteria-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp",
-    "altText": "Rendering for ¡LOTERIA: GAME ON! showing the family-room environment before transformation, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for ¡LOTERIA: GAME ON! showing the family-room environment before transformation.",
     "kind": "rendering"
   },
   {
     "id": "loteria-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150222-46ec93d2.webp",
-    "altText": "Rendering for ¡LOTERIA: GAME ON! exploring the heightened Loteria card-world, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the heightened Loteria card-world.",
     "kind": "rendering"
   }
 ],
@@ -4340,77 +4340,77 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "mdq-cover",
     "type": "image",
     "imageUrl": "/assets/projects/scenic/million-dollar-quartet/cover.webp",
-    "altText": "Million Dollar Quartet scenic design cover at South Coast Repertory, shaping Sun Records as an intimate studio and live music environment.",
+    "altText": "Sun Records as an intimate studio and live music environment.",
     "kind": "cover"
   },
   {
     "id": "mdq-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150210-2ab544ca.webp",
-    "altText": "Cast blocking across the studio set architecture in Million Dollar Quartet at SCR, scenic design by Brandon PT Davis.",
+    "altText": "Cast blocking across the studio set architecture in Million Dollar Quartet.",
     "kind": "production"
   },
   {
     "id": "mdq-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150207-7d8a45e3.webp",
-    "altText": "Performance moment on the Sun Records-inspired set for Million Dollar Quartet at South Coast Repertory, scenic design by Brandon PT Davis.",
+    "altText": "Sun Records as an intimate studio and live music environment.",
     "kind": "production"
   },
   {
     "id": "mdq-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150223-755c8e5d.webp",
-    "altText": "Band-centered stage composition with warm practical lighting in Million Dollar Quartet, scenic design by Brandon PT Davis.",
+    "altText": "Band-centered stage composition with warm practical lighting in Million Dollar Quartet.",
     "kind": "production"
   },
   {
     "id": "mdq-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150174-8f646b43.webp",
-    "altText": "Scene work on the vintage studio interior built for Million Dollar Quartet, scenic design by Brandon PT Davis.",
+    "altText": "Scene work on the vintage studio interior built for Million Dollar Quartet.",
     "kind": "production"
   },
   {
     "id": "mdq-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150067-01e01870.webp",
-    "altText": "Onstage action framed by the recording booth and studio details in Million Dollar Quartet, scenic design by Brandon PT Davis.",
+    "altText": "Sun Records as an intimate studio and live music environment.",
     "kind": "production"
   },
   {
     "id": "mdq-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150108-f491af26.webp",
-    "altText": "Wide audience-view perspective of the Million Dollar Quartet set at South Coast Repertory, scenic design by Brandon PT Davis.",
+    "altText": "Wide audience-view perspective of the Million Dollar Quartet set.",
     "kind": "production"
   },
   {
     "id": "mdq-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150190-7ee08c4c.webp",
-    "altText": "Production image highlighting the full studio footprint for Million Dollar Quartet, scenic design by Brandon PT Davis.",
+    "altText": "Full studio footprint for Million Dollar Quartet.",
     "kind": "production"
   },
   {
     "id": "mdq-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150244-8d464658.webp",
-    "altText": "Rendering study showing depth, instrument placement, and sightlines for Million Dollar Quartet, scenic design by Brandon PT Davis.",
+    "altText": "Rendering showing depth, instrument placement, and sightlines for Million Dollar Quartet.",
     "kind": "rendering"
   },
   {
     "id": "mdq-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150087-7a630428.webp",
-    "altText": "Early rendering pass for Million Dollar Quartet emphasizing period texture and performance focus, scenic design by Brandon PT Davis.",
+    "altText": "Early rendering of Million Dollar Quartet emphasizing period texture and performance focus.",
     "kind": "rendering"
   },
   {
     "id": "mdq-render-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150123-58759f4e.webp",
-    "altText": "Concept rendering of the period recording studio environment for Million Dollar Quartet, scenic design by Brandon PT Davis.",
+    "altText": "Concept rendering of the period recording studio environment for Million Dollar Quartet.",
     "kind": "rendering"
   },
   {
@@ -4425,42 +4425,42 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "man-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-cover-a7f4725c.webp",
-    "altText": "Much Ado About Nothing scenic design cover at the production venue, by Brandon PT Davis.",
+    "altText": "Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.",
     "kind": "cover"
   },
   {
     "id": "man-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150032-ce3e4bda.webp",
-    "altText": "Production image from Much Ado About Nothing at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
+    "altText": "Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.",
     "kind": "production"
   },
   {
     "id": "man-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150124-98204140.webp",
-    "altText": "Scene transition on the open-air Shakespearean set for Much Ado About Nothing at New Swan, scenic design by Brandon PT Davis.",
+    "altText": "Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.",
     "kind": "production"
   },
   {
     "id": "man-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150063-602fad8c.webp",
-    "altText": "Wide stage view of the courtyard-inspired set for Much Ado About Nothing at New Swan Theatre Festival in Irvine, scenic design by Brandon PT Davis.",
+    "altText": "Wide view of the courtyard-inspired set for Much Ado About Nothing in Irvine.",
     "kind": "production"
   },
   {
     "id": "man-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150079-d09aadaa.webp",
-    "altText": "Ensemble stage picture framed by the rustic architecture of Much Ado About Nothing, scenic design by Brandon PT Davis.",
+    "altText": "Ensemble stage picture framed by the rustic architecture of Much Ado About Nothing.",
     "kind": "production"
   },
   {
     "id": "man-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150096-a49794ed.webp",
-    "altText": "Night-lit stage composition showing arches and playing levels in Much Ado About Nothing, scenic design by Brandon PT Davis.",
+    "altText": "Night-lit stage composition showing arches and playing levels in Much Ado About Nothing.",
     "kind": "production"
   }
 ],
@@ -4469,28 +4469,28 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "darling-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg",
-    "altText": "Scenic design for Not Now, Darling by Brandon PT Davis.",
+    "altText": "The polished boutique interior and farce architecture.",
     "kind": "cover"
   },
   {
     "id": "darling-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-fdeaa527ac-79c0ba0c.jpg",
-    "altText": "Production image from Not Now, Darling showing the polished boutique interior and farce architecture, scenic design by Brandon PT Davis.",
+    "altText": "The polished boutique interior and farce architecture.",
     "kind": "production"
   },
   {
     "id": "darling-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg",
-    "altText": "Production still from Not Now, Darling emphasizing British elegance, color, and choreographed door placement, scenic design by Brandon PT Davis.",
+    "altText": "British elegance, color, and choreographed door placement.",
     "kind": "production"
   },
   {
     "id": "darling-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-e1d080dc14-b42d51ee.jpg",
-    "altText": "Final production image from Not Now, Darling showing the full comic boutique environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the full comic boutique environment in performance.",
     "kind": "production"
   }
 ],
@@ -4499,77 +4499,77 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "parliament-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-cover-3b50f3a4.webp",
-    "altText": "Scenic design for Parliament Square by Brandon PT Davis.",
+    "altText": "The circular stone path and sparse political landscape.",
     "kind": "cover"
   },
   {
     "id": "parliament-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150128-e7691d71.webp",
-    "altText": "Production image from Parliament Square showing the circular stone path and sparse political landscape, scenic design by Brandon PT Davis.",
+    "altText": "The circular stone path and sparse political landscape.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150143-98bc6786.webp",
-    "altText": "Production image from Parliament Square highlighting the ritual staging geometry and fractured environment, scenic design by Brandon PT Davis.",
+    "altText": "The ritual staging geometry and fractured environment.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150150-e6921b4b.webp",
-    "altText": "Production still from Parliament Square emphasizing concrete textures and political isolation, scenic design by Brandon PT Davis.",
+    "altText": "Concrete textures and political isolation.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150159-3968ab1c.webp",
-    "altText": "Performance image from Parliament Square showing the stone circle as a container for protest, scenic design by Brandon PT Davis.",
+    "altText": "The stone circle as a container for protest.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150166-fbd524eb.webp",
-    "altText": "Production image from Parliament Square with the cold palette and minimal architecture in view, scenic design by Brandon PT Davis.",
+    "altText": "The cold palette and minimal architecture in view.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150188-8eab105b.webp",
-    "altText": "Production image from Parliament Square emphasizing the environment's meditative austerity, scenic design by Brandon PT Davis.",
+    "altText": "The environment's meditative austerity.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150202-8991ab50.webp",
-    "altText": "Production image from Parliament Square showing the scenic world pressing the political against the personal, scenic design by Brandon PT Davis.",
+    "altText": "The scenic world pressing the political against the personal.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150205-4a077830.webp",
-    "altText": "Production still from Parliament Square highlighting symbolic decay and empty public space, scenic design by Brandon PT Davis.",
+    "altText": "Symbolic decay and empty public space.",
     "kind": "production"
   },
   {
     "id": "parliament-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150214-db908fa1.webp",
-    "altText": "Production image from Parliament Square reinforcing the scenic world's tension between resilience and sacrifice, scenic design by Brandon PT Davis.",
+    "altText": "The scenic world's tension between resilience and sacrifice.",
     "kind": "production"
   },
   {
     "id": "parliament-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90018-gallery-150241-aebfba62.webp",
-    "altText": "Rendering for Parliament Square exploring the circular path, concrete surfaces, and ritual scenic composition, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the circular path, concrete surfaces, and ritual scenic composition.",
     "kind": "rendering"
   }
 ],
@@ -4578,56 +4578,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "rich-girl-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094-bd9037d8.webp",
-    "altText": "Scenic design for Rich Girl by Brandon PT Davis.",
+    "altText": "The contemporary penthouse environment.",
     "kind": "cover"
   },
   {
     "id": "rich-girl-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-3670-51246a14.webp",
-    "altText": "Production image from Rich Girl showing the contemporary penthouse environment, scenic design by Brandon PT Davis.",
+    "altText": "The contemporary penthouse environment.",
     "kind": "production"
   },
   {
     "id": "rich-girl-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/rich-girl-5-3670-a9dce5ca.webp",
-    "altText": "Production image from Rich Girl highlighting the sleek domestic architecture and polished palette, scenic design by Brandon PT Davis.",
+    "altText": "The sleek domestic architecture and polished palette.",
     "kind": "production"
   },
   {
     "id": "rich-girl-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-4-of-8-3670-aee16070.webp",
-    "altText": "Production image from Rich Girl emphasizing openness, scale, and emotional distance, scenic design by Brandon PT Davis.",
+    "altText": "The contemporary penthouse environment.",
     "kind": "production"
   },
   {
     "id": "rich-girl-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-5-of-8-3670-314a2c6a.webp",
-    "altText": "Production still from Rich Girl showing the refined interior shell and city-facing atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The refined interior shell and city-facing atmosphere.",
     "kind": "production"
   },
   {
     "id": "rich-girl-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-6-of-8-3707-4626e751.webp",
-    "altText": "Production image from Rich Girl highlighting the elegant restraint of the penthouse world, scenic design by Brandon PT Davis.",
+    "altText": "The elegant restraint of the penthouse world.",
     "kind": "production"
   },
   {
     "id": "rich-girl-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-7-of-8-3759-f6de54ee.webp",
-    "altText": "Final production image from Rich Girl showing the complete scenic environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete set in performance.",
     "kind": "production"
   },
   {
     "id": "rich-girl-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/rich-girl-sketch-large-3759-550cb2db.webp",
-    "altText": "Rendering for Rich Girl exploring the penthouse composition, furnishings, and emotional restraint, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the penthouse composition, furnishings, and emotional restraint.",
     "kind": "rendering"
   }
 ],
@@ -4636,49 +4636,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "rom-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp",
-    "altText": "Romero scenic design cover at the University of Missouri, framing the world premiere as a ritual memory space.",
+    "altText": "The world premiere as a ritual memory space.",
     "kind": "cover"
   },
   {
     "id": "rom-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150014-a1fd754e.webp",
-    "altText": "Wide house perspective of the Romero set with layered playing spaces, scenic design by Brandon PT Davis.",
+    "altText": "Wide house perspective of the Romero set with layered playing spaces.",
     "kind": "production"
   },
   {
     "id": "rom-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150117-05260bec.webp",
-    "altText": "Lighting and scenic texture interplay in a dramatic scene from Romero, scenic design by Brandon PT Davis.",
+    "altText": "Lighting and scenic texture interplay in a dramatic scene from Romero.",
     "kind": "production"
   },
   {
     "id": "rom-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150169-c11924da.webp",
-    "altText": "Primary stage composition for Romero at University of Missouri, scenic design by Brandon PT Davis.",
+    "altText": "Primary stage composition for Romero.",
     "kind": "production"
   },
   {
     "id": "rom-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150192-b5032774.webp",
-    "altText": "Scene transition across the central platform system in Romero at University of Missouri, scenic design by Brandon PT Davis.",
+    "altText": "The world premiere as a ritual memory space.",
     "kind": "production"
   },
   {
     "id": "rom-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150236-9c607f1e.webp",
-    "altText": "Final production view of Romero showing the full environment and actor pathways, scenic design by Brandon PT Davis.",
+    "altText": "Final production view of Romero showing the full environment and actor pathways.",
     "kind": "production"
   },
   {
     "id": "rom-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150246-a5626620.webp",
-    "altText": "Actors positioned within the architectural and symbolic scenic world of Romero, scenic design by Brandon PT Davis.",
+    "altText": "Actors positioned within the architectural and symbolic scenic world of Romero.",
     "kind": "production"
   }
 ],
@@ -4687,49 +4687,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "spelling-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-5514-9770ab58.webp",
-    "altText": "Scenic design for The 25th Annual Putnam County Spelling Bee by Brandon PT Davis.",
+    "altText": "Scene emphasizing the school-gym atmosphere in Putnam County Spelling Bee.",
     "kind": "cover"
   },
   {
     "id": "spelling-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-5-of-6-7204-f6fc8191.webp",
-    "altText": "Production image from The 25th Annual Putnam County Spelling Bee showing the gymnasium set, scenic design by Brandon PT Davis.",
+    "altText": "School gymnasium set with spelling bee platform.",
     "kind": "production"
   },
   {
     "id": "spelling-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-4-of-6-7204-0e56fab9.webp",
-    "altText": "Scene from Putnam County Spelling Bee framed by the competition setup, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing the school-gym atmosphere in Putnam County Spelling Bee.",
     "kind": "production"
   },
   {
     "id": "spelling-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-1-of-6-7204-2f449803.webp",
-    "altText": "Production still emphasizing the school-gym atmosphere in Putnam County Spelling Bee, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing the school-gym atmosphere in Putnam County Spelling Bee.",
     "kind": "production"
   },
   {
     "id": "spelling-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-2-of-6-7204-a8b5064f.webp",
-    "altText": "Performance image from Putnam County Spelling Bee showing the spelling platform and ensemble staging, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing the school-gym atmosphere in Putnam County Spelling Bee.",
     "kind": "production"
   },
   {
     "id": "spelling-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-3-of-6-7204-789e2b19.webp",
-    "altText": "Putnam County Spelling Bee production image highlighting the local sponsor details and gym setting, scenic design by Brandon PT Davis.",
+    "altText": "Local sponsor details and gym setting for the spelling bee.",
     "kind": "production"
   },
   {
     "id": "spelling-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-7204-e869600a.webp",
-    "altText": "Final production image from The 25th Annual Putnam County Spelling Bee, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from The 25th Annual Putnam County Spelling Bee.",
     "kind": "production"
   }
 ],
@@ -4745,42 +4745,42 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "bald-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-caf4556cac-cedac5d3.jpg",
-    "altText": "Rendering for The Bald Soprano showing the distorted domestic environment and heightened composition, scenic and lighting design by Brandon PT Davis.",
+    "altText": "Rendering for The Bald Soprano showing the distorted domestic environment and heightened composition.",
     "kind": "rendering"
   },
   {
     "id": "bald-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-06201e4480-3a71fb84.jpg",
-    "altText": "Production still from The Bald Soprano emphasizing the absurd domestic scale and actor framing, scenic and lighting design by Brandon PT Davis.",
+    "altText": "The absurd domestic scale and actor framing.",
     "kind": "production"
   },
   {
     "id": "bald-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-39e8a0ac44-3c617948.jpg",
-    "altText": "Production image from The Bald Soprano showing the fractured drawing-room world in performance, scenic and lighting design by Brandon PT Davis.",
+    "altText": "The fractured drawing-room world in performance.",
     "kind": "production"
   },
   {
     "id": "bald-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-8ffd19e8bf-ccc7e268.jpeg",
-    "altText": "Performance still from The Bald Soprano highlighting warped domestic architecture and comic tension, scenic and lighting design by Brandon PT Davis.",
+    "altText": "Warped domestic architecture and comic tension.",
     "kind": "production"
   },
   {
     "id": "bald-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-2d959ef49b-596768d7.jpeg",
-    "altText": "Production image from The Bald Soprano showing the full scenic composition and heightened lighting contrast, scenic and lighting design by Brandon PT Davis.",
+    "altText": "The full scenic composition and heightened lighting contrast.",
     "kind": "production"
   },
   {
     "id": "bald-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-33fb979f6b-1c8ce220.jpeg",
-    "altText": "Final production image from The Bald Soprano showing the absurd domestic setting in performance, scenic and lighting design by Brandon PT Davis.",
+    "altText": "Full-stage view of the absurd domestic setting in performance.",
     "kind": "production"
   }
 ],
@@ -4789,35 +4789,35 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "complete-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f-4c52fd98.jpg",
-    "altText": "Scenic design for The Complete Works of William Shakespeare (abridged) by Brandon PT Davis.",
+    "altText": "The modular comic stage environment.",
     "kind": "cover"
   },
   {
     "id": "complete-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-7160001f26-b758f1f6.jpg",
-    "altText": "Production image from The Complete Works of William Shakespeare (abridged) showing the modular comic stage environment, scenic design by Brandon PT Davis.",
+    "altText": "The modular comic stage environment.",
     "kind": "production"
   },
   {
     "id": "complete-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-9ba7165f14-036a08a1.jpg",
-    "altText": "Production still from The Complete Works of William Shakespeare (abridged) highlighting fast-paced theatrical transitions, scenic design by Brandon PT Davis.",
+    "altText": "Fast-paced theatrical transitions.",
     "kind": "production"
   },
   {
     "id": "complete-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b-ff89656e.jpg",
-    "altText": "Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble within the scenic world, scenic design by Brandon PT Davis.",
+    "altText": "The comic ensemble within the scenic world.",
     "kind": "production"
   },
   {
     "id": "complete-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-b0e77e71fe-36ee44f9.jpg",
-    "altText": "Final production image from The Complete Works of William Shakespeare (abridged) emphasizing the playful modular environment and comic momentum, scenic design by Brandon PT Davis.",
+    "altText": "Final scene from The Complete Works of William Shakespeare (abridged) emphasizing the playful modular environment and comic momentum.",
     "kind": "production"
   }
 ],
@@ -4826,35 +4826,35 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "gamma-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-5794-fc8ce725.webp",
-    "altText": "Scenic design for The Effect of Gamma Rays on Man-in-the-Moon Marigolds by Brandon PT Davis.",
+    "altText": "The distressed domestic interior.",
     "kind": "cover"
   },
   {
     "id": "gamma-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-2-6823-b60a2d8e.webp",
-    "altText": "Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the distressed domestic interior, scenic design by Brandon PT Davis.",
+    "altText": "The distressed domestic interior.",
     "kind": "production"
   },
   {
     "id": "gamma-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-3-6823-f76d4aff.webp",
-    "altText": "Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds highlighting faded wallpaper and emotional erosion, scenic design by Brandon PT Davis.",
+    "altText": "The distressed domestic interior.",
     "kind": "production"
   },
   {
     "id": "gamma-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-4-6823-557175e3.webp",
-    "altText": "Production still from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the brittle interior surfaces and compressed space, scenic design by Brandon PT Davis.",
+    "altText": "The brittle interior surfaces and compressed space.",
     "kind": "production"
   },
   {
     "id": "gamma-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-6823-4aad8265.webp",
-    "altText": "Final production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the set in performance.",
     "kind": "production"
   }
 ],
@@ -4863,91 +4863,91 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "gm-cover",
     "type": "image",
     "imageUrl": "/assets/projects/scenic/the-glass-menagerie/glass-menagerie-maples-cover-2026.webp",
-    "altText": "Laura and Tom framed by candlelight and the glass unicorn in The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.",
+    "altText": "Laura and Tom framed by candlelight and the glass unicorn in The Glass Menagerie.",
     "kind": "cover"
   },
   {
     "id": "gm-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150121-18849ccd.webp",
-    "altText": "Production photo from The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.",
+    "altText": "Laura and Tom in the elevated Wingfield apartment for The Glass Menagerie, with warm candlelight and the glass collection in the foreground.",
     "kind": "production"
   },
   {
     "id": "gm-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150167-705248fb.webp",
-    "altText": "Wide production view of The Glass Menagerie at Maples Repertory Theatre in Macon, scenic design by Brandon PT Davis.",
+    "altText": "Wide view of the elevated Wingfield apartment, open thresholds, and surrounding city fragments.",
     "kind": "production"
   },
   {
     "id": "gm-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150147-80530627.webp",
-    "altText": "Performance moment centered in the fragile interior world of The Glass Menagerie, scenic design by Brandon PT Davis.",
+    "altText": "Actors inside the fragile interior world of The Glass Menagerie, framed by the platform, practical furniture, and memory wall.",
     "kind": "production"
   },
   {
     "id": "gm-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150109-a740442f.webp",
-    "altText": "Scene work across the primary platform system in The Glass Menagerie, scenic design by Brandon PT Davis.",
+    "altText": "Actors across the primary platform system in The Glass Menagerie showing how the elevated apartment frames the family's enclosed domestic world.",
     "kind": "production"
   },
   {
     "id": "gm-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150052-9b675ddb.webp",
-    "altText": "Audience perspective of The Glass Menagerie with layered scenic planes, scenic design by Brandon PT Davis.",
+    "altText": "View of The Glass Menagerie with layered scenic planes, exposed thresholds, and negative space around the Wingfield apartment.",
     "kind": "production"
   },
   {
     "id": "gm-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150084-22778dc8.webp",
-    "altText": "Actors framed by the memory-play architecture in The Glass Menagerie, scenic design by Brandon PT Davis.",
+    "altText": "Actors framed by fragmented walls and doorways that open the apartment into the remembered city.",
     "kind": "production"
   },
   {
     "id": "gm-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp",
-    "altText": "Concept rendering for The Glass Menagerie exploring atmosphere and spatial drift, scenic design by Brandon PT Davis.",
+    "altText": "Concept rendering of the elevated apartment, soft architectural fragments, and atmospheric drift that shaped memory-play setting.",
     "kind": "rendering"
   },
   {
     "id": "gm-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp",
-    "altText": "Production still emphasizing sightlines and negative space in The Glass Menagerie, scenic design by Brandon PT Davis.",
+    "altText": "Scene emphasizing sightlines, negative space, and the elevated platform relationship in The Glass Menagerie.",
     "kind": "production"
   },
   {
     "id": "gm-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150106-9de48421.webp",
-    "altText": "Production photo from The Glass Menagerie at Maples Repertory Theatre, showing the memory-play apartment, scenic design by Brandon PT Davis.",
+    "altText": "The memory-play apartment, framed images, and warm domestic light.",
     "kind": "production"
   },
   {
     "id": "gm-prod-10",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150095-1deb7561.webp",
-    "altText": "Full-stage composition showing layered depth in The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view showing layered depth, the Wingfield apartment platform, and the surrounding cityscape in The Glass Menagerie.",
     "kind": "production"
   },
   {
     "id": "gm-prod-11",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150022-df9b68ff.webp",
-    "altText": "House view of the scenic environment for The Glass Menagerie in Macon, scenic design by Brandon PT Davis.",
+    "altText": "Platform, memory wall, and open architectural edges in the Wingfield apartment.",
     "kind": "production"
   },
   {
     "id": "gm-prod-12",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150211-d9f6b2ed.webp",
-    "altText": "Ensemble stage picture inside the poetic world of The Glass Menagerie, scenic design by Brandon PT Davis.",
+    "altText": "Ensemble arranged across the elevated apartment and surrounding memory architecture.",
     "kind": "production"
   }
 ],
@@ -4956,35 +4956,35 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "glass-2011-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-18e039c8c0-56e7d0a8.jpg",
-    "altText": "The Glass Menagerie 2011 scenic design cover at Okoboji Summer Theatre, with scrim walls and a revealed cityscape.",
+    "altText": "Scrim walls and a revealed cityscape.",
     "kind": "cover"
   },
   {
     "id": "glass-2011-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-a53c40ae0e-269007f3.jpg",
-    "altText": "Production image from the 2011 Glass Menagerie showing the domestic memory world, scenic design by Brandon PT Davis.",
+    "altText": "The domestic memory world.",
     "kind": "production"
   },
   {
     "id": "glass-2011-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-eb79367a23-5a0d525e.jpg",
-    "altText": "Production still from the 2011 Glass Menagerie highlighting the scrim walls and layered stage space, scenic design by Brandon PT Davis.",
+    "altText": "The scrim walls and layered stage space.",
     "kind": "production"
   },
   {
     "id": "glass-2011-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-2acc2d20ef-4d9c26ac.jpg",
-    "altText": "Performance image from the 2011 Glass Menagerie emphasizing nostalgia and theatrical framing, scenic design by Brandon PT Davis.",
+    "altText": "Scrim walls and a revealed cityscape.",
     "kind": "production"
   },
   {
     "id": "glass-2011-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-a598d1ca19-6c14fbf9.jpg",
-    "altText": "Final production image from the 2011 Glass Menagerie showing the full scenic environment, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of scrim walls and the revealed cityscape.",
     "kind": "production"
   }
 ],
@@ -4993,42 +4993,42 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "liar-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg",
-    "altText": "Scenic design for The Liar by Brandon PT Davis.",
+    "altText": "Comic set with bold movement, period detail, and flexible entrances.",
     "kind": "cover"
   },
   {
     "id": "liar-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-214d560e4b-80e3c3aa.jpg",
-    "altText": "Production image from The Liar showing the classical comic setting and staging, scenic design by Brandon PT Davis.",
+    "altText": "The classical comic setting and staging.",
     "kind": "production"
   },
   {
     "id": "liar-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-c183f7b9fc-5e5aa5bc.jpg",
-    "altText": "Stage image from The Liar emphasizing wit, movement, and the scenic environment, scenic design by Brandon PT Davis.",
+    "altText": "Comic set with bold movement, period detail, and flexible entrances.",
     "kind": "production"
   },
   {
     "id": "liar-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-cc3083db71-88cf4ecf.jpg",
-    "altText": "Production still from The Liar highlighting the playful period world and comic staging, scenic design by Brandon PT Davis.",
+    "altText": "The playful period world and comic staging.",
     "kind": "production"
   },
   {
     "id": "liar-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-edc3844ade-3cb3266a.jpg",
-    "altText": "Performance image from The Liar reinforcing the bold visual rhythm of the comic setting, scenic design by Brandon PT Davis.",
+    "altText": "Comic set with bold movement, period detail, and flexible entrances.",
     "kind": "production"
   },
   {
     "id": "liar-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-fe95892931-5d621e18.jpg",
-    "altText": "Final production image from The Liar showing the full comic environment, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the full comic environment.",
     "kind": "production"
   }
 ],
@@ -5037,42 +5037,42 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "lamancha-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-3-of-5-large-4479-f458638b.webp",
-    "altText": "Scenic design for The Man of La Mancha by Brandon PT Davis.",
+    "altText": "The warehouse-inspired playing space.",
     "kind": "cover"
   },
   {
     "id": "lamancha-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-3-of-5-large-5473-f7f02325.webp",
-    "altText": "Production image from The Man of La Mancha showing the warehouse-inspired playing space, scenic design by Brandon PT Davis.",
+    "altText": "The warehouse-inspired playing space.",
     "kind": "production"
   },
   {
     "id": "lamancha-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-2-of-5-large-5474-815484ab.webp",
-    "altText": "Production image from The Man of La Mancha with industrial textures and modular scenic structure visible, scenic design by Brandon PT Davis.",
+    "altText": "Industrial textures and modular scenic structure visible.",
     "kind": "production"
   },
   {
     "id": "lamancha-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-1-of-5-large-5473-e9da7da4.webp",
-    "altText": "Performance image from The Man of La Mancha centered in the circular ritual floor pattern, scenic design by Brandon PT Davis.",
+    "altText": "Centered in the circular ritual floor pattern.",
     "kind": "production"
   },
   {
     "id": "lamancha-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-4-of-5-large-5474-4b8a4979.webp",
-    "altText": "Production still from The Man of La Mancha with actors and musicians inhabiting the scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Actors and musicians inhabiting the scenic world.",
     "kind": "production"
   },
   {
     "id": "lamancha-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-5-of-5-large-5521-023504d6.webp",
-    "altText": "Final production image from The Man of La Mancha showing the full found-object warehouse environment, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the full found-object warehouse environment.",
     "kind": "production"
   }
 ],
@@ -5081,56 +5081,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "wonderettes-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp",
-    "altText": "Scenic design for The Marvelous Wonderettes: Dream On by Brandon PT Davis.",
+    "altText": "The reunion stage and period details visible.",
     "kind": "cover"
   },
   {
     "id": "wonderettes-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-1-of-10-5746-7d654713.webp",
-    "altText": "Production image from The Marvelous Wonderettes: Dream On showing the reunion gym stage, scenic design by Brandon PT Davis.",
+    "altText": "The reunion gym stage.",
     "kind": "production"
   },
   {
     "id": "wonderettes-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-5746-7f198da3.webp",
-    "altText": "Production image from The Marvelous Wonderettes: Dream On highlighting the polished 1960s reunion atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The polished 1960s reunion atmosphere.",
     "kind": "production"
   },
   {
     "id": "wonderettes-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-3-of-10-5785-fe457f00.webp",
-    "altText": "Performance image from The Marvelous Wonderettes: Dream On with the reunion stage and period details visible, scenic design by Brandon PT Davis.",
+    "altText": "The reunion stage and period details visible.",
     "kind": "production"
   },
   {
     "id": "wonderettes-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-4-of-10-5870-ee71ba3d.webp",
-    "altText": "Production still from The Marvelous Wonderettes: Dream On emphasizing the gym architecture and stage composition, scenic design by Brandon PT Davis.",
+    "altText": "The gym architecture and stage composition.",
     "kind": "production"
   },
   {
     "id": "wonderettes-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-6-of-10-5870-2084a115.webp",
-    "altText": "Production image from The Marvelous Wonderettes: Dream On showing the warmer later-decade palette and reunion staging, scenic design by Brandon PT Davis.",
+    "altText": "The warmer later-decade palette and reunion staging.",
     "kind": "production"
   },
   {
     "id": "wonderettes-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-8-of-10-5870-13e8412e.webp",
-    "altText": "Final production image from The Marvelous Wonderettes: Dream On showing the complete reunion environment, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete reunion environment.",
     "kind": "production"
   },
   {
     "id": "wonderettes-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-7-of-10-5870-1cd71a3d.webp",
-    "altText": "Rendering for The Marvelous Wonderettes: Dream On exploring the reunion stage environment and period atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the reunion stage environment and period atmosphere.",
     "kind": "rendering"
   }
 ],
@@ -5139,77 +5139,77 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "wives-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-cover-4f96e9e8.webp",
-    "altText": "Scenic design for The Merry Wives of Windsor by Brandon PT Davis.",
+    "altText": "Shared civic playing space with open comic architecture.",
     "kind": "cover"
   },
   {
     "id": "wives-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp",
-    "altText": "Rendering for The Merry Wives of Windsor exploring the comic civic world and open architecture, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the comic civic world and open architecture.",
     "kind": "rendering"
   },
   {
     "id": "wives-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150051-f5bf5fb6.webp",
-    "altText": "Production image from The Merry Wives of Windsor showing the shared scenic environment, scenic design by Brandon PT Davis.",
+    "altText": "Shared civic playing space with open comic architecture.",
     "kind": "production"
   },
   {
     "id": "wives-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150074-573bc38e.webp",
-    "altText": "Performance image from The Merry Wives of Windsor with actors moving through the public playing space, scenic design by Brandon PT Davis.",
+    "altText": "Actors moving through the public playing space.",
     "kind": "production"
   },
   {
     "id": "wives-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150170-afa39912.webp",
-    "altText": "Production still from The Merry Wives of Windsor highlighting doorways, concealment, and comic staging, scenic design by Brandon PT Davis.",
+    "altText": "Doorways, concealment, and comic staging.",
     "kind": "production"
   },
   {
     "id": "wives-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150181-d24832cb.webp",
-    "altText": "Stage image from The Merry Wives of Windsor showing architectural framing and ensemble action, scenic design by Brandon PT Davis.",
+    "altText": "Architectural framing and ensemble action.",
     "kind": "production"
   },
   {
     "id": "wives-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp",
-    "altText": "Production image from The Merry Wives of Windsor emphasizing shared civic space and comic movement, scenic design by Brandon PT Davis.",
+    "altText": "Shared civic space and comic movement.",
     "kind": "production"
   },
   {
     "id": "wives-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150212-1de109ac.webp",
-    "altText": "Rendering for The Merry Wives of Windsor studying the scenic composition and pathways for farce, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for The Merry Wives of Windsor studying the scenic composition and pathways for farce.",
     "kind": "rendering"
   },
   {
     "id": "wives-render-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150218-e5e62fe2.webp",
-    "altText": "Rendering for The Merry Wives of Windsor showing the social world and threshold-driven scenic logic, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for The Merry Wives of Windsor showing the social world and threshold-driven scenic logic.",
     "kind": "rendering"
   },
   {
     "id": "wives-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150237-9026dda3.webp",
-    "altText": "Production image from The Merry Wives of Windsor highlighting the playful public atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The playful public atmosphere.",
     "kind": "production"
   },
   {
     "id": "wives-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150250-14ae5400.webp",
-    "altText": "Final production image from The Merry Wives of Windsor showing the complete scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete scenic world.",
     "kind": "production"
   }
 ],
@@ -5218,126 +5218,126 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "pajama-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-cover-31192793.webp",
-    "altText": "Scenic design for The Pajama Game by Brandon PT Davis.",
+    "altText": "The Sleep-Tite factory world and ensemble staging.",
     "kind": "cover"
   },
   {
     "id": "pajama-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150024-3d0dace9.webp",
-    "altText": "Production image from The Pajama Game showing the Sleep-Tite factory world and ensemble staging, scenic design by Brandon PT Davis.",
+    "altText": "The Sleep-Tite factory world and ensemble staging.",
     "kind": "production"
   },
   {
     "id": "pajama-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150038-7aa812ba.webp",
-    "altText": "Rendering for The Pajama Game exploring the factory signage and modular scenic composition, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the factory signage and modular scenic composition.",
     "kind": "rendering"
   },
   {
     "id": "pajama-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150053-79a4a706.webp",
-    "altText": "Production image from The Pajama Game emphasizing the graphic factory environment and choreography space, scenic design by Brandon PT Davis.",
+    "altText": "The graphic factory environment and choreography space.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150081-f085aa1c.webp",
-    "altText": "Production image from The Pajama Game highlighting signage and period workplace structure, scenic design by Brandon PT Davis.",
+    "altText": "Signage and period workplace structure.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150083-4436afe2.webp",
-    "altText": "Performance image from The Pajama Game showing modular scenic units in motion, scenic design by Brandon PT Davis.",
+    "altText": "Modular scenic units in motion.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150091-d653ce9d.webp",
-    "altText": "Production still from The Pajama Game with dance staging and factory signage in view, scenic design by Brandon PT Davis.",
+    "altText": "Dance staging and factory signage in view.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150113-f8ee0dbf.webp",
-    "altText": "Production image from The Pajama Game showing the scenic world supporting romance and labor conflict, scenic design by Brandon PT Davis.",
+    "altText": "The scenic world supporting romance and labor conflict.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150119-0cbc5b32.webp",
-    "altText": "Production image from The Pajama Game highlighting the modular factory atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The modular factory atmosphere.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150126-65311181.webp",
-    "altText": "Production still from The Pajama Game emphasizing period color and ensemble movement, scenic design by Brandon PT Davis.",
+    "altText": "Period color and ensemble movement.",
     "kind": "production"
   },
   {
     "id": "pajama-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150138-045be059.webp",
-    "altText": "Rendering for The Pajama Game showing factory transitions and theatrical composition, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for The Pajama Game showing factory transitions and theatrical composition.",
     "kind": "rendering"
   },
   {
     "id": "pajama-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150146-85071687.webp",
-    "altText": "Production image from The Pajama Game reinforcing the postwar factory energy, scenic design by Brandon PT Davis.",
+    "altText": "The postwar factory energy.",
     "kind": "production"
   },
   {
     "id": "pajama-render-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150172-fa983456.webp",
-    "altText": "Rendering for The Pajama Game exploring signage, movement paths, and period theatricality, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of signage, movement paths, and period theatricality.",
     "kind": "rendering"
   },
   {
     "id": "pajama-render-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150204-1eb8cc47.webp",
-    "altText": "Rendering for The Pajama Game studying scenic transitions and factory architecture, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for The Pajama Game studying scenic transitions and factory architecture.",
     "kind": "rendering"
   },
   {
     "id": "pajama-prod-10",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150206-9a85c769.webp",
-    "altText": "Production image from The Pajama Game showing scenic rhythm during a large musical number, scenic design by Brandon PT Davis.",
+    "altText": "The Sleep-Tite factory world and ensemble staging.",
     "kind": "production"
   },
   {
     "id": "pajama-prod-11",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150219-cf9d5446.webp",
-    "altText": "Production image from The Pajama Game highlighting the adaptability of the modular set, scenic design by Brandon PT Davis.",
+    "altText": "The adaptability of the modular set.",
     "kind": "production"
   },
   {
     "id": "pajama-render-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150230-31072f5e.webp",
-    "altText": "Rendering for The Pajama Game showing the Sleep-Tite world with bold period signage, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for The Pajama Game showing the Sleep-Tite world with bold period signage.",
     "kind": "rendering"
   },
   {
     "id": "pajama-render-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150242-07812088.webp",
-    "altText": "Final rendering for The Pajama Game capturing the lively factory world and musical energy, scenic design by Brandon PT Davis.",
+    "altText": "Final rendering for The Pajama Game capturing the lively factory world and musical energy.",
     "kind": "rendering"
   }
 ],
@@ -5346,77 +5346,77 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "penelopiad-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp",
-    "altText": "The Penelopiad scenic design cover at University of California Irvine, building a ritual memory space for testimony and chorus.",
+    "altText": "A ritual memory space for testimony and chorus.",
     "kind": "cover"
   },
   {
     "id": "penelopiad-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150077-fa49100b.webp",
-    "altText": "Production image from The Penelopiad showing the ritual scenic environment and chorus staging, scenic design by Brandon PT Davis.",
+    "altText": "Ritual set with chorus staging and layered memory space.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150085-f2b6c0a2.webp",
-    "altText": "Production image from The Penelopiad highlighting the layered memory space and ensemble composition, scenic design by Brandon PT Davis.",
+    "altText": "The layered memory space and ensemble composition.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150099-9d051c46.webp",
-    "altText": "Scene from The Penelopiad emphasizing chorus visibility and mythic geometry, scenic design by Brandon PT Davis.",
+    "altText": "Chorus visibility and mythic geometry.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150132-62d7293e.webp",
-    "altText": "Production still from The Penelopiad showing the scenic architecture as container and witness, scenic design by Brandon PT Davis.",
+    "altText": "The scenic architecture as container and witness.",
     "kind": "production"
   },
   {
     "id": "penelopiad-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp",
-    "altText": "Rendering for The Penelopiad exploring the ritual scenic composition and staging framework, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the ritual scenic composition and staging framework.",
     "kind": "rendering"
   },
   {
     "id": "penelopiad-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150227-b6a966e9.webp",
-    "altText": "Production image from The Penelopiad focusing on testimony, procession, and shared visual authority, scenic design by Brandon PT Davis.",
+    "altText": "Ritual set with chorus staging and layered memory space.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp",
-    "altText": "Production image from The Penelopiad showing the scenic world supporting both epic framing and intimacy, scenic design by Brandon PT Davis.",
+    "altText": "The scenic world supporting both epic framing and intimacy.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150239-82c44197.webp",
-    "altText": "Production still from The Penelopiad highlighting spatial layering and chorus movement, scenic design by Brandon PT Davis.",
+    "altText": "Spatial layering and chorus movement.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150245-288b0bff.webp",
-    "altText": "Final production image from The Penelopiad showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the set in performance.",
     "kind": "production"
   },
   {
     "id": "penelopiad-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150059-6b46fd5e.webp",
-    "altText": "Production image from The Penelopiad reinforcing the set's symbolic texture and mythic atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The set's symbolic texture and mythic atmosphere.",
     "kind": "production"
   }
 ],
@@ -5425,56 +5425,56 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "tomas-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-cover-dee4ec53.webp",
-    "altText": "Scenic design for Tomás and the Library Lady by Brandon PT Davis.",
+    "altText": "The welcoming scenic world.",
     "kind": "cover"
   },
   {
     "id": "tomas-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150021-8f3e3ec8.webp",
-    "altText": "Production image from Tomás and the Library Lady showing the welcoming scenic world, scenic design by Brandon PT Davis.",
+    "altText": "The welcoming scenic world.",
     "kind": "production"
   },
   {
     "id": "tomas-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150030-e9e8fd22.webp",
-    "altText": "Performance image from Tomás and the Library Lady highlighting the domestic space and storytelling environment, scenic design by Brandon PT Davis.",
+    "altText": "The domestic space and storytelling environment.",
     "kind": "production"
   },
   {
     "id": "tomas-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150034-713cb452.webp",
-    "altText": "Production still from Tomás and the Library Lady emphasizing movement between intimate and imaginative space, scenic design by Brandon PT Davis.",
+    "altText": "Movement between intimate and imaginative space.",
     "kind": "production"
   },
   {
     "id": "tomas-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150080-bbb3340a.webp",
-    "altText": "Stage image from Tomás and the Library Lady showing the library motifs within the scenic design, scenic design by Brandon PT Davis.",
+    "altText": "The library motifs within the set.",
     "kind": "production"
   },
   {
     "id": "tomas-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150092-f45f3aae.webp",
-    "altText": "Production image from Tomás and the Library Lady with performers framed by the scenic architecture, scenic design by Brandon PT Davis.",
+    "altText": "Performers framed by the scenic architecture.",
     "kind": "production"
   },
   {
     "id": "tomas-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150177-badff38c.webp",
-    "altText": "Final production image from Tomás and the Library Lady showing the complete theatrical environment, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete theatrical environment.",
     "kind": "production"
   },
   {
     "id": "tomas-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp",
-    "altText": "Rendering for Tomás and the Library Lady exploring the library as a portal of imagination, scenic design by Brandon PT Davis.",
+    "altText": "Rendering of the library as a portal of imagination.",
     "kind": "rendering"
   }
 ],
@@ -5483,91 +5483,91 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "uri-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-cover-cb5cfbfe.webp",
-    "altText": "Urinetown scenic design cover at the University of Missouri, using industrial levels and distressed civic architecture.",
+    "altText": "Industrial levels and distressed civic architecture.",
     "kind": "cover"
   },
   {
     "id": "uri-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150035-53b1b5b2.webp",
-    "altText": "Production image of Urinetown at University of Missouri with the full scenic footprint, scenic design by Brandon PT Davis.",
+    "altText": "Image of Urinetown with the full scenic footprint.",
     "kind": "production"
   },
   {
     "id": "uri-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150049-133e6708.webp",
-    "altText": "Cast moment on the industrial comic world of Urinetown, scenic design by Brandon PT Davis.",
+    "altText": "Industrial levels and distressed civic architecture.",
     "kind": "production"
   },
   {
     "id": "uri-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150071-f7909ab9.webp",
-    "altText": "Onstage action framed by the urban architecture in Urinetown at Mizzou, scenic design by Brandon PT Davis.",
+    "altText": "Industrial levels and distressed civic architecture.",
     "kind": "production"
   },
   {
     "id": "uri-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150089-d5824113.webp",
-    "altText": "Production still of Urinetown highlighting ensemble traffic through the set, scenic design by Brandon PT Davis.",
+    "altText": "Scene of Urinetown highlighting ensemble traffic through the set.",
     "kind": "production"
   },
   {
     "id": "uri-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150111-ce548e2f.webp",
-    "altText": "Scene transition on the multi-level structure for Urinetown, scenic design by Brandon PT Davis.",
+    "altText": "Industrial levels and distressed civic architecture.",
     "kind": "production"
   },
   {
     "id": "uri-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150209-c1a606aa.webp",
-    "altText": "Performance image of Urinetown with the civic-industrial set framing the cast, scenic design by Brandon PT Davis.",
+    "altText": "Scene of Urinetown with the civic-industrial set framing the cast.",
     "kind": "production"
   },
   {
     "id": "uri-prod-8",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150217-5d37b53f.webp",
-    "altText": "House-right audience view of Urinetown at University of Missouri, scenic design by Brandon PT Davis.",
+    "altText": "House-right view of Urinetown.",
     "kind": "production"
   },
   {
     "id": "uri-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150238-71e435a4.webp",
-    "altText": "Final production angle showing the complete Urinetown scenic composition, scenic design by Brandon PT Davis.",
+    "altText": "Final production angle showing the complete Urinetown scenic composition.",
     "kind": "production"
   },
   {
     "id": "uri-prod-10",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150023-bded7553.webp",
-    "altText": "Stage picture from Urinetown emphasizing texture, levels, and ensemble composition, scenic design by Brandon PT Davis.",
+    "altText": "Texture, levels, and ensemble composition.",
     "kind": "production"
   },
   {
     "id": "uri-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp",
-    "altText": "Scenic rendering for Urinetown testing massing, pathways, and tonal contrast, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for Urinetown testing massing, pathways, and tonal contrast.",
     "kind": "rendering"
   },
   {
     "id": "uri-render-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150120-56940bd6.webp",
-    "altText": "Rendering pass for Urinetown establishing geometry and actor flow, scenic design by Brandon PT Davis.",
+    "altText": "Rendering pass for Urinetown establishing geometry and actor flow.",
     "kind": "rendering"
   },
   {
     "id": "uri-render-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp",
-    "altText": "Perspective rendering of Urinetown with emphasis on depth and silhouette, scenic design by Brandon PT Davis.",
+    "altText": "Perspective rendering of Urinetown with emphasis on depth and silhouette.",
     "kind": "rendering"
   }
 ],
@@ -5576,35 +5576,35 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "urinetown-2021-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-c871282d6b-f398cd2f.jpeg",
-    "altText": "Urinetown 2021 scenic design cover at Okoboji Summer Theatre, shaped by Brechtian and expressionist influence.",
+    "altText": "Shaped by Brechtian and expressionist influence.",
     "kind": "cover"
   },
   {
     "id": "urinetown-2021-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-51b22c1e9d-0502fb13.jpeg",
-    "altText": "Production image from the 2021 Urinetown showing the angular dystopian environment, scenic design by Brandon PT Davis.",
+    "altText": "The angular dystopian environment.",
     "kind": "production"
   },
   {
     "id": "urinetown-2021-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-96279a9e54-b8e91501.jpeg",
-    "altText": "Production still from the 2021 Urinetown emphasizing the expressionist shapes and musical staging, scenic design by Brandon PT Davis.",
+    "altText": "The angular dystopian environment.",
     "kind": "production"
   },
   {
     "id": "urinetown-2021-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-42a3af6d44-995559d9.jpeg",
-    "altText": "Production image from the 2021 Urinetown highlighting concrete texture and dystopian atmosphere, scenic design by Brandon PT Davis.",
+    "altText": "The angular dystopian environment.",
     "kind": "production"
   },
   {
     "id": "urinetown-2021-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-61fded10c7-8e6f48c3.jpeg",
-    "altText": "Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the complete comic-dystopian scenic world.",
     "kind": "production"
   }
 ],
@@ -5613,49 +5613,49 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "vanya-cover",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190-d193baa9.webp",
-    "altText": "Scenic design for Vanya and Sonia and Masha and Spike by Brandon PT Davis.",
+    "altText": "The Bucks County porch and domestic architecture.",
     "kind": "cover"
   },
   {
     "id": "vanya-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-7-2374-dc489aad.webp",
-    "altText": "Production image from Vanya and Sonia and Masha and Spike showing the Bucks County porch and domestic architecture, scenic design by Brandon PT Davis.",
+    "altText": "The Bucks County porch and domestic architecture.",
     "kind": "production"
   },
   {
     "id": "vanya-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-3-of-7-2374-9937df06.webp",
-    "altText": "Production image from Vanya and Sonia and Masha and Spike highlighting the porch as a threshold and gathering space, scenic design by Brandon PT Davis.",
+    "altText": "The porch as a threshold and gathering space.",
     "kind": "production"
   },
   {
     "id": "vanya-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-2374-7c5829fa.webp",
-    "altText": "Production image from Vanya and Sonia and Masha and Spike emphasizing the warm wood tones and lived-in domestic world, scenic design by Brandon PT Davis.",
+    "altText": "The warm wood tones and lived-in domestic world.",
     "kind": "production"
   },
   {
     "id": "vanya-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-2-8633-c4ca37e0.webp",
-    "altText": "Production still from Vanya and Sonia and Masha and Spike showing the scenic environment supporting layered comic staging, scenic design by Brandon PT Davis.",
+    "altText": "Bucks County porch supporting layered comic staging.",
     "kind": "production"
   },
   {
     "id": "vanya-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/vanya-act-2-45-large-2372-50c5b833.webp",
-    "altText": "Production image from Vanya and Sonia and Masha and Spike reinforcing the porch as both sanctuary and constraint, scenic design by Brandon PT Davis.",
+    "altText": "The porch as both sanctuary and constraint.",
     "kind": "production"
   },
   {
     "id": "vanya-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-2-8670-9f110775.webp",
-    "altText": "Final production image from Vanya and Sonia and Masha and Spike showing the full domestic scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Full-stage view of the full domestic scenic world.",
     "kind": "production"
   }
 ],
@@ -5665,9 +5665,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "a-funny-thing-happened": [
   {
     "type": "text",
-    "heading": "Three Houses, Three Comic Engines",
     "content": [
-      "Three houses stood at the center of the design for A Funny Thing Happened on the Way to the Forum: the home of Senex, the lively brothel of Lycus, and the worn, modest dwelling of Erronius. Each façade was rendered in a heightened, cartoon-like style that matched the musical’s farcical humor while still carrying echoes of ancient Rome."
+      "A Funny Thing Happened on the Way to the Forum needed a scenic world that could move with the speed of farce while giving the audience a clear comic map. At Lake Dillon Theatre Company, I centered the design on three distinct houses: Senex's orderly home, Lycus's lively brothel, and Erronius's more modest dwelling. Each facade had its own personality so the architecture could help drive the joke before anyone entered the room.",
+      "The design pulled from Greco-Roman pottery, classical columns, and decorative motifs, then pushed them into a more heightened theatrical language. I wanted the set to feel rooted in ancient Rome without becoming museum-like. The world needed enough specificity for the story to land and enough exaggeration for the comedy to keep accelerating.",
+      "Because the musical depends on timing, entrances, and immediate recognition, clarity became the main design tool. The scenic design created a bright, playable Roman street where status, desire, confusion, and comic momentum could all be read quickly from the audience."
     ]
   },
   {
@@ -5678,25 +5679,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Classical Texture, Comic Precision",
-    "content": [
-      "To strike that balance, the design drew from Greco-Roman pottery and decorative motifs. Columns and carved details appeared throughout the architecture, treated with just enough exaggeration to feel witty without tipping into parody. The set needed clarity and flexibility, anchoring comic situations while transforming easily as the farce unfolded."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "forum-prod-3",
       "forum-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Farce at Full Tilt",
-    "content": [
-      "Each house held its own personality: Senex’s home suggested domestic order ready to unravel; Lycus’s façade leaned into flamboyance and theatricality; Erronius’s dwelling offered contrast in its simplicity. Together, the trio formed a visual shorthand for tangled relationships and chaotic schemes.",
-      "What tied the design together was its overall sense of exaggeration, architectural features pushed just far enough to feel humorous while preserving the sophistication of a classical world. That blend of whimsy and structure created a stage where disguises, comic chases, and mistaken identities felt perfectly at home."
     ]
   },
   {
@@ -5709,9 +5695,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "a-smalltowne-christmas": [
   {
     "type": "text",
-    "heading": "Holiday Warmth and Small-Town Memory",
     "content": [
-      "A Smalltowne Christmas was designed to capture the charm of a community gathering around shared holiday traditions. The scenic world leaned into familiarity, warmth, and seasonal texture, creating an environment where nostalgia and performance could live side by side without losing theatrical clarity."
+      "A Smalltowne Christmas was built around the feeling of a community gathering for shared holiday traditions. The scenic design leaned into warmth, seasonal texture, and small-town familiarity, creating a world that felt welcoming without becoming overly decorative.",
+      "The challenge was balancing festive spectacle with the intimacy of a local celebration. I wanted the environment to support music, choreography, and nostalgia while still leaving room for the performers to define the heart of the evening.",
+      "Rather than treating Christmas as surface decoration, the design used recognizable holiday details to create a sense of place. The result was a scenic world that felt communal, bright, and theatrical, but still grounded in the emotional simplicity of people coming together."
     ]
   },
   {
@@ -5719,13 +5706,6 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "mediaIds": [
       "smalltowne-prod-1",
       "smalltowne-prod-2"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Town Built for Gathering",
-    "content": [
-      "The design needed to balance festive spectacle with the intimacy of a small-town celebration. Rather than overwhelm the story with decoration, the goal was to create a setting that felt welcoming and communal, allowing the production's music, choreography, and seasonal sentiment to emerge inside a world of believable Christmas cheer."
     ]
   },
   {
@@ -5738,9 +5718,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "all-my-sons": [
   {
     "type": "text",
-    "heading": "A Familiar American Exterior",
     "content": [
-      "All My Sons is set within a postwar suburban home defined by a modest house, open porch, and backyard. The scenic environment reflects the optimism and order associated with the American Dream, presenting a space that initially feels stable, welcoming, and complete."
+      "A familiar postwar American backyard became the starting point for All My Sons at Stephens College. A modest house, open porch, and carefully maintained exterior created a world that first reads as stable, domestic, and complete.",
+      "As the play unfolds, that openness starts to work against the family. Private decisions and moral conflicts are placed in full view, so the realism of the setting becomes part of the pressure. I wanted the Keller home to feel ordinary enough that its unraveling felt more unsettling.",
+      "The design stayed understated on purpose. By avoiding overt symbolism, the backyard could hold the American Dream on the surface while quietly exposing the denial, grief, and accountability underneath it."
     ]
   },
   {
@@ -5751,25 +5732,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Openness Working Against Comfort",
-    "content": [
-      "As the play unfolds, the openness of the setting begins to work against that sense of comfort. Private conversations and moral conflicts are placed in full view, allowing tension to emerge through realism rather than overt symbolism. The layout and scenic details suggest a world carefully maintained, echoing the emotional restraint and denial within the Keller family."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "sons-prod-3",
       "sons-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "The Backyard as Moral Pressure",
-    "content": [
-      "The open suburban setting keeps the Keller home familiar at first glance, then slowly turns that familiarity against itself as private choices come into public view.",
-      "By staying understated, the design lets the play's moral pressure build in plain sight, where the calm surface only makes the fracture underneath feel sharper."
     ]
   },
   {
@@ -5790,9 +5756,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "alls-well-that-ends-well": [
   {
     "type": "text",
-    "heading": "Curtains as Architecture",
     "content": [
-      "This production of All’s Well That Ends Well, directed by Rob Salas, was approached through an operatic lens. Rather than relying on heavy architecture, the design treated curtains as the primary engine of transformation, turning drapery into structure, threshold, and spectacle."
+      "Curtains became the architecture for All's Well That Ends Well at New Swan Theatre Festival. Rather than building heavy scenic structures, I treated drapery as the central language of the production: structure, threshold, concealment, and reveal.",
+      "In Roussillon, blue drapery and heraldic signage created a clear, ceremonial court. A pedestal for the rings became a visual anchor, allowing the production to return to an object charged with promise, pursuit, and disguise.",
+      "When the action shifted to Florence, the curtains opened into warmer stucco, vines, and topiary forms. That transformation changed the emotional temperature of the stage, giving the production a flexible world for romance, deception, and theatrical play without overbuilding the space."
     ]
   },
   {
@@ -5803,26 +5770,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "From Roussillon to Florence",
-    "content": [
-      "In Roussillon, blue drapes and heraldic signage established the French court with clarity and restraint. A pedestal used to present the rings gave the world a ceremonial anchor, something that could return throughout the play and accumulate meaning as the story moved through acts of promise, pursuit, and disguise.",
-      "When the action shifted to Florence, the curtains swept back to reveal stucco walls, vines, and topiary elements that instantly warmed the stage. The transition was not just scenic; it changed the emotional temperature of the play, opening a more playful and theatrical environment for romance, deception, and resolution."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "aw-prod-3",
       "aw-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Reveal and Conceal",
-    "content": [
-      "The design lets reveal and conceal do the storytelling. Each movement of the drapery feels precise and charged, carrying the grand, stylized rhythm of opera while still leaving room for actor movement and comedic clarity. The architecture stays intentionally light so the audience can feel the stage changing in front of them.",
-      "The result is a world that can move between courtly restraint and Mediterranean warmth without losing coherence. The production photographs show how fabric, signage, and garden detail worked together to create a stage picture that is both elegant and flexible, giving Shakespeare’s shifting worlds a clear visual logic without overbuilding them."
     ]
   },
   {
@@ -5836,9 +5787,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "american-idiot": [
   {
     "type": "text",
-    "heading": "Concrete Rebellion",
     "content": [
-      "For American Idiot on the Claire Trevor Theatre stage at UCI, the design channeled Green Day's raw energy into a visual world built on the tension between suburban monotony and urban decay, reimagined through a Southern California lens."
+      "Green Day's raw energy pushed the American Idiot scenic design toward a world of suburban monotony, urban decay, and post-9/11 disconnection. On the Claire Trevor Theatre stage at UC Irvine, I wanted the environment to feel unyielding, like a concrete landscape the characters were fighting to survive.",
+      "A pedestrian bridge in Irvine became the starting image. Its concrete forms and institutional permanence suggested a Southern California version of alienation, one that felt familiar, public, and emotionally suffocating.",
+      "Rather than leaning on the Broadway production's heavy media wall, we built a more immersive frame where projection could move through the architecture. The result was a minimalist scenic world with enough resistance for the music, movement, and rebellion to hit harder."
     ]
   },
   {
@@ -5849,24 +5801,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "A Southern California Metaphor",
-    "content": [
-      "A concrete pedestrian bridge in Irvine linking campus to University Town Center sparked the central metaphor. Modular concrete forms and industrial elements created a stark, permanent environment that felt emotionally suffocating, mirroring a generation's disconnection and frustration in post-9/11 America."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "idiot-prod-3",
       "idiot-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Minimalism in Motion",
-    "content": [
-      "We moved away from Broadway's heavy TV-screen concept and leaned into immersion. Elizabeth Barrett's projections became a kinetic layer, trading static media for visceral spectacle and fluid transitions so the emotional undercurrents of the score could sit inside a minimalist frame. The set stays unyielding while the characters fight to redefine themselves within it."
     ]
   },
   {
@@ -5888,9 +5826,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "an-enemy-of-the-people": [
   {
     "type": "text",
-    "heading": "A World Without Comfort",
     "content": [
-      "For An Enemy of the People at Stephens College, I wanted the world to feel stripped down and confrontational. I kept the entire environment in grayscale, walls, architecture, and floor, treating the space almost like a three-dimensional drawing. The inspiration came from Tokyo’s 2D Cafe, where depth feels flattened and reality feels slightly unstable."
+      "The world of An Enemy of the People needed to feel stripped down, confrontational, and a little unstable. At Stephens College, I held the environment in grayscale, with architecture and floor treated almost like a three-dimensional drawing.",
+      "The inspiration came from spaces where perspective feels flattened and reality becomes slightly uncertain. Rough line work suggested walls and structure without offering comfort, which felt right for a play centered on truth, public scrutiny, and civic denial.",
+      "The only strong color came from the red furniture. Those pieces cut through the monochrome world like pressure points: danger, accusation, and interruption. The minimal palette forced attention onto the actors while making the room feel like an argument the audience could not step away from."
     ]
   },
   {
@@ -5901,25 +5840,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Architecture as Exposure",
-    "content": [
-      "The backdrop included rough, sketch-like line work that suggested architecture without fully rendering it. It wasn’t about realism. It was about exposure. In a play centered on truth and public scrutiny, I didn’t want the room to provide comfort."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "enemy-prod-3",
       "enemy-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Red as Interruption",
-    "content": [
-      "The only real color in the space comes from the red furniture, and those pieces puncture the monochrome world. Red becomes a visual interruption: pressure, danger, accusation. It makes the actors feel like they are standing inside an argument.",
-      "The minimal palette forces focus onto performance and language. There is nowhere to hide. The environment feels stark, almost clinical, but still theatrical, and the design works as a frame that amplifies the play’s themes of power, resistance, and the cost of speaking out."
     ]
   },
   {
@@ -5938,9 +5862,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "an-inspector-calls": [
   {
     "type": "text",
-    "heading": "Composure on the Surface",
     "content": [
-      "For An Inspector Calls, the scenic design framed the Birling household as outwardly composed yet structurally unstable. The room needed to project social confidence and domestic order at first glance, while quietly setting up the pressure points that would be exposed as the inspector’s revelations accumulated."
+      "The Birling home in An Inspector Calls had to look composed before it could begin to fracture. At Okoboji Summer Theatre, the scenic design projected wealth, order, and social confidence while quietly setting up the pressure that the inspector's questions would expose.",
+      "Furniture placement, entrances, and sightlines were calibrated around interrogation. The space had to support drawing-room realism while gradually feeling less like a protected home and more like a room built for accountability.",
+      "Period detail was used with restraint so composition could carry the tension. I wanted the audience to recognize the comfort of the household, then watch that comfort become part of the trap."
     ]
   },
   {
@@ -5951,24 +5876,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Interrogation Through Space",
-    "content": [
-      "Sightlines, entrances, and the arrangement of furniture were all calibrated to support the play’s interrogation dynamics. The world had to accommodate drawing-room realism, but also gradually feel less like a protected domestic interior and more like a stage for moral accountability. That shift depended less on visual excess than on control, where people entered, where they could hide, and how the room held tension."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "inspector-prod-3",
       "inspector-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A House Built for Exposure",
-    "content": [
-      "Period-informed detailing was used with restraint so atmosphere and composition could carry the central tension. The design needed to preserve the social polish of the setting while allowing the audience to feel the instability underneath it. As the evening progressed, the room itself began to feel complicit in the unraveling, an architecture of manners that could no longer protect the family from consequence."
     ]
   },
   {
@@ -5981,9 +5892,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "angel-street": [
   {
     "type": "text",
-    "heading": "A Formal Interior",
     "content": [
-      "The setting for Angel Street centers on a Victorian drawing room shaped by period detail and domestic realism. The space reflects late nineteenth-century order, refinement, and social structure while accommodating the play's psychological tension."
+      "A Victorian drawing room can be beautiful and threatening at the same time. That tension shaped Angel Street at Okoboji Summer Theatre, where domestic polish, period detail, and psychological control needed to exist in the same frame.",
+      "Wainscoting, decorative trim, a functional staircase, period furniture, and practical lighting established a formal interior shaped by observation. As the story tightened, the same details that made the room believable also reinforced a growing sense of confinement.",
+      "The design supported the performers by keeping the world stable while power and perception shifted inside it. The drawing room became an active container for the play's tension, where order, manipulation, and fear could sit in plain sight."
     ]
   },
   {
@@ -5994,24 +5906,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Observation and Enclosure",
-    "content": [
-      "Architectural elements such as wainscoting, decorative trim, and a functional staircase establish a formal interior defined by control and observation. Period furnishings and practical lighting create a believable, lived-in environment. As the story progresses, the room's density and enclosure quietly reinforce a growing sense of confinement without relying on overt visual metaphor."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "angel-prod-3",
       "angel-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Home Tightening Around Its Occupant",
-    "content": [
-      "The design supports the performers by allowing shifts in power and perception to unfold within a stable, realistic setting. The drawing room becomes an active container for the narrative, where domestic order and manipulation coexist in plain sight."
     ]
   },
   {
@@ -6032,9 +5930,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "barefoot-in-the-park": [
   {
     "type": "text",
-    "heading": "A New York Walk-Up",
     "content": [
-      "The design for Barefoot in the Park centered on a compact New York walk-up that amplifies the play’s emotional temperature through scale, proximity, and verticality. Tight architectural boundaries and selective furnishing choices helped stage the couple’s shifting rhythms while preserving clarity for fast comic timing."
+      "A compact New York walk-up became the pressure point for Barefoot in the Park at Okoboji Summer Theatre. Scale, proximity, stairs, doors, and windows all shaped the scenic design's comic rhythm and emotional temperature.",
+      "Rather than over-rendering period detail, I prioritized playable geometry. The apartment needed to support quick entrances, reversals, intimacy, and friction while always remaining clear to the audience.",
+      "The design tracks the couple's movement from romantic idealism toward negotiated partnership. It works less as a neutral apartment and more as a pressure system, turning everyday domestic life into a precise comic engine."
     ]
   },
   {
@@ -6045,24 +5944,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Geometry for Comedy",
-    "content": [
-      "Rather than over-rendering period detail, the scenic approach prioritized playable geometry and social pressure. Doors, stairs, and window relationships all functioned as storytelling tools, giving actors clean pathways for entrances, reversals, and escalating comic friction."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "barefoot-prod-3",
       "barefoot-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Walk-Up with Pressure",
-    "content": [
-      "The apartment needed to track the movement from romantic idealism to negotiated partnership without losing the wit of the play. The set works less as a realistic container than as a pressure system, shaping tempo, intimacy, and the comic stakes of everyday domestic life."
     ]
   },
   {
@@ -6084,9 +5969,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "bell-book-and-candle": [
   {
     "type": "text",
-    "heading": "A Room Built for Realism",
     "content": [
-      "The scenic design for Bell, Book and Candle, directed by Richard Biever, was rooted in realism. The goal was to create a fully realized apartment interior that felt lived-in, functional, and emotionally specific, an environment where the characters could exist naturally and the performances could carry the theatrical weight."
+      "Realism was the anchor for Bell, Book and Candle at Okoboji Summer Theatre. Gillian's apartment needed to feel fully lived-in and emotionally specific, a room where the characters could behave naturally while the play's quiet magic remained just under the surface.",
+      "Built-in bookshelves, practical doors, defined wall planes, and carefully placed furniture gave the room permanence and weight. The green walls brought warmth and personality without pushing the world into overt stylization.",
+      "The goal was to let wit, romance, and enchantment emerge from a believable domestic environment. By keeping the room human and functional first, the scenic design allowed the supernatural elements to feel more intimate."
     ]
   },
   {
@@ -6097,26 +5983,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Domestic Scale and Subtle Magic",
-    "content": [
-      "The space was conceived as a complete room rather than a suggestion of one. Built-in bookshelves, practical doors, and defined wall planes established permanence and weight, while furniture placement supported blocking and sightlines without sacrificing the rhythms of everyday life.",
-      "Color shaped the atmosphere in quieter ways. The decision to use green walls gave the apartment warmth and personality without pushing it into stylization. That palette helped the set hold the play’s familiar wit and slight enchantment at the same time, keeping the world grounded while letting the supernatural elements live just beneath the surface."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "bbc-prod-3",
       "bbc-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Room with a Whisper of Magic",
-    "content": [
-      "Textures and finishes keep the apartment grounded in believable mid-century domestic life, which gives the supernatural undertones somewhere solid to land.",
-      "Green walls, practical detail, and lived-in warmth keep the room human and specific, so the play's enchantment feels like it is slipping in through the edges instead of announcing itself."
     ]
   },
   {
@@ -6135,9 +6005,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "bingo-the-winning-musical": [
   {
     "type": "text",
-    "heading": "Okoboji Through a Playful Lens",
     "content": [
-      "For Bingo: The Winning Musical at Okoboji Summer Theatre, the scenic design pulled from the spirit of the Okoboji Lakes region rather than treating the world as a generic community-hall comedy. Nautical motifs, cheerful color, and a polished sense of playful charm helped the production feel rooted in place while still serving the heightened rhythm of musical theatre."
+      "The Okoboji Lakes region gave Bingo: The Winning Musical its scenic identity. Instead of treating the piece as a generic community-hall comedy, I pulled from nautical motifs, cheerful color, and polished local charm to root the world in place.",
+      "The production needed a bright, legible environment that could support the pace of musical theatre. I wanted enough regional specificity for the setting to feel personal, but enough openness for the staging, music, and comedy to move easily.",
+      "That balance gave the show its scenic identity: playful, buoyant, and community-centered. The design became a welcoming frame for a story about friendship, ritual, and the shared joy of gathering around a game."
     ]
   },
   {
@@ -6147,21 +6018,15 @@ export const fileFirstScenicProjectSectionsBySlug = {
       "bingo-prod-2",
       "bingo-prod-3"
     ]
-  },
-  {
-    "type": "text",
-    "heading": "Camp, Community, and Pace",
-    "content": [
-      "The goal was to support the show's lively pace with a world that was bright, legible, and theatrically generous. The design needed enough specificity to evoke the character of the region, but enough clarity and openness to keep musical storytelling moving cleanly. That balance between local flavor and compositional simplicity gave the production its buoyant comic energy."
-    ]
   }
 ],
   "boeing-boeing": [
   {
     "type": "text",
-    "heading": "A Paris Apartment Built for Farce",
     "content": [
-      "For Boeing, Boeing, I leaned fully into midcentury modernism to evoke the stylish, high-stakes world of Marc Camoletti’s French farce. A sleek 1960s Paris apartment, defined by clean geometry, rich wood, warm neutrals, and bold accents, became an active comic partner rather than a passive backdrop."
+      "Midcentury modernism gave Boeing, Boeing the right kind of comic confidence. At Stephens College, Bernard's Paris apartment needed to look stylish, controlled, and ready to collapse into farce.",
+      "Clean geometry, warm wood, blonde brick, bold accents, and an orange Sputnik chandelier established Bernard's curated world. The cobalt-blue front door became a visual and rhythmic focal point as entrances, exits, and near-misses drove the play.",
+      "The apartment was built around six doors, each placed to support timing and choreography. Every angle had to look intentional while functioning with farcical precision, letting the room become an active partner in the comedy."
     ]
   },
   {
@@ -6172,25 +6037,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Timing Through Architecture",
-    "content": [
-      "Bernard’s entry vestibule, framed by blonde brick and anchored by a cobalt-blue front door, served as a visual and rhythmic focal point as lives spiraled into farce. Above, an orange Sputnik chandelier pushed the period language further while heightening the visual tempo of the room. Every furnishing and every angle had to reinforce the image of curated control."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "boeing-prod-3",
       "boeing-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Room Built for Velocity",
-    "content": [
-      "The apartment was designed around six doors, each positioned to support the timing and choreography essential to farce. Furniture, décor, and circulation patterns had to look elegant while also functioning like a machine. The world projected polish and illusion, but that order was always meant to feel precarious.",
-      "As the comedy escalated, subtle visual clues, mismatched details, creeping plants, and the increasing pressure of the architecture, suggested the chaos gathering beneath Bernard’s carefully managed life. The set was never just background; it drove pace, stakes, and absurdity."
     ]
   },
   {
@@ -6210,9 +6060,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "cole": [
   {
     "type": "text",
-    "heading": "A Late-Night Room",
     "content": [
-      "For Cole at Okoboji Summer Theatre, I wanted the audience to feel like they had stepped into a late-night room in the 1920s. Not a museum version of the jazz age, something alive. The foundation was a black-and-white tile floor, rich walnut millwork, and a grounded bar that anchored the room architecturally."
+      "I wanted Cole to feel like stepping into a late-night 1920s room: not a museum version of the jazz age, but something alive. At Okoboji Summer Theatre, the scenic design centered on a black-and-white tile floor, walnut millwork, and a grounded bar that gave the room architectural weight.",
+      "The bar defined more than atmosphere. It shaped social hierarchy, created levels for performance, and added depth across the proscenium. Keeping the band onstage made the music feel sourced from the room rather than placed on top of it.",
+      "The layout stayed open enough for choreography and microphone work to breathe, while vertical art deco references gave the stage elegance and structure. The design relied on proportion, texture, and intention rather than decoration."
     ]
   },
   {
@@ -6223,25 +6074,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Music in the Room",
-    "content": [
-      "The bar wasn’t just decorative. It defined the social hierarchy of the space. It gave performers levels to work on and around, and it created depth across the proscenium. The band lived onstage, fully integrated into the environment. That decision changed the energy immediately. The music didn’t feel underscored, it felt sourced."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "cole-prod-3",
       "cole-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Elegance with Intention",
-    "content": [
-      "I kept the layout relatively open so choreography and microphone work could breathe, but framed it with vertical elements that referenced art deco geometry without becoming ornamental. The design relied on texture and proportion more than decoration.",
-      "This production wasn’t about spectacle. It was about proximity. The set created an intimate cabaret atmosphere where Cole Porter’s music could feel conversational, elegant, and just slightly dangerous."
     ]
   },
   {
@@ -6262,9 +6098,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "company": [
   {
     "type": "text",
-    "heading": "A New York of Exterior Lives",
     "content": [
-      "For Company at UCI, the design grew out of observation. A solo trip to New York the spring before the production became the seed: white or cream walls, trim layered in decades of paint, and buildings that felt strangely uninhabited because life seemed to happen outside, in motion, in the city itself."
+      "Company grew out of my own observations of New York: pale exterior walls, layers of old trim, fire escapes, stoops, and buildings that felt inhabited by lives just out of reach. At UC Irvine, that sense of exterior life became the heart of the scenic design.",
+      "Two coupled buildings framed one side of the stage, linked like partnership, while a lone red-brick building stood apart to reflect Bobby's solitude. Ladders, stairs, and fire escapes created both physical movement and emotional distance.",
+      "Backlit windows in purples, pinks, and blues suggested private lives behind the architecture. By treating New York as a landscape of longing, the scenic design gave Bobby's isolation a physical shape without closing the city down."
     ]
   },
   {
@@ -6275,25 +6112,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Coupled Buildings and Solitude",
-    "content": [
-      "That sensibility shaped the architecture. Two coupled buildings framed stage right, linked structures echoing partnership, while a lone red-brick building stood apart at stage left, reflecting Bobby's solitude. Fire escapes, stoops, and ladders climbed throughout the composition, offering both physical and metaphorical mobility."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "company-prod-3",
       "company-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Skyline of Longing",
-    "content": [
-      "Backlit windows in purples, pinks, and blues hint at private lives just out of reach, while the shifting skyline moves with mood and music.",
-      "By treating New York as an exterior landscape of longing, the design gives Bobby's isolation and the show's emotional drift a clear visual shape."
     ]
   },
   {
@@ -6318,9 +6140,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "dial-m-for-murder": [
   {
     "type": "text",
-    "heading": "Control as Architecture",
     "content": [
-      "For Dial “M” for Murder at Okoboji Summer Theatre, I wanted the room to feel precise. This play is about control, who has it, who loses it, and how long that illusion lasts. The apartment of Tony and Margot Wendice needed to look composed and intentional, almost curated."
+      "Precision was the first rule for Dial M for Murder at Okoboji Summer Theatre. The play is about control: who has it, who loses it, and how long the illusion lasts, so Tony and Margot's apartment needed to look composed, almost curated.",
+      "Clean architectural lines, paneled walls, balanced bookcases, and a centered fireplace created a sense of order. Around that order, darkness became pressure, isolating the apartment and making the room feel suspended and exposed.",
+      "The floor plan was built around suspense. Doors, thresholds, furniture, and sightlines all supported the mechanics of the plot: who can see, who can hear, who can hide, and who is trapped inside someone else's plan."
     ]
   },
   {
@@ -6331,25 +6154,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Negative Space as Pressure",
-    "content": [
-      "I leaned into clean architectural lines, paneled walls, balanced bookcases, and a centered fireplace to create a sense of order. The palette stayed cool and refined, allowing the actors and lighting to drive emotional shifts. Surrounding the apartment, I let darkness take over. The negative space wasn’t empty, it was pressure. It made the room feel isolated, suspended, and slightly exposed."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "dialm-prod-3",
       "dialm-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Suspense in the Floor Plan",
-    "content": [
-      "The layout was built around movement and sightlines, with every door, threshold, and furniture placement supporting the mechanics of the plot. Suspense in this play is spatial: who can see whom, who can hear what, and who is trapped.",
-      "The design avoids clutter because clutter distracts from tension. The apartment feels elegant, but never comfortable. As the story tightens, the room does not change so much as reveal how fragile that control really is."
     ]
   },
   {
@@ -6370,9 +6178,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "dont-dress-for-dinner": [
   {
     "type": "text",
-    "heading": "A Farmhouse for Farce",
     "content": [
-      "Designed for Don't Dress for Dinner at Okoboji Summer Theatre, the scenic concept reimagined a restored French farmhouse as both romantic getaway and comedic trap. The architecture was rooted in exposed timber beam work, textured plaster walls, and a grounded palette that suggested age, authenticity, and rural charm."
+      "A restored French farmhouse became both romantic getaway and comic trap in Don't Dress for Dinner at Okoboji Summer Theatre. Exposed timber beams, textured plaster, and a grounded palette created warmth, age, and rural charm.",
+      "Farce depends on clarity, so the layout prioritized clean sightlines, purposeful door placement, and layered depth. The timber grid became both a visual anchor and a practical structure for defining playing areas without crowding the stage.",
+      "The design needed to look inviting while supporting escalating deception. By balancing authenticity with precision, the farmhouse could hold the play's romantic surface and the intricate comic machinery underneath it."
     ]
   },
   {
@@ -6383,24 +6192,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Doors, Sightlines, and Precision",
-    "content": [
-      "Farce relies on clarity of movement, so the layout prioritized clean sightlines, purposeful door placement, and layered depth to support the rapid entrances and exits central to Marc Camoletti's script. The beam grid became both a visual anchor and a compositional tool, helping define playing areas without overcrowding the stage."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "dinner-prod-3",
       "dinner-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Floorplan for Escalation",
-    "content": [
-      "Close collaboration with the lighting designer and technical director ensured the timber details caught light with warmth, adding dimensionality without overpowering the actors. The result was a scenic design that supported the intricate humor and tangled relationships at the heart of the production, elegant, grounded, and engineered for precision timing."
     ]
   },
   {
@@ -6415,9 +6210,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "freaky-friday": [
   {
     "type": "text",
-    "heading": "Transformation in Motion",
     "content": [
-      "Freaky Friday required a scenic system capable of fast identity shifts, tonal contrast, and high-energy ensemble flow. The design strategy emphasized modular zones and legible transitions so the audience could instantly read changing contexts while performers maintained pace through musical numbers and dialogue scenes."
+      "Freaky Friday required a scenic system that could handle fast identity shifts, tonal changes, and high-energy ensemble movement. The design emphasized modular zones and clear transitions so the audience could read each location instantly.",
+      "Contemporary domestic and school-world cues gave the production recognizable anchors, while flexible units supported both intimate family scenes and larger musical moments. The scenic logic had to stay simple even as the story became more chaotic.",
+      "That agility was the point. The design gave the production room for comic confusion, quick location changes, and emotional sincerity without losing the relationships at the center of the show."
     ]
   },
   {
@@ -6428,25 +6224,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Zones for Comedy and Pace",
-    "content": [
-      "The visual language was built around contemporary domestic and school-world cues, with flexible units supporting both intimacy and spectacle. Scenic logic had to stay clear even as the show bounced between emotional sincerity, comic confusion, and ensemble-driven momentum."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "freaky-prod-3",
       "freaky-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Stage That Can Switch on Cue",
-    "content": [
-      "The modular layout keeps the story moving fast, letting each location read instantly even as identities and emotional stakes flip underneath it.",
-      "That agility gives the production room for comic chaos without losing the family relationships at the center of the show."
     ]
   },
   {
@@ -6469,9 +6250,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "guys-on-ice": [
   {
     "type": "text",
-    "heading": "A Frozen-Lake Playing Space",
     "content": [
-      "For Guys on Ice, the scenic design focused on creating a playable frozen-lake environment that could support both broad comedy and moments of quiet sincerity. The composition balances a strong horizon line and open negative space with practical ice-fishing architecture so performers can move cleanly while the audience always reads relationship dynamics."
+      "A frozen lake can be empty, funny, lonely, and familiar all at once. For Guys on Ice at The Great American Melodrama, the scenic design focused on a playable winter environment that could hold broad comedy and quiet sincerity at the same time.",
+      "Material choices came from Midwestern winter vernacular: worn surfaces, weathered texture, and the feeling of local history rather than caricature. The lake needed to feel recognizable as a place where ritual and friendship could live.",
+      "Grounding the humor in a believable world allowed the production to carry more than jokes. The scenic design supported musical comedy, community, and the small emotional truths that sit underneath the ice-fishing routine."
     ]
   },
   {
@@ -6482,24 +6264,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Midwestern Winter Vernacular",
-    "content": [
-      "Material and texture choices were built around Midwestern winter vernacular, with surfaces suggesting wear, weather, and local history rather than caricature. The design needed to feel specific to place and season while still supporting the comic energy of the piece."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "goi-prod-3",
       "goi-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Grounding the Lake",
-    "content": [
-      "The larger goal was to ground the humor in a recognizable world. Keeping the environment legible and specific lets the production hold both the exaggerated rhythms of musical comedy and the quieter emotional texture of friendship, ritual, and community."
     ]
   },
   {
@@ -6518,9 +6286,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "head-over-heels": [
   {
     "type": "text",
-    "heading": "Arcadia in Club Color",
     "content": [
-      "For Head Over Heels, I partnered with director Josh Walden to channel the bold, unapologetic spirit of the Go-Go’s and reimagine ancient Arcadia through the lens of 1980s club culture. We drew from the visual language of New York’s Palladium, where theatre, fashion, and music collided under pulsing lights and graphic intensity."
+      "The bold, unapologetic energy of the Go-Go's shaped Head Over Heels from the beginning. Working with director Josh Walden at Theatre SilCo, I reimagined Arcadia through 1980s club culture and the visual intensity of New York's Palladium.",
+      "Instead of medieval architecture, the set became an immersive party: Pop Art shapes, electric color, modular platforms, and stylized columns glowing in saturated pinks. The world transformed fluidly between scenes while keeping the visual energy high.",
+      "The goal was to give the production a scenic language that felt joyful, queer, and in motion. Projection, color, and flexible architecture let each location shift with the characters while keeping the stage alive with pulse and play."
     ]
   },
   {
@@ -6531,26 +6300,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "A Modular Party",
-    "content": [
-      "The set was built to feel like an immersive party. Pop Art motifs, geometric shapes, and vivid neon-inspired colors formed a modular world that transformed fluidly between scenes. Instead of medieval architecture, we leaned into a playful mashup, columns glowing in electric pinks, castle facades borrowing from record-sleeve graphics rather than stone."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "hoh-prod-3",
       "hoh-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Pop, Motion, and Queer Joy",
-    "content": [
-      "A custom high-saturation palette amplifies the show’s irreverent tone. Shifting panels, stylized platforms, and dynamic projection elements let each location evolve with the characters’ emotional arcs, creating a visual rhythm that matches the pulse of the Go-Go’s music.",
-      "The design honors transformation, identity, and freedom while keeping a pop sensibility that feels fresh and theatrical. Whether evoking a dance floor, a throne room, or a forest of fabulous confusion, the scenic world keeps its eye on the core: joy, rebellion, and love in all its forms.",
-      "Ultimately, the set acts as a visual celebration of queerness, musical energy, and theatre’s power to transport. This is not nostalgia; it is momentum in full technicolor."
     ]
   },
   {
@@ -6570,9 +6323,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "last-train-to-nibroc": [
   {
     "type": "text",
-    "heading": "Compressing the Proscenium",
     "content": [
-      "For Last Train to Nibroc, scale was the first problem to solve. The script is intimate. The proscenium was not. I built a smaller, textured frame inside the larger architecture using reclaimed Kentucky barn wood, immediately compressing the stage into a world that felt personal rather than theatrical."
+      "Scale was the first design problem on Last Train to Nibroc. The script is intimate, but the Okoboji Summer Theatre proscenium was large, so I built a smaller textured frame inside the theatre using reclaimed Kentucky barn wood.",
+      "That frame immediately compressed the stage into something more personal. A slight rake improved sightlines and gave the environment a quiet forward pressure, while the barn wood carried warmth, history, and rural honesty.",
+      "A 30-foot backdrop supported the journey between locations without breaking the rhythm of the conversations. The scenic design was not about spectacle. It was about proximity, memory, and giving stillness enough architecture to hold."
     ]
   },
   {
@@ -6583,24 +6337,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Warmth, Sightlines, and Quiet Tension",
-    "content": [
-      "The stage was raked slightly to focus sightlines and give the environment a gentle push forward. It added subtle tension without feeling stylized. The barn wood brought warmth and history into the room, something grounded and honest that reflected the play's rural setting and emotional vulnerability."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "nibroc-prod-3",
       "nibroc-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Travel, Memory, and Waiting",
-    "content": [
-      "A 30-foot backdrop carried the journey between locations, allowing transitions to remain fluid without breaking the rhythm of the characters' conversations. This design wasn't about spectacle. It was about proximity. The architecture supported stillness, and the materials carried nostalgia without becoming sentimental."
     ]
   },
   {
@@ -6623,9 +6363,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "little-shop-of-horrors": [
   {
     "type": "text",
-    "heading": "A Grounded Skid Row",
     "content": [
-      "For Little Shop of Horrors at Okoboji Summer Theatre, I didn't want to lean into camp. The script is funny, but the stakes are real. The design was grounded in a worn, urban storefront that felt structurally honest: brick, aging trim, patched surfaces, and practical doors that made the space believable."
+      "Little Shop of Horrors is funny, but I did not want the design to lean only into camp. At Okoboji Summer Theatre, Skid Row began as a worn urban storefront with brick, aging trim, patched surfaces, and practical doors so the stakes could feel real.",
+      "The flower shop sat inside a slightly compressed proscenium frame, giving Seymour's world a boxed-in quality before Audrey II made it dangerous. A gritty, desaturated palette let the plant and costumes carry contrast while keeping the environment honest.",
+      "The design supported the musical's humor by making the world believable first. That pressure made the plant's growth feel more invasive, turning a small shop into a space where desire, desperation, and horror could keep tightening."
     ]
   },
   {
@@ -6636,24 +6377,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Pressure Inside the Shop",
-    "content": [
-      "The flower shop sat inside a slightly compressed proscenium frame, giving the environment a boxed-in quality. That pressure mattered. Seymour's world needed to feel small before Audrey II made it feel dangerous. The palette stayed gritty and desaturated so the plant and costumes could carry visual contrast while the realism gave the horror weight."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "little-shop-prod-3",
       "little-shop-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Shop That Tightens",
-    "content": [
-      "Details are specific: layered brick texture, working windows, period signage, and practical counters that allow choreography to move cleanly through the shop. The goal is not nostalgia for a 1960s musical. It is tension. As the plant grows, the environment does not become bigger. It becomes more claustrophobic."
     ]
   },
   {
@@ -6668,9 +6395,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "loteria-game-on": [
   {
     "type": "text",
-    "heading": "From Basement to Game Board",
     "content": [
-      "The scenic design for ¡LOTERIA: GAME ON! began in a familiar suburban basement family room, the kind of space where a young person might gather with family, retreat into imagination, and build a world of play from whatever is at hand. That realism provided the launch point for the evening, grounding the story before the design expanded into something brighter, faster, and more theatrical."
+      "LOTERIA: GAME ON! began in the intimacy of a basement and expanded into the heightened logic of a game board. The scenic design needed to support family, ritual, competition, and transformation without losing clarity.",
+      "I treated the scenic world as something that could shift through play. Graphic forms, color, projection surfaces, and flexible architecture allowed the production to move between domestic storytelling and the larger visual language of Loteria.",
+      "The goal was to make the stage feel activated by memory and imagination. As the game took over, the environment could become more theatrical, letting cards, symbols, and family history occupy the same visual space."
     ]
   },
   {
@@ -6681,26 +6409,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Transformation Through Play",
-    "content": [
-      "At the center of the room was a large pillow fort that functioned as both a child-built refuge and a theatrical engine. As the story shifted, the fort and surrounding furniture allowed the basement to transform into a playful 8-bit-inspired Lotería world. The design embraced a game aesthetic without losing the handmade quality of live theatre, letting the stage move between domestic intimacy and heightened spectacle.",
-      "Projection became a major storytelling device in that transition. Gaming consoles, cards, and visual effects carried the audience into the rules and rhythm of the game, while keeping the performers at the center of the action rather than burying them inside technology."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "loteria-prod-3",
       "loteria-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Play, Ritual, and Spectacle",
-    "content": [
-      "The overall goal was to create a world that felt flexible, playful, and immediately legible to young audiences. Scenic elements needed to support quick shifts in space and tone, while still feeling rooted in the live presence of actors and objects. LED integration, Rosco black light paint, and projection helped push the production into a heightened visual register, but the design always returned to the idea of shared imaginative play.",
-      "Rather than separating realism and fantasy, the production treated them as part of the same continuum. The photographs show how the room could open outward into theatrical possibility while still feeling connected to the emotional core of the story."
     ]
   },
   {
@@ -6724,9 +6436,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "million-dollar-quartet": [
   {
     "type": "text",
-    "heading": "Inside Sun Records",
     "content": [
-      "The design invites audiences into Sun Records on the day Elvis Presley, Johnny Cash, Jerry Lee Lewis, and Carl Perkins came together for their legendary jam session. Collaborating with co-scenic designer Efren Delgadillo Jr., director James Moye, and associate director Kim Martin-Cotten, the work balances authenticity with theatricality, capturing both the intimacy of a Memphis studio and the explosive energy of rock and roll in the making."
+      "Sun Records was the heart of Million Dollar Quartet at South Coast Repertory. The scenic design invited audiences into the room on the day Elvis Presley, Johnny Cash, Jerry Lee Lewis, and Carl Perkins came together for their legendary jam session. Working with co-scenic designer Efren Delgadillo Jr., the space had to balance authenticity with theatrical voltage.",
+      "Wood floors, period recording equipment, gold records, and control-room windows grounded the studio in detail. At the same time, the illuminated SUN sign let the space become both a working room and a stage for myth.",
+      "The set was designed to keep the musicians facing one another so the performance felt shared, rhythmic, and alive. It is not just a backdrop for songs. It is a portrait of artists listening, pushing, and turning a recording studio into music history."
     ]
   },
   {
@@ -6737,26 +6450,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "The Room as Performance Engine",
-    "content": [
-      "The environment stays detailed and grounded: wood floors, period recording equipment, and control-room windows lined with gold records. At the same time, theatrical elements heighten the musical impact. Chief among them is the illuminated SUN sign, drawn from Elvis concert signage, which lets the studio become both a place of work and a stage for myth.",
-      "That double identity was important. The room needed to hold the closeness of a rehearsal space while still supporting the heightened, public feeling of history happening in front of an audience."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "mdq-prod-4",
       "mdq-prod-5"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "The Studio as Collaboration",
-    "content": [
-      "The set was built to honor the jam-session energy at the heart of the piece. By keeping the musicians facing one another and the room open, the design makes the performance feel shared, rhythmic, and alive.",
-      "It is not just a stage for the songs. It is a portrait of artists listening, pushing, and turning a recording studio into a moment of music history."
     ]
   },
   {
@@ -6784,9 +6481,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "much-ado-about-nothing": [
   {
     "type": "text",
-    "heading": "Shakespeare Through a Western Lens",
     "content": [
-      "This Wild West–inspired production of Much Ado About Nothing, directed by Eli Simon, reimagined Shakespeare’s comedy through the lens of the spaghetti western. The design embraced the grit and romance of the American frontier while staying flexible enough to work within New Swan’s repertory conditions."
+      "A Western lens opened up Much Ado About Nothing for New Swan Shakespeare Festival. The scenic design needed the social openness of a frontier town and the theatrical precision to support banter, eavesdropping, and public performance.",
+      "Saloon architecture, warm wood, and frontier texture gave the stage a recognizable vocabulary without locking it into strict realism. The design used porches, platforms, and thresholds to create places for watching and being watched.",
+      "That mattered for a play built on overheard conversations and shifting reputations. The scenic world gave the comedy a physical arena where wit, pride, romance, and mischief could all happen in full view."
     ]
   },
   {
@@ -6797,25 +6495,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Saloon Architecture and Frontier Texture",
-    "content": [
-      "The primary backdrop was a saloon interior, with red wallpaper created using a hand-painted roller to achieve an authentic period texture. At the center stood a bar built from rough wood slabs and barrels, complete with swinging saloon doors, giving the stage a clear focal point that could be quickly struck or reconfigured as the story moved.",
-      "Antique signage, weathered finishes, and layered frontier details grounded the world in both history and cinematic influence. The environment needed to hold wit, pursuit, deception, and music without becoming overbuilt, so each scenic element had to do multiple jobs at once."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "man-prod-3",
       "man-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Frontier Stage for Banter",
-    "content": [
-      "By merging Shakespeare’s battles of love and misunderstanding with the visual language of western cinema, the design creates a world that feels playful, textured, and theatrically legible. The saloon backdrop, bar, and signage invite the audience into a dust-filled landscape of gamblers, gunfighters, and lovers while still leaving space for performance to lead."
     ]
   },
   {
@@ -6828,9 +6511,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "not-now-darling": [
   {
     "type": "text",
-    "heading": "A Boutique Built for Farce",
     "content": [
-      "For Not Now, Darling at Okoboji Summer Theatre, the scenic design centered on a polished British boutique interior engineered for comic confusion. The world needed to feel elegant enough to support the play's upper-crust veneer, but also clear and nimble enough to sustain the speed, hiding, and rapid reversals that farce demands."
+      "A polished British boutique became the comic engine for Not Now, Darling at Okoboji Summer Theatre. The room needed to look elegant enough for the play's upper-crust veneer while functioning with the precision required for hiding, reversals, and speed.",
+      "The palette leaned into controlled, Wes Anderson-inspired color relationships. That polish sharpened the heightened comedy while keeping the retail setting specific and visually legible.",
+      "Doors and thresholds were the real engine of the design. The boutique looked refined on the surface, but underneath it behaved like a comic machine, built for entrances, near-misses, and escalating confusion."
     ]
   },
   {
@@ -6840,22 +6524,15 @@ export const fileFirstScenicProjectSectionsBySlug = {
       "darling-prod-2",
       "darling-prod-3"
     ]
-  },
-  {
-    "type": "text",
-    "heading": "Color, Precision, and Timing",
-    "content": [
-      "The palette leaned into Wes Anderson-inspired color relationships, using controlled contrast and visual polish to sharpen the heightened comedy without losing the setting's retail specificity. Doors and thresholds remained essential compositional devices, giving actors the clean entrances, exits, and near-misses that make this kind of comedy feel effortless when it is actually tightly engineered.",
-      "The design goal was to create a world that looked refined on the surface while functioning like a comic machine underneath. That balance between elegance and precision gave the production a lively visual rhythm and supported the play's escalating misunderstandings with architectural clarity."
-    ]
   }
 ],
   "parliament-square": [
   {
     "type": "text",
-    "heading": "A Ritual Path Through the Stage",
     "content": [
-      "A circular stone path cut through the stage, anchoring Parliament Square in a space that felt both ritualistic and inescapable. That central image became a symbol of repetition, echoing cycles of social struggle while reflecting Kat's inner journey toward her final act of protest."
+      "A circular stone path cutting through the stage anchored Parliament Square at UC Irvine. That image gave the scenic design a sense of repetition and ritual, echoing cycles of social struggle and Kat's movement toward her final act of protest.",
+      "Concrete, fractured surfaces, and a cold gray palette stripped comfort from the room. The environment felt public and isolating at the same time, pressing political action against private despair.",
+      "By keeping the design minimal, the stage could hold a meditative rhythm with a sharp edge. The stone circle, decayed textures, and empty space became more than backdrop; they gave sacrifice, resilience, and institutional pressure a physical form."
     ]
   },
   {
@@ -6866,24 +6543,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Concrete, Decay, and Isolation",
-    "content": [
-      "Concrete and fractured surfaces shaped the environment, their erosion mirroring Kat's unraveling faith in institutions. A cold, gray palette stripped away comfort and created a setting that felt both public and isolating, pressing the political against private despair."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "parliament-prod-3",
       "parliament-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Public Space, Private Pressure",
-    "content": [
-      "By keeping the design minimal, the focus stayed on action and the questions the play demands. Without ornamentation, the stage invited a meditative rhythm with a sharp edge of confrontation. The scenic world became more than backdrop: stone circle, textures of decay, and empty expanse together embodied sacrifice and resilience long after the final scene."
     ]
   },
   {
@@ -6906,9 +6569,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "rich-girl": [
   {
     "type": "text",
-    "heading": "A Penthouse as Emotional Armor",
     "content": [
-      "For Rich Girl at Okoboji Summer Theatre, the scenic design centered on a contemporary Manhattan penthouse that visually embodied privilege, polish, and emotional distance. The environment drew from high-end real estate staging and luxury interior publications: sleek lines, controlled color, and carefully selected furnishings that suggested generational wealth without clutter."
+      "A contemporary Manhattan penthouse shaped Rich Girl around privilege, polish, and emotional distance. At Okoboji Summer Theatre, the scenic design drew from luxury interiors and high-end real estate staging, using restraint to suggest wealth without clutter.",
+      "Open architecture, large window framing, sleek lines, and carefully selected furnishings gave the actors a space that felt expansive but exposed. A faux palm tree, later replaced by a Christmas tree, quietly marked taste, season, and time.",
+      "Minimalism became part of the dramaturgy. The penthouse looked controlled, but that control created distance around the relationships, letting emotional volatility play against a room designed to appear effortless."
     ]
   },
   {
@@ -6919,24 +6583,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Scale, Exposure, and Detail",
-    "content": [
-      "The architecture emphasized openness and scale, allowing the actors to move through a space that felt expansive yet psychologically exposed. Large window framing implied skyline views, reinforcing the urban setting and social status of the characters. A faux palm tree, later replaced by a Christmas tree, became a subtle marker of Eve's cultivated taste and the passage of time."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "rich-girl-prod-3",
       "rich-girl-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Wealth, Distance, and Exposure",
-    "content": [
-      "Minimalism became a dramaturgical tool. The restraint of the set contrasted with the emotionally charged relationships unfolding within it. The result was a scenic design that balanced refinement with vulnerability, an elegant architectural shell that amplified the fractures beneath its glossy surface."
     ]
   },
   {
@@ -6956,9 +6606,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "romero": [
   {
     "type": "text",
-    "heading": "A Ritual Rather Than a Reconstruction",
     "content": [
-      "When I first read Xiomara Cornejo’s Romero, I knew the design had to hold more than history; it had to hold ghosts. Set in the final hours of Archbishop Óscar Romero’s life, the play bends time and invites the dead to speak. It is not realism. It is ritual."
+      "When I first read Xiomara Cornejo's Romero, I knew the scenic design had to hold more than history; it had to hold ghosts. Set in the final hours of Archbishop Oscar Romero's life, the play bends time and invites the dead to speak. It is not realism. It is ritual.",
+      "The world emerged from the tension between sacredness and rupture. A cruciform arch stood at the center, part cathedral and part memory portal, while a fractured platform and textured black floor anchored the action in both earth and spirit.",
+      "The play's nonlinear structure required a space that could shift between beach, church, war zone, and afterlife without literal transitions. The design left room for silence, projection, masks, and witness, allowing the room to carry spiritual reckoning as much as image."
     ]
   },
   {
@@ -6969,26 +6620,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Sacredness and Rupture",
-    "content": [
-      "The scenic world emerged from the tension between sacredness and rupture. At the center stood a cruciform arch, part cathedral and part memory portal. Below it, a fractured platform and a textured black floor marked with five-point stars anchored the action in both earth and spirit.",
-      "The play’s nonlinear structure demanded a space that could shift between a beach, a church, a war zone, and the afterlife without literal transitions. Projection surfaces echoed the altar at Hospital de la Divina Providencia, while lighting and media traced the line between past and present."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "rom-prod-3",
       "rom-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Ritual, Rupture, and Witness",
-    "content": [
-      "Lil Lamberta’s masks and oversized figures break the surface of realism, while Cherie Sampson’s projections keep each moment anchored in living memory. The design welcomes those interruptions instead of smoothing them over, so shifts in tone, time, and identity can land with real force.",
-      "Romero is larger than a single life. The space had to hold a nation in spiritual reckoning, which meant listening closely, leaving room for silence, and letting the room carry witness as much as image."
     ]
   },
   {
@@ -7002,9 +6637,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-25th-annual-putnam-county-spelling-bee": [
   {
     "type": "text",
-    "heading": "A School Gym with Stakes",
     "content": [
-      "For The 25th Annual Putnam County Spelling Bee at Stephens College, the scenic design transformed the stage into a recognizable middle school gymnasium, functional, slightly outdated, and brimming with community pride. The architecture leaned into wood-paneled walls, acoustic panels, mounted basketball hoops, and practical overhead fixtures to evoke the institutional tone of a multipurpose school space."
+      "A recognizable middle school gym gave The 25th Annual Putnam County Spelling Bee its world at Stephens College. The scenic design needed to feel functional, slightly outdated, and full of community pride.",
+      "Wood-paneled walls, acoustic panels, basketball hoops, practical fixtures, and sponsor signage gave the room an institutional familiarity. A raised platform and bold competition banner made the spelling bee feel both ceremonial and modest.",
+      "The design needed to hold comedy and vulnerability in the same space. By grounding the event in a believable school environment, the production could let the characters' anxieties, ambitions, and small acts of bravery feel immediate."
     ]
   },
   {
@@ -7015,25 +6651,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Ceremony and Sincerity",
-    "content": [
-      "The composition centered on a raised platform framed by a bold competition banner, allowing the spelling bee to feel both ceremonial and modest. A recessed upstage area created depth while providing flexible staging for musical numbers and ensemble moments. Chairs, tables, and sponsor signage reinforced the local, volunteer-driven atmosphere of the event."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "spelling-prod-3",
       "spelling-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Competition with Heart",
-    "content": [
-      "Material choices were intentionally straightforward: durable finishes, painted surfaces, and clear graphic elements that echoed the sincerity of a school environment. This grounded realism provided contrast to the musical’s vibrant costumes and emotional arcs.",
-      "The scenic design supported fast transitions and character-driven comedy while maintaining a cohesive visual world, nostalgic, playful, and rooted in everyday Americana."
     ]
   },
   {
@@ -7047,9 +6668,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-bald-soprano": [
   {
     "type": "text",
-    "heading": "A Distorted Drawing Room",
     "content": [
-      "The Bald Soprano called for a domestic world that felt recognizable at first glance, then increasingly unstable the longer the audience sat with it. For Stephens College, the scenic and lighting design approached the room as an absurd drawing-room interior pushed slightly out of alignment, a polite domestic setting that could no longer support the logic it claimed to represent."
+      "The Bald Soprano needed a domestic room that looked recognizable at first glance, then became less stable the longer the audience sat with it. At Stephens College, the scenic and lighting design treated the drawing room as a polite interior that could no longer support logic.",
+      "Because the play is built on repetition, interruption, and the collapse of language, proportion and composition became central. Furniture, architecture, and light leaned into distortion rather than strict realism.",
+      "Lighting worked as part of the architecture, sharpening awkward pauses and tonal shifts. The design let absurdity live in plain sight, inside a room still trying to behave as if everything were normal."
     ]
   },
   {
@@ -7060,25 +6682,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Miscommunication in Space",
-    "content": [
-      "Because the play is built on repetition, interruption, and the collapse of ordinary language, proportion and composition became central design tools. The environment leaned into distortion rather than realism, allowing furniture, architecture, and light to reinforce the feeling that communication had broken down inside a room still trying to perform civility.",
-      "Lighting was treated as part of that same architecture. Instead of simply illuminating the room, it sharpened awkward pauses, exaggerated tonal shifts, and helped the domestic image slide from familiar to surreal."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "bald-prod-4",
       "bald-prod-5"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Absurdity in Plain Sight",
-    "content": [
-      "The goal was to build an absurdist environment that could hold both comedy and unease. The world needed to feel visually coherent enough for the audience to enter it, but unstable enough to reflect the play's deeper concern with ritualized speech, failed understanding, and the breakdown of meaning itself."
     ]
   },
   {
@@ -7097,9 +6704,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-complete-works-of-william-shakespeare-abridged": [
   {
     "type": "text",
-    "heading": "A Modular World for Comic Velocity",
     "content": [
-      "For The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, the scenic design embraced the playful and irreverent spirit of the show. The set was conceived as a modular comic machine, able to pivot quickly through Shakespeare's iconic works without slowing the production's momentum or flattening its theatrical humor."
+      "Speed drove the scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre. The set became a modular comic machine that could pivot quickly through Shakespeare's worlds without slowing the actors down.",
+      "Because the piece shifts constantly in style, reference, and performance mode, the environment prioritized flexibility and legibility. Bold visual elements and clear staging zones gave the performers room for physical comedy and improvisational energy.",
+      "The goal was not to illustrate every play literally. It was to provide a scenic structure that could absorb chaos, parody, and theatrical invention while keeping the audience oriented and the comedy moving."
     ]
   },
   {
@@ -7107,14 +6715,6 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "mediaIds": [
       "complete-prod-1",
       "complete-prod-2"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Fast Transitions, Bold Compositions",
-    "content": [
-      "Because the show depends on rapid-fire shifts in style, reference, and performance mode, the environment prioritized flexibility and legibility. Bold visual elements, clear staging zones, and a dynamic layout gave the actors room for physical comedy and improvisational energy while keeping the storytelling readable for the audience.",
-      "The goal was not to illustrate every Shakespearean world literally, but to provide a scenic structure that could absorb chaos, parody, and theatrical invention. That modularity let the production celebrate the speed, humor, and affectionate irreverence at the center of the piece."
     ]
   },
   {
@@ -7128,9 +6728,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-effect-of-gamma-rays": [
   {
     "type": "text",
-    "heading": "A House of Erosion",
     "content": [
-      "The environment was shaped by layers of deterioration and memory. Faded yellow wallpaper, sun-bleached and subtly stained, suggested years of exposure and emotional erosion. Sections of exposed newspaper lining beneath the paper hinted at past attempts to insulate or repair the home, reinforcing both economic strain and the passage of time."
+      "Deterioration, repair, and memory shaped The Effect of Gamma Rays on Man-in-the-Moon Marigolds at Okoboji Summer Theatre. Faded yellow wallpaper, sun bleaching, stains, and exposed newspaper layers suggested a home worn down by time and strain.",
+      "The walls carried a brittle quality through curling edges, uneven seams, and tonal shifts that caught the light uneasily. Reclaimed dock lumber from Lake Okoboji added physical authenticity and contrasted with the fragile interior surfaces.",
+      "Together, distressed paper and weathered timber created a space that felt structurally present and emotionally unraveling. The environment gave the characters a world marked by damage, but not without endurance."
     ]
   },
   {
@@ -7141,33 +6742,21 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Distressed Surfaces and Physical Weight",
-    "content": [
-      "The walls carried a brittle quality, curling edges, uneven seams, and tonal shifts that caught the light in uneasy ways. To ground the world in physical authenticity, portions of the set were built from reclaimed dock lumber sourced from Lake Okoboji. The wood's natural weathering introduced a tactile realism that contrasted with the fragile interior surfaces."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "gamma-prod-3",
       "gamma-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Fragility Under Pressure",
-    "content": [
-      "That combination of distressed paper and worn timber created a space that felt both structurally present and emotionally unraveling. The environment gave the characters a world marked by damage, but not without endurance, allowing the play's fragile hope to register against a setting that had clearly survived too much."
     ]
   }
 ],
   "the-glass-menagerie": [
   {
     "type": "text",
-    "heading": "Memory as Space",
     "content": [
-      "This production of The Glass Menagerie was grounded in the idea of the memory play, not as a literal reconstruction of the Wingfield apartment, but as a fluid, impressionistic landscape shaped by Tom's recollection. From the outset, the design sought to feel unstable and permeable, allowing memory to drift, overlap, and distort rather than lock the play into a fixed domestic realism."
+      "Tennessee Williams described The Glass Menagerie as a memory play, and that idea became the foundation of my scenic design. Rather than creating a literal recreation of the Wingfield apartment, I approached the environment as a landscape shaped by Tom's recollections--fragmented, emotional, and imperfect. The design needed to feel familiar enough to ground the story while allowing the world to shift through the lens of memory.",
+      "At the center of the production was a large elevated platform that defined the primary playing space of the apartment. Surrounding it, fragments of architecture suggested the apartment, the city beyond, and the blurred edges of remembered experiences. These elements created a visual language that supported the play's movement between reality and recollection.",
+      "One of the primary challenges was balancing clarity with uncertainty. The audience needed to recognize the Wingfield home while also sensing that the environment was being filtered through Tom's narration. Nothing was intended to feel entirely fixed or complete.",
+      "A memory wall became one of the production's strongest visual motifs. Composed of framed fragments from Tom and Laura's past, the collection functioned less as documentation and more as recollection. The images remained intentionally ambiguous, reinforcing the idea that memory is selective, emotional, and often unreliable. Through this approach, the scenic design sought to transform memory into a physical environment--one that existed somewhere between the past and the present."
     ]
   },
   {
@@ -7178,26 +6767,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Platform and Threshold",
-    "content": [
-      "The central scenic gesture was a large, elevated interior platform that defined the apartment's primary playing space. This platform functioned both practically and metaphorically: it created a clear home base for the action while reinforcing Tom's sense of entrapment within the last place he ever called home. The elevation subtly separated the family from the surrounding world, heightening the emotional pressure of scenes that unfold there.",
-      "Surrounding the platform, I developed a series of loosely defined architectural structures, brick fragments, doorways, and thresholds that suggested environment without enclosing it. These elements allowed actors to move freely through the space, supporting the play's fluid shifts between interior and exterior, past and present. The lack of complete walls was intentional; nothing in this world is fully contained."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "gm-prod-3",
       "gm-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Memory Made Physical",
-    "content": [
-      "The memory wall became the clearest visual cue in the room, a collage of framed fragments from Tom and Laura's past. Kept deliberately vague, the images feel more like recollection than documentation, which suits a play where memory is always partial and a little unreliable.",
-      "The rest of the space stays open and responsive so lighting, movement, and performance can do their work. That balance lets the apartment hold intimacy, distance, and longing in the same frame without ever feeling overdesigned."
     ]
   },
   {
@@ -7222,9 +6795,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-glass-menagerie-2011": [
   {
     "type": "text",
-    "heading": "A Memory Space for Longing and Escape",
     "content": [
-      "This production of The Glass Menagerie was designed as a world shaped by memory rather than strict realism. The domestic environment needed to feel present enough for the family drama to land, but also unstable enough to suggest the emotional filtering of recollection, longing, and distance."
+      "Memory shaped the Wingfield apartment in the 2011 Okoboji Summer Theatre production of The Glass Menagerie. The space needed to feel present enough for the family drama to land, but unstable enough to carry longing, distance, and recollection.",
+      "Memory-inspired scrim walls made the apartment feel enclosed and permeable at the same time. As sightlines shifted, the city beyond could appear through the architecture, extending the family's emotional world rather than acting as a simple backdrop.",
+      "The goal was to support Tennessee Williams' fragile emotional architecture with a setting that could hold nostalgia, pressure, intimacy, and escape. The environment stayed playable for domestic scenes while remaining haunted by everything outside the room."
     ]
   },
   {
@@ -7235,33 +6809,20 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Scrim Walls and the City Beyond",
-    "content": [
-      "Memory-inspired scrim walls allowed the apartment to feel both enclosed and permeable. As sightlines shifted, the city beyond could emerge through the scenic architecture, reinforcing the play's tension between confinement and escape. That revealed urban layer extended the emotional world of the family rather than acting as a simple background image."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "glass-2011-prod-3",
       "glass-2011-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Memory Held in Suspension",
-    "content": [
-      "The goal was to support Tennessee Williams' fragile emotional architecture with a setting that felt haunted by memory but still playable for intimate domestic scenes. The environment needed to hold nostalgia, pressure, and the desire to leave, allowing the scenic world to echo the play's central tension without overwhelming it."
     ]
   }
 ],
   "the-liar": [
   {
     "type": "text",
-    "heading": "Classical Elegance with Comic Lift",
     "content": [
-      "The Liar was approached as a classical comedy with enough visual elegance to support heightened language, but enough playfulness to keep the world active and theatrical. The scenic environment balanced refinement with exaggeration, giving the production a setting that could hold both period wit and farcical momentum."
+      "The Liar needed a world with elegance, speed, and theatrical lift. At Okoboji Summer Theatre, the scenic design balanced classical refinement with enough playfulness to keep the adaptation active and buoyant.",
+      "Because the play thrives on mistaken identity, verbal agility, and social performance, the environment had to feel orderly at first glance while leaving room for disruption. Bold accents and framed architecture helped the setting feel alive rather than museum-like.",
+      "The design honored the classical source while giving the production its own snap. It created a polished, welcoming world where wit, charm, deception, and comic momentum could move clearly."
     ]
   },
   {
@@ -7272,24 +6833,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "A World for Wit and Deception",
-    "content": [
-      "Because the play thrives on mistaken identity, verbal agility, and social performance, the design needed to feel orderly at first glance while still leaving room for comic disruption. Bold accents and carefully framed architecture helped make the environment feel lively rather than museum-like, allowing the comedy to stay buoyant and clear."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "liar-prod-3",
       "liar-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Performance as Social Strategy",
-    "content": [
-      "The goal was to create a setting that honored the classical source while giving the adaptation its own theatrical snap. The world needed to feel polished, quick, and welcoming to the audience, supporting the play's wit and charm without losing the precision that makes the farce land."
     ]
   },
   {
@@ -7302,9 +6849,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-man-of-la-mancha": [
   {
     "type": "text",
-    "heading": "A World Built in Front of Us",
     "content": [
-      "For The Man of La Mancha at Lake Dillon Theatre Company, I didn’t want to build a picturesque Spain. The director and I talked early about the story living inside a warehouse, a space where actors could assemble the world in front of us. That idea shaped everything, making the environment feel raw, performative, and always on the edge of transformation."
+      "I did not want The Man of La Mancha to live in a picturesque Spain. At Lake Dillon Theatre Company, the director and I talked early about the story existing inside a warehouse, a space where actors could assemble the world in front of us.",
+      "Brick walls, exposed piping, and a steel stair structure grounded the room in an honest industrial vocabulary. A circular pattern cut into the floor created a playing arena that felt part ritual space and part proving ground.",
+      "The windmill, traced in industrial pipe, was never meant to feel literal. It worked more like an idea projected onto the room, allowing imagination and harsh reality to occupy the same space as the performers built the story in real time."
     ]
   },
   {
@@ -7315,24 +6863,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Industrial Ritual",
-    "content": [
-      "The brick walls, exposed piping, and steel stair structure weren’t decorative. They grounded the room in something honest and industrial. At the center of the stage, a circular pattern scored into the floor created a playing arena that felt part ritual space and part proving ground. The musicians lived inside the environment rather than outside it, reinforcing the sense that this world was being made in real time."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "lamancha-prod-3",
       "lamancha-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Imagination Against the Real",
-    "content": [
-      "Upstage, a windmill traced out of industrial pipe was never meant to feel literal. It worked more like an idea projected onto reality, the image of Quixote rather than an object itself. Distressed textures, modular crates, and repurposed materials let transformation come from performance and light rather than scene changes. The set didn’t illustrate fantasy; it asked the audience to create it with us."
     ]
   },
   {
@@ -7345,9 +6879,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-marvelous-wonderettes-dream-on": [
   {
     "type": "text",
-    "heading": "A Gym as a Memory Container",
     "content": [
-      "For The Marvelous Wonderettes: Dream On at Okoboji Summer Theatre, the setting is a reunion, but it is really about time. The design was built around a recognizable high school gym stage: wood paneling, risers, school signage, and those rectangular basketball backboards that immediately signal mid-century Americana."
+      "The Marvelous Wonderettes: Dream On is set at a reunion, but the design was really about time. At Okoboji Summer Theatre, I built the world around a recognizable high school gym stage with wood paneling, risers, school signage, and mid-century basketball backboards.",
+      "The structure stayed the same between acts. What changed was tone. Act One leaned into early 1960s polish with tinsel, clean lines, and a crescent motif that made the performers feel almost like a televised variety act.",
+      "By Act Two, the space loosened into warmer color, balloon arches, and deeper saturation. The gym aged with the characters, allowing nostalgia to become active rather than decorative."
     ]
   },
   {
@@ -7358,25 +6893,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "The Structure Stayed, the Tone Shifted",
-    "content": [
-      "The structure did not change between acts. The gym stayed the gym. What changed was tone. Act One leaned into the early 1960s with clean lines, controlled color, and a polished reunion atmosphere framed by tinsel and a crescent motif that made the performers feel almost like a televised variety act.",
-      "By Act Two, the space loosened. The palette warmed, balloon arches appeared, and the lighting embraced deeper saturation. The 1970s energy felt more personal and less formal, allowing the environment to age with the characters without needing a complete scenic transformation."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "wonderettes-prod-3",
       "wonderettes-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Nostalgia with a Pulse",
-    "content": [
-      "I was not interested in parodying the decades. The goal was for the audience to recognize the space immediately and then feel it evolve. The gym became a container for memory, structured, familiar, and slowly shifting as the Wonderettes revisited who they were and who they became."
     ]
   },
   {
@@ -7396,9 +6916,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-merry-wives-of-windsor": [
   {
     "type": "text",
-    "heading": "A Shakespeare Sitcom",
     "content": [
-      "The Merry Wives of Windsor was approached through the lens of a campy 1950s sitcom. Rather than treating Windsor as a purely historical townscape, the design leaned into bright theatrical framing, heightened perspective, and a comic visual language that could support quick reversals, overheard schemes, and the playful energy of the production."
+      "A campy 1950s sitcom lens unlocked The Merry Wives of Windsor at Stephens College. Instead of a historical townscape, the scenic design used bright theatrical framing, heightened perspective, and playful visual shorthand.",
+      "A central green wall with a circular portal gave the stage a strong graphic anchor and a memorable entrance point. Each new location was marked by a different brightly colored door that could fly in, turning transitions into part of the joke.",
+      "The result was a flexible comic world built for schemes, reversals, and overheard conversations. The design kept the stage open while giving each scene a crisp visual identity."
     ]
   },
   {
@@ -7409,26 +6930,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Color, Portals, and Transitions",
-    "content": [
-      "A central green wall with a circular portal created the primary visual anchor of the set, giving actors a clean, memorable entrance point at center while reinforcing the graphic, stylized tone of the world. To help the show feel more cinematic, each scene was marked by a different brightly colored door that could fly in, turning transitions into part of the theatrical joke rather than something to hide.",
-      "Those flown doors gave each location its own comic identity while keeping the stage open and flexible. The effect was playful and crisp: scenes could shift quickly, rhythms could stay alive, and the visual world kept reinforcing the sitcom energy of the production."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "wives-prod-3",
       "wives-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Comic Mischief in Full View",
-    "content": [
-      "The goal was to make the production feel nimble, campy, and audience-facing without losing the mechanics of Shakespeare’s comedy. Scenic composition had to support eavesdropping, concealment, and surprise, but it also needed to deliver a bold visual joke the moment a new scene arrived.",
-      "By combining the flown color doors, the central portal wall, and a heightened 1950s perspective, the set created a world that felt theatrical, witty, and immediately legible. The comedy could move fast, and the design moved with it."
     ]
   },
   {
@@ -7451,9 +6956,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-pajama-game": [
   {
     "type": "text",
-    "heading": "A Factory with Personality",
     "content": [
-      "The Pajama Game needed a world that could move as fast as the score. Bold signage and shifting factory elements framed the 1950s Sleep-Tite Pajama Factory, giving the stage a strong graphic identity while keeping transitions quick and dance-friendly."
+      "The Pajama Game needed a world that could move as fast as the score. At UC Irvine, bold signage and shifting factory elements framed the Sleep-Tite Pajama Factory, giving the stage a clear graphic identity and room for dance.",
+      "The story balances romance with a labor dispute, so the world had to support both pleasure and pressure. Repeating structures, workplace signage, and a vibrant period palette suggested postwar optimism while keeping the conflict over wages visible.",
+      "A modular approach allowed quick transformations from intimate encounters to full-ensemble numbers. The result was a scenic world that felt playful and pointed, period-specific and theatrical at the same time."
     ]
   },
   {
@@ -7464,24 +6970,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Romance and Labor in the Same Space",
-    "content": [
-      "The story balances spirited romance with a sharp labor dispute, so the scenic world had to support both. Repeating structures and a vibrant factory palette suggested postwar optimism, while signage and movable units emphasized workplace mechanics and the conflict over fair wages driving the plot."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "pajama-prod-3",
       "pajama-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Work, Play, and Friction",
-    "content": [
-      "A modular approach supported dance-heavy staging, allowing rolling units to transform quickly from intimate encounters to full-ensemble numbers. The result was a world that felt playful yet pointed: period-authentic enough to ground the audience, theatrical enough to energize a story about love, labor, and finding joy amid conflict."
     ]
   },
   {
@@ -7511,9 +7003,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-penelopiad": [
   {
     "type": "text",
-    "heading": "A Memory Space for Penelope and the Maids",
     "content": [
-      "The Penelopiad was conceived as a layered memory space where testimony, ritual, and counter-narrative could coexist. Rather than locating the story in a literal reconstruction of ancient Greece, the design framed the stage as a world of witness, one where Penelope and the maids could occupy the same visual architecture while speaking from different positions of power."
+      "The Penelopiad became a layered memory space where testimony, ritual, and counter-narrative could coexist. At UC Irvine, the scenic design avoided reconstructing ancient Greece and instead framed the stage as a world of witness.",
+      "A major concern was chorus visibility. The composition needed to support group presence without flattening the action, so open geometry and layered levels allowed the world to expand into epic framing or compress into intimate address.",
+      "The material language balanced austerity with symbolic texture. The design gave Penelope and the maids a shared architecture while making the imbalance of power, authorship, and inherited myth visible."
     ]
   },
   {
@@ -7524,24 +7017,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Chorus Visibility and Flexible Geometry",
-    "content": [
-      "A central concern was chorus visibility. The scenic composition needed to support group presence without flattening the action, so the environment used open geometry and layered playing levels that could expand into epic framing or compress into intimate address. That flexibility allowed the production to move fluidly between narrative distance and emotional immediacy."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "penelopiad-prod-3",
       "penelopiad-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Witness and Counter-Witness",
-    "content": [
-      "Material language balances austerity with symbolic texture, supporting the work's interrogation of authorship, gendered history, and inherited myth. The set functions as both container and witness, giving Penelope and the maids equal visual authority inside the same world while maintaining theatrical tension across the evening."
     ]
   },
   {
@@ -7564,9 +7043,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "tomas-and-the-library-lady": [
   {
     "type": "text",
-    "heading": "Invitation Through Space",
     "content": [
-      "Tomás and the Library Lady was designed to honor storytelling as an act of invitation. The scenic approach created warm, readable spaces that support bilingual performance, audience access, and fluid movement between domestic reality and imaginative expansion."
+      "Storytelling as invitation shaped Tomas and the Library Lady at Lake Dillon Theatre Company. The scenic design needed to feel warm, readable, and accessible for young audiences while supporting bilingual performance and imaginative movement.",
+      "Library architecture and visual motifs were treated as portals rather than static background. I wanted the stage to suggest discovery without overcomplicating the picture, letting language, movement, and image work together.",
+      "The design reinforced the play's themes of literacy, belonging, and cultural memory. It welcomed the audience into a clear room, then allowed that room to open outward into imagination."
     ]
   },
   {
@@ -7577,24 +7057,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Libraries as Portals",
-    "content": [
-      "Library architecture and visual motifs were treated as portals rather than static background. The goal was to give the production a sense of discovery while maintaining clarity for young audiences, creating an environment where movement, language, and image could work together without overcomplicating the stage picture."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "tomas-prod-3",
       "tomas-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A Room That Welcomes Discovery",
-    "content": [
-      "The design reinforces the play’s core themes of literacy, belonging, and cultural memory. Warmth and legibility were essential, but so was the feeling that the world could open outward into imagination at any moment. The environment needed to welcome the audience in, then reward that openness with theatrical discovery."
     ]
   },
   {
@@ -7614,9 +7080,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "urinetown": [
   {
     "type": "text",
-    "heading": "A Civic Machine",
     "content": [
-      "Urinetown was designed as a civic machine: industrial, compressed, and deliberately stratified to support the musical’s satire of power, scarcity, and class. Layered levels and clear circulation paths allowed scenes to pivot quickly between public spectacle and private confrontation while preserving visual pressure on the ensemble."
+      "Urinetown became a civic machine at the University of Missouri: industrial, compressed, and deliberately stratified. Layered levels and visible circulation paths kept hierarchy present as scenes shifted between public spectacle and private confrontation.",
+      "Distressed infrastructure, steel framing, elevated offices, and containment logic made the world feel governed, policed, and monetized. The environment was not neutral; it was an apparatus of control.",
+      "The set needed to support satire, ensemble traffic, musical energy, and abrupt status changes while keeping the political warning visible underneath the absurdity. The architecture gave the comedy pressure."
     ]
   },
   {
@@ -7627,26 +7094,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Infrastructure as Storytelling",
-    "content": [
-      "The palette and detailing leaned into distressed infrastructure so the environment felt governed, policed, and monetized. Steel framing, elevated offices, and the logic of containment all helped turn the world into an apparatus of control rather than a neutral backdrop.",
-      "Transitions were structured to keep momentum high, reinforcing the show’s tonal shift between absurd comedy and political warning. The set needed to support ensemble traffic, musical energy, and abrupt changes in status while always keeping hierarchy visible."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "uri-prod-4",
       "uri-prod-5"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "A City That Polices Itself",
-    "content": [
-      "The architecture was shaped to make the town’s rules visible at a glance. Levels, barriers, and industrial framing turn the world into a system of control, which gives the satire a physical target.",
-      "That clarity keeps the comedy sharp, but it also leaves the audience with something more uneasy: a civic machine that feels theatrical and, at the same time, all too recognizable."
     ]
   },
   {
@@ -7671,9 +7122,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "urinetown-2021": [
   {
     "type": "text",
-    "heading": "Brecht and Expressionism as Musical Satire",
     "content": [
-      "This 2021 production of Urinetown was built around the collision of theatrical satire and authoritarian architecture. The design drew from Brechtian staging and German Expressionist distortion, creating a world of angular forms, hard textures, and visible theatricality that could support both the show's comedy and its political edge."
+      "The 2021 Okoboji Summer Theatre production of Urinetown was built around the collision of theatrical satire and authoritarian architecture. Brechtian staging and German Expressionist distortion shaped a world of angular forms, hard textures, and visible theatricality.",
+      "Concrete textures and exaggerated structural rhythms made the city feel oppressive without pinning it to literal realism. The environment functioned as a symbolic civic machine where scarcity, authority, and public control could be felt spatially.",
+      "The goal was to sharpen the musical's dystopian absurdity while giving performers a strong graphic world to play against. The design stayed open enough for movement and comic address, but hard enough to keep the politics present."
     ]
   },
   {
@@ -7684,33 +7136,20 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Concrete, Symbol, and Social Pressure",
-    "content": [
-      "Concrete textures and exaggerated structural rhythms helped make the city feel oppressive without pinning the production to literal realism. The environment needed to function as a symbolic civic machine, one where authority, scarcity, and public control could all be felt spatially, while still leaving enough openness for movement, choreography, and comic address."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "urinetown-2021-prod-3",
       "urinetown-2021-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Satire That Still Feels Close",
-    "content": [
-      "The goal was to create a stage world that sharpened the musical's dystopian absurdity while giving performers a strong graphic environment to play against. By combining angular composition, raw surfaces, and symbolic lighting, the set reinforced the production's satirical critique without flattening its humor or musical vitality."
     ]
   }
 ],
   "vanya-and-sonia-and-masha-and-spike": [
   {
     "type": "text",
-    "heading": "A Porch as Sanctuary and Constraint",
     "content": [
-      "For Vanya and Sonia and Masha and Spike at Stephens College, the scenic design drew from the architectural charm of a Bucks County country home, comfortable, rooted, and steeped in familiarity. The porch became the visual and dramaturgical anchor of the space, operating as both an extension of the interior and a threshold to the outside world."
+      "A Bucks County country home gave Vanya and Sonia and Masha and Spike its scenic foundation at Stephens College. The design needed to feel comfortable, rooted, and full of inherited familiarity, with the porch acting as both an extension of the interior and a threshold to the outside world.",
+      "Traditional American detailing, warm wood tones, practical molding, and grounded proportions suggested generational stability. A garden bench made from scrap lumber added a handmade quality that supported the home's lived-in authenticity.",
+      "The design allowed intimate conversations and broader ensemble comedy to share the same world. The house held humor, nostalgia, and disappointment without becoming sentimental, giving the characters a place that felt safe and stuck at the same time."
     ]
   },
   {
@@ -7721,24 +7160,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
     ]
   },
   {
-    "type": "text",
-    "heading": "Warmth, Detail, and Generational Weight",
-    "content": [
-      "The architecture leaned into traditional American detailing: warm wood tones, practical molding, and grounded proportions that suggested generational stability. A garden bench constructed from scrap lumber introduced a subtle handmade quality, underscoring the lived-in authenticity of the home and the play's quiet relationship to nostalgia."
-    ]
-  },
-  {
     "type": "gallery",
     "mediaIds": [
       "vanya-prod-3",
       "vanya-prod-4"
-    ]
-  },
-  {
-    "type": "text",
-    "heading": "Comedy Inside a Fading House",
-    "content": [
-      "Spatially, the design allowed for layered staging. Intimate conversations near the porch edge contrasted with broader ensemble moments in the shared living area. The environment held comedic energy without becoming caricature, instead providing a restrained, elegant frame that let Christopher Durang's humor and emotional undercurrents unfold naturally."
     ]
   },
   {

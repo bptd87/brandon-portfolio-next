@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronLeft, ChevronRight, GraduationCap } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, GraduationCap, Mail } from "lucide-react";
 import Image from "next/image";
 import { Link } from "wouter";
 import { useEffect, useRef, useState } from "react";
@@ -103,9 +103,13 @@ const navigationCards = [
 
 export default function About() {
   const exploreRailRef = useRef<HTMLDivElement | null>(null);
-  const galleryRailRef = useRef<HTMLDivElement | null>(null);
-  const galleryItemRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const gallerySectionRef = useRef<HTMLElement | null>(null);
+  const galleryStageRef = useRef<HTMLDivElement | null>(null);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const [galleryWheelProgress, setGalleryWheelProgress] = useState(0);
+  const [galleryWheelOpacity, setGalleryWheelOpacity] = useState(1);
+  const [galleryWheelSpacing, setGalleryWheelSpacing] = useState(190);
+  const [galleryWheelPin, setGalleryWheelPin] = useState<"before" | "fixed" | "after">("before");
 
   const scrollExploreBy = (direction: "prev" | "next") => {
     const rail = exploreRailRef.current;
@@ -117,50 +121,38 @@ export default function About() {
     });
   };
 
-  const scrollGalleryBy = (direction: "prev" | "next") => {
-    const nextIndex =
-      direction === "next"
-        ? Math.min(activeGalleryIndex + 1, galleryImages.length - 1)
-        : Math.max(activeGalleryIndex - 1, 0);
-
-    const target = galleryItemRefs.current[nextIndex];
-    if (!target) return;
-
-    target.scrollIntoView({
-      behavior: "smooth",
-      inline: "start",
-      block: "nearest",
-    });
-  };
-
   useEffect(() => {
-    const rail = galleryRailRef.current;
-    if (!rail) return;
+    const updateGalleryWheel = () => {
+      const section = gallerySectionRef.current;
+      const stage = galleryStageRef.current;
+      if (!section || !stage) return;
 
-    const updateActiveIndex = () => {
-      const railLeft = rail.getBoundingClientRect().left;
-      let closestIndex = 0;
-      let closestDistance = Number.POSITIVE_INFINITY;
+      const rect = section.getBoundingClientRect();
+      const scrollableDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
+      const imageProgress = progress;
+      const exactIndex = imageProgress * Math.max(1, galleryImages.length - 1);
 
-      galleryItemRefs.current.forEach((item, index) => {
-        if (!item) return;
-        const distance = Math.abs(item.getBoundingClientRect().left - railLeft);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
-        }
-      });
-
-      setActiveGalleryIndex(closestIndex);
+      setGalleryWheelProgress(exactIndex);
+      setGalleryWheelOpacity(1);
+      setActiveGalleryIndex(Math.min(galleryImages.length - 1, Math.max(0, Math.round(exactIndex))));
+      setGalleryWheelSpacing(Math.min(260, Math.max(150, stage.clientHeight * 0.24)));
+      setGalleryWheelPin(
+        rect.top > 0
+          ? "before"
+          : rect.bottom < window.innerHeight
+            ? "after"
+            : "fixed"
+      );
     };
 
-    updateActiveIndex();
-    rail.addEventListener("scroll", updateActiveIndex, { passive: true });
-    window.addEventListener("resize", updateActiveIndex);
+    updateGalleryWheel();
+    window.addEventListener("scroll", updateGalleryWheel, { passive: true });
+    window.addEventListener("resize", updateGalleryWheel);
 
     return () => {
-      rail.removeEventListener("scroll", updateActiveIndex);
-      window.removeEventListener("resize", updateActiveIndex);
+      window.removeEventListener("scroll", updateGalleryWheel);
+      window.removeEventListener("resize", updateGalleryWheel);
     };
   }, []);
 
@@ -410,72 +402,142 @@ export default function About() {
           </div>
         </section>
 
-        <section className="overflow-hidden bg-[#f1f0ec] py-16 md:py-24">
-          <div className="px-[clamp(1.5rem,5vw,6rem)]">
-            <AnimatedSection className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <div className="max-w-3xl">
-                <p className="mb-4 text-[1.15rem] font-medium tracking-[-0.035em] text-foreground/54">
-                  Personal archive
-                </p>
-                <h2 className="font-sans text-[clamp(2.25rem,4.8vw,5.4rem)] font-medium leading-[0.92] tracking-[-0.078em] text-foreground">
-                  People, classrooms, shops, and collaborations.
-                </h2>
-              </div>
-            </AnimatedSection>
-          </div>
+        <section
+          ref={gallerySectionRef}
+          aria-label="Personal archive"
+          className="relative min-h-[240svh] border-y border-black/10 bg-[#f1f0ec] text-black"
+        >
+          <div
+            className="flex h-screen flex-col overflow-hidden bg-[#f1f0ec]"
+            style={{
+              position: galleryWheelPin === "fixed" ? "fixed" : "absolute",
+              top: galleryWheelPin === "after" ? "auto" : 0,
+              bottom: galleryWheelPin === "after" ? 0 : "auto",
+              left: 0,
+              right: 0,
+              opacity: galleryWheelOpacity,
+              transition: "opacity 180ms ease",
+            }}
+          >
+            <div className="pointer-events-none absolute left-0 right-0 top-0 z-20 px-[clamp(1.5rem,5vw,6rem)] pt-10 md:pt-14">
+              <p className="mb-4 text-[1.02rem] font-medium tracking-[-0.035em] text-black/42">
+                Personal archive
+              </p>
+              <h2 className="max-w-[12ch] font-sans text-[clamp(3rem,7vw,7.5rem)] font-medium leading-[0.84] tracking-[-0.085em] text-black">
+                People, classrooms, shops, and collaborations.
+              </h2>
+            </div>
 
-          <AnimatedSection delay={140}>
             <div
-              ref={galleryRailRef}
-              className="mt-10 overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              ref={galleryStageRef}
+              className="relative min-h-0 flex-1 overflow-hidden pt-[14rem] md:pt-[12rem]"
             >
-              <div className="flex min-w-max snap-x snap-mandatory items-stretch gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-                {galleryImages.map((image, index) => (
-                  <div
-                    key={image.url}
-                    ref={(node) => {
-                      galleryItemRefs.current[index] = node;
-                    }}
-                    className="w-[min(28rem,78vw)] shrink-0 snap-start md:w-[30rem]"
-                  >
-                    <div className="group relative aspect-[4/3] h-full overflow-hidden rounded-[1.6rem] bg-white shadow-[0_18px_54px_rgba(17,17,17,0.07)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_28px_76px_rgba(17,17,17,0.12)]">
-                      <img
-                        src={image.url}
-                        alt={image.alt}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.035]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/18 to-transparent" />
-                      <p className="absolute bottom-0 left-0 max-w-[28rem] p-6 text-[1rem] font-medium leading-7 tracking-[-0.025em] text-white/88">
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-[#f1f0ec] via-[#f1f0ec]/92 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-[#f1f0ec] via-[#f1f0ec]/92 to-transparent" />
+
+              <div
+                className="absolute inset-0"
+                style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
+              >
+                {galleryImages.map((image, index) => {
+                  const distance = index - galleryWheelProgress;
+                  const absDistance = Math.abs(distance);
+                  const isActive = activeGalleryIndex === index;
+                  const isVisible = absDistance < 2.45;
+                  const scale = Math.max(0.76, 1 - absDistance * 0.09);
+                  const opacity = isActive ? 1 : Math.max(0.14, 0.44 - absDistance * 0.08);
+                  const rotateX = distance * -18;
+                  const translateY = distance * galleryWheelSpacing;
+                  const translateZ = -Math.abs(distance) * 140;
+
+                  return (
+                    <figure
+                      key={image.url}
+                      className="site-media-square absolute left-1/2 top-[61%] w-[min(86vw,42rem)] overflow-hidden border border-black/10 bg-black md:left-[68%]"
+                      style={{
+                        opacity: isVisible ? opacity : 0,
+                        pointerEvents: isActive ? "auto" : "none",
+                        transform: `translate(-50%, -50%) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) scale(${scale})`,
+                        transformStyle: "preserve-3d",
+                        transition: "opacity 160ms ease",
+                      }}
+                    >
+                      <div className="site-media-square relative aspect-[16/9] overflow-hidden bg-black">
+                        <img
+                          src={image.url}
+                          alt={image.alt}
+                          loading={index < 2 ? "eager" : "lazy"}
+                          decoding="async"
+                          className="site-media-square h-full w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/16 to-transparent" />
+                      </div>
+                      <figcaption className="border-t border-white/14 bg-black px-5 py-4 text-[0.98rem] font-medium leading-7 tracking-[-0.02em] text-white/84 md:px-6">
                         {image.caption}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                      </figcaption>
+                    </figure>
+                  );
+                })}
               </div>
             </div>
-          </AnimatedSection>
 
-          <div className="-mt-5 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-            <button
-              type="button"
-              onClick={() => scrollGalleryBy("prev")}
-              disabled={activeGalleryIndex === 0}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
-              aria-label="Scroll gallery left"
-            >
-              <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollGalleryBy("next")}
-              disabled={activeGalleryIndex === galleryImages.length - 1}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
-              aria-label="Scroll gallery right"
-            >
-              <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-            </button>
+            <div className="pointer-events-none absolute bottom-8 right-[clamp(1.5rem,5vw,6rem)] z-20 text-right">
+              <p className="font-sans text-[0.78rem] font-semibold uppercase tracking-[0.24em] text-black/34">
+                {String(activeGalleryIndex + 1).padStart(2, "0")} /{" "}
+                {String(galleryImages.length).padStart(2, "0")}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative min-h-[78svh] overflow-hidden bg-[#f1f0ec] px-[clamp(1.5rem,5vw,6rem)] py-20 text-black md:py-28">
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#f1f0ec] to-transparent"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f1f0ec] to-transparent"
+            aria-hidden="true"
+          />
+
+          <div className="relative flex min-h-[calc(78svh-10rem)] items-center justify-center">
+            <div className="w-full max-w-[76rem] rounded-[1.75rem] bg-black p-[clamp(1.5rem,5vw,4rem)] text-white shadow-[0_34px_120px_rgba(17,17,17,0.18)]">
+              <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] md:items-end">
+                <div>
+                  <p className="section-kicker text-white/42">
+                    Contact
+                  </p>
+                  <h2 className="mt-6 max-w-[13ch] font-sans text-[clamp(3rem,7vw,7.2rem)] font-medium leading-[0.84] tracking-[-0.085em] text-white">
+                    Start a scenic design conversation.
+                  </h2>
+                </div>
+
+                <div>
+                  <p className="max-w-2xl text-[1rem] leading-7 tracking-[-0.015em] text-white/62 md:text-[1.08rem]">
+                    Scenic design, rendering, teaching, and collaboration inquiries are welcome.
+                    Share the production, venue, timeline, and design goals, and I&apos;ll respond
+                    with a clear next step.
+                  </p>
+
+                  <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                    <a
+                      href="/contact"
+                      className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-86"
+                    >
+                      Contact form
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </a>
+                    <a
+                      href="mailto:info@brandonptdavis.com"
+                      className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/16 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white/30 hover:text-white"
+                    >
+                      <Mail className="h-4 w-4" />
+                      Email directly
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>

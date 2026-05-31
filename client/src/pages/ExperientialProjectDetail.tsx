@@ -490,7 +490,7 @@ export default function ExperientialProjectDetail({
         </section>
 
         {moreExperientialProjects.length > 0 ? (
-          <section className="bg-[#111111] pt-16 text-white md:pt-24">
+          <section className="border-t border-white/12 bg-[#111111] pt-16 text-white md:pt-24">
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">

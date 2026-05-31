@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
   title: "Links",
-  description: "Quick links and destination pages across the Brandon PT Davis site.",
+  description: "A visual scenic design update feed with recent projects, production photos, writing, and contact links from Brandon PT Davis.",
   pathname: "/links",
 });
 

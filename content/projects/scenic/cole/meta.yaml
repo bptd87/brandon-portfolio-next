@@ -5,12 +5,12 @@ title: Cole
 status: published
 featured: false
 excerpt: >-
-  A late-night jazz-age room for Cole, anchored by a grounded bar, black-and-white tile, and an onstage band so the
-  music feels intimate and sourced from the space itself.
+  A late-night jazz-age room for Cole, anchored by a grounded bar, black-and-white tile, and an
+  onstage band so the music feels intimate and sourced from the space itself.
 seoTitle: Cole | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for Cole at Okoboji Summer Theatre, using a jazz-age bar, integrated band, and cabaret intimacy to
-  support Cole Porter’s music.
+  Scenic design for Cole at Okoboji Summer Theatre, using a jazz-age bar, integrated band, and
+  cabaret intimacy to support Cole Porter’s music.
 seoKeywords:
   - Cole scenic design
   - Okoboji Summer Theatre
@@ -27,7 +27,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-8632-b71c63cf.webp
-  alt: Scenic design for Cole by Brandon PT Davis.
+  alt: The jazz-age room and bar.
 team:
   - role: Written By
     name: Benny Green and Alan Strachan
@@ -53,4 +53,4 @@ tags:
   - name: Okoboji Summer Theatre
     slug: okoboji-summer-theatre
 links: []
-updatedAt: '2026-03-01T10:13:53.302815+00:00'
+updatedAt: "2026-03-01T10:13:53.302815+00:00"

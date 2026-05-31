@@ -5,12 +5,12 @@ title: An Enemy of the People
 status: published
 featured: false
 excerpt: >-
-  A grayscale illustrated world punctured by red furniture, making scrutiny feel constant and comfort impossible in An
-  Enemy of the People.
+  A grayscale illustrated world punctured by red furniture, making scrutiny feel constant and
+  comfort impossible in An Enemy of the People.
 seoTitle: An Enemy of the People | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for An Enemy of the People at Stephens College, using a grayscale illustrated world and red accents to
-  heighten moral tension and exposure.
+  Scenic design for An Enemy of the People at Stephens College, using a grayscale illustrated world
+  and red accents to heighten moral tension and exposure.
 seoKeywords:
   - An Enemy of the People scenic design
   - Stephens College theatre
@@ -25,7 +25,7 @@ subcategory: Drama
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-7499-f113149d.webp
-  alt: Scenic design for An Enemy of the People by Brandon PT Davis.
+  alt: The grayscale scenic world.
 team:
   - role: Book By
     name: Henrik Ibsen
@@ -49,4 +49,4 @@ tags:
   - name: An Enemy of the People
     slug: an-enemy-of-the-people
 links: []
-updatedAt: '2026-03-01T10:26:51.60406+00:00'
+updatedAt: "2026-03-01T10:26:51.60406+00:00"

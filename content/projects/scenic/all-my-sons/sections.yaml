@@ -1,35 +1,25 @@
 - type: text
-  heading: A Familiar American Exterior
   content:
     - >-
-      All My Sons is set within a postwar suburban home defined by a modest house, open porch, and backyard. The scenic
-      environment reflects the optimism and order associated with the American Dream, presenting a space that initially
-      feels stable, welcoming, and complete.
+      A familiar postwar American backyard became the starting point for All My Sons at Stephens College. A
+      modest house, open porch, and carefully maintained exterior created a world that first reads as stable,
+      domestic, and complete.
+    - >-
+      As the play unfolds, that openness starts to work against the family. Private decisions and moral
+      conflicts are placed in full view, so the realism of the setting becomes part of the pressure. I wanted
+      the Keller home to feel ordinary enough that its unraveling felt more unsettling.
+    - >-
+      The design stayed understated on purpose. By avoiding overt symbolism, the backyard could hold the
+      American Dream on the surface while quietly exposing the denial, grief, and accountability underneath
+      it.
 - type: gallery
   mediaIds:
     - sons-prod-1
     - sons-prod-2
-- type: text
-  heading: Openness Working Against Comfort
-  content:
-    - >-
-      As the play unfolds, the openness of the setting begins to work against that sense of comfort. Private
-      conversations and moral conflicts are placed in full view, allowing tension to emerge through realism rather than
-      overt symbolism. The layout and scenic details suggest a world carefully maintained, echoing the emotional
-      restraint and denial within the Keller family.
 - type: gallery
   mediaIds:
     - sons-prod-3
     - sons-prod-4
-- type: text
-  heading: The Backyard as Moral Pressure
-  content:
-    - >-
-      The open suburban setting keeps the Keller home familiar at first glance, then slowly turns that familiarity
-      against itself as private choices come into public view.
-    - >-
-      By staying understated, the design lets the play's moral pressure build in plain sight, where the calm surface
-      only makes the fracture underneath feel sharper.
 - type: gallery
   mediaIds:
     - sons-prod-5

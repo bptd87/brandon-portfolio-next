@@ -5,12 +5,12 @@ title: Urinetown
 status: published
 featured: false
 excerpt: >-
-  A dystopian musical world shaped through Brechtian and German Expressionist influence, using angular architecture,
-  concrete textures, and symbolic lighting to sharpen the satire of Urinetown.
+  A dystopian musical world shaped through Brechtian and German Expressionist influence, using
+  angular architecture, concrete textures, and symbolic lighting to sharpen the satire of Urinetown.
 seoTitle: Urinetown (2021) Scenic Design | Okoboji Summer Theatre
 seoDescription: >-
-  Scenic design for the 2021 production of Urinetown at Okoboji Summer Theatre, inspired by Brechtian and German
-  Expressionist styles with angular concrete textures and symbolic lighting.
+  Scenic design for the 2021 production of Urinetown at Okoboji Summer Theatre, inspired by
+  Brechtian and German Expressionist styles with angular concrete textures and symbolic lighting.
 seoKeywords:
   - Urinetown 2021
   - Greg Kotis
@@ -26,7 +26,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-c871282d6b-f398cd2f.jpeg
-  alt: Urinetown 2021 scenic design cover at Okoboji Summer Theatre, shaped by Brechtian and expressionist influence.
+  alt: Shaped by Brechtian and expressionist influence.
 team:
   - role: Book By
     name: Greg Kotis
@@ -54,4 +54,4 @@ tags:
   - name: Urinetown
     slug: urinetown
 links: []
-updatedAt: '2026-03-23T20:50:00.000Z'
+updatedAt: "2026-03-23T20:50:00.000Z"

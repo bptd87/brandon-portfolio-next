@@ -5,12 +5,12 @@ title: Angel Street
 status: published
 featured: false
 excerpt: >-
-  A dense Victorian drawing room for Angel Street, letting domestic realism and psychological unease coexist inside the
-  same controlled interior.
+  A dense Victorian drawing room for Angel Street, letting domestic realism and psychological unease
+  coexist inside the same controlled interior.
 seoTitle: Angel Street | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for Angel Street at Okoboji Summer Theatre, building a formal Victorian drawing room where domestic
-  realism and psychological tension coexist.
+  Scenic design for Angel Street at Okoboji Summer Theatre, building a formal Victorian drawing room
+  where domestic realism and psychological tension coexist.
 seoKeywords:
   - Angel Street
   - Gaslight
@@ -25,7 +25,7 @@ subcategory: Drama
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp
-  alt: Scenic design for Angel Street by Brandon PT Davis.
+  alt: The Victorian drawing room and formal architecture.
 team:
   - role: Playwright
     name: Patrick Hamilton
@@ -51,4 +51,4 @@ tags:
 links:
   - label: Listing
     url: https://www.dglobe.com/news/summer-theater-announces-2013-schedule
-updatedAt: '2026-02-12T15:04:01+00:00'
+updatedAt: "2026-02-12T15:04:01+00:00"

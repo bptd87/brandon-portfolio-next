@@ -3,26 +3,20 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-9717e6782b-8c625df9.jpg
-    alt: Scenic design for A Smalltowne Christmas by Brandon PT Davis.
+    alt: Festive town set with holiday color and community-stage detail.
   - id: smalltowne-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-384b222098-e5143cc7.jpg
-    alt: >-
-      Production image from A Smalltowne Christmas showing the festive scenic environment, scenic design by Brandon PT
-      Davis.
+    alt: Festive town set with holiday color and community-stage detail.
   - id: smalltowne-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-3691d27c7b-5598713b.jpg
-    alt: >-
-      Production still from A Smalltowne Christmas highlighting holiday staging and scenic warmth, scenic design by
-      Brandon PT Davis.
+    alt: Holiday staging and scenic warmth.
   - id: smalltowne-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-be19cc2be0-0b29fd45.jpg
-    alt: >-
-      Final production image from A Smalltowne Christmas showing the complete holiday world, scenic design by Brandon PT
-      Davis.
+    alt: Full-stage view of the complete holiday world.
 videos: []

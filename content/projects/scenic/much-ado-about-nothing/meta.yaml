@@ -5,12 +5,12 @@ title: Much Ado About Nothing
 status: published
 featured: true
 excerpt: >-
-  Shakespeare’s romantic comedy reframed through a wild-west visual world of saloon architecture, rough timber, and
-  repertory-friendly frontier detail.
+  Shakespeare’s romantic comedy reframed through a wild-west visual world of saloon architecture,
+  rough timber, and repertory-friendly frontier detail.
 seoTitle: Much Ado About Nothing | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for Much Ado About Nothing at New Swan Theatre Festival, reimagining Shakespeare’s comedy through the
-  language of the spaghetti western and the architecture of a frontier saloon.
+  Scenic design for Much Ado About Nothing at New Swan Theatre Festival, reimagining Shakespeare’s
+  comedy through the language of the spaghetti western and the architecture of a frontier saloon.
 seoKeywords:
   - Much Ado About Nothing
   - scenic design
@@ -19,7 +19,8 @@ seoKeywords:
   - Brandon PT Davis
   - western scenic design
 client: New Swan Theatre Festival
-clientUrl: https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention
+clientUrl: >-
+  https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention
 location: Irvine, CA
 year: 2025
 month: 7
@@ -27,7 +28,7 @@ subcategory: Shakespeare
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-cover-a7f4725c.webp
-  alt: Much Ado About Nothing scenic design cover at the production venue, by Brandon PT Davis.
+  alt: Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.
 team:
   - role: By
     name: William Shakespeare
@@ -52,5 +53,6 @@ tags:
     slug: much-ado-about-nothing
 links:
   - label: Culture OC Feature
-    url: https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention
-updatedAt: '2026-02-12T15:04:01+00:00'
+    url: >-
+      https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention
+updatedAt: "2026-02-12T15:04:01+00:00"

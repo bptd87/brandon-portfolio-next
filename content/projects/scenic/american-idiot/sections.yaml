@@ -1,33 +1,25 @@
 - type: text
-  heading: Concrete Rebellion
   content:
     - >-
-      For American Idiot on the Claire Trevor Theatre stage at UCI, the design channeled Green Day's raw energy into a
-      visual world built on the tension between suburban monotony and urban decay, reimagined through a Southern
-      California lens.
+      Green Day's raw energy pushed the American Idiot scenic design toward a world of suburban monotony,
+      urban decay, and post-9/11 disconnection. On the Claire Trevor Theatre stage at UC Irvine, I wanted the
+      environment to feel unyielding, like a concrete landscape the characters were fighting to survive.
+    - >-
+      A pedestrian bridge in Irvine became the starting image. Its concrete forms and institutional permanence
+      suggested a Southern California version of alienation, one that felt familiar, public, and emotionally
+      suffocating.
+    - >-
+      Rather than leaning on the Broadway production's heavy media wall, we built a more immersive frame where
+      projection could move through the architecture. The result was a minimalist scenic world with enough
+      resistance for the music, movement, and rebellion to hit harder.
 - type: gallery
   mediaIds:
     - idiot-prod-1
     - idiot-prod-2
-- type: text
-  heading: A Southern California Metaphor
-  content:
-    - >-
-      A concrete pedestrian bridge in Irvine linking campus to University Town Center sparked the central metaphor.
-      Modular concrete forms and industrial elements created a stark, permanent environment that felt emotionally
-      suffocating, mirroring a generation's disconnection and frustration in post-9/11 America.
 - type: gallery
   mediaIds:
     - idiot-prod-3
     - idiot-prod-4
-- type: text
-  heading: Minimalism in Motion
-  content:
-    - >-
-      We moved away from Broadway's heavy TV-screen concept and leaned into immersion. Elizabeth Barrett's projections
-      became a kinetic layer, trading static media for visceral spectacle and fluid transitions so the emotional
-      undercurrents of the score could sit inside a minimalist frame. The set stays unyielding while the characters
-      fight to redefine themselves within it.
 - type: gallery
   mediaIds:
     - idiot-prod-5

@@ -3,38 +3,30 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-cover-a7f4725c.webp
-    alt: Much Ado About Nothing scenic design cover at the production venue, by Brandon PT Davis.
+    alt: Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.
   - id: man-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150032-ce3e4bda.webp
-    alt: Production image from Much Ado About Nothing at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+    alt: Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.
   - id: man-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150124-98204140.webp
-    alt: >-
-      Scene transition on the open-air Shakespearean set for Much Ado About Nothing at New Swan, scenic design by
-      Brandon PT Davis.
+    alt: Courtyard-inspired New Swan stage with rustic arches and open-air playing levels.
   - id: man-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150063-602fad8c.webp
-    alt: >-
-      Wide stage view of the courtyard-inspired set for Much Ado About Nothing at New Swan Theatre Festival in Irvine,
-      scenic design by Brandon PT Davis.
+    alt: Wide view of the courtyard-inspired set for Much Ado About Nothing in Irvine.
   - id: man-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150079-d09aadaa.webp
-    alt: >-
-      Ensemble stage picture framed by the rustic architecture of Much Ado About Nothing, scenic design by Brandon PT
-      Davis.
+    alt: Ensemble stage picture framed by the rustic architecture of Much Ado About Nothing.
   - id: man-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150096-a49794ed.webp
-    alt: >-
-      Night-lit stage composition showing arches and playing levels in Much Ado About Nothing, scenic design by Brandon
-      PT Davis.
+    alt: Night-lit stage composition showing arches and playing levels in Much Ado About Nothing.
 videos: []

@@ -3,44 +3,40 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp
-    alt: Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.
+    alt: The modular Arcadian world.
   - id: hoh-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp
-    alt: Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.
+    alt: The modular Arcadian world.
   - id: hoh-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150127-19a4afbc.webp
-    alt: Scene from Head Over Heels framed by vivid color and stylized architecture, scenic design by Brandon PT Davis.
+    alt: Actors framed by vivid color and stylized architecture.
   - id: hoh-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150148-e5dd8ca6.webp
-    alt: Production still from Head Over Heels emphasizing club-inspired theatricality, scenic design by Brandon PT Davis.
+    alt: Club-inspired theatricality.
   - id: hoh-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150064-e710f8d3.webp
-    alt: Head Over Heels performance image showing the set’s modular scene shifts, scenic design by Brandon PT Davis.
+    alt: Head Over Heels performance image showing the set’s modular scene shifts.
   - id: hoh-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150201-5af362e8.webp
-    alt: >-
-      Production image from Head Over Heels highlighting electric palette and theatrical rhythm, scenic design by
-      Brandon PT Davis.
+    alt: Electric palette and theatrical rhythm.
   - id: hoh-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150231-8d50248c.webp
-    alt: Final production image from Head Over Heels, scenic design by Brandon PT Davis.
+    alt: Final scene from Head Over Heels.
   - id: hoh-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp
-    alt: >-
-      Rendering for Head Over Heels testing the modular, club-inspired Arcadian world, scenic design by Brandon PT
-      Davis.
+    alt: Rendering for Head Over Heels testing the modular, club-inspired Arcadian world.
 videos: []

@@ -1,45 +1,36 @@
 gallery:
   - id: bbc-cover
     kind: cover
-    asset: >-
-      /assets/projects/scenic/bell-book-and-candle/cover.webp
-    alt: >-
-      Bell, Book, and Candle scenic design cover at Okoboji Summer Theatre, with a grounded mid-century apartment and
-      subtle magical atmosphere.
+    asset: /assets/projects/scenic/bell-book-and-candle/cover.webp
+    alt: A grounded mid-century apartment and subtle magical atmosphere.
   - id: bbc-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150114-59d7bd6e.webp
-    alt: Production image from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.
+    alt: A grounded mid-century apartment and subtle magical atmosphere.
   - id: bbc-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150253-8fbdad21.webp
-    alt: Stage image from Bell, Book, and Candle showing the domestic apartment world, scenic design by Brandon PT Davis.
+    alt: The domestic apartment world.
   - id: bbc-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150160-5c40af7a.webp
-    alt: >-
-      Performance image from Bell, Book, and Candle within the grounded interior setting, scenic design by Brandon PT
-      Davis.
+    alt: In the grounded interior setting.
   - id: bbc-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150137-30da06e5.webp
-    alt: >-
-      Production view of Bell, Book, and Candle emphasizing furniture layout and actor pathways, scenic design by
-      Brandon PT Davis.
+    alt: A grounded mid-century apartment and subtle magical atmosphere.
   - id: bbc-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150247-b5bae563.webp
-    alt: Stage picture from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.
+    alt: A grounded mid-century apartment and subtle magical atmosphere.
   - id: bbc-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp
-    alt: >-
-      Rendering for Bell, Book, and Candle exploring the grounded apartment interior and green mid-century palette,
-      scenic design by Brandon PT Davis.
+    alt: Rendering of the grounded apartment interior and green mid-century palette.
 videos: []

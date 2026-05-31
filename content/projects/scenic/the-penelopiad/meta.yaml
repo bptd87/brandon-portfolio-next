@@ -5,12 +5,12 @@ title: The Penelopiad
 status: published
 featured: true
 excerpt: >-
-  A ritual memory space for The Penelopiad, where Penelope and the maids testify within the same visual architecture,
-  balancing epic framing with intimate address.
+  A ritual memory space for The Penelopiad, where Penelope and the maids testify within the same
+  visual architecture, balancing epic framing with intimate address.
 seoTitle: The Penelopiad Scenic Design | UC Irvine
 seoDescription: >-
-  Scenic design for The Penelopiad at University of California Irvine, building a ritual memory space for testimony,
-  chorus visibility, and layered mythic staging.
+  Scenic design for The Penelopiad at University of California Irvine, building a ritual memory
+  space for testimony, chorus visibility, and layered mythic staging.
 seoKeywords:
   - The Penelopiad
   - scenic design
@@ -26,9 +26,7 @@ subcategory: Drama
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp
-  alt: >-
-    The Penelopiad scenic design cover at University of California Irvine, building a ritual memory space for testimony
-    and chorus.
+  alt: A ritual memory space for testimony and chorus.
 team:
   - role: Playwright
     name: Margaret Atwood
@@ -57,5 +55,6 @@ tags:
     slug: the-penelopiad
 links:
   - label: Review
-    url: https://newuniversity.org/2020/02/10/ucis-the-penelopiad-brings-new-narrative-to-a-classic-greek-epic/
-updatedAt: '2026-02-12T15:03:56+00:00'
+    url: >-
+      https://newuniversity.org/2020/02/10/ucis-the-penelopiad-brings-new-narrative-to-a-classic-greek-epic/
+updatedAt: "2026-02-12T15:03:56+00:00"

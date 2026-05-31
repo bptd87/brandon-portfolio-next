@@ -1,35 +1,25 @@
 - type: text
-  heading: A Late-Night Room
   content:
     - >-
-      For Cole at Okoboji Summer Theatre, I wanted the audience to feel like they had stepped into a late-night room in
-      the 1920s. Not a museum version of the jazz age, something alive. The foundation was a black-and-white tile floor,
-      rich walnut millwork, and a grounded bar that anchored the room architecturally.
+      I wanted Cole to feel like stepping into a late-night 1920s room: not a museum version of the jazz age,
+      but something alive. At Okoboji Summer Theatre, the scenic design centered on a black-and-white tile
+      floor, walnut millwork, and a grounded bar that gave the room architectural weight.
+    - >-
+      The bar defined more than atmosphere. It shaped social hierarchy, created levels for performance, and
+      added depth across the proscenium. Keeping the band onstage made the music feel sourced from the room
+      rather than placed on top of it.
+    - >-
+      The layout stayed open enough for choreography and microphone work to breathe, while vertical art deco
+      references gave the stage elegance and structure. The design relied on proportion, texture, and
+      intention rather than decoration.
 - type: gallery
   mediaIds:
     - cole-prod-1
     - cole-prod-2
-- type: text
-  heading: Music in the Room
-  content:
-    - >-
-      The bar wasn’t just decorative. It defined the social hierarchy of the space. It gave performers levels to work on
-      and around, and it created depth across the proscenium. The band lived onstage, fully integrated into the
-      environment. That decision changed the energy immediately. The music didn’t feel underscored, it felt sourced.
 - type: gallery
   mediaIds:
     - cole-prod-3
     - cole-prod-4
-- type: text
-  heading: Elegance with Intention
-  content:
-    - >-
-      I kept the layout relatively open so choreography and microphone work could breathe, but framed it with vertical
-      elements that referenced art deco geometry without becoming ornamental. The design relied on texture and
-      proportion more than decoration.
-    - >-
-      This production wasn’t about spectacle. It was about proximity. The set created an intimate cabaret atmosphere
-      where Cole Porter’s music could feel conversational, elegant, and just slightly dangerous.
 - type: gallery
   mediaIds:
     - cole-prod-5

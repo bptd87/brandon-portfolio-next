@@ -3,33 +3,25 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-c871282d6b-f398cd2f.jpeg
-    alt: Urinetown 2021 scenic design cover at Okoboji Summer Theatre, shaped by Brechtian and expressionist influence.
+    alt: Shaped by Brechtian and expressionist influence.
   - id: urinetown-2021-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-51b22c1e9d-0502fb13.jpeg
-    alt: >-
-      Production image from the 2021 Urinetown showing the angular dystopian environment, scenic design by Brandon PT
-      Davis.
+    alt: The angular dystopian environment.
   - id: urinetown-2021-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-96279a9e54-b8e91501.jpeg
-    alt: >-
-      Production still from the 2021 Urinetown emphasizing the expressionist shapes and musical staging, scenic design
-      by Brandon PT Davis.
+    alt: The angular dystopian environment.
   - id: urinetown-2021-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-42a3af6d44-995559d9.jpeg
-    alt: >-
-      Production image from the 2021 Urinetown highlighting concrete texture and dystopian atmosphere, scenic design by
-      Brandon PT Davis.
+    alt: The angular dystopian environment.
   - id: urinetown-2021-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-61fded10c7-8e6f48c3.jpeg
-    alt: >-
-      Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by
-      Brandon PT Davis.
+    alt: Full-stage view of the complete comic-dystopian scenic world.
 videos: []

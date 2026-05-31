@@ -730,8 +730,18 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   const [audioCurrentTimeSeconds, setAudioCurrentTimeSeconds] = useState(0);
   const [heroScrollProgress, setHeroScrollProgress] = useState(0);
   const [heroIntroProgress, setHeroIntroProgress] = useState(0);
+  const [isMobileHero, setIsMobileHero] = useState(false);
   const heroIntroProgressRef = useRef(0);
   const introTouchYRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateMobileHero = () => setIsMobileHero(mediaQuery.matches);
+
+    updateMobileHero();
+    mediaQuery.addEventListener("change", updateMobileHero);
+    return () => mediaQuery.removeEventListener("change", updateMobileHero);
+  }, []);
 
   useEffect(() => {
     const updateHeroScrollProgress = () => {
@@ -1107,11 +1117,17 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   const emailShareUrl = `mailto:?subject=${encodedArticleTitle}&body=${encodedArticleTitle}%0A%0A${encodedArticleUrl}`;
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedArticleUrl}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedArticleUrl}`;
-  const heroProgress = Math.max(heroScrollProgress, heroIntroProgress);
-  const heroTitleProgress = Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
+  const rawHeroProgress = Math.max(heroScrollProgress, heroIntroProgress);
+  const heroProgress = isMobileHero ? 1 : rawHeroProgress;
+  const heroTitleProgress = isMobileHero ? 1 : Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
 
   useEffect(() => {
     if (!isNarrativeArticle) return;
+    if (isMobileHero) {
+      heroIntroProgressRef.current = 1;
+      setHeroIntroProgress(1);
+      return;
+    }
 
     heroIntroProgressRef.current = 0;
     setHeroIntroProgress(0);
@@ -1157,7 +1173,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [article.slug, isNarrativeArticle]);
+  }, [article.slug, isMobileHero, isNarrativeArticle]);
 
   return (
     <div className={isNarrativeArticle ? "min-h-screen bg-[#030303] text-white" : "publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]"}>
@@ -1177,7 +1193,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       <PublishingTopBar active={isLearningPortalArticle ? "tutorials" : "articles"} tone={isNarrativeArticle ? "dark" : "light"} />
       <article className={isNarrativeArticle ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24" : "article-editorial article-editorial-light overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"}>
         {isNarrativeArticle ? (
-          <section className="relative min-h-[calc(100svh-8.5rem)] overflow-hidden bg-black">
+          <section className="relative min-h-[64svh] overflow-hidden bg-black md:min-h-[calc(100svh-8.5rem)]">
               {article.coverImageUrl ? (
                 <button
                   type="button"
@@ -1205,7 +1221,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
               <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/72 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#030303] via-[#030303]/68 to-transparent" />
 
-              <div className="relative z-10 flex min-h-[calc(100svh-8.5rem)] items-center justify-center px-[clamp(1.5rem,5vw,6rem)] py-20 text-center">
+              <div className="relative z-10 flex min-h-[64svh] items-center justify-center px-[clamp(1.5rem,5vw,6rem)] py-14 text-center md:min-h-[calc(100svh-8.5rem)] md:py-20">
                 <div
                   className="mx-auto max-w-[58rem] transition-opacity duration-150"
                   style={{ opacity: heroTitleProgress }}

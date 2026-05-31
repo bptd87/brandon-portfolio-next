@@ -5,12 +5,12 @@ title: Parliament Square
 status: published
 featured: false
 excerpt: >-
-  A circular stone path and fractured concrete world create a ritual landscape of protest, sacrifice, and political
-  exhaustion in Parliament Square.
+  A circular stone path and fractured concrete world create a ritual landscape of protest,
+  sacrifice, and political exhaustion in Parliament Square.
 seoTitle: Parliament Square | Scenic Design by Brandon PT Davis
 seoDescription: >-
-  Scenic design for Parliament Square at University of California Irvine, using a circular stone path, fractured
-  concrete, and a cold ritual landscape to support protest and political tension.
+  Scenic design for Parliament Square at University of California Irvine, using a circular stone
+  path, fractured concrete, and a cold ritual landscape to support protest and political tension.
 seoKeywords:
   - Parliament Square
   - scenic design
@@ -25,7 +25,7 @@ subcategory: Drama
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-cover-3b50f3a4.webp
-  alt: Scenic design for Parliament Square by Brandon PT Davis.
+  alt: The circular stone path and sparse political landscape.
 team:
   - role: Playwright
     name: James Fritz
@@ -53,4 +53,4 @@ tags:
 links:
   - label: Listing
     url: https://www.arts.uci.edu/press-room/uci-drama-CA-premiere-parliament-square
-updatedAt: '2026-02-12T15:03:59+00:00'
+updatedAt: "2026-02-12T15:03:59+00:00"

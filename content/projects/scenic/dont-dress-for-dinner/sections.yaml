@@ -1,33 +1,25 @@
 - type: text
-  heading: A Farmhouse for Farce
   content:
     - >-
-      Designed for Don't Dress for Dinner at Okoboji Summer Theatre, the scenic concept reimagined a restored French
-      farmhouse as both romantic getaway and comedic trap. The architecture was rooted in exposed timber beam work,
-      textured plaster walls, and a grounded palette that suggested age, authenticity, and rural charm.
+      A restored French farmhouse became both romantic getaway and comic trap in Don't Dress for Dinner at
+      Okoboji Summer Theatre. Exposed timber beams, textured plaster, and a grounded palette created warmth,
+      age, and rural charm.
+    - >-
+      Farce depends on clarity, so the layout prioritized clean sightlines, purposeful door placement, and
+      layered depth. The timber grid became both a visual anchor and a practical structure for defining
+      playing areas without crowding the stage.
+    - >-
+      The design needed to look inviting while supporting escalating deception. By balancing authenticity with
+      precision, the farmhouse could hold the play's romantic surface and the intricate comic machinery
+      underneath it.
 - type: gallery
   mediaIds:
     - dinner-prod-1
     - dinner-prod-2
-- type: text
-  heading: Doors, Sightlines, and Precision
-  content:
-    - >-
-      Farce relies on clarity of movement, so the layout prioritized clean sightlines, purposeful door placement, and
-      layered depth to support the rapid entrances and exits central to Marc Camoletti's script. The beam grid became
-      both a visual anchor and a compositional tool, helping define playing areas without overcrowding the stage.
 - type: gallery
   mediaIds:
     - dinner-prod-3
     - dinner-prod-4
-- type: text
-  heading: A Floorplan for Escalation
-  content:
-    - >-
-      Close collaboration with the lighting designer and technical director ensured the timber details caught light with
-      warmth, adding dimensionality without overpowering the actors. The result was a scenic design that supported the
-      intricate humor and tangled relationships at the heart of the production, elegant, grounded, and engineered for
-      precision timing.
 - type: gallery
   mediaIds:
     - dinner-prod-5

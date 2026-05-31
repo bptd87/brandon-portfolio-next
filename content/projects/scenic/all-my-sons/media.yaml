@@ -3,57 +3,45 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp
-    alt: Scenic design for All My Sons by Brandon PT Davis.
+    alt: The postwar suburban house and yard.
   - id: sons-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150013-2dc9c7df.webp
-    alt: Production image from All My Sons showing the postwar suburban house and yard, scenic design by Brandon PT Davis.
+    alt: The postwar suburban house and yard.
   - id: sons-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150018-16235fd3.webp
-    alt: >-
-      Production image from All My Sons highlighting the open porch and domestic realism, scenic design by Brandon PT
-      Davis.
+    alt: The open porch and domestic realism.
   - id: sons-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150054-a4cbbf69.webp
-    alt: Production still from All My Sons emphasizing the ordered suburban environment, scenic design by Brandon PT Davis.
+    alt: The ordered suburban environment.
   - id: sons-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150070-34f3888b.webp
-    alt: >-
-      Production image from All My Sons showing how the open setting exposes private conflict, scenic design by Brandon
-      PT Davis.
+    alt: The postwar suburban house and yard.
   - id: sons-prod-5
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150078-86884a86.webp
-    alt: >-
-      Production image from All My Sons reinforcing the tension between comfort and moral collapse, scenic design by
-      Brandon PT Davis.
+    alt: The postwar suburban house and yard.
   - id: sons-prod-6
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150175-668ab496.webp
-    alt: >-
-      Production still from All My Sons showing the suburban framework for the play's emotional shifts, scenic design by
-      Brandon PT Davis.
+    alt: The postwar suburban house and yard.
   - id: sons-prod-7
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150182-c867246e.webp
-    alt: >-
-      Final production image from All My Sons showing the complete family home in performance, scenic design by Brandon
-      PT Davis.
+    alt: Full-stage view of the complete family home in performance.
   - id: sons-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp
-    alt: >-
-      Rendering for All My Sons exploring the porch, yard, and postwar suburban composition, scenic design by Brandon PT
-      Davis.
+    alt: Rendering of the porch, yard, and postwar suburban composition.
 videos: []

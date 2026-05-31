@@ -1,34 +1,24 @@
 - type: text
-  heading: Composure on the Surface
   content:
     - >-
-      For An Inspector Calls, the scenic design framed the Birling household as outwardly composed yet structurally
-      unstable. The room needed to project social confidence and domestic order at first glance, while quietly setting
-      up the pressure points that would be exposed as the inspector’s revelations accumulated.
+      The Birling home in An Inspector Calls had to look composed before it could begin to fracture. At
+      Okoboji Summer Theatre, the scenic design projected wealth, order, and social confidence while quietly
+      setting up the pressure that the inspector's questions would expose.
+    - >-
+      Furniture placement, entrances, and sightlines were calibrated around interrogation. The space had to
+      support drawing-room realism while gradually feeling less like a protected home and more like a room
+      built for accountability.
+    - >-
+      Period detail was used with restraint so composition could carry the tension. I wanted the audience to
+      recognize the comfort of the household, then watch that comfort become part of the trap.
 - type: gallery
   mediaIds:
     - inspector-prod-1
     - inspector-prod-2
-- type: text
-  heading: Interrogation Through Space
-  content:
-    - >-
-      Sightlines, entrances, and the arrangement of furniture were all calibrated to support the play’s interrogation
-      dynamics. The world had to accommodate drawing-room realism, but also gradually feel less like a protected
-      domestic interior and more like a stage for moral accountability. That shift depended less on visual excess than
-      on control, where people entered, where they could hide, and how the room held tension.
 - type: gallery
   mediaIds:
     - inspector-prod-3
     - inspector-prod-4
-- type: text
-  heading: A House Built for Exposure
-  content:
-    - >-
-      Period-informed detailing was used with restraint so atmosphere and composition could carry the central tension.
-      The design needed to preserve the social polish of the setting while allowing the audience to feel the instability
-      underneath it. As the evening progressed, the room itself began to feel complicit in the unraveling, an
-      architecture of manners that could no longer protect the family from consequence.
 - type: gallery
   mediaIds:
     - inspector-render-1

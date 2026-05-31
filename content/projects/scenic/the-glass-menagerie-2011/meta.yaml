@@ -5,12 +5,12 @@ title: The Glass Menagerie
 status: published
 featured: false
 excerpt: >-
-  A memory-driven domestic environment shaped through scrim walls and a revealed cityscape, giving The Glass Menagerie a
-  world suspended between fragile realism and the urge to escape.
+  A memory-driven domestic environment shaped through scrim walls and a revealed cityscape, giving
+  The Glass Menagerie a world suspended between fragile realism and the urge to escape.
 seoTitle: The Glass Menagerie (2011) Scenic Design | Okoboji Summer Theatre
 seoDescription: >-
-  Scenic design for the 2011 production of The Glass Menagerie at Okoboji Summer Theatre, using memory-inspired scrim
-  walls and a revealed cityscape to reflect nostalgia and escape.
+  Scenic design for the 2011 production of The Glass Menagerie at Okoboji Summer Theatre, using
+  memory-inspired scrim walls and a revealed cityscape to reflect nostalgia and escape.
 seoKeywords:
   - The Glass Menagerie 2011
   - Tennessee Williams
@@ -25,7 +25,7 @@ subcategory: Drama
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-18e039c8c0-56e7d0a8.jpg
-  alt: The Glass Menagerie 2011 scenic design cover at Okoboji Summer Theatre, with scrim walls and a revealed cityscape.
+  alt: Scrim walls and a revealed cityscape.
 team:
   - role: Written By
     name: Tennessee Williams
@@ -49,4 +49,4 @@ tags:
   - name: Memory Play
     slug: memory-play
 links: []
-updatedAt: '2026-03-23T20:38:00.000Z'
+updatedAt: "2026-03-23T20:38:00.000Z"

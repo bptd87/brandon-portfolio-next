@@ -3,38 +3,30 @@ gallery:
     kind: cover
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-cover-3094f147.webp
-    alt: Scenic design for A Funny Thing Happened on the Way to the Forum by Brandon PT Davis.
+    alt: The trio of Roman house façades.
   - id: forum-prod-1
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150103-64738161.webp
-    alt: Production image from Forum showing the trio of Roman house façades, scenic design by Brandon PT Davis.
+    alt: The trio of Roman house façades.
   - id: forum-prod-2
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150216-1cca291c.webp
-    alt: >-
-      Performance image from Forum with actors moving through the farce-driven Roman architecture, scenic design by
-      Brandon PT Davis.
+    alt: Actors moving through the farce-driven Roman architecture.
   - id: forum-prod-3
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150228-f76dbf29.webp
-    alt: >-
-      Production still from Forum highlighting the exaggerated façades and playful classical motifs, scenic design by
-      Brandon PT Davis.
+    alt: The exaggerated façades and playful classical motifs.
   - id: forum-prod-4
     kind: production
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150235-825d9c24.webp
-    alt: >-
-      Final production image from Forum showing the full scenic environment and comic staging, scenic design by Brandon
-      PT Davis.
+    alt: Full-stage view of the Roman house facades and comic staging.
   - id: forum-render-1
     kind: rendering
     asset: >-
       https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp
-    alt: >-
-      Rendering for Forum exploring the trio of Roman houses and the heightened comic world, scenic design by Brandon PT
-      Davis.
+    alt: Rendering of the trio of Roman houses and the heightened comic world.
 videos: []

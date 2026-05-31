@@ -1,16 +1,16 @@
 type: project
 discipline: scenic
 slug: bingo-the-winning-musical
-title: 'Bingo: The Winning Musical'
+title: "Bingo: The Winning Musical"
 status: published
 featured: false
 excerpt: >-
-  A playful nautical world for Okoboji Summer Theatre, using lakeside color, retail-comedy brightness, and
-  musical-theatre clarity to support the show's fast humor and local charm.
-seoTitle: 'Bingo: The Winning Musical | Scenic Design by Brandon PT Davis'
+  A playful nautical world for Okoboji Summer Theatre, using lakeside color, retail-comedy
+  brightness, and musical-theatre clarity to support the show's fast humor and local charm.
+seoTitle: "Bingo: The Winning Musical | Scenic Design by Brandon PT Davis"
 seoDescription: >-
-  Scenic design for Bingo: The Winning Musical at Okoboji Summer Theatre, blending nautical themes with playful color to
-  capture the spirit of the Okoboji Lakes region.
+  Scenic design for Bingo: The Winning Musical at Okoboji Summer Theatre, blending nautical themes
+  with playful color to capture the spirit of the Okoboji Lakes region.
 seoKeywords:
   - Bingo The Winning Musical
   - scenic design
@@ -25,7 +25,7 @@ subcategory: Musical Theatre
 cover:
   asset: >-
     https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-dfa9f8cd99-91272f42.jpeg
-  alt: 'Scenic design for Bingo: The Winning Musical by Brandon PT Davis.'
+  alt: The bright nautical-inspired scenic world.
 team:
   - role: Music and Lyrics By
     name: Michael Heitzman, Ilene Reid, and David Holcenberg
@@ -52,7 +52,7 @@ tags:
     slug: comedy
   - name: Okoboji Summer Theatre
     slug: okoboji-summer-theatre
-  - name: 'Bingo: The Winning Musical'
+  - name: "Bingo: The Winning Musical"
     slug: bingo-the-winning-musical
 links: []
-updatedAt: '2026-03-23T19:18:00.000Z'
+updatedAt: "2026-03-23T19:18:00.000Z"
