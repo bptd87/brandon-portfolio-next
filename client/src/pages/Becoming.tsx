@@ -11,12 +11,11 @@ import { SEO } from "@/components/SEO";
 import { becomingPhotos } from "@shared/becomingPhotos.generated";
 
 const orderedPhotos = [...becomingPhotos].sort(
-  (a, b) => new Date(a.takenAt).getTime() - new Date(b.takenAt).getTime(),
+  (a, b) => new Date(a.takenAt).getTime() - new Date(b.takenAt).getTime()
 );
 
 function formatTakenAt(value: string) {
   return new Intl.DateTimeFormat("en", {
-    month: "short",
     year: "numeric",
   }).format(new Date(value));
 }
@@ -63,8 +62,8 @@ export default function Becoming() {
                   >
                     <figure className="mx-auto max-w-[58rem] rounded-lg border border-white/12 bg-white/[0.035] px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(2.5rem,6vw,5rem)] text-center shadow-[0_28px_90px_rgba(0,0,0,0.36)]">
                       <blockquote className="mx-auto max-w-[46rem] font-sans text-[clamp(2rem,4.1vw,4.8rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
-                        &ldquo;I am a camera with its shutter open, quite passive,
-                        recording, not thinking.&rdquo;
+                        &ldquo;I am a camera with its shutter open, quite
+                        passive, recording, not thinking.&rdquo;
                       </blockquote>
                       <figcaption className="mx-auto mt-8 max-w-[32rem] text-[0.88rem] leading-6 tracking-[-0.012em] text-white/46">
                         Christopher Isherwood, <cite>The Berlin Stories</cite>.
@@ -73,9 +72,7 @@ export default function Becoming() {
                     </figure>
                   </AnimatedSection>
                 ) : null}
-                <AnimatedSection
-                  delay={Math.min(index * 18, 220)}
-                >
+                <AnimatedSection delay={Math.min(index * 18, 220)}>
                   <figure className="group border-t border-white/12 pt-3">
                     <div className="relative overflow-hidden rounded-none bg-white/[0.035]">
                       <Image
@@ -89,9 +86,8 @@ export default function Becoming() {
                         className="h-auto w-full rounded-none object-cover transition duration-700 group-hover:brightness-110"
                       />
                     </div>
-                    <figcaption className="mt-5 grid gap-4 border-t border-white/14 pt-4 sm:grid-cols-[6rem_minmax(0,1fr)]">
+                    <figcaption className="mt-5 grid gap-4 border-t border-white/14 pt-4 sm:grid-cols-[4.5rem_minmax(0,1fr)]">
                       <div className="text-[0.72rem] font-semibold uppercase leading-5 tracking-[0.16em] text-white/38">
-                        <p>{String(index + 1).padStart(2, "0")}</p>
                         <p>{formatTakenAt(photo.takenAt)}</p>
                       </div>
                       <div>

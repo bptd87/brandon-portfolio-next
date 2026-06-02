@@ -1,9 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { Link } from "wouter";
-
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -36,7 +32,6 @@ const UTAH_SEASON_SLUGS = [
 ] as const;
 
 const UTAH_MILESTONE_SLUG = "fifth-season-utah-shakespeare-festival";
-const JO_WINIARSKI_THEATER_URL = "https://www.jowiniarski.com/theater";
 const ASSISTANT_SCENIC_URL = `https://www.brandonptdavis.com${ASSISTANT_SCENIC_DESIGN_PATH}`;
 const ASSISTANT_SCENIC_KEYWORDS = [
   "assistant scenic design credits",
@@ -48,15 +43,149 @@ const ASSISTANT_SCENIC_KEYWORDS = [
   "Brandon PT Davis",
 ].join(", ");
 
+const ASSISTANT_CV_CREDITS = [
+  {
+    year: "2025",
+    title: "The Play That Goes Wrong",
+    designer: "Tom Buderwitz",
+    venue: "Seattle Rep",
+  },
+  {
+    year: "2025",
+    title: "The Importance of Being Earnest",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2025",
+    title: "A Gentleman's Guide to Love and Murder",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2025",
+    title: "Steel Magnolias",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2025",
+    title: "The Book Club Play",
+    designer: "Jo Winiarski",
+    venue: "Cincinnati Playhouse in the Park",
+  },
+  {
+    year: "2024",
+    title: "Souvenir",
+    designer: "Jo Winiarski",
+    venue: "Pioneer Theatre Company",
+  },
+  {
+    year: "2024",
+    title: "Ragtime",
+    designer: "Jo Winiarski",
+    venue: "The Ruth, Hale Orem",
+  },
+  {
+    year: "2024",
+    title: "Natasha, Pierre, and the Great Comet of 1812",
+    designer: "Jo Winiarski",
+    venue: "Pioneer Theatre Company",
+  },
+  {
+    year: "2024",
+    title: "Jersey Boys",
+    designer: "Jo Winiarski",
+    venue: "Pioneer Theatre Company",
+  },
+  {
+    year: "2024",
+    title: "Silent Sky",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2023",
+    title: "The Mountaintop",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2023",
+    title: "Native Gardens",
+    designer: "Jo Winiarski",
+    venue: "Pioneer Theatre Company",
+  },
+  {
+    year: "2023",
+    title: "Bottle Shock",
+    designer: "Jo Winiarski",
+    venue: "California Center for the Arts, Escondido",
+  },
+  {
+    year: "2023",
+    title: "Romeo and Juliet",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2023",
+    title: "A Midsummer Night's Dream",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2023",
+    title: "The Fears",
+    designer: "Jo Winiarski",
+    venue: "Off-Broadway: Signature Theatre",
+  },
+  {
+    year: "2022",
+    title: "A Distinct Society",
+    designer: "Jo Winiarski",
+    venue: "Pioneer Theatre Company / TheatreWorks Silicon Valley",
+  },
+  {
+    year: "2022",
+    title: "Clue: On Stage",
+    designer: "Jo Winiarski",
+    venue: "Dallas Theater Center",
+  },
+  {
+    year: "2022",
+    title: "Clue: On Stage",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2022",
+    title: "The Sound of Music",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2021",
+    title: "Trouble in Mind",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2021",
+    title: "Ragtime",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+  {
+    year: "2019",
+    title: "The Pirates of Penzance",
+    designer: "Jo Winiarski",
+    venue: "Utah Shakespeare Festival",
+  },
+] as const;
+
 function formatDate(value: string) {
   return formatUtcDate(value, "year");
-}
-
-function trimCopy(value: string, maxLength: number) {
-  if (value.length <= maxLength) return value;
-  const shortened = value.slice(0, maxLength);
-  const breakIndex = shortened.lastIndexOf(" ");
-  return `${shortened.slice(0, breakIndex > 90 ? breakIndex : maxLength).trim()}...`;
 }
 
 function buildEntryMap() {
@@ -69,75 +198,68 @@ function buildEntryMap() {
   return map;
 }
 
-function getEntryExternalUrl(entry: (typeof assistantScenicDesignEntries)[number]) {
-  if (entry.externalUrl) return entry.externalUrl;
-  if (entry.collaborator === "Jo Winiarski") return JO_WINIARSKI_THEATER_URL;
-  return null;
-}
+const isFullWidthCredit = (index: number) => index % 7 === 4;
 
-function getEntryExternalLabel(entry: (typeof assistantScenicDesignEntries)[number]) {
-  return entry.externalUrl ? "Production page" : "Designer portfolio";
-}
+const getCreditMediaClass = (index: number) => {
+  if (isFullWidthCredit(index)) return "w-screen";
+  if (index % 3 === 0) return "mr-auto w-full md:w-[54vw]";
+  if (index % 3 === 1) return "ml-auto w-full md:w-[50vw]";
+  return "mx-auto w-full md:w-[62vw]";
+};
 
-function getSelectedCreditNote(entry: (typeof assistantScenicDesignEntries)[number]) {
-  switch (entry.anchorId) {
-    case "the-play-that-goes-wrong-seattle-rep":
-      return "Supported a technically precise comedy environment where scenic mechanics, visual timing, and documentation all had to stay clear.";
-    case "the-book-club-play-cincinnati-playhouse":
-      return "Regional theatre support for a contemporary comedy, with assistant work focused on scenic communication and production follow-through.";
-    case "native-gardens-pioneer-theatre-company":
-      return "Drafting and spatial development support for a production built around neighboring homes, property lines, and contrasting exterior worlds.";
-    case "bottle-shock-the-musical":
-      return "World-premiere musical support in a developing production process where scenic information had to keep pace with new-work decisions.";
-    case "the-fears-signature-theatre":
-      return "Off-Broadway assistant work supporting design continuity, communication, and execution through a fast-moving production process.";
-    case "clue-on-stage-dallas-theater-center":
-      return "Assistant scenic support for a highly choreographed farce where layout, timing, and scenic documentation carried real production weight.";
-    default:
-      return entry.excerpt;
-  }
-}
+const getCreditCaptionClass = (index: number) => {
+  if (isFullWidthCredit(index)) return "";
+  if (index % 3 === 1) return "ml-auto md:w-[50vw]";
+  if (index % 3 === 2) return "mx-auto md:w-[62vw]";
+  return "md:w-[54vw]";
+};
 
 export default function AssistantScenicDesign() {
   const entryBySlug = buildEntryMap();
 
-  const highlightEntries = HIGHLIGHT_SLUGS.map((slug) => entryBySlug.get(slug)).filter(
-    Boolean
-  ) as typeof assistantScenicDesignEntries;
-  const utahEntries = UTAH_SEASON_SLUGS.map((slug) => entryBySlug.get(slug)).filter(
-    Boolean
-  ) as typeof assistantScenicDesignEntries;
+  const highlightEntries = HIGHLIGHT_SLUGS.map(slug =>
+    entryBySlug.get(slug)
+  ).filter(Boolean) as typeof assistantScenicDesignEntries;
+  const utahEntries = UTAH_SEASON_SLUGS.map(slug =>
+    entryBySlug.get(slug)
+  ).filter(Boolean) as typeof assistantScenicDesignEntries;
   const utahMilestone = entryBySlug.get(UTAH_MILESTONE_SLUG) || null;
 
   const excludedAnchorIds = new Set([
-    ...highlightEntries.map((entry) => entry.anchorId),
-    ...utahEntries.map((entry) => entry.anchorId),
+    ...highlightEntries.map(entry => entry.anchorId),
+    ...utahEntries.map(entry => entry.anchorId),
     ...(utahMilestone ? [utahMilestone.anchorId] : []),
   ]);
 
   const additionalEntries = assistantScenicDesignEntries.filter(
-    (entry) => !excludedAnchorIds.has(entry.anchorId)
+    entry => !excludedAnchorIds.has(entry.anchorId)
   );
-  const assistantScenicUpdatedDate = assistantScenicDesignEntries.reduce((latest, entry) => {
-    return entry.date > latest ? entry.date : latest;
-  }, assistantScenicDesignEntries[0]?.date || "");
+  const portfolioEntries = [
+    ...highlightEntries,
+    ...utahEntries,
+    ...additionalEntries,
+  ];
+  const assistantScenicUpdatedDate = assistantScenicDesignEntries.reduce(
+    (latest, entry) => {
+      return entry.date > latest ? entry.date : latest;
+    },
+    assistantScenicDesignEntries[0]?.date || ""
+  );
   const assistantScenicImages = highlightEntries
-    .map((entry) => entry.coverImageUrl)
-    .filter((value, index, array): value is string => Boolean(value) && array.indexOf(value) === index);
+    .map(entry => entry.coverImageUrl)
+    .filter(
+      (value, index, array): value is string =>
+        Boolean(value) && array.indexOf(value) === index
+    );
   const assistantScenicContributors = Array.from(
-    new Set(assistantScenicDesignEntries.map((entry) => entry.collaborator).filter(Boolean))
+    new Set(
+      assistantScenicDesignEntries
+        .map(entry => entry.collaborator)
+        .filter(Boolean)
+    )
   );
-  const leadHighlightEntry = highlightEntries[0] || utahEntries[0] || assistantScenicDesignEntries[0];
-  const leadUtahEntry =
-    utahEntries.find((entry) => entry.anchorId === "utah-shakespeare-festival-2023") ||
-    utahEntries[0] ||
-    null;
-  const supportingUtahEntries = leadUtahEntry
-    ? utahEntries.filter((entry) => entry.anchorId !== leadUtahEntry.anchorId)
-    : utahEntries.slice(1);
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#111111] text-white">
       <SEO
         title={ASSISTANT_SCENIC_DESIGN_SEO_TITLE}
         description={ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION}
@@ -163,13 +285,15 @@ export default function AssistantScenicDesign() {
           primaryImageOfPage: highlightEntries[0]?.coverImageUrl,
           mainEntity: {
             name: "Assistant Scenic Design Credits",
-            itemListElement: assistantScenicDesignEntries.map((entry, index) => ({
-              position: index + 1,
-              name: entry.title,
-              url: `${ASSISTANT_SCENIC_URL}#${entry.anchorId}`,
-              datePublished: entry.date,
-              image: entry.coverImageUrl,
-            })),
+            itemListElement: assistantScenicDesignEntries.map(
+              (entry, index) => ({
+                position: index + 1,
+                name: entry.title,
+                url: `${ASSISTANT_SCENIC_URL}#${entry.anchorId}`,
+                datePublished: entry.date,
+                image: entry.coverImageUrl,
+              })
+            ),
           },
         }}
       />
@@ -191,13 +315,13 @@ export default function AssistantScenicDesign() {
           dateModified: assistantScenicUpdatedDate || undefined,
           keywords: ASSISTANT_SCENIC_KEYWORDS.split(", "),
           image: assistantScenicImages,
-          workExample: highlightEntries.map((entry) => ({
+          workExample: highlightEntries.map(entry => ({
             type: "ImageObject" as const,
             contentUrl: entry.coverImageUrl,
             name: entry.title,
             caption: `${entry.title} at ${entry.organization}. Scenic designer ${entry.collaborator}.`,
           })),
-          contributor: assistantScenicContributors.map((name) => ({
+          contributor: assistantScenicContributors.map(name => ({
             type: "Person" as const,
             name,
             roleName: "Scenic Designer",
@@ -207,306 +331,103 @@ export default function AssistantScenicDesign() {
       <Header />
       <PortfolioTopBar />
 
-      <section className="relative min-h-[calc(100svh-138px)] overflow-hidden bg-black">
-        {leadHighlightEntry?.coverImageUrl ? (
-          <Image
-            src={leadHighlightEntry.coverImageUrl}
-            alt={leadHighlightEntry.coverImageAlt}
-            fill
-            priority
-            quality={88}
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-        ) : null}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.32)_48%,rgba(0,0,0,0.88)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.24)_48%,rgba(0,0,0,0.4)_100%)]" />
-        <div className="relative flex min-h-[calc(100svh-138px)] items-end px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-12 md:pb-16 md:pt-16">
-          <AnimatedSection>
-            <div className="max-w-[72rem]">
-              <p className="section-kicker text-white/62">
-                Production Support
-              </p>
-              <h1 className="mt-5 max-w-[12ch] font-sans text-[clamp(3.2rem,7vw,7.4rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
-                Assistant Scenic Design
-              </h1>
-              <p className="mt-7 max-w-[44rem] text-[clamp(1.03rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/78">
-                Assistant scenic credits across regional theatre, repertory seasons, new work,
-                musicals, comedy, and Off-Broadway production. This work reflects experience
-                supporting established scenic designers through drafting, model communication,
-                coordination, and production follow-through.
-              </p>
-              <div className="mt-8">
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-white/76 transition-colors hover:text-white"
-                >
-                  View Scenic Design Portfolio
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
+      <main>
+        <section
+          id="assistant-credits"
+          className="scroll-mt-24 border-t border-white/12 bg-[#111111]"
+        >
+          <div className="relative overflow-hidden border-b border-white/10 bg-[#111111]">
+            <header className="relative flex min-h-[48svh] w-full items-center justify-center px-[clamp(1.5rem,5vw,5.5rem)] py-16 text-center md:min-h-[58svh] md:py-24">
+              <div className="mx-auto max-w-[60rem]">
+                <div className="text-[0.82rem] font-semibold tracking-[-0.01em] text-white/72">
+                  Assistant Scenic Design
+                </div>
+                <h1 className="mx-auto mt-5 max-w-[13ch] font-sans text-[clamp(3.2rem,7vw,7.2rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+                  Assistant Scenic Design
+                </h1>
+                <p className="mx-auto mt-7 max-w-[43rem] text-[clamp(1.02rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/82">
+                  Selected assistant scenic design credits supporting scenic
+                  designers through drafting, model communication, and
+                  production coordination.
+                </p>
               </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24">
-        <div className="container max-w-[88rem]">
-          <AnimatedSection>
-            <div className="mb-10 max-w-4xl">
-              <p className="mb-3 section-kicker text-foreground/42">
-                Selected Credits
-              </p>
-              <h2 className="mb-4 font-sans text-[clamp(2.2rem,4vw,4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
-                Production support across demanding theatre processes.
-              </h2>
-              <p className="text-[1.02rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
-                These selected credits show the range of assistant scenic work: precision comedy,
-                regional theatre, new musicals, Off-Broadway process, repertory pace, and production
-                teams that need clear scenic information from early design through technical rehearsal.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div className="space-y-16 md:space-y-20">
-            {highlightEntries.map((entry, index) => {
-              const externalUrl = getEntryExternalUrl(entry);
-              const imageFirst = index % 2 === 0;
-
-              return (
-                <AnimatedSection key={entry.anchorId}>
-                  <article
-                    id={entry.anchorId}
-                    className="group grid gap-6 border-t border-white/12 pt-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(22rem,0.8fr)] lg:gap-12"
-                  >
-                    <div className={`${imageFirst ? "" : "lg:order-2"} overflow-hidden bg-black/70`}>
-                      <div className="relative aspect-[16/10] w-full lg:aspect-[16/9]">
-                        <Image
-                          src={entry.coverImageUrl}
-                          alt={entry.coverImageAlt}
-                          fill
-                          quality={82}
-                          sizes="(max-width: 1024px) 100vw, 58vw"
-                          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
-                        />
-                      </div>
-                    </div>
-                    <div className={`${imageFirst ? "" : "lg:order-1"} self-end lg:pb-1`}>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
-                        {entry.organization}
-                      </p>
-                      <h3 className="mt-3 font-sans text-[clamp(1.8rem,3vw,3.2rem)] font-medium leading-[0.96] tracking-[-0.055em] text-foreground">
-                        {entry.title}
-                      </h3>
-                      <p className="mt-5 max-w-[42rem] text-[0.94rem] leading-[1.65] tracking-[-0.01em] text-foreground/50">
-                        Assistant scenic design with {entry.collaborator}, {formatDate(entry.date)}
-                        {entry.location ? ` · ${entry.location}` : ""}.
-                      </p>
-                      <p className="mt-4 max-w-[42rem] text-[1rem] leading-[1.78] tracking-[-0.01em] text-foreground/64">
-                        {getSelectedCreditNote(entry)}
-                      </p>
-                      {externalUrl && (
-                        <div className="mt-4">
-                          <a
-                            href={externalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
-                          >
-                            {getEntryExternalLabel(entry)}
-                            <ArrowUpRight className="h-4 w-4" />
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </article>
-                </AnimatedSection>
-              );
-            })}
+            </header>
           </div>
-        </div>
-      </section>
-
-      <section className="border-t border-border py-16 md:py-20">
-        <div className="container max-w-[88rem]">
-          <AnimatedSection>
-            <div className="mb-10 max-w-4xl">
-              <p className="mb-3 section-kicker text-foreground/42">
-                Utah Shakespeare Festival
-              </p>
-              <h2 className="mb-4 font-sans text-[clamp(2.1rem,3.8vw,3.6rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground">
-                Five seasons of repertory collaboration.
-              </h2>
-              <p className="text-[1.02rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
-                The Utah Shakespeare Festival credits form the clearest through-line on this page:
-                five summer seasons supporting Jo Winiarski across rotating repertory productions,
-                shared production timelines, and multiple scenic worlds moving at once.
-                {utahMilestone ? ` ${trimCopy(utahMilestone.excerpt, 136)}` : ""}
+          <div className="relative left-1/2 w-screen -translate-x-1/2 py-10 md:py-14">
+            <div className="mx-auto mb-10 max-w-[92rem] px-[clamp(1.5rem,5vw,6rem)]">
+              <p className="font-mono text-[0.72rem] uppercase leading-none tracking-[0.16em] text-white/38">
+                Selected production views
               </p>
             </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <div className="space-y-10">
-              {leadUtahEntry ? (
-                <figure id={leadUtahEntry.anchorId} className="grid gap-6 border-t border-white/12 pt-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(22rem,0.65fr)] lg:gap-12">
-                  <div className="overflow-hidden bg-black/70">
-                    <div className="relative aspect-[16/9] w-full lg:aspect-[16/8]">
-                      <Image
-                        src={leadUtahEntry.coverImageUrl}
-                        alt={leadUtahEntry.coverImageAlt}
-                        fill
-                        quality={86}
-                        sizes="(max-width: 1024px) 100vw, 62vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                  <figcaption className="lg:pt-1">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
-                      {new Date(leadUtahEntry.date).getFullYear()} Season
-                    </p>
-                    <h3 className="mt-3 font-sans text-[clamp(1.8rem,3vw,3.25rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground">
-                      {leadUtahEntry.title}
-                    </h3>
-                    <p className="mt-5 max-w-[34rem] text-[1rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
-                      Assistant scenic design with {leadUtahEntry.collaborator}. {leadUtahEntry.excerpt}
-                    </p>
-                    {getEntryExternalUrl(leadUtahEntry) ? (
-                      <div className="mt-5">
-                        <a
-                          href={getEntryExternalUrl(leadUtahEntry) || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
-                        >
-                          {getEntryExternalLabel(leadUtahEntry)}
-                          <ArrowUpRight className="h-4 w-4" />
-                        </a>
-                      </div>
-                    ) : null}
-                  </figcaption>
-                </figure>
-              ) : null}
-
-              <div className="grid gap-x-8 gap-y-12 md:grid-cols-2">
-                {supportingUtahEntries.map((entry) => {
-                    const externalUrl = getEntryExternalUrl(entry);
-
-                    return (
-                      <figure
-                        key={entry.anchorId}
-                        id={entry.anchorId}
-                        className="border-t border-white/12 pt-5"
-                      >
-                        <div className="overflow-hidden bg-black/70">
-                          <div className="relative aspect-[16/10] w-full">
-                            <Image
-                              src={entry.coverImageUrl}
-                              alt={entry.coverImageAlt}
-                              fill
-                              quality={82}
-                              sizes="(max-width: 768px) 100vw, 48vw"
-                              className="object-cover"
-                            />
-                          </div>
-                        </div>
-                        <figcaption className="pt-4">
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
-                            {new Date(entry.date).getFullYear()} Season
-                          </p>
-                          <h3 className="mt-2 text-[1.42rem] font-sans font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
-                            {entry.title}
-                          </h3>
-                          <p className="mt-3 text-[0.98rem] leading-[1.7] tracking-[-0.01em] text-foreground/60">
-                            Assistant scenic design with {entry.collaborator}.
-                          </p>
-                          <p className="mt-3 text-[0.98rem] leading-[1.72] tracking-[-0.01em] text-foreground/54">
-                            {trimCopy(entry.excerpt, 140)}
-                          </p>
-                          {externalUrl && (
-                            <div className="mt-4">
-                              <a
-                                href={externalUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
-                              >
-                                {getEntryExternalLabel(entry)}
-                                <ArrowUpRight className="h-4 w-4" />
-                              </a>
-                            </div>
-                          )}
-                        </figcaption>
-                      </figure>
-                    );
-                  })}
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {additionalEntries.length > 0 && (
-        <section className="border-t border-border py-16 md:py-20">
-          <div className="container max-w-[88rem]">
-            <AnimatedSection>
-              <div className="mb-8 max-w-3xl">
-                <p className="mb-3 section-kicker text-foreground/42">
-                  Additional Credits
-                </p>
-                <p className="text-[1rem] leading-[1.72] tracking-[-0.01em] text-foreground/58">
-                  Additional assistant scenic credits across regional theatre, repertory production,
-                  drafting support, and long-term scenic collaboration.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <div className="grid gap-x-10 gap-y-0 md:grid-cols-2">
-              {additionalEntries.map((entry) => {
-                const externalUrl = getEntryExternalUrl(entry);
+            <div className="space-y-16 md:space-y-24">
+              {highlightEntries.map((entry, index) => {
+                const mediaClass = getCreditMediaClass(index);
+                const captionClass = getCreditCaptionClass(index);
 
                 return (
                   <AnimatedSection key={entry.anchorId}>
-                    <article id={entry.anchorId} className="border-t border-white/10 py-6">
-                      <div className="flex items-center justify-between gap-4">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
-                          {entry.organization}
-                        </p>
-                        <p className="shrink-0 text-[0.92rem] tracking-[-0.015em] text-foreground/46">
-                          {formatDate(entry.date)}
-                        </p>
-                      </div>
-                      <h3 className="mt-3 max-w-[34rem] text-[1.22rem] font-sans font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
-                        {entry.title}
-                      </h3>
-                      <p className="mt-2 max-w-[38rem] text-[0.96rem] leading-[1.68] tracking-[-0.01em] text-foreground/58">
-                        Assistant scenic design with {entry.collaborator}
-                        {entry.location ? ` · ${entry.location}` : ""}.
-                      </p>
-                      {externalUrl && (
-                        <div className="mt-4">
-                          <a
-                            href={externalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-[0.92rem] tracking-[-0.015em] text-foreground/72 transition-colors hover:text-foreground"
-                          >
-                            {getEntryExternalLabel(entry)}
-                            <ArrowUpRight className="h-4 w-4" />
-                          </a>
+                    <figure className="space-y-4">
+                      <img
+                        src={entry.coverImageUrl}
+                        alt={entry.coverImageAlt}
+                        className={`block h-auto bg-[#111111] ${mediaClass}`}
+                        loading={index < 2 ? "eager" : "lazy"}
+                        decoding={index < 2 ? "sync" : "async"}
+                      />
+                      <figcaption
+                        className={`px-[clamp(1.5rem,5vw,5.5rem)] ${captionClass}`}
+                      >
+                        <div className="max-w-[48rem]">
+                          <p className="max-w-[38rem] text-[0.98rem] leading-6 tracking-[-0.016em] text-white/56">
+                            <strong className="font-medium text-white">
+                              {entry.title}
+                            </strong>{" "}
+                            at {entry.organization} with Scenic Design by{" "}
+                            {entry.collaborator}. {formatDate(entry.date)}.
+                          </p>
                         </div>
-                      )}
-                    </article>
+                      </figcaption>
+                    </figure>
                   </AnimatedSection>
                 );
               })}
             </div>
           </div>
-        </section>
-      )}
 
-      <Footer />
+          <div className="px-[clamp(1.5rem,5vw,6rem)] pb-20 pt-6 md:pb-28 md:pt-12">
+            <div className="mx-auto max-w-[92rem]">
+              <div className="divide-y divide-white/10 border-y border-white/12">
+                {ASSISTANT_CV_CREDITS.map((entry, index) => (
+                  <article
+                    key={`${entry.year}-${entry.title}-${entry.venue}-${index}`}
+                    className="grid gap-4 py-5 md:grid-cols-[5rem_minmax(16rem,1.1fr)_minmax(13rem,0.75fr)_minmax(15rem,0.9fr)] md:items-start"
+                  >
+                    <p className="font-mono text-[0.68rem] uppercase leading-6 tracking-[0.16em] text-white/34">
+                      {entry.year}
+                    </p>
+                    <div>
+                      <h3 className="font-sans text-[1.18rem] font-medium leading-tight tracking-[-0.04em] text-white">
+                        {entry.title}
+                      </h3>
+                      <p className="mt-1 text-[0.94rem] leading-tight tracking-[-0.018em] text-white/45">
+                        Assistant Scenic Designer
+                      </p>
+                    </div>
+                    <p className="text-[0.98rem] leading-6 tracking-[-0.018em] text-white/56">
+                      {entry.designer}
+                    </p>
+                    <p className="text-[0.98rem] leading-6 tracking-[-0.018em] text-white/45">
+                      {entry.venue}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer tone="dark" />
     </div>
   );
 }
