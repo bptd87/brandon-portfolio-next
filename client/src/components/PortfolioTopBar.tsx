@@ -14,6 +14,7 @@ const portfolioNavItems: PortfolioNavItem[] = [
   { path: "/projects/rendering", label: "Rendering" },
   { path: "/projects/experiential", label: "Experiential" },
   { path: "/assistant-scenic-design", label: "Assistant Scenic" },
+  { path: "/projects/photography", label: "Photography" },
 ] as const;
 
 export default function PortfolioTopBar() {

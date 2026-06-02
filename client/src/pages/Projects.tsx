@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowUpDown,
+  ArrowRight,
   ArrowDownAZ,
   Building2,
   CalendarArrowDown,
@@ -791,6 +792,30 @@ export default function Projects({
             </div>
           </section>
         )}
+
+        <section className="border-t border-white/12 bg-black px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-24">
+          <div className="mx-auto grid max-w-[88rem] gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-end">
+            <div>
+              <p className="section-kicker text-white/38">Visual diary</p>
+              <h2 className="mt-5 max-w-[12ch] font-sans text-[clamp(2.8rem,6vw,7rem)] font-medium leading-[0.86] tracking-[-0.085em] text-white">
+                Becoming
+              </h2>
+            </div>
+            <div>
+              <p className="max-w-2xl text-[1.04rem] leading-7 tracking-[-0.018em] text-white/58">
+                A quieter contact sheet of personal photographs, references, places, rooms, and
+                passing observations that sit beside the formal design archive.
+              </p>
+              <a
+                href="/projects/photography"
+                className="mt-7 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-[0.95rem] font-medium tracking-[-0.015em] text-white/76 transition-colors hover:border-white hover:text-white"
+              >
+                View the photo journal
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </section>
 
       </main>
 

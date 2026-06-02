@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AboutNav from "@/components/AboutNav";
+import SyllabusNav from "@/components/SyllabusNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { ArrowRight } from "lucide-react";
@@ -71,7 +70,7 @@ const modules = [
 
 export default function Syllabus3DModeling() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title="THA 211 | 3D Modeling and Rendering Syllabus"
         description="Course syllabus for THA 211: Vectorworks for theatrical design, covering 3D modeling, rendering, and drafting documentation."
@@ -115,69 +114,71 @@ export default function Syllabus3DModeling() {
         }}
       />
       <Header />
-      <AboutNav />
+      <SyllabusNav />
 
-      <section className="px-6 pb-12 pt-24 md:pb-16 md:pt-28">
-        <div className="mx-auto max-w-5xl border-b border-border/25 pb-12">
-          <p className="text-center section-kicker text-foreground/40">
-            Course Syllabus
-          </p>
-          <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-            3D Modeling and Rendering
-          </h1>
-          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
-            THA 211: Vectorworks for theatrical design, centered on modeling, visualization, and
-            production-ready drafting workflow.
-          </p>
-        </div>
-      </section>
-
-      <section className="px-6 py-8 md:py-12">
-        <div className="mx-auto grid max-w-[88rem] items-center gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
-          <div className="max-w-2xl">
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-              Teaching students how to model, render, and document with clarity.
-            </h2>
-            <div className="mt-8 space-y-5">
-              <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
-                This course moves beyond introductory drafting into a full 3D scenic design
-                workflow. Students build digital environments, learn how to visualize them, and
-                understand how those models become real production documents.
-              </p>
-              <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
-                The emphasis is not just software knowledge, but professional organization:
-                geometry, layers, classes, rendering logic, and the transition from design model to
-                clear drafting output.
-              </p>
-            </div>
-            <div className="mt-8">
+      <section className="px-5 pb-16 pt-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:pb-20 md:pt-20">
+        <div className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(22rem,0.34fr)] lg:items-start lg:gap-12">
+          <div className="min-w-0">
+            <p className="section-kicker text-black/42">Course Syllabus</p>
+            <h1 className="mt-6 max-w-[10.5ch] font-sans text-[clamp(3.25rem,7vw,6.8rem)] font-semibold leading-[0.92] tracking-[0] text-black">
+              3D Modeling and Rendering
+            </h1>
+            <p className="mt-8 max-w-3xl text-[1.18rem] leading-8 tracking-[0] text-black/62 md:text-[1.32rem] md:leading-9">
+              THA 211 teaches students how to model, render, and document with clarity, moving
+              from software fluency into production-ready scenic design workflow.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="/studio/tutorials"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-black px-5 text-[0.95rem] font-medium tracking-[0] text-white transition-colors hover:bg-[color-mix(in_oklch,var(--accent-articles)_58%,black)]"
               >
-                <span>View Vectorworks Tutorials</span>
+                <span>Vectorworks Tutorials</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
+              <Link
+                href="/about/teaching"
+                className="inline-flex min-h-11 items-center rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[0] text-black transition-colors hover:bg-white/80"
+              >
+                Teaching Context
+              </Link>
             </div>
           </div>
 
-          <div className="overflow-hidden border border-border/30 bg-card/20">
-            <div className="relative aspect-square w-full">
-              <Image
-                src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-3d-modeling-art.png"
-                alt="3D modeling syllabus artwork"
-                fill
-                quality={82}
-                sizes="(max-width: 1280px) 92vw, 34vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
+          <aside className="rounded-lg bg-white/58 p-6 md:p-7 lg:mt-16">
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.22em] text-black/40">
+              Course frame
+            </p>
+            <dl className="mt-8 space-y-6">
+              <div>
+                <dt className="text-[0.82rem] font-medium uppercase tracking-[0.14em] text-black/38">
+                  Practice
+                </dt>
+                <dd className="mt-2 text-[1.06rem] leading-7 text-black/72">
+                  Vectorworks modeling, rendering, drafting, and file organization.
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[0.82rem] font-medium uppercase tracking-[0.14em] text-black/38">
+                  Method
+                </dt>
+                <dd className="mt-2 text-[1.06rem] leading-7 text-black/72">
+                  Build the model, visualize the design, generate the drawing package.
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[0.82rem] font-medium uppercase tracking-[0.14em] text-black/38">
+                  Semester
+                </dt>
+                <dd className="mt-2 text-[1.06rem] leading-7 text-black/72">
+                  Six projects, ten skill quizzes, 1120 points.
+                </dd>
+              </div>
+            </dl>
+          </aside>
         </div>
-
       </section>
 
-      <section className="px-6 py-18 md:py-22">
+      <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto max-w-[88rem]">
           <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
             <div className="section-kicker text-foreground/40 md:sticky md:top-32">
@@ -201,28 +202,28 @@ export default function Syllabus3DModeling() {
         </div>
       </section>
 
-      <section className="border-y border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-[88rem] grid gap-10 lg:grid-cols-2">
-          <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6 md:p-8">
-            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+      <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
+        <div className="mx-auto grid max-w-[88rem] gap-4 lg:grid-cols-2">
+          <div className="rounded-lg bg-white/58 p-6 md:p-8">
+            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-black/40">
               Course Objectives
             </h2>
             <div className="mt-6 space-y-4">
               {objectives.map((item) => (
-                <p key={item} className="text-[1rem] leading-7 text-foreground/68">
+                <p key={item} className="text-[1rem] leading-7 text-black/68">
                   {item}
                 </p>
               ))}
             </div>
           </div>
 
-          <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6 md:p-8">
-            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+          <div className="rounded-lg bg-white/58 p-6 md:p-8">
+            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-black/40">
               Required Tools
             </h2>
             <div className="mt-6 space-y-4">
               {requirements.map((item) => (
-                <p key={item} className="text-[1rem] leading-7 text-foreground/68">
+                <p key={item} className="text-[1rem] leading-7 text-black/68">
                   {item}
                 </p>
               ))}
@@ -231,7 +232,7 @@ export default function Syllabus3DModeling() {
         </div>
       </section>
 
-      <section className="px-6 py-18 md:py-22">
+      <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
@@ -244,11 +245,11 @@ export default function Syllabus3DModeling() {
             </p>
           </div>
 
-          <div className="mt-10 border-t border-border/25">
+          <div className="mt-10 space-y-2">
             {evaluation.map(([title, points, description]) => (
               <div
                 key={title}
-                className="grid gap-3 border-b border-border/20 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8"
+                className="grid gap-3 rounded-lg bg-white/50 px-4 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8 md:px-6"
               >
                 <p className="font-sans text-[1rem] font-medium tracking-[-0.03em] text-foreground">
                   {title}
@@ -257,18 +258,18 @@ export default function Syllabus3DModeling() {
                 <p className="text-[0.98rem] leading-7 text-foreground/60">{description}</p>
               </div>
             ))}
-            <div className="grid gap-3 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8">
-              <p className="font-sans text-[1rem] font-medium tracking-[-0.03em] text-foreground">
+            <div className="grid gap-3 rounded-lg bg-black px-4 py-5 text-white md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8 md:px-6">
+              <p className="font-sans text-[1rem] font-medium tracking-[-0.03em]">
                 Total
               </p>
-              <p className="text-[0.98rem] leading-7 text-foreground/54">1120</p>
-              <p className="text-[0.98rem] leading-7 text-foreground/60">Semester total</p>
+              <p className="text-[0.98rem] leading-7 text-white/68">1120</p>
+              <p className="text-[0.98rem] leading-7 text-white/72">Semester total</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-border/25 px-6 py-18 md:py-22">
+      <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
@@ -276,9 +277,9 @@ export default function Syllabus3DModeling() {
             </h2>
           </div>
 
-          <div className="mt-10 space-y-10">
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
             {modules.map((module) => (
-              <div key={module.title} className="border-t border-border/20 pt-6">
+              <div key={module.title} className="rounded-lg bg-white/50 p-5 md:p-6">
                 <h3 className="font-sans text-[1.35rem] font-medium leading-[1.1] tracking-[-0.04em] text-foreground">
                   {module.title}
                 </h3>
@@ -295,8 +296,8 @@ export default function Syllabus3DModeling() {
         </div>
       </section>
 
-      <section className="px-6 pb-4 pt-2 md:pb-6 md:pt-4">
-        <div className="mx-auto max-w-[88rem] border-t border-border/20 pt-10">
+      <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
+        <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <p className="section-kicker text-foreground/45">
               Related Tutorials
@@ -310,41 +311,34 @@ export default function Syllabus3DModeling() {
           </div>
 
           <div className="mt-8 max-w-5xl">
-            <Link href="/studio/tutorials" className="group block">
-              <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
-                <div className="relative aspect-square overflow-hidden border border-border/35 bg-card/20">
-                  <Image
-                    src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png"
-                    alt="Vectorworks tutorials used in THA 211"
-                    fill
-                    quality={80}
-                    sizes="(max-width: 640px) 42vw, 8.5rem"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
+            <Link
+              href="/studio/tutorials"
+              className="group grid gap-6 rounded-lg bg-white/58 px-6 py-8 transition-colors hover:bg-white/78 md:grid-cols-[minmax(0,1fr)_2rem] md:px-10 md:py-10"
+            >
+              <div>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-black/50">
+                  <span>Studio Tutorials</span>
+                  <span>3D Modeling</span>
+                  <span>Rendering</span>
                 </div>
-                <div className="pt-1">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/50">
-                    <span>Studio Tutorials</span>
-                    <span>3D Modeling</span>
-                    <span>Rendering</span>
-                  </div>
-                  <h3 className="mt-3 font-sans text-[1.3rem] font-medium leading-[1.06] tracking-[-0.035em] text-foreground transition-colors group-hover:text-foreground/84">
-                    Vectorworks tutorial library
-                  </h3>
-                  <p className="mt-3 text-[0.97rem] leading-7 text-foreground/60">
-                    Video lessons covering drafting, hybrid objects, 3D modeling, rendering, and workflow habits that reinforce the course structure.
-                  </p>
-                </div>
+                <h3 className="mt-3 font-sans text-[1.65rem] font-medium leading-[1.06] tracking-[-0.035em] text-black transition-colors group-hover:text-black/84">
+                  Vectorworks tutorial library
+                </h3>
+                <p className="mt-3 text-[0.97rem] leading-7 text-black/60">
+                  Video lessons covering drafting, hybrid objects, 3D modeling, rendering, and
+                  workflow habits that reinforce the course structure.
+                </p>
               </div>
+              <ArrowRight className="hidden h-5 w-5 text-black/42 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-black md:block" />
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border/25 px-6 py-20 md:py-24">
+      <section className="px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
         <div className="mx-auto max-w-[88rem]">
-          <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
-            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
+          <div className="rounded-lg bg-black px-6 py-16 text-center text-white md:px-12 md:py-20">
+            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em]">
               Return to teaching philosophy and course context.
             </h2>
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -357,7 +351,7 @@ export default function Syllabus3DModeling() {
               </Link>
               <Link
                 href="/syllabus/experiential-design"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-white/14"
               >
                 <span>See Experiential Syllabus</span>
               </Link>
@@ -366,7 +360,7 @@ export default function Syllabus3DModeling() {
         </div>
       </section>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }

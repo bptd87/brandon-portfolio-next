@@ -183,10 +183,10 @@ export default function Header() {
     location === "/resume" ||
     isContactRoute ||
     isInfoRoute ||
-    location === "/creative-statement" ||
     location === "/search" ||
     location === "/about/teaching" ||
     location === "/about/collaborators" ||
+    /^\/syllabus(?:\/|$)/.test(location) ||
     /^\/upcoming-productions(?:\/|$)/.test(location);
   const isHomeRoute = location === "/";
   const useLightChrome =
@@ -312,6 +312,11 @@ export default function Header() {
           name: "Assistant Scenic Design",
           path: "/assistant-scenic-design",
           description: "Production support, drafting systems, and collaboration as assistant scenic.",
+        },
+        {
+          name: "Photography",
+          path: "/projects/photography",
+          description: "A chronological photo portfolio and visual reference archive.",
         },
       ],
     },

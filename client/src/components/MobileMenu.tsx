@@ -18,6 +18,7 @@ const PORTFOLIO_LINKS = [
   { label: "Rendering", href: "/projects/rendering" },
   { label: "Experiential Design", href: "/projects/experiential" },
   { label: "Assistant Scenic Design", href: "/assistant-scenic-design" },
+  { label: "Photography", href: "/projects/photography" },
 ] as const;
 
 const ABOUT_LINKS = [

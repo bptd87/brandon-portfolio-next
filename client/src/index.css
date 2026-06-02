@@ -334,24 +334,6 @@
     height: auto;
   }
 
-  /* Soft media corners: more Apple-like product polish without rounding icons or UI chrome. */
-  :root {
-    --site-media-radius: clamp(0.85rem, 1.15vw, 1.35rem);
-  }
-
-  img,
-  picture,
-  figure:has(> img),
-  figure:has(> picture),
-  button:has(> img),
-  button:has(> picture),
-  a:has(> img),
-  a:has(> picture),
-  div:has(> img),
-  div:has(> picture) {
-    border-radius: var(--site-media-radius) !important;
-  }
-
   .rounded-full,
   .rounded-full:has(> img),
   .rounded-full:has(> picture) {

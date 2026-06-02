@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Box, CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Box,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+} from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -162,31 +168,36 @@ const portfolioCategoryRows: Array<{
     title: "Drama",
     match: ["Drama"],
     href: "/tags/drama",
-    description: "Rooms built for memory, pressure, and consequence.",
+    description:
+      "Rooms under pressure. Places where memory, grief, class, and consequence become visible.",
   },
   {
     title: "Comedy",
     match: ["Comedy"],
     href: "/tags/comedy",
-    description: "Architecture for timing, surprise, and social pressure.",
+    description:
+      "Spaces tuned for timing: entrances, exits, reversals, hiding places, and social misreadings.",
   },
   {
     title: "Musical Theatre",
     match: ["Musical Theatre"],
     href: "/tags/musical-theatre",
-    description: "Scenic worlds built for rhythm, transformation, and scale.",
+    description:
+      "Design that can carry rhythm, scale, spectacle, and emotional turn-on-a-dime transformation.",
   },
   {
     title: "Shakespeare",
     match: ["Shakespeare"],
     href: "/tags/shakespeare",
-    description: "Classic texts held inside contemporary theatrical space.",
+    description:
+      "Old texts reframed through contemporary space, civic pressure, ritual, and bodies in public.",
   },
   {
     title: "TYA",
     match: ["Theatre for Young Audiences"],
     href: "/tags/theatre-for-young-audiences",
-    description: "Clear visual worlds for wonder, play, and young audiences.",
+    description:
+      "Clear, generous environments for young audiences: playful enough to invite, precise enough to guide.",
   },
 ];
 
@@ -211,13 +222,17 @@ function HomeIntro() {
           <p className="mb-7 font-sans text-[clamp(1rem,1.45vw,1.22rem)] font-medium leading-none tracking-[-0.035em] text-white/78">
             Brandon PT Davis Scenic Design
           </p>
-          <h1 className="max-w-[10ch] font-sans text-[clamp(3.4rem,8.2vw,8.8rem)] font-medium leading-[0.84] tracking-[-0.09em] text-white">
-            Space makes the story visible.
+          <h1
+            aria-label="If all the world is a stage, then is the scenic designer its architect?"
+            className="max-w-[min(64rem,100%)] font-sans text-[clamp(2.85rem,5.75vw,6.5rem)] font-medium leading-[0.92] tracking-[-0.04em] text-white"
+          >
+            <span className="block">If all the world is a stage, </span>
+            <span className="block">then is the scenic designer </span>
+            <span className="block">its architect?</span>
           </h1>
-          <p className="mt-8 max-w-[40rem] font-sans text-[clamp(1.1rem,1.8vw,1.65rem)] font-medium leading-[1.2] tracking-[-0.045em] text-white/68 md:mt-10">
-            Scenic design for theatre, memory, and live performance. Production
-            photos are the entry point; the work is how a room holds behavior,
-            rhythm, and atmosphere.
+          <p className="mt-7 max-w-[43rem] font-sans text-[clamp(1.16rem,2vw,1.9rem)] font-medium leading-[1.16] tracking-[-0.045em] text-white/72 md:mt-9">
+            <span className="block text-white">No. </span>
+            Scenic design gives form to the story's reflection of our world.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
@@ -233,6 +248,56 @@ function HomeIntro() {
               About Brandon
             </a>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HomeThesisSection() {
+  const ideas = [
+    {
+      label: "Pressure",
+      text: "Rooms that make behavior visible.",
+    },
+    {
+      label: "Memory",
+      text: "Spaces that carry what happened before the play begins.",
+    },
+    {
+      label: "Transformation",
+      text: "Designs that let the story change in front of us.",
+    },
+  ];
+
+  return (
+    <section className="border-t border-white/10 bg-black text-white">
+      <div className="grid gap-12 px-[clamp(1.5rem,5vw,6rem)] py-[clamp(4.5rem,9vw,8rem)] lg:grid-cols-[0.9fr_1.35fr] lg:items-end">
+        <div>
+          <p className="section-kicker mb-6 text-white/42">Position</p>
+          <h2 className="max-w-[12ch] font-sans text-[clamp(2.6rem,6.2vw,6.9rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
+            Not architecture exactly.
+          </h2>
+        </div>
+
+        <div className="max-w-[48rem]">
+          <p className="font-sans text-[clamp(1.35rem,2.6vw,2.75rem)] font-medium leading-[1.04] tracking-[-0.055em] text-white/88">
+            A scenic designer does not build the world. They decide which
+            version of the world the story needs us to see.
+          </p>
+
+          <dl className="mt-12 grid gap-7 border-t border-white/12 pt-8 md:grid-cols-3">
+            {ideas.map(idea => (
+              <div key={idea.label}>
+                <dt className="font-sans text-[0.72rem] font-medium uppercase tracking-[0.24em] text-[#c77dff]">
+                  {idea.label}
+                </dt>
+                <dd className="mt-3 max-w-[15rem] font-sans text-[1.05rem] font-medium leading-[1.35] tracking-[-0.025em] text-white/62">
+                  {idea.text}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>
@@ -394,14 +459,19 @@ function BrandonSection() {
         <div className="max-w-[48rem]">
           <p className="mb-5 section-kicker text-black/48">Profile</p>
           <h2 className="font-sans text-[clamp(2.4rem,5.2vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-black">
-            Scenic design as atmosphere, architecture, and human behavior.
+            Scenic design from San Diego, with room for the world.
           </h2>
+          <Heart
+            aria-hidden="true"
+            className="mt-6 h-8 w-8 fill-black text-black md:h-10 md:w-10"
+            strokeWidth={1.75}
+          />
           <p className="mt-8 max-w-[56rem] text-[1rem] leading-8 tracking-[-0.01em] text-black/62 md:text-[1.08rem]">
-            Brandon's work starts with how people move through a room: what a
-            space remembers, what it hides, and how it shapes the rhythm of a
-            performance. The portfolio collects production environments,
-            renderings, and process images from regional theatre, summer stock,
-            and academic stages.
+            Based in San Diego, I design theatrical spaces that make behavior
+            visible: rooms under pressure, places with memory, and environments
+            that shift as the story changes. The portfolio gathers production
+            environments, renderings, and process work from theatre, academic,
+            and collaborative design practice.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
@@ -642,8 +712,13 @@ function HomeExperientialAndRenderingSection() {
               strokeWidth={1.65}
               aria-hidden="true"
             />
-            <span>Spatial work and visual studies.</span>
+            <span>The same scenic eye, across medium and scale.</span>
           </h2>
+          <p className="mt-6 max-w-[47rem] font-sans text-[clamp(1.05rem,1.65vw,1.45rem)] font-medium leading-[1.3] tracking-[-0.035em] text-white/56">
+            Renderings, drawings, installations, and commercial environments
+            carry the same questions as the theatre work: what does the space
+            ask people to notice, feel, remember, or do?
+          </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
               href="/projects/experiential"
@@ -908,7 +983,7 @@ export default function Home({
     <>
       <SEO
         title="Brandon PT Davis | Scenic Designer"
-        description="San Diego-based union scenic designer creating story-driven environments for regional theatre, summer stock, and academic production."
+        description="San Diego-based union scenic designer giving form to how stories reflect our world through theatre environments, renderings, and production design."
         keywords="scenic designer, scenic design portfolio, USA 829 scenic designer, San Diego scenic designer, Southern California scenic designer, regional theatre design, stage design, Brandon PT Davis"
         image={featuredProject?.coverImageUrl || undefined}
         imageAlt={
@@ -927,6 +1002,7 @@ export default function Home({
         ) : featuredProject ? (
           <>
             <HomeIntro />
+            <HomeThesisSection />
             <PortfolioCategoryRows projects={projects} />
             <BrandonSection />
             <UpcomingSection />

@@ -224,10 +224,11 @@ export default function About() {
 
                   <blockquote className="py-8 md:py-10">
                     <p className="font-sans text-[clamp(2rem,4.4vw,4.9rem)] font-medium leading-[0.95] tracking-[-0.075em]">
-                    <span className="bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text text-transparent">
-                      Expressive theatrical environments that support
-                      storytelling through space.
-                    </span>
+                      <span className="bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text text-transparent">
+                        I try not to arrive. The useful work usually starts
+                        somewhere past certainty, a little further out than
+                        feels comfortable.
+                      </span>
                     </p>
                   </blockquote>
 
