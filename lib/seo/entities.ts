@@ -200,14 +200,6 @@ export function getWebsiteJsonLd() {
     publisher: {
       "@id": BRANDON_ORGANIZATION_ID,
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteMetadata.siteUrl.replace(/\/$/, "")}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 

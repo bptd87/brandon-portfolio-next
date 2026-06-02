@@ -725,7 +725,7 @@ export default function ScenicProjectDetail({
                     {project.tags.map((tag) => (
                       <Link
                         key={tag.slug}
-                        href={`/projects/tags/${tag.slug}`}
+                        href={`/tags/${tag.slug}`}
                         className="block underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
                       >
                         {tag.name}

@@ -18,7 +18,7 @@ import { getConfiguredSiteUrl } from "../../../lib/env/site";
 const EXPERIENTIAL_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/experiential";
 const EXPERIENTIAL_PORTFOLIO_TITLE = "Experiential Design Portfolio | Brandon PT Davis";
 const EXPERIENTIAL_PORTFOLIO_DESCRIPTION =
-  "Experiential design portfolio by Brandon PT Davis featuring project-based case studies that combine renderings, technical drawing, and finished work into a single narrative.";
+  "Experiential design portfolio by Brandon PT Davis, extending scenic design methods into immersive environments, brand activations, renderings, drafting, and finished work.";
 const EXPERIENTIAL_PORTFOLIO_KEYWORDS = [
   "experiential design portfolio",
   "experiential project portfolio",
@@ -36,9 +36,9 @@ const MEDIA_LABELS: Record<LocalExperientialProject["mediaTypes"][number], strin
 
 const experientialPortfolioLandingCopy = {
   title: "Experiential Design",
-  subtitle: "Spatial work, renderings, drafting, and independent experiments.",
+  subtitle: "Scenic design methods beyond the theatre.",
   intro:
-    "A focused archive of work adjacent to scenic design: open-air venues, brand environments, documentation, and visual studies.",
+    "Selected work where scenic thinking moves into audience flow, brand environments, technical drawing, and built experience.",
 } as const;
 
 const SITE_URL = getConfiguredSiteUrl();

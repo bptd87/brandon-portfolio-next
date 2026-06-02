@@ -98,6 +98,34 @@ export function GET() {
       title: "Brandon PT Davis Scenic Design Portfolio",
       caption: `${project.title} scenic design by Brandon PT Davis.`,
     }));
+  const scenicPortfolioImages = getLocalScenicProjects()
+    .filter((project) => project.coverImageUrl)
+    .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
+    .slice(0, 8)
+    .map((project) => ({
+      pathname: "/projects",
+      imageUrl: toAbsoluteImageUrl(project.coverImageUrl!),
+      title: "Brandon PT Davis Scenic Design Portfolio",
+      caption: `${project.title} scenic design by Brandon PT Davis.`,
+    }));
+  const renderingPortfolioImages = getLocalRenderingProjects()
+    .filter((project) => project.coverImageUrl)
+    .slice(0, 8)
+    .map((project) => ({
+      pathname: "/projects/rendering",
+      imageUrl: toAbsoluteImageUrl(project.coverImageUrl!),
+      title: "Brandon PT Davis Scenic Rendering Portfolio",
+      caption: `${project.title} rendering by Brandon PT Davis.`,
+    }));
+  const experientialPortfolioImages = getLocalExperientialProjects()
+    .filter((project) => project.coverImageUrl)
+    .slice(0, 8)
+    .map((project) => ({
+      pathname: "/projects/experiential",
+      imageUrl: toAbsoluteImageUrl(project.coverImageUrl!),
+      title: "Brandon PT Davis Experiential Design Portfolio",
+      caption: `${project.title} experiential design by Brandon PT Davis.`,
+    }));
   const articleImages = getLocalArticles().flatMap((article) => {
     const pathname = LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
       ? `/studio/tutorials/${article.slug}`
@@ -127,6 +155,9 @@ export function GET() {
       caption: "Selected scenic design, rendering, and experiential design work by Brandon PT Davis.",
     },
     ...portfolioHomepageImages,
+    ...scenicPortfolioImages,
+    ...renderingPortfolioImages,
+    ...experientialPortfolioImages,
     {
       pathname: "/about",
       imageUrl: profileHeadshot,

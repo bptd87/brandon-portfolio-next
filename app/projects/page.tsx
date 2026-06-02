@@ -6,11 +6,18 @@ import { toScenicProjectSummary } from "../../shared/scenicProjectSummaries";
 
 export const dynamic = "force-static";
 
+const scenicMetadataImage = getLocalScenicProjects().find(
+  (project) => project.coverImageUrl
+)?.coverImageUrl;
+
 export const metadata = buildPageMetadata({
   title: "Scenic Design Portfolio",
   description:
-    "Selected scenic design projects for musicals, plays, and Shakespeare, with production images, credits, and story-led environments developed for theatre.",
+    "Scenic design portfolio by Brandon PT Davis, featuring theatre environments for plays, musicals, Shakespeare, and new work with production images and project credits.",
   pathname: "/projects",
+  image: scenicMetadataImage,
+  keywords:
+    "scenic design portfolio, theatre set design, scenic designer, Brandon PT Davis, San Diego scenic designer",
 });
 
 export default function Page() {

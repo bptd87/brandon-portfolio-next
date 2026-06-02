@@ -36,7 +36,7 @@ export const scenicShowcaseProps = {
 
 export const scenicPortfolioLandingCopy = {
   title: "Scenic Design",
-  subtitle: "Production environments built for story, rhythm, and performance.",
+  subtitle: "The center of the portfolio: theatre environments for story, rhythm, and performance.",
   intro:
-    "A selected body of scenic design work across musicals, plays, Shakespeare, and new work. These productions are organized as portfolio case studies with images, credits, and the spatial thinking behind the design.",
+    "Selected scenic design by Brandon PT Davis for plays, musicals, Shakespeare, and new work. The work begins with the script and ends in rooms actors can inhabit, audiences can read, and production teams can build.",
 } as const;

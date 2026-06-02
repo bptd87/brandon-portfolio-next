@@ -68,8 +68,33 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/projects/scenic-models",
+        destination: "/projects/rendering",
+        permanent: true,
+      },
+      {
+        source: "/projects/scenic-models/:slug",
+        destination: "/projects/rendering/:slug",
+        permanent: true,
+      },
+      {
+        source: "/projects/tags/:slug",
+        destination: "/tags/:slug",
+        permanent: true,
+      },
+      {
         source: "/scale-converter",
         destination: "/studio/apps/scale-calculator",
+        permanent: true,
+      },
+      {
+        source: "/studio/apps/paint-finder",
+        destination: "/studio/apps/commercial-paint-matcher",
+        permanent: true,
+      },
+      {
+        source: "/studio/apps/classical-orders",
+        destination: "/studio/apps/design-history-timeline",
         permanent: true,
       },
       {

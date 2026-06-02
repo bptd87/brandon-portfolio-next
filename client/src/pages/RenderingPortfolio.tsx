@@ -12,7 +12,7 @@ import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/loc
 const RENDERING_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/rendering";
 const RENDERING_PORTFOLIO_TITLE = "Scenic Rendering Portfolio | Brandon PT Davis";
 const RENDERING_PORTFOLIO_DESCRIPTION =
-  "Scenic rendering portfolio by Brandon PT Davis featuring theatre concept renderings, alternate views, and production visualization developed to support directors, collaborators, and scenic teams.";
+  "Scenic rendering portfolio by Brandon PT Davis, showing theatre concept renderings and visual studies used to test atmosphere, scale, and design intent before production.";
 const RENDERING_PORTFOLIO_KEYWORDS = [
   "scenic rendering portfolio",
   "theatre renderings",
@@ -158,11 +158,11 @@ export default function RenderingPortfolio() {
             <div className="mb-5 flex flex-wrap items-end justify-between gap-4 pb-4">
               <div>
                 <p className="font-mono text-[0.68rem] uppercase leading-none tracking-[0.16em] text-white/46">
-                  Visual studies for scenic space.
+                  Rendering as scenic design.
                 </p>
                 <p className="mt-3 max-w-2xl text-[1rem] leading-6 text-white/58 md:text-[1.08rem]">
-                  Concept images, scenic studies, and production visualizations used to test
-                  atmosphere, scale, color, and story before the work reaches the stage.
+                  Concept images and production visualizations used to test atmosphere,
+                  scale, color, and intent before the work reaches the stage.
                 </p>
               </div>
               <p className="font-mono text-[0.72rem] uppercase leading-none tracking-[0.16em] text-white/42">
