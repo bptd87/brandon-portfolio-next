@@ -1,6 +1,10 @@
 import { notFound, permanentRedirect } from "next/navigation";
 
-import { resolveLegacyProjectPath, resolveLegacyTagPath } from "../../../shared/legacyRedirects";
+import {
+  resolveLegacyCollaboratorPath,
+  resolveLegacyProjectPath,
+  resolveLegacyTagPath,
+} from "../../../shared/legacyRedirects";
 
 type PageProps = {
   params: Promise<{ slug: string[] }>;
@@ -11,7 +15,7 @@ export default async function Page({ params }: PageProps) {
   const [first, second] = slug || [];
 
   if (first === "tag" || first === "category") {
-    const destination = resolveLegacyTagPath(second);
+    const destination = resolveLegacyTagPath(second) || resolveLegacyCollaboratorPath(second);
     if (!destination) notFound();
     permanentRedirect(destination);
   }

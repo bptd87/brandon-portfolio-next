@@ -123,6 +123,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source:
+          "/articles/understanding-computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care",
+        destination:
+          "/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care",
+        permanent: true,
+      },
+      {
         source: "/articles/the-modern-theatrical-design-portfolio",
         destination: "/articles/online-portfolio-theatrical-design-2026",
         permanent: true,

@@ -1,7 +1,10 @@
 import { permanentRedirect } from "next/navigation";
 import { notFound } from "next/navigation";
 
-import { resolveLegacyTagPath } from "../../../../shared/legacyRedirects";
+import {
+  resolveLegacyCollaboratorPath,
+  resolveLegacyTagPath,
+} from "../../../../shared/legacyRedirects";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -15,7 +18,7 @@ export default async function Page({ params }: PageProps) {
     permanentRedirect("/assistant-scenic-design");
   }
 
-  const destination = resolveLegacyTagPath(slug);
+  const destination = resolveLegacyTagPath(slug) || resolveLegacyCollaboratorPath(slug);
   if (!destination) {
     notFound();
   }
