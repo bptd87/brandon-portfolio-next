@@ -16,7 +16,8 @@ import StructuredData from "@/components/StructuredData";
 
 const TEACHING_HERO_IMAGE =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png";
-const TEACHING_PDF_URL = "/files/brandon-pt-davis-teaching-philosophy-and-experience.pdf";
+const TEACHING_PDF_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/site/brandon-pt-davis-teaching-philosophy-and-experience-6507bfe65e.pdf";
 const CV_PDF_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/resume/msmkrdmbsoqtuyko-58989945e6-d6f5c926.pdf";
 

@@ -15,7 +15,8 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
-const STATEMENT_PDF_URL = "/files/brandon-pt-davis-creative-statement.pdf";
+const STATEMENT_PDF_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/site/brandon-pt-davis-creative-statement-93eb8f2125.pdf";
 const RENDERING_CHAPTER_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp";
 const REVEAL_CHAPTER_IMAGE_URL =
