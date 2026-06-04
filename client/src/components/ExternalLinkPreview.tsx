@@ -75,24 +75,57 @@ export function ExternalLinkPreview({
   ...props
 }: ExternalLinkPreviewProps) {
   const anchorRef = useRef<HTMLAnchorElement | null>(null);
+  const previewIntentRef = useRef(false);
   const reduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
+  const [fetchedImageSrc, setFetchedImageSrc] = useState("");
+  const [hasFetchedPreview, setHasFetchedPreview] = useState(false);
   const [hasLoadedPreview, setHasLoadedPreview] = useState(false);
   const [previewImageFailed, setPreviewImageFailed] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0 });
-  const isPreviewable = preview && canPreviewUrl(href) && Boolean(imageSrc) && !previewImageFailed;
+  const previewImageSrc = imageSrc || fetchedImageSrc;
+  const isPreviewable = preview && canPreviewUrl(href) && !previewImageFailed;
   const previewMeta = useMemo(() => getPreviewMeta(href, previewLabel), [href, previewLabel]);
 
   const openPreview = useCallback(() => {
     if (!isPreviewable || typeof window === "undefined" || !anchorRef.current) return;
     if (!window.matchMedia("(min-width: 768px) and (hover: hover)").matches) return;
 
+    previewIntentRef.current = true;
     setPosition(getPreviewPosition(anchorRef.current));
     setHasLoadedPreview(true);
-    setIsOpen(true);
-  }, [isPreviewable]);
+
+    if (previewImageSrc) {
+      setIsOpen(true);
+      return;
+    }
+
+    if (hasFetchedPreview) return;
+
+    setHasFetchedPreview(true);
+
+    fetch(`/api/link-preview?url=${encodeURIComponent(href)}`)
+      .then((response) => (response.ok ? response.json() : { imageSrc: "" }))
+      .then((data: { imageSrc?: string }) => {
+        if (!data.imageSrc) {
+          setPreviewImageFailed(true);
+          return;
+        }
+
+        setFetchedImageSrc(data.imageSrc);
+
+        if (previewIntentRef.current && anchorRef.current) {
+          setPosition(getPreviewPosition(anchorRef.current));
+          setIsOpen(true);
+        }
+      })
+      .catch(() => {
+        setPreviewImageFailed(true);
+      });
+  }, [hasFetchedPreview, href, isPreviewable, previewImageSrc]);
 
   const closePreview = useCallback(() => {
+    previewIntentRef.current = false;
     setIsOpen(false);
   }, []);
 
@@ -127,7 +160,7 @@ export function ExternalLinkPreview({
       {typeof document !== "undefined"
         ? createPortal(
             <AnimatePresence>
-              {isOpen && isPreviewable ? (
+              {isOpen && isPreviewable && previewImageSrc ? (
                 <motion.div
                   aria-hidden="true"
                   className="pointer-events-none fixed z-[120] overflow-hidden rounded-[0.9rem] border border-white/16 bg-[#101010] shadow-[0_26px_70px_rgba(0,0,0,0.32)] ring-1 ring-black/12"
@@ -142,9 +175,9 @@ export function ExternalLinkPreview({
                   exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.975 }}
                   transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {hasLoadedPreview && imageSrc ? (
+                  {hasLoadedPreview && previewImageSrc ? (
                     <img
-                      src={imageSrc}
+                      src={previewImageSrc}
                       alt=""
                       className="h-full w-full bg-[#161616] object-cover"
                       loading="eager"
