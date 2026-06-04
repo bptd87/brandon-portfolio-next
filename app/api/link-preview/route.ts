@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 
 const MAX_HTML_BYTES = 220_000;
 const REQUEST_TIMEOUT_MS = 4_500;
+const SCREENSHOT_WIDTH = 520;
+
+function getScreenshotUrl(previewUrl: URL) {
+  return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(previewUrl.toString())}?w=${SCREENSHOT_WIDTH}`;
+}
 
 function isBlockedHostname(hostname: string) {
   const normalized = hostname.toLowerCase();
@@ -53,6 +58,30 @@ function toAbsoluteImageUrl(imageUrl: string, pageUrl: URL) {
   }
 }
 
+async function getVerifiedScreenshotUrl(previewUrl: URL) {
+  const screenshotUrl = getScreenshotUrl(previewUrl);
+
+  try {
+    const response = await fetch(screenshotUrl, {
+      redirect: "follow",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+    const contentType = response.headers.get("content-type") || "";
+
+    if (
+      response.ok &&
+      contentType.startsWith("image/") &&
+      !response.url.includes("/mshots/v1/default")
+    ) {
+      return screenshotUrl;
+    }
+  } catch {
+    return "";
+  }
+
+  return "";
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const rawUrl = searchParams.get("url") || "";
@@ -73,6 +102,18 @@ export async function GET(request: Request) {
   }
 
   try {
+    const screenshotSrc = await getVerifiedScreenshotUrl(previewUrl);
+    if (screenshotSrc) {
+      return NextResponse.json(
+        { imageSrc: screenshotSrc, source: "screenshot" },
+        {
+          headers: {
+            "Cache-Control": "public, max-age=3600, s-maxage=86400",
+          },
+        }
+      );
+    }
+
     const response = await fetch(previewUrl, {
       headers: {
         "User-Agent": "Brandon PT Davis portfolio link preview",
@@ -89,7 +130,7 @@ export async function GET(request: Request) {
     const imageSrc = toAbsoluteImageUrl(getMetaImage(html), previewUrl);
 
     return NextResponse.json(
-      { imageSrc },
+      { imageSrc, source: imageSrc ? "open-graph" : "" },
       {
         headers: {
           "Cache-Control": "public, max-age=3600, s-maxage=86400",

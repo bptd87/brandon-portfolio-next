@@ -104,7 +104,7 @@ export function ExternalLinkPreview({
 
     setHasFetchedPreview(true);
 
-    fetch(`/api/link-preview?url=${encodeURIComponent(href)}`)
+    fetch(`/api/link-preview?url=${encodeURIComponent(href)}&strategy=screenshot-first`)
       .then((response) => (response.ok ? response.json() : { imageSrc: "" }))
       .then((data: { imageSrc?: string }) => {
         if (!data.imageSrc) {
