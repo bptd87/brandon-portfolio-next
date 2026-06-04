@@ -502,15 +502,15 @@ export default function RenderingProjectDetail({
           </AnimatedSection>
         </section>
 
-        <section className="bg-[#111111]">
+        <section className="bg-[#111111] [contain-intrinsic-size:1px_1400px] [content-visibility:auto]">
           <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
             {renderings[0] ? (
               <img
                 src={renderings[0].imageUrl || ""}
                 alt={renderings[0].altText || `${project.title} rendering`}
                 className="site-media-square max-h-screen w-full object-contain"
-                loading="eager"
-                fetchPriority="high"
+                loading="lazy"
+                decoding="async"
               />
             ) : null}
           </div>
@@ -524,6 +524,7 @@ export default function RenderingProjectDetail({
                           alt={image.altText || `${project.title} rendering`}
                           className="site-media-square h-full w-full object-contain"
                           loading="lazy"
+                          decoding="async"
                         />
                       </div>
                       {image.caption ? (
@@ -538,7 +539,7 @@ export default function RenderingProjectDetail({
         </section>
 
         {moreRenderingProjects.length > 0 ? (
-          <section className="border-t border-white/12 bg-[#111111] pt-16 text-white md:pt-24">
+          <section className="border-t border-white/12 bg-[#111111] pt-16 text-white [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24">
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -570,6 +571,7 @@ export default function RenderingProjectDetail({
                               alt={`${item.title} rendering preview image`}
                               className="site-media-square block h-full w-full rounded-none object-cover transition-opacity duration-500 group-hover:opacity-90"
                               loading="lazy"
+                              decoding="async"
                             />
                           ) : <div className="h-full w-full bg-muted" />}
                         </div>

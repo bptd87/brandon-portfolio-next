@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
+import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import StructuredData from "@/components/StructuredData";
 import {
   getLocalExperientialProjectHref,
@@ -118,8 +119,10 @@ function getYoutubePosterUrl(url: string) {
 }
 
 export default function ExperientialPortfolio() {
+  const isDesktopViewport = useIsDesktopViewport();
   const router = useRouter();
   const projects = sortExperientialProjectsChronologically(getLocalExperientialProjects());
+  const eagerProjectCount = isDesktopViewport ? 3 : 1;
   const featuredProject = projects[0];
   const experientialAlt = (title: string) => `${title} experiential design by Brandon PT Davis`;
   const latestProjectUpdateDate = projects
@@ -264,7 +267,7 @@ export default function ExperientialPortfolio() {
 
         {projects.length > 0 ? (
           <section className="border-t border-white/12 bg-[#111111]">
-            <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+            <div className="portfolio-focus-grid grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
               {projects.map((project, index) => {
                 const href = getLocalExperientialProjectHref(project);
                 const isFeatureCard = index % 6 < 2;
@@ -275,11 +278,11 @@ export default function ExperientialPortfolio() {
                     key={project.slug}
                     href={href}
                     onClick={(event) => navigateWithTransition(event, href)}
-                    className={`group block border-b border-r border-white/12 ${isFeatureCard ? "md:col-span-2" : ""}`}
+                    className={`portfolio-focus-card group block border-b border-r border-white/12 ${isFeatureCard ? "md:col-span-2" : ""}`}
                   >
                     <article className="bg-[#111111]">
                       <div
-                        className={`transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
+                        className={`portfolio-focus-media transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
                         style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
                       >
                         {project.coverVideoUrl ? (
@@ -288,8 +291,8 @@ export default function ExperientialPortfolio() {
                               src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
                               alt={`${project.title} video preview poster`}
                               className="site-media-square h-full w-full object-cover object-center transition-opacity duration-500 group-hover:opacity-90"
-                              loading={index < 3 ? "eager" : "lazy"}
-                              fetchPriority={index < 3 ? "high" : "auto"}
+                              loading={index < eagerProjectCount ? "eager" : "lazy"}
+                              fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                             />
                             <iframe
                               src={getYoutubeEmbedUrl(project.coverVideoUrl)}
@@ -297,7 +300,7 @@ export default function ExperientialPortfolio() {
                               aria-label={`${project.title} video preview`}
                               className="site-media-square pointer-events-none absolute left-1/2 top-1/2 h-full w-[120%] -translate-x-1/2 -translate-y-1/2 border-0"
                               allow="autoplay; encrypted-media; picture-in-picture"
-                              loading="eager"
+                              loading={index < eagerProjectCount ? "eager" : "lazy"}
                             />
                           </>
                         ) : project.coverImageUrl ? (
@@ -305,8 +308,8 @@ export default function ExperientialPortfolio() {
                             src={project.coverImageUrl}
                             alt={experientialAlt(project.title)}
                             className={`site-media-square h-full w-full object-center transition-opacity duration-500 group-hover:opacity-90 ${imageTreatment.image}`}
-                            loading={index < 3 ? "eager" : "lazy"}
-                            fetchPriority={index < 3 ? "high" : "auto"}
+                            loading={index < eagerProjectCount ? "eager" : "lazy"}
+                            fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center text-white/42">
@@ -314,7 +317,7 @@ export default function ExperientialPortfolio() {
                           </div>
                         )}
                       </div>
-                      <div className="grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
+                      <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
                         <div>
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] font-medium uppercase leading-none tracking-[0.12em] text-[#c9ff3d]">
                             {project.mediaTypes.slice(0, 2).map((type) => (

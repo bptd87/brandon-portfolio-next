@@ -9,6 +9,7 @@ import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { SEO } from "@/components/SEO";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { VOYAGELA_EXTERNAL_URL } from "@shared/publicContent";
@@ -102,6 +103,7 @@ const navigationCards = [
 ];
 
 export default function About() {
+  const isDesktopViewport = useIsDesktopViewport();
   const exploreRailRef = useRef<HTMLDivElement | null>(null);
   const gallerySectionRef = useRef<HTMLElement | null>(null);
   const galleryStageRef = useRef<HTMLDivElement | null>(null);
@@ -122,6 +124,8 @@ export default function About() {
   };
 
   useEffect(() => {
+    if (!isDesktopViewport) return;
+
     const updateGalleryWheel = () => {
       const section = gallerySectionRef.current;
       const stage = galleryStageRef.current;
@@ -154,7 +158,7 @@ export default function About() {
       window.removeEventListener("scroll", updateGalleryWheel);
       window.removeEventListener("resize", updateGalleryWheel);
     };
-  }, []);
+  }, [isDesktopViewport]);
 
   return (
     <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
@@ -169,7 +173,7 @@ export default function About() {
       <AboutNav />
 
       <main>
-        <section className="relative min-h-[82svh] overflow-hidden bg-[#c66f46]">
+        <section className="relative min-h-[68svh] overflow-hidden bg-[#c66f46] md:min-h-[82svh]">
           <Image
             src={ABOUT_HEADSHOT_URL}
             alt="Brandon PT Davis against an orange wall"
@@ -178,17 +182,17 @@ export default function About() {
             fetchPriority="high"
             quality={86}
             sizes="100vw"
-            className="site-media-square object-cover object-center"
+            className="site-media-square object-cover object-[76%_center] md:object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.70)_0%,rgba(0,0,0,0.38)_34%,rgba(0,0,0,0.04)_68%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.16)_0%,rgba(0,0,0,0.45)_42%,rgba(0,0,0,0.82)_100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.70)_0%,rgba(0,0,0,0.38)_34%,rgba(0,0,0,0.04)_68%)]" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/34 to-transparent" />
 
-          <div className="relative flex min-h-[82svh] items-center px-[clamp(1.5rem,5vw,6rem)] py-20 md:py-28">
+          <div className="relative flex min-h-[68svh] items-end px-[clamp(1rem,5vw,6rem)] pb-12 pt-20 md:min-h-[82svh] md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-28">
             <AnimatedSection className="max-w-[54rem]">
               <p className="section-kicker text-white/58">
                 Profile
               </p>
-              <h1 className="mt-5 font-sans text-[clamp(3.5rem,8vw,8rem)] font-medium leading-[0.86] tracking-[-0.075em] text-white">
+              <h1 className="mt-5 font-sans text-[clamp(2.75rem,14vw,4.4rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white md:text-[clamp(3.5rem,8vw,8rem)] md:leading-[0.86] md:tracking-[-0.075em]">
                 Brandon PT Davis
               </h1>
               <p className="mt-7 max-w-2xl text-[1.04rem] font-medium leading-8 tracking-[-0.015em] text-white/76 md:text-[1.14rem]">
@@ -348,7 +352,7 @@ export default function About() {
                   <Link
                     key={card.href}
                     href={card.href}
-                    className="group relative flex h-[30rem] w-[min(21rem,78vw)] shrink-0 snap-start flex-col overflow-hidden rounded-[2rem] bg-[#f7f6f2] p-6 shadow-[0_18px_50px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.025] transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_70px_rgba(17,17,17,0.12)] md:w-[22rem]"
+                    className="group relative flex h-[26rem] w-[min(19rem,82vw)] shrink-0 snap-start flex-col overflow-hidden rounded-[1.25rem] bg-[#f7f6f2] p-5 shadow-[0_18px_50px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.025] transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_70px_rgba(17,17,17,0.12)] md:h-[30rem] md:w-[22rem] md:rounded-[2rem] md:p-6"
                     style={{ transitionDelay: `${Math.min(index * 35, 140)}ms` }}
                   >
                     <div className="relative z-10">
@@ -406,20 +410,54 @@ export default function About() {
         <section
           ref={gallerySectionRef}
           aria-label="Personal archive"
-          className="relative min-h-[240svh] border-y border-black/10 bg-[#f1f0ec] text-black"
+          className="relative border-y border-black/10 bg-[#f1f0ec] text-black md:min-h-[240svh]"
         >
-          <div
-            className="flex h-screen flex-col overflow-hidden bg-[#f1f0ec]"
-            style={{
-              position: galleryWheelPin === "fixed" ? "fixed" : "absolute",
-              top: galleryWheelPin === "after" ? "auto" : 0,
-              bottom: galleryWheelPin === "after" ? 0 : "auto",
-              left: 0,
-              right: 0,
-              opacity: galleryWheelOpacity,
-              transition: "opacity 180ms ease",
-            }}
-          >
+          {!isDesktopViewport ? (
+            <div className="px-[clamp(1rem,5vw,6rem)] py-14">
+              <p className="mb-4 text-[1.02rem] font-medium tracking-[-0.035em] text-black/42">
+                Personal archive
+              </p>
+              <h2 className="max-w-[12ch] font-sans text-[clamp(2.35rem,12vw,3.8rem)] font-medium leading-[0.9] tracking-[-0.075em] text-black">
+                People, classrooms, shops, and collaborations.
+              </h2>
+              <div className="mt-9 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex snap-x snap-mandatory gap-4 pr-[clamp(1rem,5vw,6rem)]">
+                  {galleryImages.map((image) => (
+                    <figure
+                      key={image.url}
+                      className="site-media-square w-[min(20rem,82vw)] shrink-0 snap-start overflow-hidden border border-black/10 bg-black"
+                    >
+                      <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-black">
+                        <img
+                          src={image.url}
+                          alt={image.alt}
+                          loading="lazy"
+                          decoding="async"
+                          className="site-media-square h-full w-full object-cover"
+                        />
+                      </div>
+                      <figcaption className="border-t border-white/14 bg-black px-4 py-3 text-[0.92rem] font-medium leading-6 tracking-[-0.02em] text-white/84">
+                        {image.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : null}
+          {isDesktopViewport ? (
+            <div
+              className="flex h-screen flex-col overflow-hidden bg-[#f1f0ec]"
+              style={{
+                position: galleryWheelPin === "fixed" ? "fixed" : "absolute",
+                top: galleryWheelPin === "after" ? "auto" : 0,
+                bottom: galleryWheelPin === "after" ? 0 : "auto",
+                left: 0,
+                right: 0,
+                opacity: galleryWheelOpacity,
+                transition: "opacity 180ms ease",
+              }}
+            >
             <div className="pointer-events-none absolute left-0 right-0 top-0 z-20 px-[clamp(1.5rem,5vw,6rem)] pt-10 md:pt-14">
               <p className="mb-4 text-[1.02rem] font-medium tracking-[-0.035em] text-black/42">
                 Personal archive
@@ -487,11 +525,12 @@ export default function About() {
                 {String(activeGalleryIndex + 1).padStart(2, "0")} /{" "}
                 {String(galleryImages.length).padStart(2, "0")}
               </p>
-            </div>
-          </div>
-        </section>
+	            </div>
+	          </div>
+          ) : null}
+	        </section>
 
-        <section className="relative min-h-[78svh] overflow-hidden bg-[#f1f0ec] px-[clamp(1.5rem,5vw,6rem)] py-20 text-black md:py-28">
+        <section className="relative min-h-[62svh] overflow-hidden bg-[#f1f0ec] px-[clamp(1rem,5vw,6rem)] py-14 text-black md:min-h-[78svh] md:px-[clamp(1.5rem,5vw,6rem)] md:py-28">
           <div
             className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#f1f0ec] to-transparent"
             aria-hidden="true"
@@ -501,14 +540,14 @@ export default function About() {
             aria-hidden="true"
           />
 
-          <div className="relative flex min-h-[calc(78svh-10rem)] items-center justify-center">
-            <div className="w-full max-w-[76rem] rounded-[1.75rem] bg-black p-[clamp(1.5rem,5vw,4rem)] text-white shadow-[0_34px_120px_rgba(17,17,17,0.18)]">
+          <div className="relative flex min-h-[calc(62svh-7rem)] items-center justify-center md:min-h-[calc(78svh-10rem)]">
+            <div className="w-full max-w-[76rem] rounded-[1.25rem] bg-black p-[clamp(1.25rem,5vw,4rem)] text-white shadow-[0_34px_120px_rgba(17,17,17,0.18)] md:rounded-[1.75rem]">
               <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] md:items-end">
                 <div>
                   <p className="section-kicker text-white/42">
                     Contact
                   </p>
-                  <h2 className="mt-6 max-w-[13ch] font-sans text-[clamp(3rem,7vw,7.2rem)] font-medium leading-[0.84] tracking-[-0.085em] text-white">
+                  <h2 className="mt-5 max-w-[13ch] font-sans text-[clamp(2.25rem,12vw,3.8rem)] font-medium leading-[0.9] tracking-[-0.075em] text-white md:mt-6 md:text-[clamp(3rem,7vw,7.2rem)] md:leading-[0.84] md:tracking-[-0.085em]">
                     Start a scenic design conversation.
                   </h2>
                 </div>

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
+import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -100,6 +101,8 @@ const allApps: StudioApp[] = [
 
 export default function StudioApps() {
   const apps = allApps;
+  const isDesktopViewport = useIsDesktopViewport();
+  const appTiles = isDesktopViewport ? apps : [...apps, converterTool];
   const [activeApp, setActiveApp] = useState<StudioApp | null>(null);
   const [isAppClosing, setIsAppClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
@@ -219,7 +222,7 @@ export default function StudioApps() {
                     paint, reference, and research, plus a Mac converter for 3D
                     handoffs when the workflow needs to leave the browser.
                   </p>
-                  <div className="mt-7 grid grid-cols-3 gap-3 text-center">
+                  <div className="mt-7 hidden grid-cols-3 gap-3 text-center sm:grid">
                     {["Scale", "Paint", "Reference"].map(
                       (item) => (
                         <div
@@ -277,8 +280,8 @@ export default function StudioApps() {
                     src={featuredApp.screenImage ?? featuredApp.image}
                     alt={`${featuredApp.title} screen`}
                     fill
-                    quality={92}
-                    sizes="(max-width: 768px) 78vw, 24rem"
+                    quality={80}
+                    sizes="(max-width: 768px) 68vw, 24rem"
                     className="object-contain"
                   />
                 </div>
@@ -288,36 +291,41 @@ export default function StudioApps() {
         </section>
 
         <section className="bg-[#f4f5f7] px-0 text-[#111111]">
-          <div className="grid border-b border-black/8 [grid-auto-rows:1fr] md:grid-cols-2 lg:grid-cols-3">
-            {apps.map((app, index) => (
-              <AnimatedSection key={app.title} className="h-full" delay={index * 55}>
+          <div className="grid grid-cols-2 border-b border-black/8 [grid-auto-rows:1fr] md:grid-cols-2 lg:grid-cols-3">
+            {appTiles.map((app, index) => (
+              <AnimatedSection
+                key={app.title}
+                className={`h-full ${app === converterTool ? "md:hidden" : ""}`}
+                delay={index * 55}
+              >
                 <button
                   type="button"
                   onClick={() => openStudioApp(app)}
-                  className="group flex h-full min-h-[23rem] w-full flex-col overflow-hidden rounded-none border-b border-r border-t border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors hover:bg-white md:min-h-[27rem]"
+                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-none border-b border-r border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors hover:bg-white md:min-h-[27rem] md:border-t"
                 >
                   <div className="site-media-square relative aspect-square w-full overflow-hidden rounded-none border-b border-black/8 bg-black [border-radius:0]">
                     <Image
                       src={app.image}
                       alt=""
                       fill
-                      quality={88}
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      quality={75}
+                      sizes="(max-width: 768px) 32vw, 33vw"
                       className="site-media-square object-cover"
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col p-5 pt-6 md:p-6 md:pt-7">
-                    <p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-black/42">
+                  <div className="flex flex-1 flex-col p-3.5 pt-4 md:p-6 md:pt-7">
+                    <p className="text-[0.58rem] font-medium uppercase leading-4 tracking-[0.16em] text-black/38 md:text-[0.72rem] md:tracking-[0.18em] md:text-black/42">
                       {app.category} / {app.tone}
                     </p>
-                    <h3 className="mt-3 max-w-[10ch] font-sans text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.9] tracking-[-0.075em] text-[#111111]">
-                      {app.title}
+                    <h3 className="mt-2 font-sans text-[clamp(1.38rem,6vw,1.85rem)] font-medium leading-[0.9] tracking-[-0.07em] text-[#111111] md:mt-3 md:max-w-[10ch] md:text-[clamp(2rem,4vw,3.5rem)] md:tracking-[-0.075em]">
+                      <span className="md:hidden">{app.shortTitle}</span>
+                      <span className="hidden md:inline">{app.title}</span>
                     </h3>
-                    <p className="mt-4 max-w-[28rem] text-[0.96rem] leading-6 tracking-[-0.015em] text-black/54">
+                    <p className="mt-4 hidden max-w-[28rem] text-[0.96rem] leading-6 tracking-[-0.015em] text-black/54 md:block">
                       {app.description}
                     </p>
-                    <div className="mt-auto inline-flex items-center gap-2 pt-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black/62 transition-colors group-hover:text-black">
+                    <div className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.82rem] font-medium tracking-[-0.02em] text-black/58 transition-colors group-hover:text-black md:gap-2 md:pt-6 md:text-[0.95rem] md:text-black/62">
                       Open tool
                       <ArrowRight className="h-4 w-4" />
                     </div>
@@ -328,44 +336,46 @@ export default function StudioApps() {
           </div>
         </section>
 
-        <section className="border-t border-white/10 bg-[#080808] px-5 py-14 text-white md:px-8 md:py-18">
-          <AnimatedSection>
-            <div className="mx-auto grid max-w-[88rem] overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-0 shadow-[0_34px_120px_rgba(0,0,0,0.38)] md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-stretch">
-              <div className="site-media-square relative min-h-[18rem] overflow-hidden rounded-none bg-black [border-radius:0] md:min-h-[24rem]">
-                <Image
-                  src={converterTool.image}
-                  alt={converterTool.title}
-                  fill
-                  quality={84}
-                  sizes="(max-width: 768px) 100vw, 42rem"
-                  className="site-media-square object-cover opacity-80"
-                />
-              </div>
-
-              <div className="flex flex-col justify-between px-5 py-8 md:px-8 md:py-10">
-                <div>
-                  <p className="section-kicker text-white/38">
-                    {converterTool.category}
-                  </p>
-                  <h2 className="mt-5 max-w-[9ch] font-sans text-[clamp(2.9rem,7vw,6.8rem)] font-medium leading-[0.84] tracking-[-0.08em] text-white">
-                    {converterTool.title}
-                  </h2>
-                  <p className="mt-7 max-w-2xl text-[1rem] leading-7 tracking-[-0.015em] text-white/58">
-                    {converterTool.description}
-                  </p>
+        {isDesktopViewport ? (
+          <section className="border-t border-white/10 bg-[#080808] px-5 py-14 text-white md:px-8 md:py-18">
+            <AnimatedSection>
+              <div className="mx-auto grid max-w-[88rem] overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-0 shadow-[0_34px_120px_rgba(0,0,0,0.38)] md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-stretch">
+                <div className="site-media-square relative min-h-[18rem] overflow-hidden rounded-none bg-black [border-radius:0] md:min-h-[24rem]">
+                  <Image
+                    src={converterTool.image}
+                    alt={converterTool.title}
+                    fill
+                    quality={84}
+                    sizes="(max-width: 768px) 86vw, 42rem"
+                    className="site-media-square object-cover opacity-80"
+                  />
                 </div>
 
-                <Link
-                  href={converterTool.href}
-                  className="mt-8 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
-                >
-                  View Mac download
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+                <div className="flex flex-col justify-between px-5 py-8 md:px-8 md:py-10">
+                  <div>
+                    <p className="section-kicker text-white/38">
+                      {converterTool.category}
+                    </p>
+                    <h2 className="mt-5 max-w-[9ch] font-sans text-[clamp(2.9rem,7vw,6.8rem)] font-medium leading-[0.84] tracking-[-0.08em] text-white">
+                      {converterTool.title}
+                    </h2>
+                    <p className="mt-7 max-w-2xl text-[1rem] leading-7 tracking-[-0.015em] text-white/58">
+                      {converterTool.description}
+                    </p>
+                  </div>
+
+                  <Link
+                    href={converterTool.href}
+                    className="mt-8 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
+                  >
+                    View Mac download
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </AnimatedSection>
-        </section>
+            </AnimatedSection>
+          </section>
+        ) : null}
 
         <section className="bg-[#111111] px-5 py-16 text-white md:px-8 md:py-20">
           <div className="mx-auto grid max-w-[88rem] gap-10 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-end">

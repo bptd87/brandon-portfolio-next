@@ -137,14 +137,14 @@ function BrandLink({
   return (
     <Link href="/" className={`group inline-flex min-w-0 flex-col leading-none transition-all ${centered ? "justify-self-start lg:justify-self-center lg:items-center" : ""}`}>
       <span
-        className={`font-sans text-[1.34rem] font-black leading-[0.88] tracking-[-0.075em] transition-colors md:text-[1.56rem] ${
+        className={`font-sans text-[1.08rem] font-black leading-[0.9] tracking-[-0.06em] transition-colors min-[380px]:text-[1.2rem] md:text-[1.56rem] md:leading-[0.88] md:tracking-[-0.075em] ${
           isLight ? "text-black group-hover:text-black/72" : "text-white group-hover:text-white/78"
         }`}
       >
         BRANDON PT DAVIS
       </span>
       <span
-        className={`mt-1.5 font-sans text-[9px] font-semibold uppercase leading-none tracking-[0.34em] md:text-[9.5px] ${
+        className={`mt-1.5 font-sans text-[8px] font-semibold uppercase leading-none tracking-[0.24em] min-[380px]:tracking-[0.3em] md:text-[9.5px] md:tracking-[0.34em] ${
           isLight ? "text-black/48" : "text-white/46"
         }`}
       >
@@ -390,7 +390,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="h-[74px]" aria-hidden="true" />
+      <div className="h-[64px] md:h-[74px]" aria-hidden="true" />
       {desktopMenuOpen ? (
         <button
           type="button"
@@ -417,8 +417,8 @@ export default function Header() {
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="px-[clamp(1.5rem,5vw,6rem)] py-4">
-          <nav className="grid grid-cols-[1fr_auto] items-center gap-6 lg:grid-cols-[1fr_auto_1fr]">
+        <div className="px-[clamp(1rem,5vw,6rem)] py-3 md:px-[clamp(1.5rem,5vw,6rem)] md:py-4">
+          <nav className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
             <div className="hidden lg:flex">
               <button
                 type="button"
@@ -480,12 +480,12 @@ export default function Header() {
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-4 lg:hidden">
+            <div className="flex min-w-[3rem] items-center justify-end gap-4 lg:hidden">
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
                 aria-expanded={mobileMenuOpen}
-                className={`inline-flex h-11 items-center gap-3 rounded-full px-1.5 text-[0.78rem] font-medium uppercase tracking-[0.08em] transition-colors ${
+                className={`inline-flex h-10 min-w-10 items-center justify-center gap-3 rounded-full px-1.5 text-[0.78rem] font-medium uppercase tracking-[0.08em] transition-colors md:h-11 ${
                   useLightChrome
                     ? "text-black/72 hover:text-black"
                     : "text-white/76 hover:text-white"
@@ -516,7 +516,6 @@ export default function Header() {
       <MobileMenu
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        onOpenSearch={() => setSearchOpen(true)}
       />
       {searchOpen ? <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} /> : null}
     </>

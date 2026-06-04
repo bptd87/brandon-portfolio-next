@@ -122,7 +122,6 @@ function SampleGallery({
             videoId={getYoutubeId(sample.videoUrl)}
             title={sample.displayTitle}
             className="overflow-hidden rounded-none"
-            eagerPoster
             showLabel={false}
           />
         </div>
@@ -142,6 +141,8 @@ function SampleGallery({
                     alt={image.altText}
                     style={{ borderRadius: 0 }}
                     className={`site-media-square block h-full w-full transition-opacity duration-500 hover:opacity-90 ${imageClass}`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </button>
@@ -469,7 +470,7 @@ export default function ExperientialProjectDetail({
             </div>
           </AnimatedSection>
         </section>
-        <section className="bg-[#111111] pt-12 pb-0 md:pt-16">
+        <section className="bg-[#111111] pb-0 pt-12 [contain-intrinsic-size:1px_1800px] [content-visibility:auto] md:pt-16">
           <div>
             {project.renderings.length > 0 ? (
               <MediaSection category="rendering" samples={project.renderings} onOpenImage={openImageByKey} />
@@ -490,7 +491,7 @@ export default function ExperientialProjectDetail({
         </section>
 
         {moreExperientialProjects.length > 0 ? (
-          <section className="border-t border-white/12 bg-[#111111] pt-16 text-white md:pt-24">
+          <section className="border-t border-white/12 bg-[#111111] pt-16 text-white [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24">
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -526,6 +527,7 @@ export default function ExperientialProjectDetail({
                                 alt={`${item.title} experiential design preview image`}
                                 className="site-media-square block h-full w-full rounded-none object-cover transition-opacity duration-500 group-hover:opacity-90"
                                 loading="lazy"
+                                decoding="async"
                               />
                             ) : (
                               <div className="flex h-full w-full items-center justify-center bg-[#111111]">

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
+import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import StructuredData from "@/components/StructuredData";
 import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
 
@@ -25,6 +26,7 @@ const RENDERING_PORTFOLIO_KEYWORDS = [
 ].join(", ");
 
 export default function RenderingPortfolio() {
+  const isDesktopViewport = useIsDesktopViewport();
   const projects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
   const galleryItems = getLocalRenderingGallery();
   const isLoading = false;
@@ -68,6 +70,7 @@ export default function RenderingPortfolio() {
     .filter((item, index, list) => list.findIndex((candidate) => candidate.slug === item.slug) === index);
   const renderingPortfolioImage =
     allRenderingItems[0]?.imageUrl || undefined;
+  const eagerRenderingCount = isDesktopViewport ? 3 : 1;
   const renderingPortfolioUpdatedDate = (projects || []).reduce((latest, project) => {
     const candidate = project.updatedAt || project.publishedAt || project.createdAt;
     if (!candidate) return latest;
@@ -179,15 +182,15 @@ export default function RenderingPortfolio() {
 
         {allRenderingItems.length > 0 && (
           <section id="rendering" className="scroll-mt-24 border-t border-white/12 bg-[#111111]">
-            <div className="grid w-full grid-cols-1 border-l border-white/12 md:grid-cols-4">
+            <div className="portfolio-focus-grid grid w-full grid-cols-1 border-l border-white/12 md:grid-cols-4">
               {allRenderingItems.map((item, index) => (
                 <Link
                   key={item.id}
                   href={`/projects/rendering/${item.slug}`}
-                  className={`group block border-b border-r border-white/12 ${index % 6 < 2 ? "md:col-span-2" : ""}`}
+                  className={`portfolio-focus-card group block border-b border-r border-white/12 ${index % 6 < 2 ? "md:col-span-2" : ""}`}
                 >
                   <article className="bg-[#111111]">
-                    <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
+                    <div className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
                       {item.imageUrl ? (
                         <ProgressiveImage
                           src={item.imageUrl}
@@ -196,8 +199,8 @@ export default function RenderingPortfolio() {
                           objectFit="cover"
                           containerClassName="site-media-square h-full w-full"
                           className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                          loading={index < 3 ? "eager" : "lazy"}
-                          fetchPriority={index < 3 ? "high" : "auto"}
+                          loading={index < eagerRenderingCount ? "eager" : "lazy"}
+                          fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center text-white/42">
@@ -205,7 +208,7 @@ export default function RenderingPortfolio() {
                         </div>
                       )}
                     </div>
-                    <div className="grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
+                    <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
                       <div>
                         <p className="font-mono text-[0.66rem] uppercase leading-none tracking-[0.13em] text-white/80">
                           Rendering

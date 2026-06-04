@@ -43,6 +43,7 @@ import {
   getScenicProjectTimestamp,
   scenicPortfolioLandingCopy,
 } from "@/lib/scenicShowcase";
+import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
@@ -117,11 +118,11 @@ function ProjectCard({
     <a
       href={href}
       onClick={(event) => onNavigate(event, href)}
-      className={`group block border-b border-r border-white/12 ${layoutClass || ""}`}
+      className={`portfolio-focus-card group block border-b border-r border-white/12 ${layoutClass || ""}`}
     >
       <article className="bg-[#111111]">
         <div
-          className="site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]"
+          className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]"
           style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
         >
           {project.coverImageUrl ? (
@@ -129,7 +130,7 @@ function ProjectCard({
               src={project.coverImageUrl}
               alt={scenicAlt(project.title)}
               fill
-              quality={86}
+              quality={eager ? 84 : 78}
               className="site-media-square object-cover object-center"
               style={{
                 objectPosition: project.coverImagePosition || "center",
@@ -143,7 +144,7 @@ function ProjectCard({
             <div className="aspect-[4/3] w-full bg-muted" />
           )}
         </div>
-        <div className="min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+        <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
           <div>
             <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
               {project.title}
@@ -174,6 +175,7 @@ export default function Projects({
   initialProjects: ScenicProjectSummary[];
 }) {
   const router = useRouter();
+  const isDesktopViewport = useIsDesktopViewport();
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
   const [selectedVenue, setSelectedVenue] = useState<string>("all");
   const [selectedYear, setSelectedYear] = useState<string>("all");
@@ -288,6 +290,8 @@ export default function Projects({
   const heroDisplayTitle = currentHeading;
   const activeFilterCount =
     (selectedVenue !== "all" ? 1 : 0) + (selectedYear !== "all" ? 1 : 0);
+  const visibleViewMode = isDesktopViewport ? viewMode : "grid";
+  const eagerProjectCount = isDesktopViewport ? 2 : 1;
   const scenicArchiveTitle =
     selectedVenue !== "all"
       ? `${selectedVenue} Scenic Design | Brandon PT Davis`
@@ -683,7 +687,7 @@ export default function Projects({
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <div className="inline-flex h-10 items-center rounded-full border border-border/50 p-1">
+                <div className="hidden h-10 items-center rounded-full border border-border/50 p-1 md:inline-flex">
                   <button
                     type="button"
                     onClick={() => setViewMode("grid")}
@@ -729,15 +733,15 @@ export default function Projects({
           <PortfolioGridSkeleton />
         ) : sortedProjects.length > 0 ? (
           <section className="border-t border-white/12 bg-[#111111]">
-            {viewMode === "grid" ? (
-              <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+            {visibleViewMode === "grid" ? (
+              <div className="portfolio-focus-grid grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
                 {sortedProjects.map((project, index) => {
                   const href = getProjectPath(project);
 
                   return (
                     <ProjectCard
                       key={`${project.slug}-${index}`}
-                      eager={index < 2}
+                      eager={index < eagerProjectCount}
                       href={href}
                       layoutClass={getProjectPanelClass(index)}
                       onNavigate={navigateWithTransition}

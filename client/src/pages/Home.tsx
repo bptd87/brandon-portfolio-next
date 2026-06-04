@@ -11,6 +11,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { getProjectPath } from "@/lib/projectRoutes";
@@ -205,7 +206,7 @@ function HomeIntro() {
   return (
     <section
       id="portfolio-categories"
-      className="relative min-h-[calc(100svh-74px)] overflow-hidden bg-black"
+      className="relative min-h-[calc(100svh-64px)] overflow-hidden bg-black md:min-h-[calc(100svh-74px)]"
     >
       <img
         src={HOME_HERO_IMAGE_URL}
@@ -214,27 +215,27 @@ function HomeIntro() {
         loading="eager"
       />
       <div className="absolute inset-0 bg-black/22" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.48)_34%,rgba(0,0,0,0.08)_72%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.52)_46%,rgba(0,0,0,0.84)_100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.48)_34%,rgba(0,0,0,0.08)_72%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/74 via-black/24 to-transparent" />
 
-      <div className="relative flex min-h-[calc(100svh-74px)] items-center px-[clamp(1.5rem,5vw,6rem)] py-24">
+      <div className="relative flex min-h-[calc(100svh-64px)] items-end px-[clamp(1rem,5vw,6rem)] pb-12 pt-20 md:min-h-[calc(100svh-74px)] md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-24">
         <div className="relative z-10 max-w-[56rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-5 motion-safe:duration-700">
-          <p className="mb-7 font-sans text-[clamp(1rem,1.45vw,1.22rem)] font-medium leading-none tracking-[-0.035em] text-white/78">
+          <p className="mb-5 font-sans text-[1rem] font-medium leading-none tracking-[-0.035em] text-white/78 md:mb-7 md:text-[clamp(1rem,1.45vw,1.22rem)]">
             Brandon PT Davis Scenic Design
           </p>
           <h1
             aria-label="If all the world is a stage, then is the scenic designer its architect?"
-            className="max-w-[min(64rem,100%)] font-sans text-[clamp(2.85rem,5.75vw,6.5rem)] font-medium leading-[0.92] tracking-[-0.04em] text-white"
+            className="max-w-[min(64rem,100%)] font-sans text-[clamp(2.35rem,13vw,3.65rem)] font-medium leading-[0.96] tracking-[-0.04em] text-white md:text-[clamp(2.85rem,5.75vw,6.5rem)] md:leading-[0.92]"
           >
             <span className="block">If all the world is a stage, </span>
             <span className="block">then is the scenic designer </span>
             <span className="block">its architect?</span>
           </h1>
-          <p className="mt-7 max-w-[43rem] font-sans text-[clamp(1.16rem,2vw,1.9rem)] font-medium leading-[1.16] tracking-[-0.045em] text-white/72 md:mt-9">
+          <p className="mt-5 max-w-[43rem] font-sans text-[1.1rem] font-medium leading-[1.22] tracking-[-0.04em] text-white/72 md:mt-9 md:text-[clamp(1.16rem,2vw,1.9rem)] md:leading-[1.16] md:tracking-[-0.045em]">
             <span className="block text-white">No. </span>
             Scenic design gives form to the story's reflection of our world.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-col gap-3 min-[420px]:flex-row md:mt-8 md:flex-wrap">
             <a
               href="/projects"
               className="inline-flex h-11 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
@@ -335,27 +336,27 @@ function PortfolioCategoryRows({
       row.title === "Musical Theatre" ||
       row.title === "TYA";
     const contentAlignment = alignRight
-      ? "items-end text-right"
+      ? "items-start text-left md:items-end md:text-right"
       : "items-start text-left";
     const overlayPosition = alignRight
       ? "justify-end md:pr-[clamp(2rem,7vw,8rem)]"
       : "justify-start md:pl-[clamp(2rem,7vw,8rem)]";
     const overlayGradient = alignRight
-      ? "bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.58)_100%)]"
-      : "bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.14)_58%,rgba(0,0,0,0)_100%)]";
+      ? "md:bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.58)_100%)]"
+      : "md:bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.14)_58%,rgba(0,0,0,0)_100%)]";
 
     return (
       <article
         key={row.title}
-        className={`group relative overflow-hidden bg-[#f1f0ec] ${
-          isSplit ? "min-h-[78svh]" : "min-h-[94svh]"
+        className={`group relative min-h-[72svh] overflow-hidden bg-[#f1f0ec] ${
+          isSplit ? "md:min-h-[78svh]" : "md:min-h-[94svh]"
         }`}
       >
         {leadProject ? (
           <a
             href={getProjectPath(leadProject)}
-            className={`site-media-square relative block w-full overflow-hidden ${
-              isSplit ? "h-[78svh]" : "h-[94svh]"
+            className={`site-media-square relative block h-[72svh] w-full overflow-hidden ${
+              isSplit ? "md:h-[78svh]" : "md:h-[94svh]"
             }`}
             aria-label={`${leadProject.title} scenic design by Brandon PT Davis`}
           >
@@ -369,11 +370,11 @@ function PortfolioCategoryRows({
         ) : null}
 
         <div
-          className={`pointer-events-none absolute inset-0 ${overlayGradient}`}
+          className={`pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.2)_42%,rgba(0,0,0,0.78)_100%)] ${overlayGradient}`}
           aria-hidden="true"
         />
         <div
-          className={`absolute inset-0 flex items-center px-[clamp(1.5rem,5vw,6rem)] py-16 ${overlayPosition}`}
+          className={`absolute inset-0 flex items-end px-[clamp(1rem,5vw,6rem)] py-10 md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-16 ${overlayPosition}`}
         >
           <div
             className={`flex max-w-[min(34rem,88vw)] flex-col ${contentAlignment}`}
@@ -397,8 +398,8 @@ function PortfolioCategoryRows({
               {row.description}
             </p>
             <div
-              className={`pointer-events-auto mt-6 flex flex-wrap gap-3 ${
-                alignRight ? "justify-end" : "justify-start"
+              className={`pointer-events-auto mt-6 flex flex-col gap-3 min-[420px]:flex-row ${
+                alignRight ? "md:justify-end" : "md:justify-start"
               }`}
             >
               <a
@@ -445,20 +446,20 @@ function PortfolioCategoryRows({
 
 function BrandonSection() {
   return (
-    <section className="relative min-h-[82svh] overflow-hidden border-t border-black/10 bg-[#c66f46]">
+    <section className="relative min-h-[68svh] overflow-hidden border-t border-black/10 bg-[#c66f46] md:min-h-[82svh]">
       <img
         src={ABOUT_HEADSHOT_URL}
         alt="Brandon PT Davis against an orange wall"
-        className="site-media-square absolute inset-0 h-full w-full object-cover object-center"
+        className="site-media-square absolute inset-0 h-full w-full object-cover object-[76%_center] md:object-center"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(241,240,236,0.74)_0%,rgba(241,240,236,0.42)_35%,rgba(241,240,236,0.02)_68%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(241,240,236,0.12)_0%,rgba(241,240,236,0.52)_45%,rgba(241,240,236,0.88)_100%)] md:bg-[linear-gradient(90deg,rgba(241,240,236,0.74)_0%,rgba(241,240,236,0.42)_35%,rgba(241,240,236,0.02)_68%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/18 to-transparent" />
 
-      <div className="relative flex min-h-[82svh] items-center px-[clamp(1.5rem,5vw,6rem)] py-20 md:py-28">
+      <div className="relative flex min-h-[68svh] items-end px-[clamp(1rem,5vw,6rem)] py-12 md:min-h-[82svh] md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-28">
         <div className="max-w-[48rem]">
           <p className="mb-5 section-kicker text-black/48">Profile</p>
-          <h2 className="font-sans text-[clamp(2.4rem,5.2vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-black">
+          <h2 className="font-sans text-[clamp(2.05rem,10vw,3.35rem)] font-medium leading-[0.94] tracking-[-0.065em] text-black md:text-[clamp(2.4rem,5.2vw,5.8rem)] md:leading-[0.92] md:tracking-[-0.07em]">
             Scenic design from San Diego, with room for the world.
           </h2>
           <Heart
@@ -473,7 +474,7 @@ function BrandonSection() {
             environments, renderings, and process work from theatre, academic,
             and collaborative design practice.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-col gap-3 min-[420px]:flex-row md:mt-9 md:flex-wrap">
             <a
               href="/about"
               className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 text-sm font-medium text-white transition-colors hover:bg-[#c77dff]"
@@ -495,6 +496,7 @@ function BrandonSection() {
 
 function UpcomingSection() {
   const nextProductions = upcomingProductions;
+  const isDesktopViewport = useIsDesktopViewport();
   const [activeProductionIndex, setActiveProductionIndex] = useState(0);
   const [productionWheelProgress, setProductionWheelProgress] = useState(0);
   const [productionWheelOpacity, setProductionWheelOpacity] = useState(1);
@@ -506,6 +508,8 @@ function UpcomingSection() {
   const wheelStageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!isDesktopViewport) return;
+
     const updateWheel = () => {
       const section = sectionRef.current;
       const stage = wheelStageRef.current;
@@ -547,14 +551,47 @@ function UpcomingSection() {
       window.removeEventListener("scroll", updateWheel);
       window.removeEventListener("resize", updateWheel);
     };
-  }, [nextProductions.length]);
+  }, [isDesktopViewport, nextProductions.length]);
 
   return (
     <section
       ref={sectionRef}
       aria-label="Upcoming productions"
-      className="relative min-h-[520vh] bg-black text-white"
+      className="relative bg-black text-white md:min-h-[520vh]"
     >
+      {!isDesktopViewport ? (
+      <div className="px-[clamp(1rem,5vw,6rem)] py-14">
+        <p className="section-kicker mb-4 text-white">Upcoming Productions</p>
+        <h2 className="flex max-w-[11ch] items-center gap-3 font-sans text-[clamp(2.25rem,12vw,3.7rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+          <CalendarDays
+            className="h-[0.82em] w-[0.82em] shrink-0"
+            strokeWidth={1.65}
+            aria-hidden="true"
+          />
+          <span>The season ahead.</span>
+        </h2>
+        <div className="mt-9 grid gap-3">
+          {nextProductions.map((production) => (
+            <a
+              key={production.id}
+              href={`/upcoming-productions/${production.id}`}
+              className="group flex min-h-20 items-center justify-between gap-4 border-t border-white/14 py-4"
+              aria-label={`View ${production.title}`}
+            >
+              <span className="font-sans text-[1.45rem] font-medium uppercase leading-[0.94] tracking-[-0.055em] text-white transition-colors group-hover:text-[#e0aaff]">
+                {production.title}
+              </span>
+              <ChevronRight
+                className="h-5 w-5 shrink-0 text-white/42 transition-transform group-hover:translate-x-1 group-hover:text-white"
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+      ) : null}
+      {isDesktopViewport ? (
       <div
         className="flex h-screen flex-col overflow-hidden bg-black"
         style={{
@@ -645,10 +682,12 @@ function UpcomingSection() {
           </div>
         </div>
       </div>
+      ) : null}
     </section>
   );
 }
 function HomeExperientialAndRenderingSection() {
+  const isDesktopViewport = useIsDesktopViewport();
   const experientialProjects = getLocalExperientialProjects()
     .filter(project => project.coverImageUrl)
     .sort(
@@ -686,12 +725,13 @@ function HomeExperientialAndRenderingSection() {
         list.findIndex(candidate => candidate.href === card.href) === index
     )
     .slice(0, 10);
-  const movingRenderingCards = [...renderingRailCards, ...renderingRailCards];
+  const movingRenderingCards = isDesktopViewport ? [...renderingRailCards, ...renderingRailCards] : [];
 
   if (!experientialProjects.length && !renderingRailCards.length) return null;
 
   return (
     <section className="bg-black py-12 text-white md:py-16">
+      {isDesktopViewport ? (
       <style>
         {`
           @keyframes home-rendering-rail {
@@ -700,13 +740,14 @@ function HomeExperientialAndRenderingSection() {
           }
         `}
       </style>
+      ) : null}
 
       <div className="px-[clamp(1.5rem,5vw,6rem)]">
         <div className="mx-auto mb-10 flex max-w-[70rem] flex-col items-center text-center">
           <p className="section-kicker mb-4 text-white">
             Rendering + Experiential Design
           </p>
-          <h2 className="flex items-center justify-center gap-4 font-sans text-[clamp(2.35rem,4.8vw,5.15rem)] font-medium leading-[1] tracking-[-0.055em] text-white">
+          <h2 className="flex flex-col items-center justify-center gap-3 font-sans text-[clamp(2rem,10vw,3.45rem)] font-medium leading-[1] tracking-[-0.055em] text-white min-[520px]:flex-row md:gap-4 md:text-[clamp(2.35rem,4.8vw,5.15rem)]">
             <Box
               className="h-[0.78em] w-[0.78em] shrink-0"
               strokeWidth={1.65}
@@ -751,7 +792,7 @@ function HomeExperientialAndRenderingSection() {
                   `${project.title} experiential design by Brandon PT Davis`
                 }
                 className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                loading={index < 2 ? "eager" : "lazy"}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.82)_100%)]" />
               <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
@@ -769,33 +810,65 @@ function HomeExperientialAndRenderingSection() {
 
       {renderingRailCards.length ? (
         <div className={experientialProjects.length ? "mt-3" : ""}>
-          <div className="h-[8rem] overflow-hidden md:h-[11rem]">
-            <div className="flex h-full w-max gap-3 px-[clamp(1rem,2vw,1.5rem)] motion-safe:animate-[home-rendering-rail_52s_linear_infinite] motion-safe:hover:[animation-play-state:paused]">
-              {movingRenderingCards.map((card, index) => (
-                <a
-                  key={`${card.href}-${index}`}
-                  href={card.href}
-                  className="site-media-square group relative block h-full w-[min(15.5rem,64vw)] shrink-0 overflow-hidden rounded-none bg-black ring-1 ring-white/10 md:w-[18rem]"
-                >
-                  <img
-                    src={card.image}
-                    alt={card.imageAlt}
-                    className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                    loading={index < 4 ? "eager" : "lazy"}
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
-                  <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
-                    <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
-                      Rendering
-                    </p>
-                    <h3 className="mt-2 max-w-[14ch] font-sans text-[1.22rem] font-medium leading-[0.96] tracking-[-0.045em] text-white md:text-[1.35rem]">
-                      {card.title}
-                    </h3>
-                  </div>
-                </a>
-              ))}
+          {!isDesktopViewport ? (
+            <div className="overflow-x-auto px-[clamp(1rem,2vw,1.5rem)]">
+              <div className="flex snap-x gap-3">
+                {renderingRailCards.slice(0, 6).map((card) => (
+                  <a
+                    key={card.href}
+                    href={card.href}
+                    className="site-media-square group relative block h-[8rem] w-[min(15.5rem,64vw)] shrink-0 snap-start overflow-hidden rounded-none bg-black ring-1 ring-white/10"
+                  >
+                    <img
+                      src={card.image}
+                      alt={card.imageAlt}
+                      className="site-media-square h-full w-full rounded-none object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
+                    <div className="absolute inset-x-0 bottom-0 p-4">
+                      <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
+                        Rendering
+                      </p>
+                      <h3 className="mt-2 max-w-[14ch] font-sans text-[1.22rem] font-medium leading-[0.96] tracking-[-0.045em] text-white">
+                        {card.title}
+                      </h3>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
+
+          {isDesktopViewport ? (
+            <div className="h-[11rem] overflow-hidden">
+              <div className="flex h-full w-max gap-3 px-[clamp(1rem,2vw,1.5rem)] motion-safe:animate-[home-rendering-rail_52s_linear_infinite] motion-safe:hover:[animation-play-state:paused]">
+                {movingRenderingCards.map((card, index) => (
+                  <a
+                    key={`${card.href}-${index}`}
+                    href={card.href}
+                    className="site-media-square group relative block h-full w-[min(15.5rem,64vw)] shrink-0 overflow-hidden rounded-none bg-black ring-1 ring-white/10 md:w-[18rem]"
+                  >
+                    <img
+                      src={card.image}
+                      alt={card.imageAlt}
+                      className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
+                    <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                      <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
+                        Rendering
+                      </p>
+                      <h3 className="mt-2 max-w-[14ch] font-sans text-[1.22rem] font-medium leading-[0.96] tracking-[-0.045em] text-white md:text-[1.35rem]">
+                        {card.title}
+                      </h3>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </section>
@@ -850,7 +923,7 @@ function PublishSection() {
             <a
               key={`${card.kind}-${card.href}`}
               href={card.href}
-              className="group relative flex h-[30rem] w-[min(21rem,78vw)] flex-col justify-end overflow-hidden rounded-[2rem] bg-black p-6 text-white shadow-[0_12px_28px_rgba(0,0,0,0.2)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.24)] md:w-[22rem]"
+              className="group relative flex h-[26rem] w-[min(19rem,82vw)] flex-col justify-end overflow-hidden rounded-[1.25rem] bg-black p-5 text-white shadow-[0_12px_28px_rgba(0,0,0,0.2)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.24)] md:h-[30rem] md:w-[22rem] md:rounded-[2rem] md:p-6"
               aria-label={`${card.kind}: ${card.title}`}
             >
               <img
@@ -911,7 +984,7 @@ function PublishSection() {
 
 function HomeCta() {
   return (
-    <section className="group relative min-h-[72svh] overflow-hidden bg-black">
+    <section className="group relative min-h-[62svh] overflow-hidden bg-black md:min-h-[72svh]">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-10 h-28 bg-gradient-to-b from-black via-black/82 to-transparent"
         aria-hidden="true"
@@ -923,15 +996,15 @@ function HomeCta() {
         loading="lazy"
       />
       <div className="absolute inset-0 bg-black/28" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.42)_36%,rgba(0,0,0,0.08)_72%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.48)_44%,rgba(0,0,0,0.86)_100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.42)_36%,rgba(0,0,0,0.08)_72%)]" />
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/42 to-transparent" />
 
-      <div className="relative flex min-h-[72svh] items-end px-[clamp(1.5rem,5vw,6rem)] pb-12 pt-24 md:pb-16">
+      <div className="relative flex min-h-[62svh] items-end px-[clamp(1rem,5vw,6rem)] pb-10 pt-20 md:min-h-[72svh] md:px-[clamp(1.5rem,5vw,6rem)] md:pb-16">
         <div className="max-w-3xl">
           <p className="mb-4 section-kicker text-white/46">
             Portfolio / Contact
           </p>
-          <h2 className="font-sans text-[clamp(2.6rem,5.8vw,6.2rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
+          <h2 className="font-sans text-[clamp(2.2rem,11vw,3.6rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white md:text-[clamp(2.6rem,5.8vw,6.2rem)] md:leading-[0.9] md:tracking-[-0.07em]">
             Start with the space.
           </h2>
           <p className="mt-5 max-w-xl text-[0.98rem] leading-7 tracking-[-0.01em] text-white/64 md:text-[1.05rem]">

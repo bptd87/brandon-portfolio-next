@@ -193,7 +193,7 @@ export default function CreativeStatement() {
           tone="dark"
         />
 
-        <section className="border-y border-white/10 bg-black px-5 py-5 sm:px-8 md:px-[clamp(3rem,7vw,7rem)]">
+        <section className="bg-black px-5 py-5 sm:px-8 md:px-[clamp(3rem,7vw,7rem)]">
           <div className="mx-auto flex max-w-[88rem] flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <p className="max-w-[42rem] text-[0.98rem] leading-7 tracking-[-0.018em] text-white/54">
               Start with the formal statement, then move through the visual version below as each
@@ -223,11 +223,11 @@ export default function CreativeStatement() {
             return (
               <section
                 key={chapter.label}
-                className="relative isolate min-h-[100svh] overflow-hidden bg-black text-white"
+                className="relative isolate overflow-hidden bg-black text-white md:min-h-[100svh]"
               >
                 {visual?.coverImageUrl ? (
                   <motion.div
-                    className="absolute inset-0"
+                    className="relative h-[46svh] min-h-[20rem] overflow-hidden bg-black md:absolute md:inset-0 md:h-auto md:min-h-0"
                     initial={{ scale: 1.06, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     viewport={{ once: false, amount: 0.45 }}
@@ -240,41 +240,42 @@ export default function CreativeStatement() {
                       priority={index === 0}
                       quality={86}
                       sizes="100vw"
-                      className="object-contain"
+                      className="object-cover md:object-contain"
                     />
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.34)_18%,rgba(0,0,0,0.08)_48%,rgba(0,0,0,0.4)_78%,rgba(0,0,0,0.92)_100%)] md:bg-[linear-gradient(180deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.2)_18%,rgba(0,0,0,0.06)_48%,rgba(0,0,0,0.34)_78%,rgba(0,0,0,0.9)_100%)]" />
                   </motion.div>
                 ) : null}
 
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.08),rgba(0,0,0,0.74))]" />
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.78))]" />
-                <div className="absolute inset-x-0 top-0 h-1/3 bg-[linear-gradient(180deg,rgba(0,0,0,0.5),transparent)]" />
+                <div className="absolute inset-0 hidden bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.12),rgba(0,0,0,0.78))] md:block" />
+                <div className="absolute inset-x-0 bottom-0 hidden h-2/3 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.92))] md:block" />
+                <div className="absolute inset-x-0 top-0 hidden h-1/3 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),transparent)] md:block" />
 
-                <div className={`relative z-10 flex min-h-[100svh] px-5 py-12 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20 ${positionClass}`}>
+                <div className={`relative z-10 flex px-5 py-9 sm:px-8 md:min-h-[100svh] md:px-[clamp(3rem,7vw,7rem)] md:py-20 ${positionClass}`}>
                   <motion.div
                     className="max-w-[46rem]"
-                    initial={{ opacity: 0, y: 44, filter: "blur(10px)" }}
-                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ opacity: 0, y: 36 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, amount: 0.55 }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <p className="font-mono text-[0.78rem] uppercase tracking-[0.24em] text-white/58">
+                    <p className="font-mono text-[0.68rem] uppercase leading-5 tracking-[0.2em] text-white/46 md:text-[0.78rem] md:tracking-[0.24em] md:text-white/58">
                       0{index + 1} · {chapter.label}
                     </p>
-                    <h2 className="mt-5 font-sans text-[clamp(3rem,8vw,8.9rem)] font-semibold leading-[0.86] tracking-[-0.08em] text-white">
+                    <h2 className="mt-4 font-sans text-[clamp(2.15rem,11vw,3.1rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white md:mt-5 md:text-[clamp(3rem,8vw,8.9rem)] md:leading-[0.86] md:tracking-[-0.08em]">
                       {chapter.title}
                     </h2>
-                    <p className="mt-7 text-[clamp(1.08rem,1.65vw,1.36rem)] leading-[1.68] tracking-[-0.03em] text-white/78">
+                    <p className="mt-5 text-[1.02rem] leading-8 tracking-[-0.024em] text-white/72 md:mt-7 md:text-[clamp(1.08rem,1.65vw,1.36rem)] md:leading-[1.68] md:tracking-[-0.03em] md:text-white/78">
                       {chapter.body}
                     </p>
                     {visual?.slug ? (
                       <Link
                         href={getProjectHref(visual)}
-                        className="mt-7 inline-flex border-b border-white/40 pb-1 text-[0.95rem] font-medium tracking-[-0.02em] text-white/76 transition-colors hover:border-white hover:text-white"
+                        className="mt-7 inline-flex text-[0.95rem] font-medium tracking-[-0.02em] text-white/68 transition-colors hover:text-white"
                       >
                         {visual.title}
                       </Link>
                     ) : visual ? (
-                      <p className="mt-7 inline-flex border-b border-white/24 pb-1 text-[0.95rem] font-medium tracking-[-0.02em] text-white/58">
+                      <p className="mt-7 inline-flex text-[0.95rem] font-medium tracking-[-0.02em] text-white/52">
                         {visual.title}
                       </p>
                     ) : null}
@@ -286,7 +287,7 @@ export default function CreativeStatement() {
         </article>
 
         <section className="bg-black px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
-          <AnimatedSection className="mx-auto flex min-h-[68svh] max-w-[88rem] border-y border-white/12 py-14 md:py-20">
+          <AnimatedSection className="mx-auto flex min-h-[68svh] max-w-[88rem] py-14 md:py-20">
             <div className="grid w-full gap-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.3fr)] lg:items-center">
               <div>
                 <p className="font-mono text-[0.8rem] uppercase tracking-[0.22em] text-white/34">

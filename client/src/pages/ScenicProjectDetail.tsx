@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -535,12 +536,15 @@ export default function ScenicProjectDetail({
           style={{ borderRadius: 0 }}
         >
           {project.coverImageUrl ? (
-            <img
+            <Image
               src={project.coverImageUrl}
               alt={`${project.title} scenic design cover image`}
-              className="project-hero-media site-media-square absolute inset-0 h-full w-full object-cover"
+              fill
+              priority
+              quality={84}
+              sizes="100vw"
+              className="project-hero-media site-media-square object-cover"
               style={{ objectPosition: project.coverImagePosition || "center", borderRadius: 0 }}
-              loading="eager"
               fetchPriority="high"
             />
           ) : null}
@@ -630,12 +634,12 @@ export default function ScenicProjectDetail({
               </div>
 
               <div>
-                <div className="text-[0.9rem] leading-[1.48] text-white">
+                <div className="text-[0.98rem] leading-[1.66] text-white md:text-[0.9rem] md:leading-[1.48]">
                   {projectNarrativeSections.length ? (
                     hasNarrativeHeadings ? (
-                      <div className="space-y-5">
+                      <div className="space-y-6 md:space-y-5">
                         {projectNarrativeSections.map((section, sectionIndex) => (
-                          <div key={`${section.heading || "description"}-${sectionIndex}`} className="space-y-2.5">
+                          <div key={`${section.heading || "description"}-${sectionIndex}`} className="space-y-3.5 md:space-y-2.5">
                             {section.heading ? <p className="font-medium text-white">{section.heading}</p> : null}
                             {section.content.map((paragraph, paragraphIndex) => (
                               <p key={paragraphIndex}>{paragraph}</p>
@@ -644,7 +648,7 @@ export default function ScenicProjectDetail({
                         ))}
                       </div>
                     ) : (
-                      <div className="space-y-4 text-justify hyphens-auto [text-wrap:pretty]">
+                      <div className="max-w-[38rem] space-y-5 text-left hyphens-auto [text-wrap:pretty] md:max-w-none md:space-y-4 md:text-justify">
                         <p className="text-left">
                           <span className="text-[0.82rem] font-medium uppercase tracking-[0.08em] text-white">
                             Description
@@ -657,7 +661,7 @@ export default function ScenicProjectDetail({
                           <button
                             type="button"
                             onClick={() => setIsDescriptionExpanded((expanded) => !expanded)}
-                            className="inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 pt-1 text-left text-[0.72rem] font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
+                            className="inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 pt-1 text-left text-[0.72rem] font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white md:pt-1"
                             aria-expanded={isDescriptionExpanded}
                           >
                             {isDescriptionExpanded ? "Show less" : "Show more"}
@@ -671,7 +675,7 @@ export default function ScenicProjectDetail({
                       </div>
                     )
                   ) : (
-                    <div className="space-y-4 text-justify hyphens-auto [text-wrap:pretty]">
+                    <div className="max-w-[38rem] space-y-5 text-left hyphens-auto [text-wrap:pretty] md:max-w-none md:space-y-4 md:text-justify">
                       <p className="text-left">
                         <span className="text-[0.82rem] font-medium uppercase tracking-[0.08em] text-white">
                           Description
@@ -771,7 +775,10 @@ export default function ScenicProjectDetail({
           </AnimatedSection>
         </section>
 
-        <section id="project-process" className="scroll-mt-28 bg-[#111111]">
+        <section
+          id="project-process"
+          className="scroll-mt-28 bg-[#111111] [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
+        >
           <div className="relative left-1/2 w-screen -translate-x-1/2">
             <div>
               {visualMediaItems.map((item, index) => {
@@ -793,8 +800,8 @@ export default function ScenicProjectDetail({
                           className={`site-media-square block bg-[#111111] object-contain ${alignClass} ${
                             isFullWidth ? "h-auto" : "aspect-[3/2]"
                           }`}
-                          loading={index < 2 ? "eager" : "lazy"}
-                          decoding={index < 2 ? "sync" : "async"}
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : item.mediaType === "video" ? (
                         <div className={alignClass}>
@@ -810,8 +817,8 @@ export default function ScenicProjectDetail({
                               className={`site-media-square absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-700 ${
                                 renderingIndex === safeRenderingIndex ? "opacity-100" : "opacity-0"
                               }`}
-                              loading={renderingIndex === 0 ? "eager" : "lazy"}
-                              decoding={renderingIndex === 0 ? "sync" : "async"}
+                              loading="lazy"
+                              decoding="async"
                             />
                           ))}
 
@@ -851,7 +858,7 @@ export default function ScenicProjectDetail({
         </section>
 
         {moreScenicProjects.length > 0 ? (
-          <section className="bg-[#111111] border-t border-white/12 pt-16 text-white md:pt-24">
+          <section className="bg-[#111111] border-t border-white/12 pt-16 text-white [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24">
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -884,6 +891,7 @@ export default function ScenicProjectDetail({
                               alt={`${item.title} scenic design cover image`}
                               className="site-media-square h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-[0.88]"
                               loading="lazy"
+                              decoding="async"
                             />
                           ) : null}
                         </div>

@@ -18,22 +18,22 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
 
   return (
     <div
-      className={`sticky top-[72px] z-30 border-b backdrop-blur-xl ${
+      className={`sticky top-[64px] z-30 border-b backdrop-blur-xl md:top-[72px] ${
         isDark
           ? "border-white/[0.08] bg-[#070707]/88"
           : "border-black/[0.06] bg-[#f1f0ec]/92"
       }`}
     >
-      <div className="flex min-h-16 flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div className="flex min-h-12 flex-col gap-2 px-[clamp(1rem,5vw,6rem)] py-2.5 md:min-h-16 md:flex-row md:items-center md:justify-between md:gap-8 md:px-[clamp(1.5rem,5vw,6rem)] md:py-3">
         <a
           href="/studio"
-          className={`text-[1.35rem] font-semibold leading-none tracking-[-0.045em] ${isDark ? "text-white" : "text-[#111111]"}`}
+          className={`hidden text-[1.35rem] font-semibold leading-none tracking-[-0.045em] md:block ${isDark ? "text-white" : "text-[#111111]"}`}
         >
           Publish
         </a>
 
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-8">
-          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-center md:gap-8">
+          <nav className="flex min-w-0 items-center gap-x-5 overflow-x-auto whitespace-nowrap pr-2 md:flex-wrap md:gap-x-6 md:gap-y-2 md:overflow-visible md:pr-0">
             <a href="/articles" className={linkClass("articles")}>
               Articles
             </a>
@@ -41,17 +41,19 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
               Tutorials
             </a>
             <a href="/studio/apps" className={linkClass("apps")}>
-              Studio Apps
+              <span className="md:hidden">Apps</span>
+              <span className="hidden md:inline">Studio Apps</span>
             </a>
             <a href="/studio/directory" className={linkClass("directory")}>
-              Scenic Directory
+              <span className="md:hidden">Directory</span>
+              <span className="hidden md:inline">Scenic Directory</span>
             </a>
           </nav>
 
           <form
             action="/search"
             method="get"
-            className="relative w-full md:w-[15rem]"
+            className="relative hidden w-full md:block md:w-[15rem]"
           >
             <Search className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${isDark ? "text-white/46" : "text-[#5d5851]"}`} />
             <input
