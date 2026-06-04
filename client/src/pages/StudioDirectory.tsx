@@ -3,6 +3,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import { ExternalLink, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SEO } from "@/components/SEO";
@@ -235,22 +236,12 @@ export default function StudioDirectory() {
 
                   <div className="border-t border-black/10">
                     {group.items.map((resource: any) => (
-                      <button
+                      <ExternalLinkPreview
                         key={resource.id}
-                        onClick={() => window.open(resource.url, "_blank", "noopener,noreferrer")}
-                        className="grid w-full items-start gap-4 border-b border-black/8 px-[clamp(1.5rem,5vw,6rem)] py-5 text-left transition-colors hover:bg-white md:grid-cols-[64px_minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                        href={resource.url}
+                        className="grid w-full items-start gap-4 border-b border-black/8 px-[clamp(1.5rem,5vw,6rem)] py-5 text-left transition-colors hover:bg-white md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                        previewLabel={resource.name}
                       >
-                        <div className="h-12 w-12 shrink-0 overflow-hidden border border-black/10 bg-black/[0.035] [border-radius:0]">
-                          <img
-                            src={resource.cover_image || getDirectoryPlaceholder(resource.name)}
-                            onError={(e) => {
-                              e.currentTarget.src = getDirectoryPlaceholder(resource.name);
-                            }}
-                            className="h-full w-full object-cover [border-radius:0]"
-                            alt=""
-                          />
-                        </div>
-
                         <div>
                           <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-black">
                             {resource.name}
@@ -268,7 +259,7 @@ export default function StudioDirectory() {
                           <span>Open</span>
                           <ExternalLink className="h-3.5 w-3.5" />
                         </div>
-                      </button>
+                      </ExternalLinkPreview>
                     ))}
                   </div>
                 </section>
@@ -280,22 +271,12 @@ export default function StudioDirectory() {
                 const category = categories.find((entry) => entry.slug === resource.category_slug);
 
                 return (
-                  <button
+                  <ExternalLinkPreview
                     key={resource.id}
-                    onClick={() => window.open(resource.url, "_blank", "noopener,noreferrer")}
-                    className="grid w-full items-start gap-4 border-b border-black/8 px-[clamp(1.5rem,5vw,6rem)] py-5 text-left transition-colors hover:bg-white md:grid-cols-[64px_minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                    href={resource.url}
+                    className="grid w-full items-start gap-4 border-b border-black/8 px-[clamp(1.5rem,5vw,6rem)] py-5 text-left transition-colors hover:bg-white md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                    previewLabel={resource.name}
                   >
-                    <div className="h-12 w-12 shrink-0 overflow-hidden border border-black/10 bg-black/[0.035] [border-radius:0]">
-                      <img
-                        src={resource.cover_image || getDirectoryPlaceholder(resource.name)}
-                        onError={(e) => {
-                          e.currentTarget.src = getDirectoryPlaceholder(resource.name);
-                        }}
-                        className="h-full w-full object-cover [border-radius:0]"
-                        alt=""
-                      />
-                    </div>
-
                     <div>
                       <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-black">
                         {resource.name}
@@ -313,7 +294,7 @@ export default function StudioDirectory() {
                       <span>Open</span>
                       <ExternalLink className="h-3.5 w-3.5" />
                     </div>
-                  </button>
+                  </ExternalLinkPreview>
                 );
               })}
             </div>

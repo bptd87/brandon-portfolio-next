@@ -1,13 +1,16 @@
 "use client";
 
-import { PlayCircle } from "lucide-react";
+import { Play } from "lucide-react";
 import { useMemo, useState } from "react";
+
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 type DeferredYouTubeEmbedProps = {
   videoId: string;
   title: string;
   className?: string;
   eagerPoster?: boolean;
+  playbackMode?: "inline" | "dialog";
   showLabel?: boolean;
 };
 
@@ -16,37 +19,22 @@ export default function DeferredYouTubeEmbed({
   title,
   className = "",
   eagerPoster = false,
+  playbackMode = "inline",
   showLabel = true,
 }: DeferredYouTubeEmbedProps) {
   const [isActivated, setIsActivated] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const thumbnailUrl = useMemo(
     () => `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
     [videoId]
   );
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
 
-  if (isActivated) {
-    return (
-      <div className={`aspect-[16/9] ${className}`}>
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          className="h-full w-full"
-        />
-      </div>
-    );
-  }
-
-  return (
+  const posterButton = (
     <button
       type="button"
-      onClick={() => setIsActivated(true)}
+      onClick={() => (playbackMode === "dialog" ? setIsDialogOpen(true) : setIsActivated(true))}
       className={`group relative block aspect-[16/9] w-full overflow-hidden bg-black text-left ${className}`}
       aria-label={`Play ${title}`}
     >
@@ -69,10 +57,61 @@ export default function DeferredYouTubeEmbed({
             showLabel ? "gap-3 px-5 py-3" : "h-14 w-14"
           }`}
         >
-          <PlayCircle className="h-5 w-5" />
+          <Play className="h-5 w-5 translate-x-[1px] fill-current" />
           {showLabel ? "Play video" : null}
         </span>
       </div>
     </button>
   );
+
+  if (playbackMode === "dialog") {
+    return (
+      <>
+        {posterButton}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent
+            className="max-w-[min(94vw,72rem)] border-white/10 bg-black p-0 shadow-[0_32px_90px_rgba(0,0,0,0.45)] sm:max-w-[min(94vw,72rem)]"
+            overlayClassName="bg-black/82 backdrop-blur-md"
+          >
+            <DialogTitle className="sr-only">{title}</DialogTitle>
+            <div className="aspect-video w-full overflow-hidden rounded-lg bg-black">
+              {isDialogOpen ? (
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={embedUrl}
+                  title={title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="h-full w-full"
+                />
+              ) : null}
+            </div>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  }
+
+  if (isActivated) {
+    return (
+      <div className={`aspect-[16/9] ${className}`}>
+        <iframe
+          width="100%"
+          height="100%"
+          src={embedUrl}
+          title={title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+          className="h-full w-full"
+        />
+      </div>
+    );
+  }
+
+  return posterButton;
 }

@@ -3,6 +3,8 @@
 import { Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { Link } from "wouter";
 
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
+
 const FOOTER_SECTIONS = [
   {
     title: "Portfolio",
@@ -134,36 +136,50 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
             <div className="flex flex-wrap gap-3">
               {SOCIAL_LINKS.map((item) => {
                 const Icon = item.icon;
+                const isEmail = item.href.startsWith("mailto:");
+                const className = `inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
+                  isLight
+                    ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
+                    : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
+                }`;
+
+                if (!isEmail) {
+                  return (
+                    <ExternalLinkPreview
+                      key={item.label}
+                      href={item.href}
+                      className={className}
+                      previewLabel={item.label}
+                      title={item.label}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </ExternalLinkPreview>
+                  );
+                }
+
                 return (
                   <a
                     key={item.label}
                     href={item.href}
-                    target={item.href.startsWith("mailto:") ? undefined : "_blank"}
-                    rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
-                      isLight
-                        ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
-                        : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
-                    }`}
+                    className={className}
                     title={item.label}
                   >
                     <Icon className="h-4 w-4" />
                   </a>
                 );
               })}
-              <a
+              <ExternalLinkPreview
                 href="https://www.pinterest.com/BrandonPTDavis/"
-                target="_blank"
-                rel="noopener noreferrer"
                 className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
                   isLight
                     ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
                     : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
                 }`}
+                previewLabel="Pinterest"
                 title="Pinterest"
               >
                 <PinterestIcon className="h-4 w-4" />
-              </a>
+              </ExternalLinkPreview>
             </div>
           </div>
         </div>

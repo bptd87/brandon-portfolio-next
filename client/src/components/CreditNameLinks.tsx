@@ -3,6 +3,8 @@
 import { Fragment } from "react";
 import { getLocalCollaboratorPortfolioUrlByName } from "@shared/localStudio";
 
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
+
 const CREDIT_NAME_SEPARATOR = /(\s+(?:and|&)\s+|,\s*)/g;
 
 function splitCreditNames(value: string) {
@@ -35,15 +37,14 @@ export function CreditNameLinks({
         }
 
         return (
-          <a
+          <ExternalLinkPreview
             key={`${segment}-${index}`}
             href={href}
-            target="_blank"
-            rel="noopener noreferrer"
             className={className}
+            previewLabel={segment}
           >
             {segment}
-          </a>
+          </ExternalLinkPreview>
         );
       })}
     </>

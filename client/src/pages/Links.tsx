@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { Instagram, Linkedin, Mail } from "lucide-react";
 import { Link } from "wouter";
 
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import { SEO } from "@/components/SEO";
 import {
   LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG,
@@ -134,6 +135,14 @@ function SmartLink({
   href: string;
 }) {
   if (external || href.startsWith("http") || href.startsWith("mailto:")) {
+    if (href.startsWith("http")) {
+      return (
+        <ExternalLinkPreview className={className} href={href}>
+          {children}
+        </ExternalLinkPreview>
+      );
+    }
+
     return (
       <a className={className} href={href} target={href.startsWith("mailto:") ? undefined : "_blank"} rel="noopener noreferrer">
         {children}
@@ -311,33 +320,30 @@ export default function Links() {
           </p>
 
           <div className="mt-5 flex items-center justify-center gap-2">
-            <a
+            <ExternalLinkPreview
               href="https://instagram.com/brandonptdavisdesign"
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label="Instagram"
+              previewLabel="Instagram"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-black/58 transition-colors hover:border-black/24 hover:text-black"
             >
               <Instagram className="h-4 w-4" />
-            </a>
-            <a
+            </ExternalLinkPreview>
+            <ExternalLinkPreview
               href="https://linkedin.com/in/brandonptdavis"
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label="LinkedIn"
+              previewLabel="LinkedIn"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-black/58 transition-colors hover:border-black/24 hover:text-black"
             >
               <Linkedin className="h-4 w-4" />
-            </a>
-            <a
+            </ExternalLinkPreview>
+            <ExternalLinkPreview
               href="https://www.pinterest.com/BrandonPTDavis/"
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label="Pinterest"
+              previewLabel="Pinterest"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/12 text-black/58 transition-colors hover:border-black/24 hover:text-black"
             >
               <PinterestIcon className="h-4 w-4" />
-            </a>
+            </ExternalLinkPreview>
             <a
               href="mailto:info@brandonptdavis.com"
               className="inline-flex h-9 items-center gap-2 rounded-full bg-black px-3.5 text-[0.82rem] font-medium text-white transition-colors hover:bg-black/80"

@@ -5,6 +5,7 @@ import { ArrowRight, ExternalLink, Instagram, Link2 } from "lucide-react";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ProfileSectionHero from "@/components/ProfileSectionHero";
@@ -233,11 +234,10 @@ export default function Collaborators() {
             </AnimatedSection>
 
             <AnimatedSection delay={120}>
-              <a
+              <ExternalLinkPreview
                 href={VOYAGELA_EXTERNAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group mx-auto mt-6 grid max-w-[58rem] gap-6 rounded-[1.65rem] bg-white/82 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.085)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-7"
+                previewLabel="VoyageLA"
               >
                 <div>
                   <p className="text-[0.98rem] font-medium tracking-[-0.025em] text-[#111111]/46">
@@ -255,7 +255,7 @@ export default function Collaborators() {
                   Read profile
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
-              </a>
+              </ExternalLinkPreview>
             </AnimatedSection>
           </div>
         </article>
@@ -367,27 +367,25 @@ export default function Collaborators() {
 
                             <div className="flex shrink-0 items-center gap-1.5 text-[#111111]/42">
                               {website ? (
-                                <a
+                                <ExternalLinkPreview
                                   href={website}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
                                   className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5 hover:text-[#111111]"
                                   aria-label={`${collaborator.name} website`}
+                                  previewLabel={collaborator.name}
                                 >
                                   <Link2 className="h-4 w-4" />
-                                </a>
+                                </ExternalLinkPreview>
                               ) : null}
                               {collaborator.instagramUrl ? (
-                                <a
+                                <ExternalLinkPreview
                                   href={collaborator.instagramUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
                                   className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5 hover:text-[#111111]"
                                   aria-label={`${collaborator.name} Instagram`}
+                                  previewLabel={`${collaborator.name} Instagram`}
                                   title={`@${instagramLabel}`}
                                 >
                                   <Instagram className="h-4 w-4" />
-                                </a>
+                                </ExternalLinkPreview>
                               ) : null}
                               {website ? (
                                 <ExternalLink className="hidden h-4 w-4 opacity-0 transition-opacity group-hover:opacity-45 md:block" />

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
@@ -289,11 +290,10 @@ export default function About() {
                 </div>
 
                 <div className="mx-auto mt-5 max-w-[62rem]">
-                  <a
+                  <ExternalLinkPreview
                     href={VOYAGELA_EXTERNAL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="group grid gap-6 rounded-[1.5rem] bg-white/78 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.08)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                    previewLabel="VoyageLA"
                   >
                     <div>
                       <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/46">
@@ -311,7 +311,7 @@ export default function About() {
                       Read profile
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </span>
-                  </a>
+                  </ExternalLinkPreview>
                 </div>
               </article>
             </AnimatedSection>

@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
+import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { Button } from "@/components/ui/button";
 import {
@@ -700,14 +701,13 @@ export default function ScenicProjectDetail({
                       <span>{getCreditRoleLabel(member.role)}:</span>
                       <span>
                         {member.url ? (
-                          <a
+                          <ExternalLinkPreview
                             href={member.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                            previewLabel={member.name}
                           >
                             {member.name}
-                          </a>
+                          </ExternalLinkPreview>
                         ) : (
                           <CreditNameLinks
                             name={member.name}
@@ -746,16 +746,15 @@ export default function ScenicProjectDetail({
                     <div className="space-y-3">
                       {projectInfoLinks.map((link) =>
                         link.external ? (
-                          <a
+                          <ExternalLinkPreview
                             key={`${link.kind}-${link.href}`}
                             href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="group flex items-start justify-between gap-3 underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                            previewLabel={link.label}
                           >
                             <span>{link.label}</span>
                             <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                          </a>
+                          </ExternalLinkPreview>
                         ) : (
                           <Link
                             key={`${link.kind}-${link.href}`}

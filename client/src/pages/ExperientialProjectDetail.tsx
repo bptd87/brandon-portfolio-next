@@ -122,6 +122,7 @@ function SampleGallery({
             videoId={getYoutubeId(sample.videoUrl)}
             title={sample.displayTitle}
             className="overflow-hidden rounded-none"
+            playbackMode="dialog"
             showLabel={false}
           />
         </div>

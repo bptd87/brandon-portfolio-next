@@ -1593,7 +1593,12 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
             className="mx-auto mt-16 max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-[#e5e3dc] shadow-[0_24px_70px_rgba(29,29,31,0.08)]"
           >
             {videoId ? (
-              <DeferredYouTubeEmbed videoId={videoId} title={tutorial.title} eagerPoster />
+              <DeferredYouTubeEmbed
+                videoId={videoId}
+                title={tutorial.title}
+                eagerPoster
+                playbackMode="dialog"
+              />
             ) : (
               <div className="aspect-[16/9] bg-[#dad8d0]" />
             )}
