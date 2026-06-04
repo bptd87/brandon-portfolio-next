@@ -76,6 +76,7 @@ export function ExternalLinkPreview({
 }: ExternalLinkPreviewProps) {
   const anchorRef = useRef<HTMLAnchorElement | null>(null);
   const previewIntentRef = useRef(false);
+  const retryTimerRef = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
   const [fetchedImageSrc, setFetchedImageSrc] = useState("");
@@ -86,6 +87,45 @@ export function ExternalLinkPreview({
   const previewImageSrc = imageSrc || fetchedImageSrc;
   const isPreviewable = preview && canPreviewUrl(href) && !previewImageFailed;
   const previewMeta = useMemo(() => getPreviewMeta(href, previewLabel), [href, previewLabel]);
+
+  const loadPreview = useCallback(
+    (attempt = 0) => {
+      setHasFetchedPreview(true);
+
+      fetch(`/api/link-preview?url=${encodeURIComponent(href)}&strategy=screenshot-first`)
+        .then((response) => (response.ok ? response.json() : { imageSrc: "" }))
+        .then((data: { imageSrc?: string; pending?: boolean; retryAfterMs?: number }) => {
+          if (!data.imageSrc) {
+            if (data.pending && attempt < 4) {
+              retryTimerRef.current = window.setTimeout(() => {
+                retryTimerRef.current = null;
+
+                if (previewIntentRef.current) {
+                  loadPreview(attempt + 1);
+                } else {
+                  setHasFetchedPreview(false);
+                }
+              }, data.retryAfterMs ?? 900);
+              return;
+            }
+
+            setPreviewImageFailed(true);
+            return;
+          }
+
+          setFetchedImageSrc(data.imageSrc);
+
+          if (previewIntentRef.current && anchorRef.current) {
+            setPosition(getPreviewPosition(anchorRef.current));
+            setIsOpen(true);
+          }
+        })
+        .catch(() => {
+          setPreviewImageFailed(true);
+        });
+    },
+    [href]
+  );
 
   const openPreview = useCallback(() => {
     if (!isPreviewable || typeof window === "undefined" || !anchorRef.current) return;
@@ -102,32 +142,18 @@ export function ExternalLinkPreview({
 
     if (hasFetchedPreview) return;
 
-    setHasFetchedPreview(true);
-
-    fetch(`/api/link-preview?url=${encodeURIComponent(href)}&strategy=screenshot-first`)
-      .then((response) => (response.ok ? response.json() : { imageSrc: "" }))
-      .then((data: { imageSrc?: string }) => {
-        if (!data.imageSrc) {
-          setPreviewImageFailed(true);
-          return;
-        }
-
-        setFetchedImageSrc(data.imageSrc);
-
-        if (previewIntentRef.current && anchorRef.current) {
-          setPosition(getPreviewPosition(anchorRef.current));
-          setIsOpen(true);
-        }
-      })
-      .catch(() => {
-        setPreviewImageFailed(true);
-      });
-  }, [hasFetchedPreview, href, isPreviewable, previewImageSrc]);
+    loadPreview();
+  }, [hasFetchedPreview, isPreviewable, loadPreview, previewImageSrc]);
 
   const closePreview = useCallback(() => {
     previewIntentRef.current = false;
+    if (retryTimerRef.current !== null) {
+      window.clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
+    if (!fetchedImageSrc) setHasFetchedPreview(false);
     setIsOpen(false);
-  }, []);
+  }, [fetchedImageSrc]);
 
   return (
     <>

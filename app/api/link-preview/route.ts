@@ -2,10 +2,21 @@ import { NextResponse } from "next/server";
 
 const MAX_HTML_BYTES = 220_000;
 const REQUEST_TIMEOUT_MS = 4_500;
+const SCREENSHOT_RETRIES = 3;
+const SCREENSHOT_RETRY_DELAY_MS = 900;
 const SCREENSHOT_WIDTH = 520;
+
+type ScreenshotResult = {
+  imageSrc: string;
+  status: "ready" | "pending" | "unavailable";
+};
 
 function getScreenshotUrl(previewUrl: URL) {
   return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(previewUrl.toString())}?w=${SCREENSHOT_WIDTH}`;
+}
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function isBlockedHostname(hostname: string) {
@@ -58,7 +69,7 @@ function toAbsoluteImageUrl(imageUrl: string, pageUrl: URL) {
   }
 }
 
-async function getVerifiedScreenshotUrl(previewUrl: URL) {
+async function checkScreenshotUrl(previewUrl: URL): Promise<ScreenshotResult> {
   const screenshotUrl = getScreenshotUrl(previewUrl);
 
   try {
@@ -73,13 +84,31 @@ async function getVerifiedScreenshotUrl(previewUrl: URL) {
       contentType.startsWith("image/") &&
       !response.url.includes("/mshots/v1/default")
     ) {
-      return screenshotUrl;
+      return { imageSrc: screenshotUrl, status: "ready" };
+    }
+
+    if (response.ok && response.url.includes("/mshots/v1/default")) {
+      return { imageSrc: "", status: "pending" };
     }
   } catch {
-    return "";
+    return { imageSrc: "", status: "unavailable" };
   }
 
-  return "";
+  return { imageSrc: "", status: "unavailable" };
+}
+
+async function getVerifiedScreenshotUrl(previewUrl: URL): Promise<ScreenshotResult> {
+  let latestResult: ScreenshotResult = { imageSrc: "", status: "unavailable" };
+
+  for (let attempt = 0; attempt < SCREENSHOT_RETRIES; attempt += 1) {
+    latestResult = await checkScreenshotUrl(previewUrl);
+
+    if (latestResult.status === "ready") return latestResult;
+    if (latestResult.status !== "pending") break;
+    if (attempt < SCREENSHOT_RETRIES - 1) await wait(SCREENSHOT_RETRY_DELAY_MS);
+  }
+
+  return latestResult;
 }
 
 export async function GET(request: Request) {
@@ -101,11 +130,15 @@ export async function GET(request: Request) {
     return NextResponse.json({ imageSrc: "" }, { status: 400 });
   }
 
+  let screenshotStatus: ScreenshotResult["status"] = "unavailable";
+
   try {
-    const screenshotSrc = await getVerifiedScreenshotUrl(previewUrl);
-    if (screenshotSrc) {
+    const screenshotResult = await getVerifiedScreenshotUrl(previewUrl);
+    screenshotStatus = screenshotResult.status;
+
+    if (screenshotResult.imageSrc) {
       return NextResponse.json(
-        { imageSrc: screenshotSrc, source: "screenshot" },
+        { imageSrc: screenshotResult.imageSrc, source: "screenshot" },
         {
           headers: {
             "Cache-Control": "public, max-age=3600, s-maxage=86400",
@@ -128,16 +161,37 @@ export async function GET(request: Request) {
 
     const html = (await response.text()).slice(0, MAX_HTML_BYTES);
     const imageSrc = toAbsoluteImageUrl(getMetaImage(html), previewUrl);
+    const pending = !imageSrc && screenshotStatus === "pending";
 
     return NextResponse.json(
-      { imageSrc, source: imageSrc ? "open-graph" : "" },
+      {
+        imageSrc,
+        source: imageSrc ? "open-graph" : "",
+        pending,
+        retryAfterMs: SCREENSHOT_RETRY_DELAY_MS,
+      },
       {
         headers: {
-          "Cache-Control": "public, max-age=3600, s-maxage=86400",
+          "Cache-Control": pending ? "no-store" : "public, max-age=3600, s-maxage=86400",
         },
       }
     );
   } catch {
-    return NextResponse.json({ imageSrc: "" }, { status: 200 });
+    const pending = screenshotStatus === "pending";
+
+    return NextResponse.json(
+      {
+        imageSrc: "",
+        source: "",
+        pending,
+        retryAfterMs: SCREENSHOT_RETRY_DELAY_MS,
+      },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": pending ? "no-store" : "public, max-age=600, s-maxage=3600",
+        },
+      }
+    );
   }
 }
