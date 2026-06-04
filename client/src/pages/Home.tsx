@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  Box,
   CalendarDays,
   ChevronLeft,
   ChevronRight,
@@ -36,6 +35,12 @@ const ABOUT_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/brandon-pt-davis-about-home.jpg";
 const HOME_CTA_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp";
+const HOME_RENDERING_FLIP_WORDS = [
+  "renderings",
+  "drawings",
+  "installations",
+  "environments",
+];
 
 type PublishCard = {
   kind: "Article" | "Tutorial";
@@ -54,6 +59,87 @@ type HomeRenderingRailCard = {
   title: string;
   meta: string;
 };
+
+function FlipWords({
+  words,
+  duration = 3000,
+  className = "",
+}: {
+  words: string[];
+  duration?: number;
+  className?: string;
+}) {
+  const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+    if (words.length <= 1) return;
+
+    const timer = window.setInterval(() => {
+      setWordIndex((current) => (current + 1) % words.length);
+    }, duration);
+
+    return () => window.clearInterval(timer);
+  }, [duration, words.length]);
+
+  return (
+    <span
+      className={`relative inline-block overflow-hidden align-baseline ${className}`}
+      aria-hidden="true"
+    >
+      <span
+        key={words[wordIndex]}
+        className="inline-block motion-safe:animate-[home-flip-word_560ms_cubic-bezier(0.22,1,0.36,1)]"
+      >
+        {words[wordIndex]}
+      </span>
+    </span>
+  );
+}
+
+function TextGenerateEffect({
+  lines,
+  className = "",
+  duration = 620,
+  stagger = 58,
+  startDelay = 160,
+}: {
+  lines: string[];
+  className?: string;
+  duration?: number;
+  stagger?: number;
+  startDelay?: number;
+}) {
+  let wordIndex = 0;
+
+  return (
+    <span className={className} aria-hidden="true">
+      {lines.map((line) => (
+        <span key={line} className="block">
+          {line.split(" ").map((word, lineWordIndex, lineWords) => {
+            const delay = startDelay + wordIndex * stagger;
+            wordIndex += 1;
+
+            return (
+              <span
+                key={`${line}-${word}-${delay}`}
+                className={`inline-block opacity-0 motion-safe:animate-[home-text-generate_620ms_cubic-bezier(0.22,1,0.36,1)_forwards] motion-reduce:opacity-100 ${
+                  lineWordIndex < lineWords.length - 1 ? "mr-[0.18em]" : ""
+                }`}
+                style={{
+                  animationDelay: `${delay}ms`,
+                  animationDuration: `${duration}ms`,
+                }}
+              >
+                {word}
+                {" "}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 const getPublishTimestamp = (...dates: Array<string | Date | null | undefined>) =>
   Math.max(
@@ -208,6 +294,23 @@ function HomeIntro() {
       id="portfolio-categories"
       className="relative min-h-[calc(100svh-64px)] overflow-hidden bg-black md:min-h-[calc(100svh-74px)]"
     >
+      <style>
+        {`
+          @keyframes home-text-generate {
+            0% { opacity: 0; transform: translateY(0.2em); filter: blur(8px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+          }
+          @keyframes home-answer-punch {
+            0% { opacity: 0; transform: translateY(0.18em) scale(0.82); filter: blur(10px); }
+            58% { opacity: 1; transform: translateY(0) scale(1.08); filter: blur(0); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+          }
+          @keyframes home-answer-copy {
+            0% { opacity: 0; transform: translateY(0.65rem); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}
+      </style>
       <img
         src={HOME_HERO_IMAGE_URL}
         alt="Scenic rendering by Brandon PT Davis"
@@ -227,13 +330,31 @@ function HomeIntro() {
             aria-label="If all the world is a stage, then is the scenic designer its architect?"
             className="max-w-[min(64rem,100%)] font-sans text-[clamp(2.35rem,13vw,3.65rem)] font-medium leading-[0.96] tracking-[-0.04em] text-white md:text-[clamp(2.85rem,5.75vw,6.5rem)] md:leading-[0.92]"
           >
-            <span className="block">If all the world is a stage, </span>
-            <span className="block">then is the scenic designer </span>
-            <span className="block">its architect?</span>
+            <span className="md:hidden">
+              <span className="block">If all the world is a stage, </span>
+              <span className="block">then is the scenic designer </span>
+              <span className="block">its architect?</span>
+            </span>
+            <TextGenerateEffect
+              className="hidden md:block"
+              lines={[
+                "If all the world is a stage,",
+                "then is the scenic designer",
+                "its architect?",
+              ]}
+            />
           </h1>
           <p className="mt-5 max-w-[43rem] font-sans text-[1.1rem] font-medium leading-[1.22] tracking-[-0.04em] text-white/72 md:mt-9 md:text-[clamp(1.16rem,2vw,1.9rem)] md:leading-[1.16] md:tracking-[-0.045em]">
-            <span className="block text-white">No. </span>
-            Scenic design gives form to the story's reflection of our world.
+            <span className="block text-white md:mb-3 md:text-[clamp(2.75rem,5vw,5.65rem)] md:font-medium md:leading-[0.82] md:tracking-[-0.08em] md:opacity-0 motion-safe:md:animate-[home-answer-punch_760ms_cubic-bezier(0.18,1.35,0.28,1)_1250ms_forwards] motion-reduce:md:opacity-100">
+              No.
+            </span>
+            <span className="block text-white md:opacity-0 motion-safe:md:animate-[home-answer-copy_560ms_ease_1640ms_forwards] motion-reduce:md:opacity-100">
+              The scenic designer is its storyteller.
+            </span>
+            <span className="mt-2 block max-w-[40rem] text-white/68 md:opacity-0 motion-safe:md:animate-[home-answer-copy_560ms_ease_1840ms_forwards] motion-reduce:md:opacity-100">
+              Using space, image, and metaphor, scenic design transforms ideas into places
+              where stories can unfold.
+            </span>
           </p>
           <div className="mt-7 flex flex-col gap-3 min-[420px]:flex-row md:mt-8 md:flex-wrap">
             <a
@@ -561,14 +682,14 @@ function UpcomingSection() {
     >
       {!isDesktopViewport ? (
       <div className="px-[clamp(1rem,5vw,6rem)] py-14">
-        <p className="section-kicker mb-4 text-white">Upcoming Productions</p>
+        <p className="section-kicker mb-4 text-white">Upcoming / In Process</p>
         <h2 className="flex max-w-[11ch] items-center gap-3 font-sans text-[clamp(2.25rem,12vw,3.7rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
           <CalendarDays
             className="h-[0.82em] w-[0.82em] shrink-0"
             strokeWidth={1.65}
             aria-hidden="true"
           />
-          <span>The season ahead.</span>
+          <span>On the drafting table.</span>
         </h2>
         <div className="mt-9 grid gap-3">
           {nextProductions.map((production) => (
@@ -605,16 +726,14 @@ function UpcomingSection() {
         }}
       >
         <div className="pointer-events-none absolute left-1/2 top-0 z-20 w-[min(92vw,48rem)] -translate-x-1/2 px-[clamp(1.5rem,5vw,6rem)] pt-10 text-center md:pt-14">
-          <p className="section-kicker mb-4 text-white">
-            Upcoming Productions
-          </p>
+          <p className="section-kicker mb-4 text-white">Upcoming / In Process</p>
           <h2 className="mx-auto flex items-center justify-center gap-3 font-sans text-[clamp(2.25rem,4.4vw,4.65rem)] font-medium leading-[1] tracking-[-0.055em] text-white">
             <CalendarDays
               className="h-[0.82em] w-[0.82em] shrink-0"
               strokeWidth={1.65}
               aria-hidden="true"
             />
-            <span>The season ahead.</span>
+            <span>On the drafting table.</span>
           </h2>
         </div>
 
@@ -731,6 +850,15 @@ function HomeExperientialAndRenderingSection() {
 
   return (
     <section className="bg-black py-12 text-white md:py-16">
+      <style>
+        {`
+          @keyframes home-flip-word {
+            0% { opacity: 0; transform: translateY(0.48em); filter: blur(6px); }
+            55% { opacity: 1; filter: blur(0); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+          }
+        `}
+      </style>
       {isDesktopViewport ? (
       <style>
         {`
@@ -747,18 +875,21 @@ function HomeExperientialAndRenderingSection() {
           <p className="section-kicker mb-4 text-white">
             Rendering + Experiential Design
           </p>
-          <h2 className="flex flex-col items-center justify-center gap-3 font-sans text-[clamp(2rem,10vw,3.45rem)] font-medium leading-[1] tracking-[-0.055em] text-white min-[520px]:flex-row md:gap-4 md:text-[clamp(2.35rem,4.8vw,5.15rem)]">
-            <Box
-              className="h-[0.78em] w-[0.78em] shrink-0"
-              strokeWidth={1.65}
-              aria-hidden="true"
-            />
-            <span>The same scenic eye, across medium and scale.</span>
+          <h2
+            className="mx-auto max-w-[13.5ch] font-sans text-[clamp(2rem,10vw,3.45rem)] font-medium leading-[1] tracking-[-0.055em] text-white md:max-w-[15ch] md:text-[clamp(2.35rem,4.8vw,5.15rem)]"
+            aria-label="Designing renderings, drawings, installations, and environments beyond the proscenium."
+          >
+            Designing{" "}
+            <FlipWords
+              words={HOME_RENDERING_FLIP_WORDS}
+              className="text-[#c77dff]"
+            />{" "}
+            beyond the proscenium.
           </h2>
           <p className="mt-6 max-w-[47rem] font-sans text-[clamp(1.05rem,1.65vw,1.45rem)] font-medium leading-[1.3] tracking-[-0.035em] text-white/56">
             Renderings, drawings, installations, and commercial environments
-            carry the same questions as the theatre work: what does the space
-            ask people to notice, feel, remember, or do?
+            still begin with a scenic question: how should a space guide
+            attention, feeling, memory, and action?
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
