@@ -4,6 +4,7 @@ import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 type ExternalLinkPreviewProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   children: ReactNode;
@@ -21,29 +22,22 @@ function canPreviewUrl(href: string) {
   return /^https?:\/\//i.test(href) && !/\.(pdf|zip|docx?|xlsx?)(\?|#|$)/i.test(href);
 }
 
-function getPreviewImageUrl(href: string, imageSrc?: string) {
-  if (imageSrc) return imageSrc;
-
-  const params = new URLSearchParams({
-    url: href,
-    screenshot: "true",
-    meta: "false",
-    embed: "screenshot.url",
-  });
-
-  params.set("viewport.width", "1440");
-  params.set("viewport.height", "900");
-
-  return `https://api.microlink.io/?${params.toString()}`;
-}
-
-function getPreviewLabel(href: string, previewLabel?: string) {
-  if (previewLabel) return previewLabel;
-
+function getPreviewMeta(href: string, previewLabel?: string) {
   try {
-    return new URL(href).hostname.replace(/^www\./, "");
+    const url = new URL(href);
+    const host = url.hostname.replace(/^www\./, "");
+
+    return {
+      host,
+      label: previewLabel || host,
+      path: url.pathname && url.pathname !== "/" ? url.pathname.replace(/\/$/, "") : "External site",
+    };
   } catch {
-    return "External link";
+    return {
+      host: "External link",
+      label: previewLabel || "External link",
+      path: "External site",
+    };
   }
 }
 
@@ -85,10 +79,11 @@ export function ExternalLinkPreview({
   const reduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
   const [hasLoadedPreview, setHasLoadedPreview] = useState(false);
+  const [previewImageFailed, setPreviewImageFailed] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const isPreviewable = preview && canPreviewUrl(href);
-  const label = useMemo(() => getPreviewLabel(href, previewLabel), [href, previewLabel]);
-  const previewImageUrl = useMemo(() => getPreviewImageUrl(href, imageSrc), [href, imageSrc]);
+  const previewMeta = useMemo(() => getPreviewMeta(href, previewLabel), [href, previewLabel]);
+  const shouldShowImage = Boolean(imageSrc && !previewImageFailed);
 
   const openPreview = useCallback(() => {
     if (!isPreviewable || typeof window === "undefined" || !anchorRef.current) return;
@@ -150,18 +145,47 @@ export function ExternalLinkPreview({
                   transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {hasLoadedPreview ? (
-                    <img
-                      src={previewImageUrl}
-                      alt=""
-                      className="h-full w-full bg-[#161616] object-cover"
-                      loading="eager"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                    />
+                    shouldShowImage ? (
+                      <img
+                        src={imageSrc}
+                        alt=""
+                        className="h-full w-full bg-[#161616] object-cover"
+                        loading="eager"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        onError={() => setPreviewImageFailed(true)}
+                      />
+                    ) : (
+                      <div className="relative flex h-full w-full flex-col justify-between overflow-hidden bg-[#111111] p-4 text-white">
+                        <div
+                          className="absolute inset-0 opacity-70"
+                          style={{
+                            background:
+                              "radial-gradient(circle at 18% 18%, rgba(255,255,255,0.22), transparent 30%), linear-gradient(135deg, rgba(41,92,255,0.62), rgba(196,119,255,0.34) 42%, rgba(255,255,255,0.08))",
+                          }}
+                        />
+                        <div className="relative flex items-center justify-between">
+                          <span className="rounded-full border border-white/18 bg-white/10 px-2.5 py-1 text-[0.58rem] font-medium uppercase tracking-[0.16em] text-white/72">
+                            Preview
+                          </span>
+                          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">
+                            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                          </span>
+                        </div>
+                        <div className="relative">
+                          <p className="line-clamp-2 font-sans text-[1.3rem] font-medium leading-[0.98] tracking-[-0.06em] text-white">
+                            {previewMeta.label}
+                          </p>
+                          <p className="mt-2 line-clamp-1 text-[0.74rem] leading-5 tracking-[-0.01em] text-white/58">
+                            {previewMeta.path}
+                          </p>
+                        </div>
+                      </div>
+                    )
                   ) : null}
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/82 via-black/44 to-transparent px-3 pb-2.5 pt-10">
                     <p className="truncate text-[0.68rem] font-medium uppercase tracking-[0.14em] text-white/76">
-                      {label}
+                      {previewMeta.host}
                     </p>
                   </div>
                 </motion.div>
