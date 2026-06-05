@@ -155,6 +155,28 @@ const DEFAULT_CATEGORY_STYLE: CategoryStyle = {
 const getCategoryStyle = (category: string | null | undefined) =>
   CATEGORY_STYLES[category || ""] || DEFAULT_CATEGORY_STYLE;
 
+const COVER_OBJECT_POSITION_BY_SLUG: Record<string, string> = {
+  "becoming-a-scenic-designer-a-comprehensive-guide": "50% 18%",
+};
+
+const READING_PATHS = [
+  {
+    title: "Process",
+    category: "Design Process",
+    description: "Research, drafting, models, and rehearsal choices becoming a built production.",
+  },
+  {
+    title: "Context",
+    category: "Performance History & Culture",
+    description: "Theatre, performance culture, and the artistic questions behind the work.",
+  },
+  {
+    title: "Profiles",
+    category: "Profiles & Interviews",
+    description: "Interviews, press, and editorial pieces that frame the wider practice.",
+  },
+];
+
 function ArticleGridCard({
   article,
   eager,
@@ -190,6 +212,7 @@ function ArticleGridCard({
               fill
               quality={82}
               className="publish-card-image object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+              style={{ objectPosition: COVER_OBJECT_POSITION_BY_SLUG[article.slug] || "center" }}
               loading={eager ? "eager" : "lazy"}
               sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
             />
@@ -521,7 +544,7 @@ export default function Articles() {
 
         {sortedArticles.length > 0 ? (
           <>
-            <section className="pb-20 pt-6 md:pb-28 md:pt-8">
+            <section className="pb-12 pt-6 md:pb-16 md:pt-8">
               <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
                 <div className="mb-8 flex items-center justify-start">
                   <button
@@ -584,26 +607,34 @@ export default function Articles() {
           </section>
         )}
 
-        <section className="border-t border-black/10 py-16 md:py-20">
-          <div className="container max-w-[88rem]">
-            <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-[#6f6b64]">
-              Reading Paths
-            </p>
-            <div className="mt-6 grid border-t border-black/10 md:grid-cols-3">
-              {[
-                ["Process", "How scenic ideas move from research, drafting, models, and rehearsal into a built production."],
-                ["Context", "Notes around theatre, performance culture, and the artistic questions behind the portfolio."],
-                ["Profiles", "Interviews, press, and editorial pieces that place the work inside a wider creative practice."],
-              ].map(([title, description]) => (
-                <div key={title} className="border-b border-black/10 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0">
-                  <h2 className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]">
-                    {title}
-                  </h2>
-                  <p className="mt-4 max-w-[24rem] text-[0.98rem] leading-7 text-[#5d5851]">
-                    {description}
-                  </p>
-                </div>
-              ))}
+        <section className="pb-20 pt-2 md:pb-24">
+          <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
+            <div className="border-t border-black/[0.08] pt-10 md:pt-12">
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <p className="text-[clamp(1.05rem,1.35vw,1.28rem)] font-semibold leading-none tracking-[-0.035em] text-[#111111]">
+                  Reading Paths
+                </p>
+                <p className="max-w-[26rem] text-[0.95rem] leading-6 tracking-[-0.015em] text-[#6f6b64] md:text-right">
+                  Follow a thread through the archive, from process notes to cultural context and profile pieces.
+                </p>
+              </div>
+              <div className="mt-7 grid gap-3 md:grid-cols-3">
+                {READING_PATHS.map((path) => (
+                  <button
+                    key={path.title}
+                    type="button"
+                    onClick={() => navigateToCategory(path.category)}
+                    className="group min-h-[11rem] rounded-[1.15rem] bg-[#fbfaf7] p-6 text-left shadow-[0_10px_30px_rgba(17,17,17,0.045)] ring-1 ring-black/[0.06] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_42px_rgba(17,17,17,0.08)]"
+                  >
+                    <span className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111] transition-colors group-hover:text-[#7b2cff]">
+                      {path.title}
+                    </span>
+                    <span className="mt-4 block max-w-[22rem] text-[0.98rem] leading-7 tracking-[-0.015em] text-[#5d5851]">
+                      {path.description}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </section>

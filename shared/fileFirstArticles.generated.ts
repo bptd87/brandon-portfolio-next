@@ -33,6 +33,7 @@ import whatMakesAGoodScenicDesignRenderingBlocks from "../content/articles/what-
 import whenBroadwayGotARevolutionTheRiseOfTheConceptMusicalInThe1970sBlocks from "../content/articles/when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s/blocks.json";
 import whenBroadwayGotSpectacularTheRiseOfTheBritishMegamusicalBlocks from "../content/articles/when-broadway-got-spectacular-the-rise-of-the-british-megamusical/blocks.json";
 import workingOffstageExpandingAScenicDesignCareerBeyondTheatreBlocks from "../content/articles/working-offstage-expanding-a-scenic-design-career-beyond-theatre/blocks.json";
+import year39Blocks from "../content/articles/year-39/blocks.json";
 import youreWastingMyTimeAScenicDesignLessonInGrowthAndRevisionBlocks from "../content/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision/blocks.json";
 
 export const fileFirstArticleFieldsBySlug = {
@@ -55,7 +56,7 @@ export const fileFirstArticleFieldsBySlug = {
   "featured": false,
   "excerpt": "A realistic guide to becoming a scenic designer, covering training paths, portfolio development, collaboration habits, and career positioning.",
   "categoryName": "Scenic Design",
-  "coverImageAlt": "A muted watercolor field of charcoal, parchment, and smoky blue-gray with faint scenic drafting traces suggesting growth and authorship.",
+  "coverImageAlt": "Brandon PT Davis at age 38 outside South Coast Repertory, holding a scenic model for a production design.",
   "seoTitle": "How to Become a Scenic Designer | A Practical Career Guide",
   "seoDescription": "A practical scenic design career guide on education pathways, portfolio strategy, production experience, and professional growth in contemporary theatre.",
   "seoKeywords": "scenic design career, theatre design education, becoming a designer, design training, career guide",
@@ -63,7 +64,7 @@ export const fileFirstArticleFieldsBySlug = {
   "publishedAt": "2025-04-24T00:00:00+00:00",
   "updatedAt": "2026-02-12T15:04:17+00:00",
   "linkedScenicProjectSlugs": [],
-  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/becoming-a-scenic-designer-a-comprehensive-guide/cover.webp"
+  "coverImageUrl": "/images/articles/becoming-a-scenic-designer-a-comprehensive-guide/brandon-38-south-coast-rep.jpeg"
 },
   "building-the-visual-world-art-direction-in-film-television": {
   "title": "Building the Visual World: Art Direction in Film & Television",
@@ -615,6 +616,21 @@ export const fileFirstArticleFieldsBySlug = {
   },
   "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/cover.webp"
 },
+  "year-39": {
+  "title": "39",
+  "featured": true,
+  "excerpt": "A birthday reflection on creative work, unseen growth, collaboration, curiosity, and staying open to what comes next.",
+  "categoryName": "Personal Essay",
+  "coverImageAlt": "Brandon PT Davis and his partner standing together in a sunlit themed environment with handwritten birthday notes for year 39 over the image.",
+  "seoTitle": "39 | Brandon PT Davis",
+  "seoDescription": "A personal birthday reflection from Brandon PT Davis on creative work, collaboration, quiet growth, and the beginning of another chapter.",
+  "seoKeywords": "Brandon PT Davis, personal reflection, creative work, scenic design career, birthday reflection",
+  "readTime": 3,
+  "publishedAt": "2026-06-05T00:00:00-07:00",
+  "updatedAt": "2026-06-05T00:00:00-07:00",
+  "linkedScenicProjectSlugs": [],
+  "coverImageUrl": "/images/articles/year-39/cover.jpeg"
+},
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": {
   "title": "You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision",
   "featured": false,
@@ -672,5 +688,6 @@ export const fileFirstArticleContentBySlug = {
   "when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s": whenBroadwayGotARevolutionTheRiseOfTheConceptMusicalInThe1970sBlocks,
   "when-broadway-got-spectacular-the-rise-of-the-british-megamusical": whenBroadwayGotSpectacularTheRiseOfTheBritishMegamusicalBlocks,
   "working-offstage-expanding-a-scenic-design-career-beyond-theatre": workingOffstageExpandingAScenicDesignCareerBeyondTheatreBlocks,
+  "year-39": year39Blocks,
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": youreWastingMyTimeAScenicDesignLessonInGrowthAndRevisionBlocks,
 } as const;

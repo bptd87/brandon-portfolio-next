@@ -1191,7 +1191,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       />
       <Header />
       <PublishingTopBar active={isLearningPortalArticle ? "tutorials" : "articles"} tone={isNarrativeArticle ? "dark" : "light"} />
-      <article className={isNarrativeArticle ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24" : "article-editorial article-editorial-light overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"}>
+      <article className={isNarrativeArticle ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24" : "article-editorial article-editorial-light article-editorial-learning overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"}>
         {isNarrativeArticle ? (
           <section className="relative min-h-[64svh] overflow-hidden bg-black md:min-h-[calc(100svh-8.5rem)]">
               {article.coverImageUrl ? (
@@ -1246,19 +1246,19 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
           <section className="px-5 pb-6 pt-16 sm:px-8 md:pt-24 lg:px-10">
             <AnimatedSection>
               <header className="mx-auto max-w-[48rem] text-left">
-                <div className="text-[1rem] font-semibold leading-6 tracking-[-0.02em] text-[#6e6e73]">
-                  <p className="text-[0.78rem] uppercase tracking-[0.06em]">Updated</p>
+                <div className="text-[1rem] font-medium leading-6 tracking-[-0.02em] text-[#6e6e73]">
+                  <p className="text-[0.92rem] tracking-[-0.02em] text-[#6e6e73]/82">Updated</p>
                   <time className="mt-1 block" dateTime={articleDisplayUpdatedAt}>
                     {formatUtcDate(articleDisplayUpdatedAt, "long")}
                   </time>
                 </div>
 
-                <h1 className="mt-8 max-w-[13ch] text-balance font-sans text-[clamp(2.9rem,5.8vw,5.7rem)] font-semibold leading-[0.96] tracking-[-0.072em] text-[#1d1d1f]">
+                <h1 className="mt-8 max-w-[14ch] text-balance font-sans text-[clamp(2.7rem,5.2vw,5.2rem)] font-semibold leading-[0.98] tracking-[-0.058em] text-[#1d1d1f]">
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
                 {article.excerpt && (
-                  <p className="mt-7 max-w-[43rem] text-balance text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.16] tracking-[-0.046em] text-[#1d1d1f]">
+                  <p className="mt-7 max-w-[43rem] text-balance text-[clamp(1.18rem,1.85vw,1.56rem)] font-medium leading-[1.28] tracking-[-0.034em] text-[#35312c]">
                     {decodeHTMLEntities(article.excerpt)}
                   </p>
                 )}
@@ -1520,6 +1520,12 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                         const headingClassName =
                           isGhibliShowcaseHeading
                             ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-white"
+                            : isLearningPortalArticle && level === 2
+                              ? "mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
+                            : isLearningPortalArticle && level === 3
+                              ? "mt-12 mb-4 font-sans text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-[#24211f]"
+                            : isLearningPortalArticle
+                              ? "mt-9 mb-3 font-sans text-[1.08rem] font-medium leading-[1.28] tracking-[-0.025em] text-[#3d3832]"
                             : level === 2
                             ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-white"
                             : level === 3
@@ -1538,15 +1544,27 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                           return <h2 key={index} id={headingId} className={headingClassName}>{headingText}</h2>;
                         } else if (level === 3) {
                           if (numberedHeadingMatch) {
+                            if (isLearningPortalArticle) {
+                              return (
+                                <h2
+                                  key={index}
+                                  id={headingId}
+                                  className="article-learning-numbered-heading mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
+                                >
+                                  {headingText}
+                                </h2>
+                              );
+                            }
+
                             return (
                               <div key={index} className="mt-18 mb-7 border-t border-white/10 pt-6">
                                 <div className="flex items-end gap-4 md:gap-5">
-                                  <span className="shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] text-white/34">
+                                  <span className={`shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] ${isLearningPortalArticle ? "text-black/24" : "text-white/34"}`}>
                                   {numberedHeadingMatch[1]}
                                   </span>
                                   <h3
                                     id={headingId}
-                                    className="font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white"
+                                    className={`font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isLearningPortalArticle ? "text-[#1d1d1f]" : "text-white"}`}
                                   >
                                     {numberedHeadingMatch[2]}
                                   </h3>
@@ -1567,8 +1585,8 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                         return (
                           <p
                             key={index}
-                            className={`mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white ${
-                              isOpeningParagraph
+                            className={`${isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"} ${
+                              isOpeningParagraph && isNarrativeArticle
                                 ? "first-letter:float-left first-letter:mr-3 first-letter:mt-2 first-letter:font-sans first-letter:text-[5.4rem] first-letter:font-semibold first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-white"
                                 : ""
                             }`}
@@ -1804,14 +1822,14 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                       case 'gallery':
                         const galleryImages = section.images || [];
                         return (
-                          <section key={index} className="my-16 relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-14 sm:px-18 lg:px-24">
-                            <div className="mx-auto flex max-w-[72rem] items-center justify-center gap-2">
-                              <div className="hidden items-center gap-2 md:flex">
+                          <section key={index} className={`article-image-gallery relative left-1/2 my-24 w-screen max-w-[92rem] -translate-x-1/2 px-5 sm:px-8 lg:px-12 ${isNarrativeArticle ? "article-image-gallery-dark" : "article-image-gallery-light"}`}>
+                            <div className="mx-auto mb-4 flex max-w-[78rem] items-center justify-end">
+                              <div className="hidden items-center gap-1.5 md:flex">
                                 <button
                                   type="button"
                                   aria-label="Previous gallery images"
                                   onClick={() => scrollGallery(index, "prev")}
-                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-white/65 transition-colors hover:border-border hover:text-white"
+                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b2cff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
                                 >
                                   <ChevronLeft className="h-4 w-4" />
                                 </button>
@@ -1819,43 +1837,35 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                                   type="button"
                                   aria-label="Next gallery images"
                                   onClick={() => scrollGallery(index, "next")}
-                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-white/65 transition-colors hover:border-border hover:text-white"
+                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b2cff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
                                 >
                                   <ChevronRight className="h-4 w-4" />
                                 </button>
                               </div>
                             </div>
-                            <div className="mt-10 overflow-hidden">
+                            <div className="overflow-hidden">
                               <div
                                 ref={(el) => {
                                   galleryRefs.current[index] = el;
                                 }}
-                                className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory md:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                                className="flex gap-4 overflow-x-auto pb-5 snap-x snap-mandatory sm:gap-5 md:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                               >
                                 {galleryImages.map((img: any, imgIndex: number) => (
                                   <figure
                                     key={imgIndex}
-                                    className={`flex-none snap-start ${
-                                      imgIndex === 0
-                                        ? "w-[58vw] sm:w-[47vw] md:w-[calc((100%-1.5rem)*0.54)]"
-                                        : imgIndex === 1
-                                          ? "w-[50vw] sm:w-[39vw] md:w-[calc((100%-1.5rem)*0.46)]"
-                                          : "w-[50vw] sm:w-[39vw] md:w-[calc((100%-1.5rem)/2)]"
-                                    }`}
+                                    className="group/gallery-card flex-none w-[82vw] max-w-[52rem] snap-start sm:w-[66vw] md:w-[min(62vw,52rem)] lg:w-[min(54vw,52rem)]"
                                   >
                                     <ProgressiveImage
                                       src={getArticleMediaUrl(img.url)}
                                       alt={img.alt || img.caption || ''}
                                       loading="lazy"
-                                      aspectRatio="4 / 3"
-                                      objectFit="cover"
                                       enableScrollAnimation={false}
-                                      sizes="(min-width: 1024px) 34rem, 50vw"
-                                      className="cursor-pointer rounded-xl transition-opacity hover:opacity-90"
+                                      sizes="(min-width: 1024px) 52rem, 82vw"
+                                      className="cursor-pointer transition duration-300 group-hover/gallery-card:opacity-92"
                                       onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
                                     />
                                     {img.caption && (
-                                      <figcaption className="mt-4 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] text-white/56">
+                                      <figcaption className={`mt-3 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}>
                                         {decodeHTMLEntities(img.caption)}
                                       </figcaption>
                                     )}
@@ -1901,27 +1911,38 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                         return (
                           <section
                             key={index}
-                            className="mt-8 mb-20 max-w-[50rem]"
+                            className="mb-20 mt-12 max-w-[50rem]"
                           >
-                            <h2 className="mb-5 font-sans text-[clamp(1.65rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
+                            <h2 className={`mb-5 font-sans text-[clamp(1.65rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}>
                               {decodeHTMLEntities(section.heading || "Frequently Asked Questions")}
                             </h2>
-                            <div className="overflow-hidden rounded-[1.1rem] border border-white/8 bg-white/[0.02]">
+                            <div className={`overflow-hidden rounded-[1.15rem] border shadow-[0_14px_40px_rgba(17,17,17,0.035)] ${isNarrativeArticle ? "border-white/8 bg-white/[0.02] shadow-none" : "border-black/[0.08] bg-[#fbfaf7]"}`}>
                               <Accordion type="single" collapsible className="space-y-0 px-5 py-1 md:px-6 md:py-2">
                                 {section.items?.map((item: any, faqIndex: number) => (
                                   <AccordionItem
                                     key={faqIndex}
                                     value={`faq-${faqIndex}`}
-                                    className="border-b border-white/8 last:border-b-0"
+                                    className={`border-b last:border-b-0 ${isNarrativeArticle ? "border-white/8" : "border-black/[0.08]"}`}
                                   >
-                                    <AccordionTrigger className="py-4 text-left hover:no-underline">
-                                      <div className="pr-6 text-[0.98rem] font-medium leading-[1.35] tracking-[-0.02em] text-white md:text-[1.04rem]">
-                                        {decodeHTMLEntities(item.question)}
+                                    <AccordionTrigger
+                                      className={`group/faq rounded-none py-0 text-left hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-[#7b2cff]/28 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:border-[#7b2cff] [&[data-state=open]_.faq-plus-ring]:bg-[#7b2cff] [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0 ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                                    >
+                                      <div className="flex w-full items-center justify-between gap-5 py-5">
+                                        <div className={`pr-2 text-[1.02rem] font-medium leading-[1.35] tracking-[-0.026em] md:text-[1.08rem] ${isNarrativeArticle ? "text-white" : "text-[#24211f]"}`}>
+                                          {decodeHTMLEntities(item.question)}
+                                        </div>
+                                        <span
+                                          aria-hidden="true"
+                                          className={`faq-plus-ring relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-out group-hover/faq:scale-105 ${isNarrativeArticle ? "border-white/14 bg-white/[0.04]" : "border-black/10 bg-black/[0.035]"}`}
+                                        >
+                                          <span className={`faq-plus-line absolute h-[2px] w-4 rounded-full transition-colors duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`} />
+                                          <span className={`faq-plus-line faq-plus-vertical absolute h-[2px] w-4 rotate-90 rounded-full transition-all duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`} />
+                                        </span>
                                       </div>
                                     </AccordionTrigger>
                                     <AccordionContent className="pb-5">
                                       <div
-                                        className="max-w-3xl pr-8 text-[0.96rem] leading-7 text-white/64 [&_p]:mb-4 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/30 [&_a]:underline-offset-4"
+                                        className={`max-w-3xl pr-8 text-[0.98rem] leading-7 tracking-[-0.01em] [&_p]:mb-4 [&_a]:underline [&_a]:underline-offset-4 ${isNarrativeArticle ? "text-white/64 [&_a]:text-white [&_a]:decoration-white/30" : "text-black/64 [&_a]:text-[#111111] [&_a]:decoration-black/25"}`}
                                         dangerouslySetInnerHTML={{ __html: item.answer }}
                                       />
                                     </AccordionContent>
@@ -1975,7 +1996,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
                 <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-                  <h3 className={`mb-4 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] ${isNarrativeArticle ? "text-white/48" : "text-black/42"}`}>
+                  <h3 className={`mb-4 font-sans ${isNarrativeArticle ? "text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48" : "text-[1.08rem] font-medium tracking-[-0.025em] text-black/50"}`}>
                     Tagged With
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -2008,7 +2029,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   </div>
                   <div className="flex-1">
                     <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
-                    <p className={`mb-4 text-sm uppercase tracking-wider ${isNarrativeArticle ? "text-white/48" : "text-black/42"}`}>Scenic Designer</p>
+                    <p className={`mb-4 text-sm ${isNarrativeArticle ? "uppercase tracking-wider text-white/48" : "font-medium tracking-[-0.015em] text-black/42"}`}>Scenic Designer</p>
                     <p className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}>
                       Brandon PT Davis is a scenic designer based in San Diego.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
@@ -2216,6 +2237,92 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
         .article-editorial-light .article-content p::first-letter {
           color: #111111 !important;
+        }
+
+        .article-editorial-learning .article-content {
+          font-family: var(--font-sans, inherit);
+        }
+
+        .article-editorial-learning .article-content h2 {
+          margin-top: 5rem !important;
+          margin-bottom: 1.5rem !important;
+          color: #1d1d1f !important;
+          font-size: clamp(1.5rem, 2.15vw, 1.95rem) !important;
+          font-weight: 650 !important;
+          line-height: 1.04 !important;
+          letter-spacing: -0.045em !important;
+          text-wrap: balance;
+        }
+
+        .article-editorial-learning .article-content h3 {
+          margin-top: 3rem !important;
+          margin-bottom: 1rem !important;
+          color: #24211f !important;
+          font-size: clamp(1.35rem, 1.75vw, 1.7rem) !important;
+          font-weight: 620 !important;
+          line-height: 1.1 !important;
+          letter-spacing: -0.035em !important;
+          text-wrap: balance;
+        }
+
+        .article-editorial-learning .article-content .article-learning-numbered-heading {
+          margin-top: 5rem !important;
+          margin-bottom: 1.5rem !important;
+          color: #1d1d1f !important;
+          font-size: clamp(1.5rem, 2.15vw, 1.95rem) !important;
+          font-weight: 650 !important;
+          line-height: 1.04 !important;
+          letter-spacing: -0.045em !important;
+          text-wrap: balance;
+        }
+
+        .article-editorial-learning .article-content h4 {
+          margin-top: 2.25rem !important;
+          margin-bottom: 0.75rem !important;
+          color: rgba(17, 17, 17, 0.72) !important;
+          font-size: 1.08rem !important;
+          font-weight: 540 !important;
+          line-height: 1.28 !important;
+          letter-spacing: -0.025em !important;
+          text-transform: none !important;
+        }
+
+        .article-editorial-learning .article-content p,
+        .article-editorial-learning .article-content li {
+          color: rgba(17, 17, 17, 0.74) !important;
+          font-size: 1.06rem !important;
+          font-weight: 400 !important;
+          line-height: 1.82 !important;
+          letter-spacing: -0.015em !important;
+        }
+
+        .article-editorial-learning .article-content blockquote p {
+          color: #111111 !important;
+          font-size: clamp(1.28rem, 1.85vw, 1.72rem) !important;
+          font-weight: 560 !important;
+          line-height: 1.22 !important;
+          letter-spacing: -0.04em !important;
+        }
+
+        .article-editorial-learning .article-content figcaption {
+          color: rgba(17, 17, 17, 0.58) !important;
+          font-size: 0.92rem !important;
+          line-height: 1.55 !important;
+          letter-spacing: -0.01em !important;
+        }
+
+        .article-editorial-learning .article-content p::first-letter {
+          float: none !important;
+          margin: 0 !important;
+          color: inherit !important;
+          font: inherit !important;
+          letter-spacing: inherit !important;
+          line-height: inherit !important;
+        }
+
+        .article-editorial-learning .uppercase {
+          text-transform: none !important;
+          letter-spacing: -0.018em !important;
         }
 
         .article-editorial .article-content ul li::marker,

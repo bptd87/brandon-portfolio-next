@@ -2674,6 +2674,32 @@ const thirtyEightArticle: LocalArticle = {
   ],
 };
 
+const year39Article: LocalArticle = {
+  id: 100026,
+  slug: "year-39",
+  title: "39",
+  excerpt:
+    "A birthday reflection on creative work, unseen growth, collaboration, curiosity, and staying open to what comes next.",
+  coverImageUrl: "/images/articles/year-39/cover.jpeg",
+  coverImageAlt:
+    "Brandon PT Davis and his partner standing together in a sunlit themed environment with handwritten birthday notes for year 39 over the image.",
+  publishedAt: "2026-06-05",
+  updatedAt: "2026-06-05",
+  createdAt: "2026-06-05",
+  categoryName: "Personal Essay",
+  seoTitle: "39 | Brandon PT Davis",
+  seoDescription:
+    "A personal birthday reflection from Brandon PT Davis on creative work, collaboration, quiet growth, and the beginning of another chapter.",
+  seoKeywords:
+    "Brandon PT Davis, personal essay, creative work, scenic designer, birthday reflection",
+  tags: [
+    { id: 1002601, name: "Personal Essay", slug: "personal-essay" },
+    { id: 1002602, name: "Creative Work", slug: "creative-work" },
+    { id: 1002603, name: "Birthday Reflection", slug: "birthday-reflection" },
+  ],
+  content: [],
+};
+
 const externalProfileArticleSlugs = new Set([VOYAGELA_ARTICLE_SLUG]);
 
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[])
@@ -2696,6 +2722,7 @@ const manualArticles: LocalArticle[] = [
   vectorworksPublishingRenderingsArticle,
   okobojiFortyShowsArticle,
   thirtyEightArticle,
+  year39Article,
 ];
 
 const articlesWithManualEntries = [
