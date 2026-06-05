@@ -16,6 +16,26 @@ export const VOYAGELA_EXTERNAL_URL =
   "https://voyagela.com/interview/rising-stars-meet-brandon-pt-davis-of-irvine-ca/";
 export const VOYAGELA_NEWS_SLUG = "featured-voyagela-rising-stars-interview";
 export const VOYAGELA_PROFILE_TITLE = "VoyageLA: Rising Stars Interview";
+export const SKENE_INVISIBLE_DESIGN_EXTERNAL_URL =
+  "https://skene.pub/brandon-pt-davis-invisible-design/";
+export const SKENE_INVISIBLE_DESIGN_PROFILE_TITLE = "Skene: Invisible Design";
+
+export const PROFILE_ARTICLE_LINKS = [
+  {
+    href: VOYAGELA_EXTERNAL_URL,
+    previewLabel: "VoyageLA",
+    title: VOYAGELA_PROFILE_TITLE,
+    description:
+      "A public profile on Brandon's scenic design practice, career development, and creative process.",
+  },
+  {
+    href: SKENE_INVISIBLE_DESIGN_EXTERNAL_URL,
+    previewLabel: "Skene",
+    title: SKENE_INVISIBLE_DESIGN_PROFILE_TITLE,
+    description:
+      "A Skene feature connected to Brandon's scenic design practice and the often unseen work behind theatrical environments.",
+  },
+] as const;
 
 export interface LegacyCanonicalDestination {
   canonicalPath: string;

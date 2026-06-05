@@ -13,7 +13,7 @@ import Header from "@/components/Header";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { SEO } from "@/components/SEO";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
-import { VOYAGELA_EXTERNAL_URL } from "@shared/publicContent";
+import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 
 const galleryImages = [
   {
@@ -289,29 +289,31 @@ export default function About() {
                   </div>
                 </div>
 
-                <div className="mx-auto mt-5 max-w-[62rem]">
-                  <ExternalLinkPreview
-                    href={VOYAGELA_EXTERNAL_URL}
-                    className="group grid gap-6 rounded-[1.5rem] bg-white/78 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.08)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
-                    previewLabel="VoyageLA"
-                  >
-                    <div>
-                      <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/46">
-                        Profile article
-                      </p>
-                      <h3 className="mt-2 font-sans text-[1.65rem] font-medium leading-[1] tracking-[-0.055em] text-foreground md:text-[2rem]">
-                        VoyageLA: Rising Stars Interview
-                      </h3>
-                      <p className="mt-3 max-w-2xl text-[0.98rem] leading-6 tracking-[-0.02em] text-foreground/58">
-                        A press profile on Brandon&apos;s scenic design practice. Future
-                        interviews and academic profiles can collect here as they publish.
-                      </p>
-                    </div>
-                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/18 px-5 py-3 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/70 transition-colors group-hover:border-foreground/40 group-hover:text-foreground">
-                      Read profile
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                  </ExternalLinkPreview>
+                <div className="mx-auto mt-5 grid max-w-[62rem] gap-4">
+                  {PROFILE_ARTICLE_LINKS.map((profileLink) => (
+                    <ExternalLinkPreview
+                      key={profileLink.href}
+                      href={profileLink.href}
+                      className="group grid gap-6 rounded-[1.5rem] bg-white/78 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.08)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                      previewLabel={profileLink.previewLabel}
+                    >
+                      <div>
+                        <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/46">
+                          Profile article
+                        </p>
+                        <h3 className="mt-2 font-sans text-[1.65rem] font-medium leading-[1] tracking-[-0.055em] text-foreground md:text-[2rem]">
+                          {profileLink.title}
+                        </h3>
+                        <p className="mt-3 max-w-2xl text-[0.98rem] leading-6 tracking-[-0.02em] text-foreground/58">
+                          {profileLink.description}
+                        </p>
+                      </div>
+                      <span className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/18 px-5 py-3 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/70 transition-colors group-hover:border-foreground/40 group-hover:text-foreground">
+                        Read profile
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                    </ExternalLinkPreview>
+                  ))}
                 </div>
               </article>
             </AnimatedSection>

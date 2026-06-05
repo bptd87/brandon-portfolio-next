@@ -12,7 +12,7 @@ import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
-import { VOYAGELA_EXTERNAL_URL } from "@shared/publicContent";
+import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 import {
   getLocalCollaboratorPortfolioUrlByName,
   getLocalCollaborators,
@@ -234,28 +234,32 @@ export default function Collaborators() {
             </AnimatedSection>
 
             <AnimatedSection delay={120}>
-              <ExternalLinkPreview
-                href={VOYAGELA_EXTERNAL_URL}
-                className="group mx-auto mt-6 grid max-w-[58rem] gap-6 rounded-[1.65rem] bg-white/82 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.085)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-7"
-                previewLabel="VoyageLA"
-              >
-                <div>
-                  <p className="text-[0.98rem] font-medium tracking-[-0.025em] text-[#111111]/46">
-                    Profile context
-                  </p>
-                  <h2 className="mt-2 font-sans text-[clamp(1.85rem,3vw,2.8rem)] font-medium leading-[0.98] tracking-[-0.065em] text-[#111111]">
-                    VoyageLA: Rising Stars Interview
-                  </h2>
-                  <p className="mt-3 max-w-2xl text-[1rem] leading-6 tracking-[-0.025em] text-[#111111]/58">
-                    A press profile connected to the creative practice, with more interviews and
-                    academic profiles to collect here as they publish.
-                  </p>
-                </div>
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#111111]/18 px-5 py-3 text-[0.95rem] font-medium tracking-[-0.02em] text-[#111111]/70 transition-colors group-hover:border-[#111111]/42 group-hover:text-[#111111]">
-                  Read profile
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </ExternalLinkPreview>
+              <div className="mx-auto mt-6 grid max-w-[58rem] gap-4">
+                {PROFILE_ARTICLE_LINKS.map((profileLink) => (
+                  <ExternalLinkPreview
+                    key={profileLink.href}
+                    href={profileLink.href}
+                    className="group grid gap-6 rounded-[1.65rem] bg-white/82 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.085)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-7"
+                    previewLabel={profileLink.previewLabel}
+                  >
+                    <div>
+                      <p className="text-[0.98rem] font-medium tracking-[-0.025em] text-[#111111]/46">
+                        Profile context
+                      </p>
+                      <h2 className="mt-2 font-sans text-[clamp(1.85rem,3vw,2.8rem)] font-medium leading-[0.98] tracking-[-0.065em] text-[#111111]">
+                        {profileLink.title}
+                      </h2>
+                      <p className="mt-3 max-w-2xl text-[1rem] leading-6 tracking-[-0.025em] text-[#111111]/58">
+                        {profileLink.description}
+                      </p>
+                    </div>
+                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#111111]/18 px-5 py-3 text-[0.95rem] font-medium tracking-[-0.02em] text-[#111111]/70 transition-colors group-hover:border-[#111111]/42 group-hover:text-[#111111]">
+                      Read profile
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </ExternalLinkPreview>
+                ))}
+              </div>
             </AnimatedSection>
           </div>
         </article>
