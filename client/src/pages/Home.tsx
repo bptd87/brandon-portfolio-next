@@ -41,6 +41,7 @@ const HOME_RENDERING_FLIP_WORDS = [
   "installations",
   "environments",
 ];
+const HOME_LOGO_SRC = "/images/site-assets/brand/brandon-pt-davis-white.png";
 
 type PublishCard = {
   kind: "Article" | "Tutorial";
@@ -138,6 +139,67 @@ function TextGenerateEffect({
         </span>
       ))}
     </span>
+  );
+}
+
+function HomeLogoLoader() {
+  const [visible, setVisible] = useState(true);
+  const [exiting, setExiting] = useState(false);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setVisible(false);
+      return;
+    }
+
+    const exitTimer = window.setTimeout(() => setExiting(true), 1280);
+    const removeTimer = window.setTimeout(() => setVisible(false), 1860);
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div
+      aria-hidden="true"
+      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden bg-black text-white ${
+        exiting ? "motion-safe:animate-[home-loader-out_580ms_cubic-bezier(0.22,1,0.36,1)_forwards]" : ""
+      }`}
+    >
+      <style>
+        {`
+          @keyframes home-loader-logo {
+            0% { opacity: 0; transform: translateY(0.8rem) scale(0.94); filter: blur(10px); }
+            62% { opacity: 1; transform: translateY(0) scale(1.018); filter: blur(0); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+          }
+          @keyframes home-loader-title {
+            0% { opacity: 0; transform: translateY(0.4rem); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes home-loader-out {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+          }
+        `}
+      </style>
+      <div className="flex w-[min(78vw,32rem)] flex-col items-center">
+        <img
+          src={HOME_LOGO_SRC}
+          alt=""
+          className="h-auto w-full select-none object-contain opacity-0 motion-safe:animate-[home-loader-logo_860ms_cubic-bezier(0.22,1,0.36,1)_160ms_forwards]"
+          draggable={false}
+        />
+        <p className="mt-5 font-sans text-[0.68rem] font-semibold uppercase leading-none tracking-[0.54em] text-white/72 opacity-0 motion-safe:animate-[home-loader-title_520ms_cubic-bezier(0.22,1,0.36,1)_720ms_forwards]">
+          Scenic Design
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -1199,6 +1261,7 @@ export default function Home({
       />
 
       <Header />
+      <HomeLogoLoader />
 
       <main>
         {projectsLoading ? (

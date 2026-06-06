@@ -8,11 +8,20 @@ import {
   X,
 } from "lucide-react";
 import MobileMenu from "./MobileMenu";
+import {
+  recentArticlePreview,
+  recentExperientialPreview,
+  recentRenderingPreview,
+  recentScenicProjects,
+  recentTutorialPreview,
+  studioAppPreview,
+} from "./navigationData";
 
 type MenuItem = {
   name: string;
   path: string;
   description: string;
+  feature?: MenuFeature;
 };
 
 type MenuGroup = {
@@ -20,60 +29,183 @@ type MenuGroup = {
   items: MenuItem[];
 };
 
+type MenuFeature = {
+  label: string;
+  title: string;
+  description: string;
+  path: string;
+  image: string;
+  imageFit?: "cover" | "contain";
+};
+
 type DesktopCategory = {
   label: "Portfolio" | "About" | "Studio";
   groups: MenuGroup[];
+  feature: MenuFeature;
+};
+
+const NAV_FEATURE_IMAGES = {
+  portfolio:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp",
+  rendering:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150015-31e01022.webp",
+  experiential:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp",
+  assistant:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-2-cover-906f6fb9.webp",
+  photography:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp",
+  about:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/brandon-pt-davis-about-home.jpg",
+  upcoming: "/images/about/icons/upcoming-icon.png",
+  resume: "/images/about/icons/resume-icon.png",
+  creative: "/images/about/icons/creative-statement-icon.png",
+  teaching: "/images/about/icons/teaching-icon.png",
+  collaborators: "/images/about/icons/collaboration-icon.png",
+  studio:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
+  studioArticles:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-articles-cover.png",
+  studioTutorials:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png",
+  studioDirectory:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-directory-cover.png",
+  studioApps: "/assets/studio-apps/icons/scale-calculator.jpg",
 };
 
 function DesktopMenuPanel({
-  groups,
+  category,
   onClose,
+  currentPath,
   tone = "dark",
 }: {
-  groups: MenuGroup[];
+  category: DesktopCategory;
   onClose: () => void;
+  currentPath: string;
   tone?: "dark" | "light";
 }) {
+  const items = category.groups.flatMap((group) => group.items);
   const isLight = tone === "light";
+  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const hoveredItem = items.find((item) => item.path === hoveredPath);
+  const activeItem = [...items].sort((a, b) => b.path.length - a.path.length).find(
+    (item) => currentPath === item.path || (item.path !== "/projects" && currentPath.startsWith(`${item.path}/`))
+  );
+  const previewItem = hoveredItem || activeItem;
+  const previewFeature = previewItem
+    ? previewItem.feature || {
+        label: category.label,
+        title: previewItem.name,
+        description: previewItem.description,
+        path: previewItem.path,
+        image: category.feature.image,
+        imageFit: category.feature.imageFit,
+      }
+    : category.feature;
+  const previewUsesContain = previewFeature.imageFit === "contain";
+
+  useEffect(() => {
+    setHoveredPath(null);
+  }, [category.label]);
 
   return (
     <div
-      className={`absolute inset-x-0 top-full overflow-hidden border-b shadow-[0_34px_110px_rgba(0,0,0,0.24)] animate-in fade-in slide-in-from-top-2 duration-200 ${
-        isLight ? "border-black/10 bg-[#f1f0ec]/96" : "border-white/10 bg-[#080808]/96"
+      className={`absolute left-1/2 top-[calc(100%+0.7rem)] h-[19rem] w-[24rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-[18px] border shadow-[0_28px_90px_rgba(0,0,0,0.34)] backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200 ${
+        isLight
+          ? "border-black/10 bg-[#f1f0ec]/97 shadow-[0_28px_80px_rgba(17,17,17,0.14)]"
+          : "border-white/10 bg-[#050505]/97"
       }`}
     >
-      <div className="grid w-full gap-6 px-[clamp(1.5rem,5vw,6rem)] py-6 lg:grid-cols-[10rem_minmax(0,76rem)]">
-        <div className="hidden lg:block" aria-hidden="true" />
-        <div className="max-w-[66rem]">
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-            {groups.flatMap((group) =>
-              group.items.map((item) => (
+      <div className="grid h-full grid-cols-[7.45rem_13.75rem] gap-3 px-3 py-3.5">
+        <div className="flex flex-col justify-center">
+          <div
+            className={`mb-5 flex items-center gap-2 text-[0.74rem] font-medium tracking-[-0.01em] ${
+              isLight ? "text-black/54" : "text-white/58"
+            }`}
+          >
+            <span className="h-2 w-2 bg-[#8f7aff]" aria-hidden="true" />
+            {category.label}
+          </div>
+          <div className="grid gap-3">
+            {items.map((item) => {
+              const isActive =
+                currentPath === item.path || (item.path !== "/projects" && currentPath.startsWith(`${item.path}/`));
+
+              return (
                 <Link
                   key={item.path}
                   href={item.path}
                   onClick={onClose}
+                  onMouseEnter={() => setHoveredPath(item.path)}
+                  onMouseMove={() => setHoveredPath(item.path)}
+                  onPointerEnter={() => setHoveredPath(item.path)}
+                  onPointerMove={() => setHoveredPath(item.path)}
+                  onFocus={() => setHoveredPath(item.path)}
                   aria-label={`${item.name}: ${item.description}`}
-                  className="group block transition-colors"
+                  className={`block py-1 font-sans text-[1.02rem] font-medium leading-none tracking-[-0.025em] transition-colors ${
+                    isLight
+                      ? isActive
+                        ? "text-black"
+                        : "text-black/56 hover:text-black"
+                      : isActive
+                        ? "text-white"
+                        : "text-white/58 hover:text-white"
+                  }`}
                 >
-                  <span
-                    className={`block font-sans text-[1.02rem] font-medium leading-[1.08] tracking-[-0.035em] transition-colors ${
-                      isLight ? "text-black/82 group-hover:text-black" : "text-white/84 group-hover:text-white"
-                    }`}
-                  >
-                    {item.name}
-                  </span>
-                  <span
-                    className={`mt-1.5 block max-w-[17rem] text-[0.76rem] leading-5 tracking-[-0.01em] transition-colors ${
-                      isLight ? "text-black/45 group-hover:text-black/58" : "text-white/42 group-hover:text-white/58"
-                    }`}
-                  >
-                    {item.description}
-                  </span>
+                  {item.name}
                 </Link>
-              ))
-            )}
+              );
+            })}
           </div>
         </div>
+
+        <Link
+          href={previewFeature.path}
+          onClick={onClose}
+          className={`group block h-full rounded-[10px] border p-2.5 transition-colors ${
+            isLight
+              ? "border-black/10 bg-white/46 shadow-[0_18px_50px_rgba(17,17,17,0.1)] hover:border-black/18 hover:bg-white/68"
+              : "border-white/10 bg-white/[0.055] shadow-[0_18px_60px_rgba(0,0,0,0.32)] hover:border-white/20 hover:bg-white/[0.075]"
+          }`}
+        >
+          <div
+            key={previewFeature.path}
+            className="flex h-full flex-col animate-in fade-in slide-in-from-bottom-2 zoom-in-95 duration-300 ease-out"
+          >
+            <div
+              className={`h-[7.95rem] rounded-[6px] bg-center bg-no-repeat transition-transform duration-500 ease-out group-hover:scale-[1.012] ${
+                previewUsesContain
+                  ? isLight
+                    ? "bg-contain bg-[#f7f6f2]"
+                    : "bg-contain bg-white/[0.045]"
+                  : "bg-cover"
+              }`}
+              style={{ backgroundImage: `url(${previewFeature.image})` }}
+              aria-hidden="true"
+            />
+            <div
+              className={`mt-2.5 inline-flex w-fit bg-[#8f7aff]/16 px-2.5 py-1.5 text-[0.74rem] font-medium leading-none tracking-[-0.01em] transition-colors ${
+                isLight ? "text-[#5f4fd0] group-hover:text-[#33228f]" : "text-[#cec5ff] group-hover:text-white"
+              }`}
+            >
+              {previewFeature.label}
+            </div>
+            <div
+              className={`mt-3 min-h-[2.3rem] overflow-hidden text-[1.02rem] font-medium leading-[1.12] tracking-[-0.045em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
+                isLight ? "text-black" : "text-white"
+              }`}
+            >
+              {previewFeature.title}
+            </div>
+            <p
+              className={`mt-1.5 max-w-[20rem] overflow-hidden text-[0.78rem] leading-[1.35] tracking-[-0.018em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
+                isLight ? "text-black/52" : "text-white/50"
+              }`}
+            >
+              {previewFeature.description}
+            </p>
+          </div>
+        </Link>
       </div>
     </div>
   );
@@ -89,25 +221,58 @@ function BrandLink({
   tone?: "dark" | "light";
 }) {
   const isLight = tone === "light";
+  const logoSrc = isLight
+    ? "/images/site-assets/brand/brandon-pt-davis-black.png"
+    : "/images/site-assets/brand/brandon-pt-davis-white.png";
 
   return (
-    <Link href="/" className={`group inline-flex min-w-0 flex-col leading-none transition-all ${centered ? "justify-self-start lg:justify-self-center lg:items-center" : ""}`}>
+    <Link
+      href="/"
+      aria-label={`Brandon PT Davis ${descriptor}`}
+      className={`group inline-flex w-fit min-w-0 justify-self-start flex-col items-center leading-none transition-opacity hover:opacity-78 ${
+        centered ? "lg:justify-self-center" : ""
+      }`}
+    >
+      <img
+        src={logoSrc}
+        alt=""
+        aria-hidden="true"
+        className="h-auto w-[10.8rem] select-none object-contain md:w-[11.8rem]"
+        draggable={false}
+      />
       <span
-        className={`font-sans text-[1.08rem] font-black leading-[0.9] tracking-[-0.06em] transition-colors min-[380px]:text-[1.2rem] md:text-[1.22rem] md:leading-[0.88] md:tracking-[-0.065em] ${
-          isLight ? "text-black group-hover:text-black/72" : "text-white group-hover:text-white/78"
-        }`}
-      >
-        BRANDON PT DAVIS
-      </span>
-      <span
-        className={`mt-1.5 font-sans text-[8px] font-semibold uppercase leading-none tracking-[0.24em] min-[380px]:tracking-[0.3em] md:text-[7.5px] md:tracking-[0.3em] ${
-          isLight ? "text-black/48" : "text-white/46"
+        className={`mt-0.5 font-sans text-[0.48rem] font-semibold uppercase leading-none tracking-[0.32em] md:text-[0.5rem] ${
+          isLight ? "text-black" : "text-white"
         }`}
       >
         {descriptor}
       </span>
     </Link>
   );
+}
+
+function getBrandDescriptor(path: string) {
+  if (/^\/projects\/experiential(?:\/|$)/.test(path) || /^\/experiential-design(?:\/|$)/.test(path)) {
+    return "EXPERIENTIAL DESIGN";
+  }
+
+  if (/^\/projects\/rendering(?:\/|$)/.test(path) || path === "/theatre-renderings") {
+    return "RENDERING";
+  }
+
+  if (/^\/projects\/photography(?:\/|$)/.test(path)) {
+    return "PHOTOGRAPHY";
+  }
+
+  if (path === "/assistant-scenic-design" || /^\/design-process\/assistant-scenic-design(?:\/|$)/.test(path)) {
+    return "ASSISTANT SCENIC";
+  }
+
+  if (/^\/project(?:\/|$)/.test(path) || path === "/projects" || path === "/projects/scenic-design") {
+    return "SCENIC DESIGN";
+  }
+
+  return "SCENIC DESIGN";
 }
 
 export default function Header() {
@@ -121,6 +286,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollYRef = useRef(0);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const desktopMenuCloseTimerRef = useRef<number | null>(null);
   const desktopMenuOpen = Boolean(activeDesktopCategory);
   const isStudioAppsRoute = /^\/studio\/apps(?:\/|$)/.test(location);
   const isEditorialRoute =
@@ -152,20 +318,33 @@ export default function Header() {
     !isStudioAppsRoute && ((isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute);
   const useWhiteLightChrome = isContactRoute || isInfoRoute || location === "/studio";
   const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
-  const brandDescriptor = /^\/projects\/experiential(?:\/|$)/.test(location)
-    ? "EXPERIENTIAL DESIGN"
-    : /^\/projects\/rendering(?:\/|$)/.test(location)
-      ? "RENDERING"
-      : "SCENIC DESIGN";
+  const brandDescriptor = getBrandDescriptor(location);
 
   const headerRef = useRef<HTMLElement>(null);
 
+  const clearDesktopMenuCloseTimer = () => {
+    if (desktopMenuCloseTimerRef.current) {
+      window.clearTimeout(desktopMenuCloseTimerRef.current);
+      desktopMenuCloseTimerRef.current = null;
+    }
+  };
+
   const openDesktopMenu = (category: DesktopCategory) => {
+    clearDesktopMenuCloseTimer();
     setActiveDesktopCategory(category);
   };
 
   const closeDesktopMenu = () => {
+    clearDesktopMenuCloseTimer();
     setActiveDesktopCategory(null);
+  };
+
+  const scheduleDesktopMenuClose = () => {
+    clearDesktopMenuCloseTimer();
+    desktopMenuCloseTimerRef.current = window.setTimeout(() => {
+      setActiveDesktopCategory(null);
+      desktopMenuCloseTimerRef.current = null;
+    }, 140);
   };
 
   useEffect(() => {
@@ -267,26 +446,61 @@ export default function Header() {
           name: "Scenic Design",
           path: "/projects",
           description: "Full production archive across plays, musicals, and regional theatre work.",
+          feature: {
+            label: "Recent portfolio",
+            title: recentScenicProjects[0].title,
+            description: recentScenicProjects[0].meta,
+            path: recentScenicProjects[0].href,
+            image: recentScenicProjects[0].imageUrl,
+          },
         },
         {
           name: "Renderings",
           path: "/projects/rendering",
           description: "Concept images, presentation sets, and scenic visualization studies.",
+          feature: {
+            label: "Recent rendering",
+            title: recentRenderingPreview.title,
+            description: recentRenderingPreview.meta,
+            path: recentRenderingPreview.href,
+            image: recentRenderingPreview.imageUrl,
+          },
         },
         {
           name: "Experiential",
           path: "/projects/experiential",
           description: "Immersive environments, drafting, and built event design work.",
+          feature: {
+            label: "Recent experiential",
+            title: recentExperientialPreview.title,
+            description: recentExperientialPreview.meta,
+            path: recentExperientialPreview.href,
+            image: recentExperientialPreview.imageUrl,
+          },
         },
         {
           name: "Assistant Scenic",
           path: "/assistant-scenic-design",
           description: "Production support, drafting systems, and collaboration as assistant scenic.",
+          feature: {
+            label: "Portfolio",
+            title: "Assistant Scenic",
+            description: "Production support, drafting systems, and collaboration as assistant scenic.",
+            path: "/assistant-scenic-design",
+            image: NAV_FEATURE_IMAGES.assistant,
+          },
         },
         {
           name: "Photography",
           path: "/projects/photography",
           description: "A chronological photo portfolio and visual reference archive.",
+          feature: {
+            label: "Portfolio",
+            title: "Photography",
+            description: "A chronological photo portfolio and visual reference archive.",
+            path: "/projects/photography",
+            image: NAV_FEATURE_IMAGES.photography,
+          },
         },
       ],
     },
@@ -300,31 +514,78 @@ export default function Header() {
           name: "Profile",
           path: "/about",
           description: "Biography, current work, and the broader design perspective behind the site.",
+          feature: {
+            label: "Profile",
+            title: "About Brandon",
+            description: "Biography, teaching, collaborators, and the wider practice behind the work.",
+            path: "/about",
+            image: NAV_FEATURE_IMAGES.about,
+          },
         },
         {
           name: "Upcoming",
           path: "/upcoming-productions",
           description: "Public production windows and scenic design commitments currently on the calendar.",
+          feature: {
+            label: "About",
+            title: "Upcoming",
+            description: "Public production windows and scenic design commitments currently on the calendar.",
+            path: "/upcoming-productions",
+            image: NAV_FEATURE_IMAGES.upcoming,
+            imageFit: "contain",
+          },
         },
         {
           name: "Resume / CV",
           path: "/resume",
           description: "Production credits, teaching, training, and linked portfolio references.",
+          feature: {
+            label: "About",
+            title: "Resume / CV",
+            description: "Production credits, teaching, training, and linked portfolio references.",
+            path: "/resume",
+            image: NAV_FEATURE_IMAGES.resume,
+            imageFit: "contain",
+          },
         },
         {
           name: "Creative",
           path: "/creative-statement",
           description: "The artistic values shaping scenic work, collaboration, and storytelling.",
+          feature: {
+            label: "About",
+            title: "Creative",
+            description: "The artistic values shaping scenic work, collaboration, and storytelling.",
+            path: "/creative-statement",
+            image: NAV_FEATURE_IMAGES.creative,
+            imageFit: "contain",
+          },
         },
         {
           name: "Teaching",
           path: "/about/teaching",
           description: "How design instruction, studio process, and student learning connect.",
+          feature: {
+            label: "About",
+            title: "Teaching",
+            description: "How design instruction, studio process, and student learning connect.",
+            path: "/about/teaching",
+            image: NAV_FEATURE_IMAGES.teaching,
+            imageFit: "contain",
+          },
         },
         {
           name: "Collaborators",
           path: "/about/collaborators",
           description: "Directors, designers, companies, and long-running creative collaborators.",
+          feature: {
+            label: "About",
+            title: "Collaborators",
+            description: "Directors, designers, companies, and long-running creative collaborators.",
+            path: "/about/collaborators",
+            image: NAV_FEATURE_IMAGES.collaborators,
+            imageFit: "contain",
+          },
         },
       ],
     },
@@ -335,24 +596,52 @@ export default function Header() {
       heading: "Studio",
       items: [
         {
-          name: "Publish",
+          name: "Articles",
           path: "/articles",
           description: "Scenic design writing, process essays, tutorials, and cultural analysis.",
+          feature: {
+            label: "Latest article",
+            title: recentArticlePreview.title,
+            description: recentArticlePreview.meta,
+            path: recentArticlePreview.href,
+            image: recentArticlePreview.imageUrl,
+          },
         },
         {
           name: "Tutorials",
           path: "/studio/tutorials",
           description: "Vectorworks instruction and workflow demonstrations used in teaching.",
+          feature: {
+            label: "Recent tutorial",
+            title: recentTutorialPreview.title,
+            description: recentTutorialPreview.meta,
+            path: recentTutorialPreview.href,
+            image: recentTutorialPreview.imageUrl,
+          },
         },
         {
           name: "Directory",
           path: "/studio/directory",
           description: "A curated directory of scenic resources, suppliers, archives, and software.",
+          feature: {
+            label: "Studio",
+            title: "Directory",
+            description: "A curated directory of scenic resources, suppliers, archives, and software.",
+            path: "/studio/directory",
+            image: NAV_FEATURE_IMAGES.studioDirectory,
+          },
         },
         {
           name: "Apps",
           path: "/studio/apps",
           description: "Practical scenic design tools and workflow utilities.",
+          feature: {
+            label: "App",
+            title: studioAppPreview.title,
+            description: studioAppPreview.meta,
+            path: studioAppPreview.href,
+            image: studioAppPreview.imageUrl,
+          },
         },
       ],
     },
@@ -362,14 +651,35 @@ export default function Header() {
     {
       label: "Portfolio",
       groups: portfolioGroups,
+      feature: {
+        label: "Recent portfolio",
+        title: recentScenicProjects[0].title,
+        description: recentScenicProjects[0].meta,
+        path: recentScenicProjects[0].href,
+        image: recentScenicProjects[0].imageUrl,
+      },
     },
     {
       label: "About",
       groups: aboutGroups,
+      feature: {
+        label: "Profile",
+        title: "About Brandon",
+        description: "Biography, teaching, collaborators, and the wider practice behind the work.",
+        path: "/about",
+        image: NAV_FEATURE_IMAGES.about,
+      },
     },
     {
       label: "Studio",
       groups: studioGroups,
+      feature: {
+        label: "Latest article",
+        title: recentArticlePreview.title,
+        description: recentArticlePreview.meta,
+        path: recentArticlePreview.href,
+        image: recentArticlePreview.imageUrl,
+      },
     },
   ];
 
@@ -384,17 +694,15 @@ export default function Header() {
       {desktopMenuOpen ? (
         <button
           type="button"
-          className={`fixed inset-x-0 bottom-0 top-[74px] z-40 cursor-default animate-in fade-in duration-200 ${
-            useLightChrome
-              ? `${useWhiteLightChrome ? "bg-white/38" : "bg-[#f1f0ec]/38"} backdrop-blur-sm`
-              : "bg-black/24 backdrop-blur-sm"
-          }`}
+          className="fixed inset-x-0 bottom-0 top-[74px] z-40 cursor-default bg-transparent"
           onClick={closeDesktopMenu}
           aria-label="Close navigation menu"
         />
       ) : null}
       <header
         ref={headerRef}
+        onMouseEnter={clearDesktopMenuCloseTimer}
+        onMouseLeave={scheduleDesktopMenuClose}
         className={`fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
           useLightChrome
             ? useWhiteLightChrome
@@ -408,11 +716,11 @@ export default function Header() {
         }`}
       >
         <div className="px-[clamp(1rem,5vw,6rem)] py-3 md:px-[clamp(1.5rem,5vw,6rem)] md:py-4">
-          <nav className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-8">
+          <nav className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-8">
             <BrandLink descriptor={brandDescriptor} tone={useLightChrome ? "light" : "dark"} />
 
             <div
-              className="hidden items-center gap-1 lg:flex"
+              className="hidden items-center justify-center gap-1 lg:flex"
             >
               {desktopCategories.map((category) => {
                 const isActive =
@@ -545,8 +853,9 @@ export default function Header() {
 
         {activeDesktopCategory ? (
           <DesktopMenuPanel
-            groups={activeDesktopCategory.groups}
+            category={activeDesktopCategory}
             onClose={closeDesktopMenu}
+            currentPath={location}
             tone={useLightChrome ? "light" : "dark"}
           />
         ) : null}

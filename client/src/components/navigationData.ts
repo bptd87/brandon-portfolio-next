@@ -24,3 +24,47 @@ export const recentScenicProjects = [
       "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp",
   },
 ] as const;
+
+export const recentRenderingPreview = {
+  title: "The Northwind Mare Tavern",
+  href: "/projects/rendering/the-northwind-mare-tavern",
+  meta: "Rendering · 2026",
+  imageAlt: "The Northwind Mare Tavern scenic rendering by Brandon PT Davis",
+  imageUrl:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/image-150061-d434fc14.webp",
+} as const;
+
+export const recentExperientialPreview = {
+  title: "First Bank Lollipops",
+  href: "/projects/experiential/first-bank-lollipops",
+  meta: "Experiential · Case Study",
+  imageAlt: "First Bank Lollipops experiential design by Brandon PT Davis",
+  imageUrl:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771839325696-first_bank_lollipops-b3b5a475.png",
+} as const;
+
+export const recentArticlePreview = {
+  title: "Year 39",
+  href: "/articles/year-39",
+  meta: "Personal Essay · Jun 5, 2026",
+  imageAlt:
+    "Brandon PT Davis and his partner standing together in a sunlit themed environment with handwritten birthday notes for year 39 over the image.",
+  imageUrl: "/images/articles/year-39/cover.jpeg",
+} as const;
+
+export const recentTutorialPreview = {
+  title: "Publishing Vectorworks Renderings",
+  href: "/studio/tutorials/publishing-vectorworks-renderings-for-presentation",
+  meta: "Tutorial · Mar 17, 2026",
+  imageAlt: "Vectorworks rendering publishing tutorial cover",
+  imageUrl:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/convert-bitmap-poster.jpg",
+} as const;
+
+export const studioAppPreview = {
+  title: "Scale Calculator",
+  href: "/studio/apps/scale-calculator",
+  meta: "App · Mobile Tool",
+  imageAlt: "Scale Calculator scenic design app card",
+  imageUrl: "/assets/studio-apps/icons/scale-calculator.jpg",
+} as const;

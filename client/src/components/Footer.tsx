@@ -17,7 +17,7 @@ const FOOTER_SECTIONS = [
     ],
   },
   {
-    title: "Publish",
+    title: "Studio",
     links: [
       { label: "Articles", href: "/articles", internal: true },
       { label: "Tutorials", href: "/studio/tutorials", internal: true },
@@ -48,7 +48,7 @@ const SOCIAL_LINKS = [
   },
   {
     label: "YouTube",
-    href: "https://www.youtube.com/@brandonptdavis",
+    href: "https://www.youtube.com/@BrandonPTDavisDesign",
     icon: Youtube,
   },
   {
@@ -70,6 +70,9 @@ function PinterestIcon({ className }: { className?: string }) {
 
 export default function Footer({ tone = "dark", className = "" }: { tone?: "dark" | "light"; className?: string }) {
   const isLight = tone === "light";
+  const logoSrc = isLight
+    ? "/images/site-assets/brand/brandon-pt-davis-black.png"
+    : "/images/site-assets/brand/brandon-pt-davis-white.png";
 
   return (
     <footer
@@ -79,9 +82,9 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
           : "border-white/10 bg-[#070707] text-white [--background:#070707] [--border:rgba(255,255,255,0.15)] [--foreground:#ffffff]"
       } ${className}`}
     >
-      <div className="w-full px-[clamp(1rem,5vw,6rem)] pb-14 pt-16 md:px-[clamp(1.5rem,5vw,6rem)] md:pb-16 md:pt-20">
-        <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="w-full px-[clamp(1rem,5vw,6rem)] pb-12 pt-14 md:px-[clamp(1.5rem,5vw,6rem)] md:pb-14 md:pt-16">
+        <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_minmax(15rem,18rem)] md:items-end md:gap-12">
+          <div className="grid max-w-4xl gap-9 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
                 <h3
@@ -120,27 +123,36 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
             ))}
           </div>
 
-          <div className="space-y-5 md:min-w-[16rem]">
-            <div>
-              <p
-                className={`text-[11px] font-medium uppercase tracking-[0.22em] ${
-                  isLight ? "text-black/42" : "text-white/42"
+          <div className="flex flex-col items-start gap-3.5 md:justify-self-end md:self-end md:items-end">
+            <Link
+              href="/"
+              aria-label="Brandon PT Davis Scenic Design"
+              className="flex w-fit max-w-full flex-col items-center transition-opacity hover:opacity-78"
+            >
+              <img
+                src={logoSrc}
+                alt=""
+                aria-hidden="true"
+                className="h-auto w-[min(18rem,78vw)] select-none object-contain md:w-[18rem]"
+                draggable={false}
+              />
+              <span
+                className={`mt-1.5 font-sans text-[0.52rem] font-semibold uppercase leading-none tracking-[0.32em] ${
+                  isLight ? "text-black" : "text-white"
                 }`}
               >
-                Connect
-              </p>
-              <p className={`mt-2 text-sm leading-7 ${isLight ? "text-black/62" : "text-white/68"}`}>
-                Follow current work, studio updates, and professional contact points.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
+                SCENIC DESIGN
+              </span>
+            </Link>
+
+            <div className="flex w-[min(18rem,78vw)] flex-wrap justify-center gap-2 md:w-[18rem]">
               {SOCIAL_LINKS.map((item) => {
                 const Icon = item.icon;
                 const isEmail = item.href.startsWith("mailto:");
-                const className = `inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
+                const className = `inline-flex h-8 w-8 items-center justify-center transition-colors ${
                   isLight
-                    ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
-                    : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
+                    ? "text-black/48 hover:text-black"
+                    : "text-white/50 hover:text-white"
                 }`;
 
                 if (!isEmail) {
@@ -152,7 +164,7 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
                       previewLabel={item.label}
                       title={item.label}
                     >
-                      <Icon className="h-4 w-4" />
+                      <Icon className="h-3.5 w-3.5" />
                     </ExternalLinkPreview>
                   );
                 }
@@ -164,21 +176,21 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
                     className={className}
                     title={item.label}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3.5 w-3.5" />
                   </a>
                 );
               })}
               <ExternalLinkPreview
                 href="https://www.pinterest.com/BrandonPTDavis/"
-                className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
+                className={`inline-flex h-8 w-8 items-center justify-center transition-colors ${
                   isLight
-                    ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
-                    : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
+                    ? "text-black/48 hover:text-black"
+                    : "text-white/50 hover:text-white"
                 }`}
                 previewLabel="Pinterest"
                 title="Pinterest"
               >
-                <PinterestIcon className="h-4 w-4" />
+                <PinterestIcon className="h-3.5 w-3.5" />
               </ExternalLinkPreview>
             </div>
           </div>

@@ -193,8 +193,18 @@ export default function About() {
               <p className="section-kicker text-white/58">
                 Profile
               </p>
-              <h1 className="mt-5 font-sans text-[clamp(2.75rem,14vw,4.4rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white md:text-[clamp(3.5rem,8vw,8rem)] md:leading-[0.86] md:tracking-[-0.075em]">
-                Brandon PT Davis
+              <h1 className="mt-5 w-[min(88vw,28rem)] md:w-[clamp(30rem,48vw,50rem)]">
+                <span className="sr-only">Brandon PT Davis</span>
+                <img
+                  src="/images/site-assets/brand/brandon-pt-davis-white.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-auto w-full select-none object-contain"
+                  draggable={false}
+                />
+                <span className="mt-3 block text-center font-sans text-[0.58rem] font-semibold uppercase leading-none tracking-[0.36em] text-white md:text-[0.66rem]">
+                  Scenic Design
+                </span>
               </h1>
               <p className="mt-7 max-w-2xl text-[1.04rem] font-medium leading-8 tracking-[-0.015em] text-white/76 md:text-[1.14rem]">
                 Scenic designer for theatre, memory, architecture, and live
