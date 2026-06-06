@@ -18,7 +18,7 @@ export default function SearchPage() {
   }, [initialQuery]);
 
   return (
-    <div className="min-h-screen bg-[#f1f0ec] text-[#1d1d1f]">
+    <div className="min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title="Search the Site | Brandon PT Davis"
         description="Search projects, articles, collaborators, tutorials, and design credits across the Brandon PT Davis site."

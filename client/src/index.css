@@ -538,6 +538,11 @@
     border-color: rgba(17, 17, 17, 0.16) !important;
   }
 
+  .publish-editorial .site-header-search-input {
+    background-color: transparent !important;
+    border-color: transparent !important;
+  }
+
   .publish-editorial input::placeholder,
   .publish-editorial textarea::placeholder {
     color: rgba(17, 17, 17, 0.38) !important;

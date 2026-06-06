@@ -79,7 +79,7 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
           : "border-white/10 bg-[#070707] text-white [--background:#070707] [--border:rgba(255,255,255,0.15)] [--foreground:#ffffff]"
       } ${className}`}
     >
-      <div className="container max-w-[88rem] pt-16 pb-14 md:pt-20 md:pb-16">
+      <div className="w-full px-[clamp(1rem,5vw,6rem)] pb-14 pt-16 md:px-[clamp(1.5rem,5vw,6rem)] md:pb-16 md:pt-20">
         <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (

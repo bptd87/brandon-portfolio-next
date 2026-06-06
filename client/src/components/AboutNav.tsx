@@ -33,19 +33,19 @@ export default function AboutNav({ tone = "light" }: AboutNavProps) {
 
   return (
     <nav
-      aria-label="Profile section navigation"
+      aria-label="About section navigation"
       className={`sticky top-[72px] z-30 border-b backdrop-blur-xl ${
         isDark ? "border-white/12 bg-black/88" : "border-black/[0.06] bg-[#f7f6f2]/90"
       }`}
     >
-      <div className="flex min-h-16 flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div className="grid min-h-16 gap-3 px-[clamp(1rem,5vw,6rem)] py-3 md:grid-cols-[10.875rem_minmax(0,1fr)] md:items-center md:gap-8 md:px-[clamp(1.5rem,5vw,6rem)]">
         <Link
           href="/about"
           className={`text-[1.35rem] font-semibold leading-none tracking-[-0.045em] ${
             isDark ? "text-white" : "text-[#111111]"
           }`}
         >
-          Profile
+          About
         </Link>
 
         <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
