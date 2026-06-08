@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Fragment } from "react";
+import { useEffect, useState } from "react";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
@@ -14,13 +14,64 @@ const orderedPhotos = [...becomingPhotos].sort(
   (a, b) => new Date(a.takenAt).getTime() - new Date(b.takenAt).getTime()
 );
 
-function formatTakenAt(value: string) {
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-  }).format(new Date(value));
-}
+type BecomingPhotoItem = (typeof orderedPhotos)[number];
+
+const cropPositions: Record<string, string> = {
+  "becoming-01": "52% 35%",
+  "becoming-02": "58% 52%",
+  "becoming-04": "47% 36%",
+  "becoming-06": "50% 44%",
+  "becoming-07": "50% 50%",
+  "becoming-09": "50% 38%",
+  "becoming-10": "50% 56%",
+  "becoming-11": "52% 34%",
+  "becoming-12": "50% 50%",
+  "becoming-13": "50% 44%",
+  "becoming-14": "50% 56%",
+  "becoming-16": "50% 50%",
+  "becoming-17": "50% 52%",
+  "becoming-18": "50% 32%",
+  "becoming-19": "50% 34%",
+  "becoming-20": "50% 42%",
+  "becoming-21": "50% 58%",
+  "becoming-22": "50% 38%",
+  "becoming-23": "50% 42%",
+  "becoming-24": "50% 43%",
+  "becoming-25": "50% 34%",
+  "becoming-26": "50% 46%",
+  "becoming-27": "50% 36%",
+  "becoming-28": "50% 48%",
+  "becoming-31": "54% 28%",
+  "becoming-32": "50% 34%",
+  "becoming-33": "50% 38%",
+  "becoming-34": "50% 40%",
+  "becoming-35": "50% 34%",
+  "becoming-36": "50% 45%",
+  "becoming-37": "50% 36%",
+  "becoming-38": "50% 48%",
+  "becoming-39": "50% 34%",
+  "becoming-40": "52% 54%",
+  "becoming-41": "50% 42%",
+};
 
 export default function Becoming() {
+  const [selectedPhoto, setSelectedPhoto] = useState<BecomingPhotoItem | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (!selectedPhoto) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedPhoto(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPhoto]);
+
   return (
     <div className="min-h-screen bg-black text-white">
       <SEO
@@ -51,80 +102,84 @@ export default function Becoming() {
           </AnimatedSection>
         </section>
 
-        <section className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
-          <div className="mx-auto grid max-w-[92rem] gap-x-8 gap-y-14 md:grid-cols-2">
+        <section className="py-0">
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {orderedPhotos.map((photo, index) => (
-              <Fragment key={photo.id}>
-                {index === 12 ? (
-                  <AnimatedSection
-                    key="isherwood-quote"
-                    className="md:col-span-2"
+              <AnimatedSection key={photo.id} delay={Math.min(index * 18, 220)}>
+                <figure className="group">
+                  <button
+                    type="button"
+                    aria-label={`Open ${photo.title}`}
+                    className="relative block aspect-square w-full overflow-hidden rounded-none border border-black bg-black text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-white/70"
+                    onClick={() => setSelectedPhoto(photo)}
                   >
-                    <figure className="mx-auto max-w-[58rem] rounded-lg border border-white/12 bg-white/[0.035] px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(2.5rem,6vw,5rem)] text-center shadow-[0_28px_90px_rgba(0,0,0,0.36)]">
-                      <blockquote className="mx-auto max-w-[46rem] font-sans text-[clamp(2rem,4.1vw,4.8rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
-                        &ldquo;I am a camera with its shutter open, quite
-                        passive, recording, not thinking.&rdquo;
-                      </blockquote>
-                      <figcaption className="mx-auto mt-8 max-w-[32rem] text-[0.88rem] leading-6 tracking-[-0.012em] text-white/46">
-                        Christopher Isherwood, <cite>The Berlin Stories</cite>.
-                        Observation as research.
-                      </figcaption>
-                    </figure>
-                  </AnimatedSection>
-                ) : null}
-                <AnimatedSection delay={Math.min(index * 18, 220)}>
-                  <figure className="group border-t border-white/12 pt-3">
-                    <div className="relative overflow-hidden rounded-none bg-white/[0.035]">
-                      <Image
-                        src={photo.src}
-                        alt={photo.alt}
-                        width={photo.width}
-                        height={photo.height}
-                        priority={index < 2}
-                        loading={index < 2 ? "eager" : "lazy"}
-                        sizes="(max-width: 768px) 92vw, 44vw"
-                        className="h-auto w-full rounded-none object-cover transition duration-700 group-hover:brightness-110"
-                      />
-                    </div>
-                    <figcaption className="mt-5 grid gap-4 border-t border-white/14 pt-4 sm:grid-cols-[4.5rem_minmax(0,1fr)]">
-                      <div className="text-[0.72rem] font-semibold uppercase leading-5 tracking-[0.16em] text-white/38">
-                        <p>{formatTakenAt(photo.takenAt)}</p>
-                      </div>
-                      <div>
-                        <p className="text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-white/38">
-                          {photo.location}
-                        </p>
-                        <h2 className="mt-2 font-sans text-[1.55rem] font-medium leading-none tracking-[-0.055em] text-white">
-                          {photo.title}
-                        </h2>
-                        <p className="mt-3 max-w-[34rem] text-[0.98rem] leading-6 tracking-[-0.018em] text-white/58">
-                          {photo.caption}
-                        </p>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </AnimatedSection>
-              </Fragment>
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      width={photo.width}
+                      height={photo.height}
+                      priority={index < 2}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      sizes="(max-width: 768px) 92vw, 44vw"
+                      style={{
+                        objectPosition: cropPositions[photo.id] ?? "50% 50%",
+                      }}
+                      className="h-full w-full rounded-none object-cover transition duration-700 group-hover:brightness-110"
+                    />
+                  </button>
+                </figure>
+              </AnimatedSection>
             ))}
           </div>
         </section>
 
-        <section className="border-t border-white/12 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
-          <AnimatedSection className="mx-auto max-w-[92rem]">
-            <div className="grid gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-end">
-              <p className="font-sans text-[clamp(2.4rem,5vw,5.8rem)] font-medium leading-[0.9] tracking-[-0.078em] text-white">
-                A working archive, not a finished statement.
-              </p>
-              <p className="max-w-3xl text-[1.04rem] leading-7 tracking-[-0.018em] text-white/58">
-                A quieter record of influence: source material, fragments, and
-                visual habits that keep the work looking outward.
-              </p>
-            </div>
+        <section className="border-t border-white/12 px-[clamp(1.5rem,5vw,6rem)] py-[clamp(4rem,10vw,9rem)]">
+          <AnimatedSection className="mx-auto max-w-[72rem] text-center">
+            <figure>
+              <blockquote className="mx-auto font-sans text-[clamp(2.25rem,5.8vw,7rem)] font-medium leading-[0.92] tracking-[-0.07em] text-white">
+                &ldquo;I am a camera with its shutter open, quite passive,
+                recording, not thinking.&rdquo;
+              </blockquote>
+              <figcaption className="mx-auto mt-8 max-w-[28rem] text-[0.78rem] font-semibold uppercase leading-6 tracking-[0.16em] text-white/38">
+                Christopher Isherwood, <cite>The Berlin Stories</cite>
+              </figcaption>
+            </figure>
           </AnimatedSection>
         </section>
       </main>
 
       <Footer tone="dark" />
+
+      {selectedPhoto ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/82 px-4 py-16 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedPhoto.title}
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 px-2 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/70 transition hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-white/70 md:right-8 md:top-8"
+            onClick={() => setSelectedPhoto(null)}
+          >
+            Close
+          </button>
+          <div
+            className="relative max-h-full max-w-full"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <Image
+              src={selectedPhoto.src}
+              alt={selectedPhoto.alt}
+              width={selectedPhoto.width}
+              height={selectedPhoto.height}
+              sizes="100vw"
+              className="max-h-[82vh] w-auto max-w-[92vw] object-contain"
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import {
   CalendarDays,
   ChevronLeft,
@@ -42,6 +43,8 @@ const HOME_RENDERING_FLIP_WORDS = [
   "environments",
 ];
 const HOME_LOGO_SRC = "/images/site-assets/brand/brandon-pt-davis-white.png";
+const HOME_LOADER_EXIT_START_MS = 1280;
+const HOME_LOADER_DONE_MS = 1860;
 
 type PublishCard = {
   kind: "Article" | "Tutorial";
@@ -103,12 +106,14 @@ function TextGenerateEffect({
   duration = 620,
   stagger = 58,
   startDelay = 160,
+  active = true,
 }: {
   lines: string[];
   className?: string;
   duration?: number;
   stagger?: number;
   startDelay?: number;
+  active?: boolean;
 }) {
   let wordIndex = 0;
 
@@ -123,7 +128,11 @@ function TextGenerateEffect({
             return (
               <span
                 key={`${line}-${word}-${delay}`}
-                className={`inline-block opacity-0 motion-safe:animate-[home-text-generate_620ms_cubic-bezier(0.22,1,0.36,1)_forwards] motion-reduce:opacity-100 ${
+                className={`inline-block opacity-0 motion-reduce:opacity-100 ${
+                  active
+                    ? "motion-safe:animate-[home-text-generate_620ms_cubic-bezier(0.22,1,0.36,1)_forwards]"
+                    : ""
+                } ${
                   lineWordIndex < lineWords.length - 1 ? "mr-[0.18em]" : ""
                 }`}
                 style={{
@@ -142,7 +151,7 @@ function TextGenerateEffect({
   );
 }
 
-function HomeLogoLoader() {
+function HomeLogoLoader({ onComplete }: { onComplete?: () => void }) {
   const [visible, setVisible] = useState(true);
   const [exiting, setExiting] = useState(false);
 
@@ -150,17 +159,21 @@ function HomeLogoLoader() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) {
       setVisible(false);
+      onComplete?.();
       return;
     }
 
-    const exitTimer = window.setTimeout(() => setExiting(true), 1280);
-    const removeTimer = window.setTimeout(() => setVisible(false), 1860);
+    const exitTimer = window.setTimeout(() => setExiting(true), HOME_LOADER_EXIT_START_MS);
+    const removeTimer = window.setTimeout(() => {
+      setVisible(false);
+      onComplete?.();
+    }, HOME_LOADER_DONE_MS);
 
     return () => {
       window.clearTimeout(exitTimer);
       window.clearTimeout(removeTimer);
     };
-  }, []);
+  }, [onComplete]);
 
   if (!visible) return null;
 
@@ -350,7 +363,7 @@ const portfolioCategoryRows: Array<{
   },
 ];
 
-function HomeIntro() {
+function HomeIntro({ introReady }: { introReady: boolean }) {
   return (
     <section
       id="portfolio-categories"
@@ -384,7 +397,13 @@ function HomeIntro() {
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/74 via-black/24 to-transparent" />
 
       <div className="relative flex min-h-[calc(100svh-64px)] items-end px-[clamp(1rem,5vw,6rem)] pb-12 pt-20 md:min-h-[calc(100svh-74px)] md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-24">
-        <div className="relative z-10 max-w-[56rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-5 motion-safe:duration-700">
+        <div
+          className={`relative z-10 max-w-[56rem] ${
+            introReady
+              ? "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-5 motion-safe:duration-700"
+              : ""
+          }`}
+        >
           <p className="mb-5 font-sans text-[1rem] font-medium leading-none tracking-[-0.035em] text-white/78 md:mb-7 md:text-[clamp(1rem,1.45vw,1.22rem)]">
             Brandon PT Davis Scenic Design
           </p>
@@ -399,6 +418,7 @@ function HomeIntro() {
             </span>
             <TextGenerateEffect
               className="hidden md:block"
+              active={introReady}
               lines={[
                 "If all the world is a stage,",
                 "then is the scenic designer",
@@ -407,13 +427,25 @@ function HomeIntro() {
             />
           </h1>
           <p className="mt-5 max-w-[43rem] font-sans text-[1.1rem] font-medium leading-[1.22] tracking-[-0.04em] text-white/72 md:mt-9 md:text-[clamp(1.16rem,2vw,1.9rem)] md:leading-[1.16] md:tracking-[-0.045em]">
-            <span className="block text-white md:mb-3 md:text-[clamp(2.75rem,5vw,5.65rem)] md:font-medium md:leading-[0.82] md:tracking-[-0.08em] md:opacity-0 motion-safe:md:animate-[home-answer-punch_760ms_cubic-bezier(0.18,1.35,0.28,1)_1250ms_forwards] motion-reduce:md:opacity-100">
+            <span className={`block text-white md:mb-3 md:text-[clamp(2.75rem,5vw,5.65rem)] md:font-medium md:leading-[0.82] md:tracking-[-0.08em] md:opacity-0 motion-reduce:md:opacity-100 ${
+              introReady
+                ? "motion-safe:md:animate-[home-answer-punch_760ms_cubic-bezier(0.18,1.35,0.28,1)_1250ms_forwards]"
+                : ""
+            }`}>
               No.
             </span>
-            <span className="block text-white md:opacity-0 motion-safe:md:animate-[home-answer-copy_560ms_ease_1640ms_forwards] motion-reduce:md:opacity-100">
+            <span className={`block text-white md:opacity-0 motion-reduce:md:opacity-100 ${
+              introReady
+                ? "motion-safe:md:animate-[home-answer-copy_560ms_ease_1640ms_forwards]"
+                : ""
+            }`}>
               The scenic designer is its storyteller.
             </span>
-            <span className="mt-2 block max-w-[40rem] text-white/68 md:opacity-0 motion-safe:md:animate-[home-answer-copy_560ms_ease_1840ms_forwards] motion-reduce:md:opacity-100">
+            <span className={`mt-2 block max-w-[40rem] text-white/68 md:opacity-0 motion-reduce:md:opacity-100 ${
+              introReady
+                ? "motion-safe:md:animate-[home-answer-copy_560ms_ease_1840ms_forwards]"
+                : ""
+            }`}>
               Using space, image, and metaphor, scenic design transforms ideas into places
               where stories can unfold.
             </span>
@@ -505,15 +537,25 @@ function PortfolioCategoryRows({
         .slice(0, 8),
     }))
     .filter(row => row.projects.length);
+  const fullWidthRows = rows.slice(0, 3);
+  const splitRows = rows.slice(3, 5);
 
   if (!rows.length) return null;
 
   const renderCategoryPanel = (
     row: (typeof rows)[number],
-    options: { split?: boolean } = {}
+    options: {
+      split?: boolean;
+      stackIndex?: number;
+      stagePanel?: boolean;
+      frameTop?: boolean;
+      frameBottom?: boolean;
+    } = {}
   ) => {
     const leadProject = row.projects[0];
     const isSplit = options.split === true;
+    const isStagePanel = options.stagePanel === true;
+    const stackIndex = options.stackIndex;
     const alignRight =
       row.title === "Drama" ||
       row.title === "Musical Theatre" ||
@@ -532,14 +574,19 @@ function PortfolioCategoryRows({
       <article
         key={row.title}
         className={`group relative min-h-[72svh] overflow-hidden bg-[#f1f0ec] ${
-          isSplit ? "md:min-h-[78svh]" : "md:min-h-[94svh]"
+          isStagePanel
+            ? "md:h-full md:min-h-0"
+            : isSplit
+            ? "md:min-h-screen"
+            : "md:sticky md:top-0 md:h-screen md:min-h-screen"
         }`}
+        style={stackIndex ? { zIndex: stackIndex } : undefined}
       >
         {leadProject ? (
           <a
             href={getProjectPath(leadProject)}
             className={`site-media-square relative block h-[72svh] w-full overflow-hidden ${
-              isSplit ? "md:h-[78svh]" : "md:h-[94svh]"
+              isStagePanel ? "md:h-full" : "md:h-screen"
             }`}
             aria-label={`${leadProject.title} scenic design by Brandon PT Davis`}
           >
@@ -556,6 +603,16 @@ function PortfolioCategoryRows({
           className={`pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.2)_42%,rgba(0,0,0,0.78)_100%)] ${overlayGradient}`}
           aria-hidden="true"
         />
+        {isStagePanel && !isSplit ? (
+          <div
+            className={`pointer-events-none absolute inset-0 border-x-[20px] border-[#f1f0ec] ${
+              options.frameTop === false ? "" : "border-t-[20px]"
+            } ${
+              options.frameBottom === false ? "" : "border-b-[20px]"
+            }`}
+            aria-hidden="true"
+          />
+        ) : null}
         <div
           className={`absolute inset-0 flex items-end px-[clamp(1rem,5vw,6rem)] py-10 md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-16 ${overlayPosition}`}
         >
@@ -606,30 +663,119 @@ function PortfolioCategoryRows({
     );
   };
 
-  const fullWidthRows = rows.slice(0, 3);
-  const splitRows = rows.slice(3, 5);
-
   return (
     <section
       id="portfolio-index"
-      className="border-t border-black/10 bg-[#f1f0ec]"
+      className="border-t border-black/10 bg-[#f1f0ec] md:bg-black"
     >
-      <div className="space-y-4 px-[clamp(1rem,2vw,1.5rem)] py-[clamp(1rem,2vw,1.5rem)]">
-        {fullWidthRows.map(row => renderCategoryPanel(row))}
+      <div className="space-y-4 px-[clamp(1rem,2vw,1.5rem)] py-[clamp(1rem,2vw,1.5rem)] md:hidden">
+        {fullWidthRows.map((row, index) =>
+          renderCategoryPanel(row, { stackIndex: index + 1 })
+        )}
 
         {splitRows.length ? (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div
+            className="grid gap-4 md:sticky md:top-0 md:h-screen md:grid-cols-2 md:gap-0"
+            style={{ zIndex: fullWidthRows.length + 1 }}
+          >
             {splitRows.map(row => renderCategoryPanel(row, { split: true }))}
           </div>
         ) : null}
+
+        <BrandonSection stacked stackIndex={fullWidthRows.length + (splitRows.length ? 2 : 1)} />
+      </div>
+
+      <div className="hidden bg-black md:block">
+        {fullWidthRows.map((row, index) => (
+          <SettlingPanel key={row.title} className="h-screen overflow-hidden bg-black" delay={index * 70}>
+            {renderCategoryPanel(row, {
+              stagePanel: true,
+              frameTop: index === 0,
+              frameBottom: !(splitRows.length && index === fullWidthRows.length - 1),
+            })}
+          </SettlingPanel>
+        ))}
+
+        {splitRows.length ? (
+          <SettlingPanel className="grid h-screen grid-cols-2 gap-5 bg-[#f1f0ec] p-5" delay={fullWidthRows.length * 70}>
+            {splitRows.map(row =>
+              renderCategoryPanel(row, { split: true, stagePanel: true })
+            )}
+          </SettlingPanel>
+        ) : null}
+
+        <SettlingPanel
+          className="h-screen overflow-hidden bg-[#c66f46]"
+          delay={(fullWidthRows.length + (splitRows.length ? 1 : 0)) * 70}
+        >
+          <BrandonSection stagePanel />
+        </SettlingPanel>
       </div>
     </section>
   );
 }
 
-function BrandonSection() {
+function SettlingPanel({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -14% 0px", threshold: 0.18 }
+    );
+
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative min-h-[68svh] overflow-hidden border-t border-black/10 bg-[#c66f46] md:min-h-[82svh]">
+    <div
+      ref={panelRef}
+      className={`${className} transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100 ${
+        isVisible ? "translate-y-0 scale-100 opacity-100" : "translate-y-12 scale-[0.982] opacity-80"
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function BrandonSection({
+  stacked = false,
+  stackIndex,
+  stagePanel = false,
+}: {
+  stacked?: boolean;
+  stackIndex?: number;
+  stagePanel?: boolean;
+}) {
+  return (
+    <section
+      className={`relative min-h-[68svh] overflow-hidden border-t border-black/10 bg-[#c66f46] ${
+        stagePanel ? "md:h-full md:min-h-0" : "md:min-h-screen"
+      } ${
+        stacked ? "md:sticky md:top-0" : ""
+      }`}
+      style={stacked && stackIndex ? { zIndex: stackIndex } : undefined}
+    >
       <img
         src={ABOUT_HEADSHOT_URL}
         alt="Brandon PT Davis against an orange wall"
@@ -638,8 +784,11 @@ function BrandonSection() {
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(241,240,236,0.12)_0%,rgba(241,240,236,0.52)_45%,rgba(241,240,236,0.88)_100%)] md:bg-[linear-gradient(90deg,rgba(241,240,236,0.74)_0%,rgba(241,240,236,0.42)_35%,rgba(241,240,236,0.02)_68%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/18 to-transparent" />
-
-      <div className="relative flex min-h-[68svh] items-end px-[clamp(1rem,5vw,6rem)] py-12 md:min-h-[82svh] md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-28">
+      <div
+        className={`relative flex min-h-[68svh] items-end px-[clamp(1rem,5vw,6rem)] py-12 md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-28 ${
+          stagePanel ? "md:h-full md:min-h-0" : "md:min-h-screen"
+        }`}
+      >
         <div className="max-w-[48rem]">
           <p className="mb-5 section-kicker text-black/48">Profile</p>
           <h2 className="font-sans text-[clamp(2.05rem,10vw,3.35rem)] font-medium leading-[0.94] tracking-[-0.065em] text-black md:text-[clamp(2.4rem,5.2vw,5.8rem)] md:leading-[0.92] md:tracking-[-0.07em]">
@@ -761,7 +910,7 @@ function UpcomingSection() {
               className="group flex min-h-20 items-center justify-between gap-4 border-t border-white/14 py-4"
               aria-label={`View ${production.title}`}
             >
-              <span className="font-sans text-[1.45rem] font-medium uppercase leading-[0.94] tracking-[-0.055em] text-white transition-colors group-hover:text-[#e0aaff]">
+              <span className="min-w-0 font-sans text-[1.45rem] font-medium uppercase leading-[0.94] tracking-[-0.055em] text-white transition-colors group-hover:text-[#e0aaff]">
                 {production.title}
               </span>
               <ChevronRight
@@ -837,7 +986,7 @@ function UpcomingSection() {
                   key={production.id}
                   href={`/upcoming-productions/${production.id}`}
                   aria-label={`View ${production.title}`}
-                  className="group absolute left-1/2 top-1/2 flex w-auto max-w-[88vw] items-center justify-center text-center"
+                  className="group absolute left-1/2 top-1/2 flex w-[min(88vw,76rem)] items-center justify-center text-center"
                   style={{
                     opacity: isVisible ? opacity : 0,
                     pointerEvents: isVisible ? "auto" : "none",
@@ -847,12 +996,12 @@ function UpcomingSection() {
                   }}
                 >
                   <span
-                    className={`whitespace-nowrap font-sans font-medium uppercase leading-[0.78] tracking-[-0.078em] transition-colors duration-300 group-hover:text-white ${
+                    className={`max-w-full text-balance whitespace-normal font-sans font-medium uppercase leading-[0.82] tracking-[-0.078em] transition-colors duration-300 group-hover:text-white ${
                       isLongTitle
-                        ? "text-[2.5rem] sm:text-[3.5rem] md:text-[4.7rem] lg:text-[5.8rem] xl:text-[6.6rem]"
+                        ? "text-[2.5rem] sm:text-[3.5rem] md:text-[4.4rem] lg:text-[5.25rem] xl:text-[5.9rem]"
                         : isMediumTitle
-                          ? "text-[3rem] sm:text-[4.1rem] md:text-[5.3rem] lg:text-[6.6rem] xl:text-[7.5rem]"
-                          : "text-[3.45rem] sm:text-[4.9rem] md:text-[6.3rem] lg:text-[8rem] xl:text-[9rem]"
+                          ? "text-[3rem] sm:text-[4.1rem] md:text-[5rem] lg:text-[6.1rem] xl:text-[6.9rem]"
+                          : "text-[3.45rem] sm:text-[4.9rem] md:text-[5.9rem] lg:text-[7.1rem] xl:text-[8rem]"
                     } ${isActive ? "text-white" : "text-white/16"}`}
                   >
                     {production.title}
@@ -1241,6 +1390,10 @@ export default function Home({
 }: {
   initialProjects: ScenicProjectSummary[];
 }) {
+  const [introReady, setIntroReady] = useState(false);
+  const handleLoaderComplete = useCallback(() => {
+    setIntroReady(true);
+  }, []);
   const projects = sortScenicProjectsChronologically(initialProjects);
   const projectsLoading = false;
   const featuredProject =
@@ -1261,17 +1414,16 @@ export default function Home({
       />
 
       <Header />
-      <HomeLogoLoader />
+      <HomeLogoLoader onComplete={handleLoaderComplete} />
 
       <main>
         {projectsLoading ? (
           <ProjectGridSkeleton />
         ) : featuredProject ? (
           <>
-            <HomeIntro />
+            <HomeIntro introReady={introReady} />
             <HomeThesisSection />
             <PortfolioCategoryRows projects={projects} />
-            <BrandonSection />
             <UpcomingSection />
             <HomeExperientialAndRenderingSection />
             <PublishSection />

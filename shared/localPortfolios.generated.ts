@@ -1423,16 +1423,6 @@ export const generatedExperientialProcessGallery = [
     "createdAt": "2026-02-17T01:04:03.540Z",
     "images": [
       {
-        "id": 110,
-        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290461111-toyota-gold-cup-final-29-271bdafcb3-f83fc5ec.png",
-        "videoUrl": null,
-        "altText": "Toyota Gold Cup Final 29 scenic design by Brandon PT Davis",
-        "caption": "",
-        "title": "",
-        "sortOrder": 0,
-        "imageType": "rendering"
-      },
-      {
         "id": 107,
         "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290350722-screenshot-2026-01-12-at-1.15.34-pm-large-3fe1d90b43-d6882595.jpg",
         "videoUrl": null,
@@ -1564,16 +1554,6 @@ export const generatedExperientialProcessGallery = [
     "year": null,
     "createdAt": "2026-02-17T01:14:25.079Z",
     "images": [
-      {
-        "id": 111,
-        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290965345-image1-39ac4253ed-d9a2385a.jpg",
-        "videoUrl": null,
-        "altText": "Toyota  Gold Cup Activation scenic design by Brandon PT Davis",
-        "caption": "",
-        "title": "",
-        "sortOrder": 0,
-        "imageType": "rendering"
-      },
       {
         "id": 112,
         "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290968388-image2-8f0a934b2b-c8f51bca.jpg",

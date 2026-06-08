@@ -17,7 +17,7 @@ import {
   type LocalScenicProjectMedia,
 } from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
-import { Check, ChevronDown, ChevronRight, ChevronUp, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Link2, Linkedin, Mail } from "lucide-react";
 
 type ScenicProjectDetailProps = {
   slug?: string;
@@ -55,6 +55,41 @@ type VisualMediaItem =
       items: VisualImageMediaItem[];
       caption?: string;
     };
+
+const scenicMediaObjectPositions: Record<string, string> = {
+  "gm-prod-11": "50% 18%",
+  "hoh-prod-2": "50% 0%",
+  "hoh-prod-6": "50% 0%",
+};
+
+function getScenicMediaObjectPosition(mediaId: string) {
+  return scenicMediaObjectPositions[mediaId] ?? "50% 50%";
+}
+
+function getScenicMediaAspectClass(
+  display: LocalScenicProjectMedia["display"] | undefined,
+  index: number,
+  isFullWidth: boolean
+) {
+  if (display === "portrait") return "aspect-[4/5]";
+  if (display === "wide" || display === "full" || isFullWidth || index % 3 === 0) {
+    return "aspect-[16/9]";
+  }
+  return "aspect-[4/3]";
+}
+
+function getScenicMediaBlockClass(
+  item: VisualMediaItem,
+  index: number,
+  isFullWidth: boolean
+) {
+  if (isFullWidth) return "md:col-span-12";
+  if (item.mediaType === "video" || item.mediaType === "renderingGallery") {
+    return "md:col-span-12";
+  }
+  if (index > 0 && index % 3 === 0) return "md:col-span-12";
+  return "md:col-span-6";
+}
 
 function getEmbedUrl(url: string): string {
   if (!url) return "";
@@ -218,87 +253,13 @@ export default function ScenicProjectDetail({
     .toLowerCase();
   const project = getLocalScenicProjectBySlug(normalizedSlug);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [heroScrollProgress, setHeroScrollProgress] = useState(0);
-  const [heroIntroProgress, setHeroIntroProgress] = useState(0);
-  const [isMobileHero, setIsMobileHero] = useState(false);
   const [activeRenderingIndex, setActiveRenderingIndex] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-  const heroIntroProgressRef = useRef(0);
-  const introTouchYRef = useRef<number | null>(null);
+  const [isProjectDetailsOpen, setIsProjectDetailsOpen] = useState(false);
+  const [selectedVisualImage, setSelectedVisualImage] = useState<VisualImageMediaItem | null>(
+    null
+  );
   const allScenicProjects = getLocalScenicProjects();
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateMobileHero = () => setIsMobileHero(mediaQuery.matches);
-
-    updateMobileHero();
-    mediaQuery.addEventListener("change", updateMobileHero);
-    return () => mediaQuery.removeEventListener("change", updateMobileHero);
-  }, []);
-
-  useEffect(() => {
-    const updateHeroScrollProgress = () => {
-      setHeroScrollProgress(Math.min(Math.max(window.scrollY / 180, 0), 1));
-    };
-
-    updateHeroScrollProgress();
-    window.addEventListener("scroll", updateHeroScrollProgress, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeroScrollProgress);
-  }, []);
-
-  useEffect(() => {
-    if (isMobileHero) {
-      heroIntroProgressRef.current = 1;
-      setHeroIntroProgress(1);
-      return;
-    }
-
-    heroIntroProgressRef.current = 0;
-    setHeroIntroProgress(0);
-    setIsDescriptionExpanded(false);
-
-    const advanceIntro = (delta: number) => {
-      if (delta <= 0 || window.scrollY > 2 || heroIntroProgressRef.current >= 1) {
-        return false;
-      }
-
-      const nextProgress = Math.min(1, heroIntroProgressRef.current + delta / 420);
-      heroIntroProgressRef.current = nextProgress;
-      setHeroIntroProgress(nextProgress);
-      return true;
-    };
-
-    const handleWheel = (event: WheelEvent) => {
-      if (advanceIntro(event.deltaY)) {
-        event.preventDefault();
-      }
-    };
-
-    const handleTouchStart = (event: TouchEvent) => {
-      introTouchYRef.current = event.touches[0]?.clientY ?? null;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      const currentY = event.touches[0]?.clientY;
-      const previousY = introTouchYRef.current;
-      if (currentY == null || previousY == null) return;
-
-      const delta = previousY - currentY;
-      introTouchYRef.current = currentY;
-      if (advanceIntro(delta)) {
-        event.preventDefault();
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [isMobileHero, normalizedSlug]);
 
   if (!project) {
     return (
@@ -384,15 +345,6 @@ export default function ScenicProjectDetail({
     ]
       .filter(Boolean)
       .join(", ");
-  const rawHeroProgress = Math.max(heroScrollProgress, heroIntroProgress);
-  const heroProgress = isMobileHero ? 1 : rawHeroProgress;
-  const heroTitleProgress = isMobileHero ? 1 : Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
-  const projectMetaItems = [
-    project.client ? { label: "Company", value: project.client } : null,
-    project.location ? { label: "Location", value: project.location } : null,
-    project.year ? { label: "Year", value: String(project.year) } : null,
-    project.subcategory ? { label: "Type", value: project.subcategory } : null,
-  ].filter((item): item is { label: string; value: string } => Boolean(item));
   const projectInfoLinks = [
     project.clientUrl
       ? {
@@ -518,6 +470,19 @@ export default function ScenicProjectDetail({
     return () => window.clearTimeout(timer);
   }, [activeRenderingIndex, renderingGalleryItems.length]);
 
+  useEffect(() => {
+    if (!selectedVisualImage) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedVisualImage(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedVisualImage]);
+
   return (
     <div className="min-h-screen bg-[#111111] text-white">
       <SEO
@@ -532,10 +497,7 @@ export default function ScenicProjectDetail({
       <Header />
 
       <main className="bg-[#111111]">
-        <section
-          className="project-hero-media site-media-square relative min-h-[64svh] overflow-hidden border-b border-white/10 bg-black md:min-h-[calc(100svh-74px)]"
-          style={{ borderRadius: 0 }}
-        >
+        <section className="relative flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-black px-[clamp(1.5rem,5vw,5.5rem)] pb-12 pt-28 md:pb-16 md:pt-34">
           {project.coverImageUrl ? (
             <Image
               src={project.coverImageUrl}
@@ -544,32 +506,34 @@ export default function ScenicProjectDetail({
               priority
               quality={84}
               sizes="100vw"
-              className="project-hero-media site-media-square object-cover"
+              className="object-cover"
               style={{ objectPosition: project.coverImagePosition || "center", borderRadius: 0 }}
               fetchPriority="high"
             />
           ) : null}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.08)_52%,rgba(0,0,0,0.42)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.04)_58%,rgba(0,0,0,0.12)_100%)]" />
-          <div
-            className="absolute inset-0 transition-colors duration-200"
-            style={{ backgroundColor: `rgba(0, 0, 0, ${heroProgress * 0.52})` }}
-          />
-          <header className="relative flex min-h-[64svh] w-full items-center justify-center px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center md:min-h-[calc(100svh-74px)] md:py-20">
-            <div
-              className="mx-auto max-w-[58rem] transition-opacity duration-150"
-              style={{ opacity: heroTitleProgress }}
-            >
-              <div className="text-[0.82rem] font-semibold tracking-[-0.01em] text-white/72">
+          <div className="absolute inset-0 bg-black/50" />
+          <header
+            className="relative z-10 mt-auto grid w-full gap-8 lg:grid-cols-[minmax(0,0.84fr)_minmax(21rem,0.48fr)] lg:items-end"
+            style={{ transform: "translateY(calc(-1 * clamp(6rem, 16vh, 12rem)))" }}
+          >
+            <div>
+              <div className="mb-4 text-[clamp(1rem,1.15vw,1.24rem)] font-medium tracking-[0.02em] text-white/74">
                 Scenic Design
               </div>
-              <h1 className="mx-auto mt-5 max-w-[13ch] font-sans text-[clamp(3.2rem,7vw,7.2rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+              <h1
+                className="max-w-[12ch] font-sans text-[clamp(4rem,10.2vw,11.25rem)] font-medium leading-[0.84] tracking-[-0.065em] text-white"
+              >
                 {project.title}
               </h1>
-              <p className="mx-auto mt-7 max-w-[43rem] text-[clamp(1.02rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/82">
+            </div>
+
+            <div className="border-t border-white/22 pt-5">
+              <p
+                className="max-w-[31rem] text-[clamp(1rem,1.25vw,1.24rem)] font-normal leading-[1.52] tracking-[-0.025em] text-white/70"
+              >
                 {project.excerpt}
               </p>
-              <div className="mt-6 flex items-center justify-center gap-2">
+              <div className="mt-6 flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyLink}
@@ -608,32 +572,33 @@ export default function ScenicProjectDetail({
           </header>
         </section>
 
-        <section className="bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-16 text-white md:py-20">
-          <AnimatedSection>
-            <div className="mx-auto grid w-full max-w-[96rem] gap-x-12 gap-y-12 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(12rem,0.58fr)_minmax(24rem,1.08fr)_minmax(20rem,0.82fr)_minmax(14rem,0.52fr)]">
-              <div className="space-y-8">
-                <div>
-                  <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
-                    Info
-                  </p>
-                  <p>{project.title}</p>
-                  {project.client ? <p>{project.client}</p> : null}
-                  {project.year ? <p>{project.year}</p> : null}
-                </div>
-                {projectMetaItems.length ? (
-                  <dl className="space-y-2">
-                    {projectMetaItems.map((item) => (
-                      <div key={item.label} className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
-                        <dt>{item.label}:</dt>
-                        <dd>
-                          {item.value}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                ) : null}
-              </div>
+        <section className="border-y border-white/12 bg-black px-[clamp(1.5rem,5vw,5.5rem)] text-white">
+          <button
+            type="button"
+            onClick={() => setIsProjectDetailsOpen((open) => !open)}
+            className="flex w-full items-center justify-between gap-5 py-4 text-left text-[0.92rem] tracking-[-0.015em] text-white/72 transition-colors hover:text-white"
+            aria-expanded={isProjectDetailsOpen}
+            aria-controls="scenic-project-details"
+          >
+            <span>Details</span>
+            <span className="flex flex-wrap justify-end gap-x-4 gap-y-1 text-right">
+              {project.client ? (
+                <span className="text-white/62">{project.client}</span>
+              ) : null}
+              {project.year ? (
+                <span className="text-white/38">{project.year}</span>
+              ) : null}
+              {!project.client && !project.year ? (
+                <span className="text-white/48">Scenic Design</span>
+              ) : null}
+            </span>
+          </button>
 
+          {isProjectDetailsOpen ? (
+            <div
+              id="scenic-project-details"
+              className="mx-auto grid w-full max-w-[88rem] gap-x-10 gap-y-10 border-t border-white/10 py-8 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(24rem,1fr)_minmax(17rem,0.58fr)_minmax(14rem,0.46fr)] md:py-10"
+            >
               <div>
                 <div className="text-[0.98rem] leading-[1.66] text-white md:text-[0.9rem] md:leading-[1.48]">
                   {projectNarrativeSections.length ? (
@@ -651,7 +616,7 @@ export default function ScenicProjectDetail({
                     ) : (
                       <div className="max-w-[38rem] space-y-5 text-left hyphens-auto [text-wrap:pretty] md:max-w-none md:space-y-4 md:text-justify">
                         <p className="text-left">
-                          <span className="text-[0.82rem] font-medium uppercase tracking-[0.08em] text-white">
+                          <span className="text-[0.96rem] font-medium tracking-[-0.02em] text-white">
                             Description
                           </span>
                         </p>
@@ -678,7 +643,7 @@ export default function ScenicProjectDetail({
                   ) : (
                     <div className="max-w-[38rem] space-y-5 text-left hyphens-auto [text-wrap:pretty] md:max-w-none md:space-y-4 md:text-justify">
                       <p className="text-left">
-                        <span className="text-[0.82rem] font-medium uppercase tracking-[0.08em] text-white">
+                        <span className="text-[0.96rem] font-medium tracking-[-0.02em] text-white">
                           Description
                         </span>
                       </p>
@@ -689,21 +654,21 @@ export default function ScenicProjectDetail({
               </div>
 
               <div id="project-credits" className="scroll-mt-28">
-                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
                   Credits
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {creativeTeamGroups.map((member) => (
                     <div
                       key={`${member.role}-${member.name}`}
                       className="grid min-w-0 grid-cols-[8.5rem_minmax(0,1fr)] gap-4"
                     >
-                      <span>{getCreditRoleLabel(member.role)}:</span>
-                      <span>
+                      <span className="text-white/48">{getCreditRoleLabel(member.role)}</span>
+                      <span className="text-white/76">
                         {member.url ? (
                           <ExternalLinkPreview
                             href={member.url}
-                            className="underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                            className="text-white/76 no-underline transition-colors hover:text-white"
                             previewLabel={member.name}
                           >
                             {member.name}
@@ -711,67 +676,49 @@ export default function ScenicProjectDetail({
                         ) : (
                           <CreditNameLinks
                             name={member.name}
-                            className="underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                            className="text-white/76 no-underline transition-colors hover:text-white"
                           />
                         )}
                       </span>
                     </div>
                   ))}
                 </div>
+
               </div>
 
-              <div>
-                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
-                  Tags
-                </p>
-                {project.tags.length ? (
-                  <div className="space-y-1.5">
-                    {project.tags.map((tag) => (
-                      <Link
-                        key={tag.slug}
-                        href={`/tags/${tag.slug}`}
-                        className="block underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
-                      >
-                        {tag.name}
-                      </Link>
-                    ))}
+              {projectInfoLinks.length ? (
+                <div>
+                  <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
+                    Links
+                  </p>
+                  <div className="space-y-2.5">
+                    {projectInfoLinks.map((link) =>
+                      link.external ? (
+                        <ExternalLinkPreview
+                          key={`${link.kind}-${link.href}`}
+                          href={link.href}
+                          className="block text-white/60 no-underline transition-colors hover:text-white"
+                          previewLabel={link.label}
+                        >
+                          {link.label}
+                        </ExternalLinkPreview>
+                      ) : (
+                        <Link
+                          key={`${link.kind}-${link.href}`}
+                          href={link.href}
+                          className="block text-white/60 no-underline transition-colors hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      )
+                    )}
                   </div>
-                ) : null}
-
-                {projectInfoLinks.length ? (
-                  <div className="mt-9">
-                    <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
-                      Links
-                    </p>
-                    <div className="space-y-3">
-                      {projectInfoLinks.map((link) =>
-                        link.external ? (
-                          <ExternalLinkPreview
-                            key={`${link.kind}-${link.href}`}
-                            href={link.href}
-                            className="group flex items-start justify-between gap-3 underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
-                            previewLabel={link.label}
-                          >
-                            <span>{link.label}</span>
-                            <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                          </ExternalLinkPreview>
-                        ) : (
-                          <Link
-                            key={`${link.kind}-${link.href}`}
-                            href={link.href}
-                            className="group flex items-start justify-between gap-3 underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
-                          >
-                            <span>{link.label}</span>
-                            <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                          </Link>
-                        )
-                      )}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
+                </div>
+              ) : (
+                <div aria-hidden="true" />
+              )}
             </div>
-          </AnimatedSection>
+          ) : null}
         </section>
 
         <section
@@ -779,35 +726,41 @@ export default function ScenicProjectDetail({
           className="scroll-mt-28 bg-[#111111] [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
         >
           <div className="relative left-1/2 w-screen -translate-x-1/2">
-            <div>
+            <div className="grid w-full grid-flow-dense grid-cols-1 bg-black md:grid-cols-12">
               {visualMediaItems.map((item, index) => {
                 const isFullWidth =
                   item.mediaType === "image" && (index === 0 || item.display === "full" || item.display === "wide");
-                const alignClass = isFullWidth
-                  ? "w-screen"
-                  : index % 2 === 0
-                    ? "ml-auto w-full md:w-[50vw]"
-                    : "mr-auto w-full md:w-[50vw]";
+                const blockClass = getScenicMediaBlockClass(item, index, isFullWidth);
 
                 return (
-                  <AnimatedSection key={item.key} className="site-media-square">
-                    <figure className="site-media-square space-y-4">
+                  <AnimatedSection key={item.key} className={`site-media-square ${blockClass}`}>
+                    <figure className="site-media-square">
                       {item.mediaType === "image" ? (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.altText}
-                          className={`site-media-square block bg-[#111111] object-contain ${alignClass} ${
-                            isFullWidth ? "h-auto" : "aspect-[3/2]"
-                          }`}
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <button
+                          type="button"
+                          aria-label={`Open ${item.altText}`}
+                          className={`site-media-square relative block w-full overflow-hidden border border-black bg-black text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-white/70 ${getScenicMediaAspectClass(
+                            item.display,
+                            index,
+                            isFullWidth
+                          )}`}
+                          onClick={() => setSelectedVisualImage(item)}
+                        >
+                          <img
+                            src={item.imageUrl}
+                            alt={item.altText}
+                            className="site-media-square absolute inset-0 h-full w-full object-cover"
+                            style={{ objectPosition: getScenicMediaObjectPosition(item.id) }}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </button>
                       ) : item.mediaType === "video" ? (
-                        <div className={alignClass}>
+                        <div className="border border-black">
                           <AutoPlayEmbed url={item.videoUrl} title={item.title} />
                         </div>
                       ) : (
-                        <div className={`site-media-square relative aspect-[3/2] overflow-hidden bg-black ${alignClass}`}>
+                        <div className="site-media-square relative aspect-[3/2] overflow-hidden border border-black bg-black">
                           {item.items.map((rendering, renderingIndex) => (
                             <img
                               key={rendering.key}
@@ -841,9 +794,7 @@ export default function ScenicProjectDetail({
 
                       {item.caption ? (
                         <figcaption
-                          className={`max-w-[44rem] px-[clamp(1.5rem,5vw,5.5rem)] text-[0.9rem] leading-6 tracking-[-0.01em] text-white/48 ${
-                            !isFullWidth && index % 2 === 0 ? "ml-auto md:w-[50vw]" : ""
-                          }`}
+                          className="border-x border-b border-black bg-[#111111] px-4 py-3 text-[0.82rem] leading-5 tracking-[-0.01em] text-white/48"
                         >
                           {item.caption}
                         </figcaption>
@@ -915,6 +866,34 @@ export default function ScenicProjectDetail({
       </main>
 
       <Footer />
+
+      {selectedVisualImage ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/82 px-4 py-16 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Project image"
+          onClick={() => setSelectedVisualImage(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 px-2 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/70 transition hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-white/70 md:right-8 md:top-8"
+            onClick={() => setSelectedVisualImage(null)}
+          >
+            Close
+          </button>
+          <div
+            className="relative max-h-full max-w-full"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <img
+              src={selectedVisualImage.imageUrl}
+              alt={selectedVisualImage.altText}
+              className="max-h-[82vh] w-auto max-w-[92vw] object-contain"
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

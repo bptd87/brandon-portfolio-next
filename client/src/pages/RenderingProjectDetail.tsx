@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check, Link2, Linkedin, Mail } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Link2, Linkedin, Mail } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Link } from "wouter";
 import Footer from "@/components/Footer";
@@ -67,6 +67,7 @@ export default function RenderingProjectDetail({
     ? new Date(project.updatedAt).toISOString().split('T')[0]
     : undefined;
   const [linkCopied, setLinkCopied] = useState(false);
+  const [isProjectDetailsOpen, setIsProjectDetailsOpen] = useState(false);
 
   if (!project) {
     return (
@@ -210,19 +211,6 @@ export default function RenderingProjectDetail({
     if (!paragraph) return false;
     return paragraphs.indexOf(paragraph) === index;
   });
-  const renderingTags = Array.from(
-    new Set(
-      [
-        isExperientialRendering ? "Experiential Rendering" : "Rendering",
-        project.client,
-        project.location,
-        ...(project.seoKeywords || "")
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter(Boolean),
-      ].filter(Boolean)
-    )
-  ).slice(0, 10);
   const portfolioNoteLinks = [
     scenicProjectHref && scenicProjectMatch
       ? {
@@ -363,22 +351,34 @@ export default function RenderingProjectDetail({
         }}
       />
       <Header />
-      <main className="bg-[#111111]">
-        <section className="flex min-h-[min(72svh,46rem)] items-center justify-center bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center text-white md:py-16">
-          <AnimatedSection>
-            <header className="mx-auto max-w-[66rem]">
-              <p className="text-[0.82rem] font-medium tracking-[-0.01em] text-white/72">
+      <main className="-mt-[64px] bg-[#111111] md:-mt-[74px]">
+        <section className="relative bg-black text-white">
+          <div className="relative flex h-[100svh] items-center justify-center overflow-hidden">
+            {renderings[0] ? (
+              <img
+                src={renderings[0].imageUrl || ""}
+                alt={renderings[0].altText || `${project.title} rendering`}
+                className="site-media-square h-full w-full object-contain"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+              />
+            ) : null}
+          </div>
+        </section>
+
+        <section className="border-t border-white/10 bg-black px-[clamp(1.5rem,5vw,5.5rem)] py-5 text-white">
+          <header className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-[0.95rem] font-medium tracking-[-0.015em] text-white/68">
                 {isExperientialRendering ? "Experiential Rendering" : "Rendering"}
               </p>
-              <h1 className="mx-auto mt-4 max-w-[13ch] font-sans text-[clamp(3rem,6.2vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+              <h1 className="mt-2 max-w-[14ch] font-sans text-[clamp(2.3rem,4.8vw,5.6rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
                 {project.title}
               </h1>
-              {heroDescription ? (
-                <p className="mx-auto mt-5 max-w-[39rem] text-[clamp(1rem,1.2vw,1.18rem)] leading-[1.58] tracking-[-0.02em] text-white/78">
-                  {heroDescription}
-                </p>
-              ) : null}
-              <nav aria-label="Share this rendering" className="mt-5 flex items-center justify-center gap-2">
+            </div>
+
+            <nav aria-label="Share this rendering" className="flex items-center gap-2 md:justify-end">
                 <button
                   type="button"
                   onClick={handleCopyLink}
@@ -413,54 +413,38 @@ export default function RenderingProjectDetail({
                   f
                 </a>
               </nav>
-            </header>
-          </AnimatedSection>
+          </header>
         </section>
 
-        <section className="border-t border-white/10 bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-16 text-white md:py-20">
-          <AnimatedSection>
-            <div className="mx-auto grid w-full max-w-[96rem] gap-x-12 gap-y-12 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(12rem,0.58fr)_minmax(24rem,1.08fr)_minmax(18rem,0.72fr)_minmax(14rem,0.52fr)]">
-              <div className="space-y-8">
-                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
-                  Info
-                </p>
-                <p>{project.title}</p>
-                {project.client ? <p>{project.client}</p> : null}
-                {projectDateLabel ? <p>{projectDateLabel}</p> : null}
-                <dl className="space-y-2">
-                  <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
-                    <dt>Type:</dt>
-                    <dd>{isExperientialRendering ? "Experiential Rendering" : "Rendering"}</dd>
-                  </div>
-                  {project.client ? (
-                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
-                      <dt>Company:</dt>
-                      <dd>{project.client}</dd>
-                    </div>
-                  ) : null}
-                  {project.location ? (
-                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
-                      <dt>Location:</dt>
-                      <dd>{project.location}</dd>
-                    </div>
-                  ) : null}
-                  {projectDateLabel ? (
-                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
-                      <dt>Date:</dt>
-                      <dd>{projectDateLabel}</dd>
-                    </div>
-                  ) : null}
-                </dl>
-              </div>
+        <section className="border-y border-white/12 bg-black px-[clamp(1.5rem,5vw,5.5rem)] text-white">
+          <button
+            type="button"
+            onClick={() => setIsProjectDetailsOpen((open) => !open)}
+            className="flex w-full items-center justify-between gap-5 py-4 text-left text-[0.92rem] tracking-[-0.015em] text-white/72 transition-colors hover:text-white"
+            aria-expanded={isProjectDetailsOpen}
+            aria-controls="rendering-project-details"
+          >
+            <span>Details</span>
+            <span className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-right">
+              {project.client ? <span className="text-white/62">{project.client}</span> : null}
+              {projectDateLabel ? <span className="text-white/38">{projectDateLabel}</span> : null}
+              {isProjectDetailsOpen ? <ChevronUp className="h-4 w-4 text-white/48" /> : <ChevronDown className="h-4 w-4 text-white/48" />}
+            </span>
+          </button>
 
-              <div>
-                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+          {isProjectDetailsOpen ? (
+            <div
+              id="rendering-project-details"
+              className="mx-auto grid w-full max-w-[88rem] gap-x-10 gap-y-10 border-t border-white/10 py-8 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(24rem,1fr)_minmax(17rem,0.58fr)_minmax(14rem,0.46fr)] md:py-10"
+            >
+              <div className="text-[0.98rem] leading-[1.66] text-white md:text-[0.9rem] md:leading-[1.48]">
+                <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
                   Description
                 </p>
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-5">
                   {portfolioNoteSections.map((section, sectionIndex) => (
-                    <div key={`${section.heading}-${sectionIndex}`} className="space-y-5">
-                      <p className="font-medium">{section.heading}</p>
+                    <div key={`${section.heading}-${sectionIndex}`} className="space-y-3.5 md:space-y-2.5">
+                      <p className="font-medium text-white">{section.heading}</p>
                       {section.paragraphs.map((paragraph, paragraphIndex) => (
                         <p key={paragraphIndex}>{paragraph}</p>
                       ))}
@@ -470,27 +454,44 @@ export default function RenderingProjectDetail({
               </div>
 
               <div>
-                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
-                  Tags
+                <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
+                  Project
                 </p>
-                <div className="space-y-2">
-                  {renderingTags.map((tag) => (
-                    <p key={tag} className="text-white/64">
-                      {tag}
-                    </p>
-                  ))}
-                </div>
+                <dl className="space-y-2.5">
+                  <div className="grid min-w-0 grid-cols-[7rem_minmax(0,1fr)] gap-4">
+                    <dt className="text-white/48">Format</dt>
+                    <dd className="text-white/76">{isExperientialRendering ? "Experiential Rendering" : "Rendering"}</dd>
+                  </div>
+                  {project.client ? (
+                    <div className="grid min-w-0 grid-cols-[7rem_minmax(0,1fr)] gap-4">
+                      <dt className="text-white/48">Company</dt>
+                      <dd className="text-white/76">{project.client}</dd>
+                    </div>
+                  ) : null}
+                  {project.location ? (
+                    <div className="grid min-w-0 grid-cols-[7rem_minmax(0,1fr)] gap-4">
+                      <dt className="text-white/48">Location</dt>
+                      <dd className="text-white/76">{project.location}</dd>
+                    </div>
+                  ) : null}
+                  {projectDateLabel ? (
+                    <div className="grid min-w-0 grid-cols-[7rem_minmax(0,1fr)] gap-4">
+                      <dt className="text-white/48">Date</dt>
+                      <dd className="text-white/76">{projectDateLabel}</dd>
+                    </div>
+                  ) : null}
+                </dl>
               </div>
 
               <div>
                 {portfolioNoteLinks.length > 0 ? (
                   <>
-                    <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                    <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
                       Links
                     </p>
-                    <div className="space-y-5">
+                    <div className="space-y-2.5">
                       {portfolioNoteLinks.map((item) => (
-                        <Link key={item.href} href={item.href} className="block underline decoration-white/48 underline-offset-4">
+                        <Link key={item.href} href={item.href} className="block text-white/60 no-underline transition-colors hover:text-white">
                           {item.label}
                         </Link>
                       ))}
@@ -499,44 +500,33 @@ export default function RenderingProjectDetail({
                 ) : null}
               </div>
             </div>
-          </AnimatedSection>
+          ) : null}
         </section>
 
-        <section className="bg-[#111111] [contain-intrinsic-size:1px_1400px] [content-visibility:auto]">
-          <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
-            {renderings[0] ? (
-              <img
-                src={renderings[0].imageUrl || ""}
-                alt={renderings[0].altText || `${project.title} rendering`}
-                className="site-media-square max-h-screen w-full object-contain"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : null}
-          </div>
-            {renderings.length > 1 ? (
-              <div className="grid grid-cols-1 border-t border-white/10 md:grid-cols-2">
-                  {renderings.slice(1).map((image) => (
-                    <figure key={image.id} className="border-b border-r border-white/10">
-                      <div className="flex min-h-[70vh] items-center justify-center overflow-hidden bg-[#111111]">
-                        <img
-                          src={image.imageUrl || ""}
-                          alt={image.altText || `${project.title} rendering`}
-                          className="site-media-square h-full w-full object-contain"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                      {image.caption ? (
-                        <figcaption className="p-4 text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
-                          {image.caption}
-                        </figcaption>
-                      ) : null}
-                    </figure>
-                  ))}
-                </div>
-            ) : null}
-        </section>
+        {renderings.length > 1 ? (
+          <section className="bg-[#111111] [contain-intrinsic-size:1px_1400px] [content-visibility:auto]">
+            <div className="grid grid-cols-1 border-t border-white/10 md:grid-cols-2">
+              {renderings.slice(1).map((image) => (
+                <figure key={image.id} className="border-b border-r border-white/10">
+                  <div className="flex min-h-[70vh] items-center justify-center overflow-hidden bg-[#111111]">
+                    <img
+                      src={image.imageUrl || ""}
+                      alt={image.altText || `${project.title} rendering`}
+                      className="site-media-square h-full w-full object-contain"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  {image.caption ? (
+                    <figcaption className="p-4 text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
+                      {image.caption}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {moreRenderingProjects.length > 0 ? (
           <section className="border-t border-white/12 bg-[#111111] pt-16 text-white [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24">
