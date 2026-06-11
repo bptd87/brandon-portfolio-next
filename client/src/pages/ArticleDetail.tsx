@@ -1109,6 +1109,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
   const isLearningPortalArticle = variant === "tutorial" || LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
   const isNarrativeArticle = !isLearningPortalArticle;
+  const hasOpeningDropCap = isNarrativeArticle && article.slug !== "what-does-a-scenic-designer-do";
   const articleBasePath = isLearningPortalArticle ? "/studio/tutorials" : "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
   const articleDisplayUpdatedAt = getDisplayUpdatedDate(article.updatedAt || article.publishedAt || article.createdAt);
@@ -1586,7 +1587,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                           <p
                             key={index}
                             className={`${isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"} ${
-                              isOpeningParagraph && isNarrativeArticle
+                              isOpeningParagraph && hasOpeningDropCap
                                 ? "first-letter:float-left first-letter:mr-3 first-letter:mt-2 first-letter:font-sans first-letter:text-[5.4rem] first-letter:font-semibold first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-white"
                                 : ""
                             }`}

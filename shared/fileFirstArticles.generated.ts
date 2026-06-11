@@ -29,6 +29,7 @@ import urinetownScenicDesignBuildingADystopiaThatFeelsUncomfortablyFamiliarBlock
 import vectorworksRenderingWorkflowFileSizeAndSpeedBlocks from "../content/articles/vectorworks-rendering-workflow-file-size-and-speed/blocks.json";
 import videoGameEnvironmentsLessonsForScenicDesignBlocks from "../content/articles/video-game-environments-lessons-for-scenic-design/blocks.json";
 import voyagelaRisingStarsInterviewBlocks from "../content/articles/voyagela-rising-stars-interview/blocks.json";
+import whatDoesAScenicDesignerDoBlocks from "../content/articles/what-does-a-scenic-designer-do/blocks.json";
 import whatMakesAGoodScenicDesignRenderingBlocks from "../content/articles/what-makes-a-good-scenic-design-rendering/blocks.json";
 import whenBroadwayGotARevolutionTheRiseOfTheConceptMusicalInThe1970sBlocks from "../content/articles/when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s/blocks.json";
 import whenBroadwayGotSpectacularTheRiseOfTheBritishMegamusicalBlocks from "../content/articles/when-broadway-got-spectacular-the-rise-of-the-british-megamusical/blocks.json";
@@ -543,6 +544,29 @@ export const fileFirstArticleFieldsBySlug = {
   "sourceUrl": "https://voyagela.com/interview/rising-stars-meet-brandon-pt-davis-of-irvine-ca/",
   "linkedScenicProjectSlugs": []
 },
+  "what-does-a-scenic-designer-do": {
+  "title": "What Does a Scenic Designer Do?",
+  "featured": false,
+  "excerpt": "A scenic designer does more than make a set. Scenic design turns script, space, collaboration, and performance into a world the audience can read.",
+  "categoryName": "Scenic Design",
+  "coverImageAlt": "Scene emphasizing sightlines, negative space, and the elevated platform relationship in The Glass Menagerie.",
+  "seoTitle": "What Does a Scenic Designer Do? Story, Space, and the World of the Play",
+  "seoDescription": "A scenic designer does more than make a set. Scenic design turns script, space, collaboration, and performance into a world the audience can read.",
+  "seoKeywords": "what does a scenic designer do, scenic designer, scenic design, set designer, theatre design, stage design, scenic design process",
+  "readTime": 7,
+  "publishedAt": "2026-06-11T00:00:00-07:00",
+  "updatedAt": "2026-06-11T00:00:00-07:00",
+  "linkedScenicProjectSlugs": [
+    "the-glass-menagerie",
+    "company"
+  ],
+  "series": {
+    "name": "Scenic Design Fundamentals",
+    "slug": "scenic-design-fundamentals",
+    "order": 1
+  },
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp"
+},
   "what-makes-a-good-scenic-design-rendering": {
   "title": "What Makes a Good Scenic Design Rendering?",
   "featured": false,
@@ -684,6 +708,7 @@ export const fileFirstArticleContentBySlug = {
   "vectorworks-rendering-workflow-file-size-and-speed": vectorworksRenderingWorkflowFileSizeAndSpeedBlocks,
   "video-game-environments-lessons-for-scenic-design": videoGameEnvironmentsLessonsForScenicDesignBlocks,
   "voyagela-rising-stars-interview": voyagelaRisingStarsInterviewBlocks,
+  "what-does-a-scenic-designer-do": whatDoesAScenicDesignerDoBlocks,
   "what-makes-a-good-scenic-design-rendering": whatMakesAGoodScenicDesignRenderingBlocks,
   "when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s": whenBroadwayGotARevolutionTheRiseOfTheConceptMusicalInThe1970sBlocks,
   "when-broadway-got-spectacular-the-rise-of-the-british-megamusical": whenBroadwayGotSpectacularTheRiseOfTheBritishMegamusicalBlocks,

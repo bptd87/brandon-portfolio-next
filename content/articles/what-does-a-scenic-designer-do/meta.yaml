@@ -1,0 +1,41 @@
+type: article
+slug: what-does-a-scenic-designer-do
+title: What Does a Scenic Designer Do?
+status: published
+featured: false
+excerpt: >-
+  A scenic designer does more than make a set. Scenic design turns script, space,
+  collaboration, and performance into a world the audience can read.
+category: Scenic Design
+seoTitle: What Does a Scenic Designer Do? Story, Space, and the World of the Play
+seoDescription: >-
+  A scenic designer does more than make a set. Scenic design turns script, space,
+  collaboration, and performance into a world the audience can read.
+seoKeywords:
+  - what does a scenic designer do
+  - scenic designer
+  - scenic design
+  - set designer
+  - theatre design
+  - stage design
+  - scenic design process
+cover:
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp
+  alt: >-
+    Scene emphasizing sightlines, negative space, and the elevated platform
+    relationship in The Glass Menagerie.
+tags:
+  - scenic-design
+  - theatre-design
+  - design-process
+  - stage-design
+readTime: 7
+publishedAt: '2026-06-11T00:00:00-07:00'
+updatedAt: '2026-06-11T00:00:00-07:00'
+linkedScenicProjectSlugs:
+  - the-glass-menagerie
+  - company
+series:
+  name: Scenic Design Fundamentals
+  slug: scenic-design-fundamentals
+  order: 1

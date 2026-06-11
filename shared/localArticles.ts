@@ -2706,7 +2706,39 @@ const dbBackedArticles = (generatedLocalArticles as LocalArticle[])
   .map(mergeArticleSources)
   .filter((article) => !externalProfileArticleSlugs.has(article.slug));
 
-const baseArticles = dbBackedArticles;
+const dbBackedArticleSlugs = new Set(dbBackedArticles.map((article) => article.slug));
+
+const fileFirstOnlyArticles = Object.entries(fileFirstFieldMap)
+  .filter(([slug]) => !dbBackedArticleSlugs.has(slug) && !externalProfileArticleSlugs.has(slug))
+  .map(([slug, fields], index): LocalArticle => {
+    const content = fileFirstContentMap[slug] ?? [];
+    const title = fields.title || slug.replace(/-/g, " ");
+    const publishedAt = fields.publishedAt || new Date().toISOString();
+
+    return {
+      id: 200000 + index,
+      slug,
+      title,
+      excerpt: fields.excerpt || "",
+      coverImageUrl: fields.coverImageUrl || "",
+      coverImageAlt: fields.coverImageAlt || title,
+      publishedAt,
+      updatedAt: fields.updatedAt || publishedAt,
+      createdAt: fields.createdAt || publishedAt,
+      categoryName: fields.categoryName || "Scenic Design",
+      seoTitle: fields.seoTitle || title,
+      seoDescription: fields.seoDescription || fields.excerpt || "",
+      seoKeywords: fields.seoKeywords || null,
+      content,
+      featured: fields.featured ?? false,
+      readTime: fields.readTime ?? estimateReadTime(content),
+      series: fields.series,
+      linkedScenicProjectSlugs: fields.linkedScenicProjectSlugs || [],
+      tags: fields.tags || [],
+    };
+  });
+
+const baseArticles = [...dbBackedArticles, ...fileFirstOnlyArticles];
 
 const manualArticles: LocalArticle[] = [
   visualLanguageArticle,
