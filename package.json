@@ -13,6 +13,7 @@
     "check": "next build --webpack",
     "format": "prettier --write .",
     "test": "vitest run",
+    "article:new": "node --import tsx scripts/create-article-draft.ts",
     "generate:file-first-article-overrides": "node --import tsx scripts/generate-file-first-article-overrides.ts",
     "generate:file-first-project-overrides": "node --import tsx scripts/generate-file-first-project-overrides.ts",
     "export:project-content": "node --import tsx scripts/export-project-content.ts",

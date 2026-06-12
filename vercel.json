@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/scheduled-article-rebuild",
+      "schedule": "20 16 * * *"
+    }
+  ]
+}

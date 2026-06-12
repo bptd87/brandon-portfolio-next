@@ -28,10 +28,13 @@ export interface LocalArticleSeries {
   order: number;
 }
 
+export type LocalArticleStatus = "draft" | "scheduled" | "published";
+
 export interface LocalArticle {
   id: number;
   slug: string;
   title: string;
+  status?: LocalArticleStatus;
   excerpt: string;
   coverImageUrl: string;
   coverImageAlt: string;
@@ -2712,6 +2715,29 @@ const year39Article: LocalArticle = {
 
 const externalProfileArticleSlugs = new Set([VOYAGELA_ARTICLE_SLUG]);
 
+const normalizeArticleStatus = (status?: string | null): LocalArticleStatus => {
+  if (status === "draft" || status === "scheduled" || status === "published") {
+    return status;
+  }
+
+  return "published";
+};
+
+const getArticlePublishTimestamp = (article: Pick<LocalArticle, "publishedAt" | "createdAt">) => {
+  const timestamp = new Date(article.publishedAt || article.createdAt || 0).getTime();
+  return Number.isFinite(timestamp) ? timestamp : 0;
+};
+
+const isPublicArticle = (article: LocalArticle, now = new Date()) => {
+  const status = normalizeArticleStatus(article.status);
+
+  if (status === "draft") {
+    return false;
+  }
+
+  return getArticlePublishTimestamp(article) <= now.getTime();
+};
+
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[])
   .map(mergeArticleSources)
   .filter((article) => !externalProfileArticleSlugs.has(article.slug));
@@ -2735,6 +2761,7 @@ const fileFirstOnlyArticles = Object.entries(fileFirstFieldMap)
       publishedAt,
       updatedAt: fields.updatedAt || publishedAt,
       createdAt: fields.createdAt || publishedAt,
+      status: normalizeArticleStatus(fields.status),
       categoryName: fields.categoryName || "Scenic Design",
       seoTitle: fields.seoTitle || title,
       seoDescription: fields.seoDescription || fields.excerpt || "",
@@ -2776,14 +2803,15 @@ export const localArticles = articlesWithManualEntries
   .map(mergeArticleSources)
   .map((article) => ({
     ...article,
+    status: normalizeArticleStatus(article.status),
     categoryName: normalizeArticleCategory(article.categoryName),
     excerpt: article.excerpt || "",
     coverImageAlt: article.coverImageAlt || article.title,
     readTime: article.readTime ?? estimateReadTime(article.content),
     createdAt: article.createdAt || article.publishedAt,
     updatedAt: article.updatedAt || article.publishedAt,
-    status: "published" as const,
   }))
+  .filter((article) => isPublicArticle(article))
   .map((article) => applyBlobMediaManifest(article))
   .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
@@ -2810,7 +2838,7 @@ export function toLocalArticleRecord(article: LocalArticle) {
     coverImageUrl: article.coverImageUrl,
     coverImageAlt: article.coverImageAlt,
     readTime: article.readTime ?? estimateReadTime(article.content),
-    status: "published" as const,
+    status: normalizeArticleStatus(article.status),
     featured: Boolean(article.featured),
     categoryId: null,
     authorId: null,

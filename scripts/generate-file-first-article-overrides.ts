@@ -9,6 +9,7 @@ const OUTPUT_PATH = path.join(ROOT, "shared", "fileFirstArticles.generated.ts");
 type ArticleMeta = {
   slug: string;
   title: string;
+  status?: "draft" | "scheduled" | "published";
   featured?: boolean;
   excerpt?: string;
   category?: string;
@@ -80,6 +81,7 @@ async function main() {
 
     const fieldValue: Record<string, unknown> = {
       title: meta.title,
+      status: meta.status,
       featured: Boolean(meta.featured),
       excerpt: meta.excerpt || "",
       categoryName: meta.category || "Article",

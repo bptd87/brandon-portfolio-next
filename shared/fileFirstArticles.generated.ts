@@ -40,6 +40,7 @@ import youreWastingMyTimeAScenicDesignLessonInGrowthAndRevisionBlocks from "../c
 export const fileFirstArticleFieldsBySlug = {
   "artistic-vision-in-scenic-design-finding-my-creative-voice": {
   "title": "Artistic Vision in Scenic Design: Finding My Creative Voice",
+  "status": "published",
   "featured": false,
   "excerpt": "A reflection on building artistic voice in scenic design while staying accountable to story, collaboration, and craft.",
   "categoryName": "Scenic Design",
@@ -54,6 +55,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "becoming-a-scenic-designer-a-comprehensive-guide": {
   "title": "Becoming a Scenic Designer: A Comprehensive Guide",
+  "status": "published",
   "featured": false,
   "excerpt": "A realistic guide to becoming a scenic designer, covering training paths, portfolio development, collaboration habits, and career positioning.",
   "categoryName": "Scenic Design",
@@ -69,6 +71,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "building-the-visual-world-art-direction-in-film-television": {
   "title": "Building the Visual World: Art Direction in Film & Television",
+  "status": "published",
   "featured": false,
   "excerpt": "How art direction builds coherent visual worlds in film and television through concept alignment, team coordination, and material execution.",
   "categoryName": "Performance History & Culture",
@@ -83,6 +86,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care": {
   "title": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care",
+  "status": "published",
   "featured": false,
   "excerpt": "A practical hardware guide for scenic designers who need dependable drafting, modeling, and rendering performance in real production timelines.",
   "categoryName": "Tools & Technology",
@@ -97,6 +101,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "designing-the-keller-home-a-look-back-at-all-my-sons": {
   "title": "Designing the Keller Home: A Look Back at All My Sons",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic case study of All My Sons focused on spatial ethics, domestic realism, and the dramaturgy of the Keller home.",
   "categoryName": "Design Process",
@@ -118,6 +123,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "empowering-theatre-students-with-computer-literacy": {
   "title": "Empowering Theatre Production Students with Computer Literacy",
+  "status": "published",
   "featured": false,
   "excerpt": "Why computer literacy matters in theatre training, with a practical framework for helping production students work confidently across digital tools.",
   "categoryName": "Tools & Technology",
@@ -132,6 +138,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "framing-the-martyr-scenic-design-as-memory-work-in-romero": {
   "title": "Framing the Martyr: Scenic Design as Memory Work in Romero",
+  "status": "published",
   "featured": false,
   "excerpt": "How Romero used scenic space as memory architecture, shaping ritual, grief, and political urgency onstage.",
   "categoryName": "Design Process",
@@ -153,6 +160,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool": {
   "title": "How to Create Trim Profiles in Vectorworks Using the Polyline Tool",
+  "status": "published",
   "featured": false,
   "excerpt": "A practical Vectorworks workflow for creating clean, reusable trim profiles with the Polyline tool for scenic drafting and production packages.",
   "categoryName": "Tools & Technology",
@@ -167,6 +175,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "lighting-and-render-styles-in-vectorworks": {
   "title": "Renderworks Settings and Lighting in Vectorworks",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic rendering workflow for comparing the same model across render looks, building a lighting layer, and choosing Renderworks settings with intention.",
   "categoryName": "Tools & Technology",
@@ -187,6 +196,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "lighting-styles-in-ai-models": {
   "title": "Lighting Styles in AI Models: How Lighting Changes Everything",
+  "status": "published",
   "featured": false,
   "excerpt": "Explore how 20 different lighting styles transform AI-generated scenes in Sora and Midjourney, with practical prompt strategies for theatre designers and visual storytellers.",
   "categoryName": "Tools & Technology",
@@ -204,6 +214,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "minimalist-scenic-design-dominating-regional-theatres-in-2025": {
   "title": "Minimalist Scenic Design: Dominating Regional Theatres in 2025",
+  "status": "published",
   "featured": false,
   "excerpt": "Why minimalist scenic design continues to lead regional theatre in 2025, and how restraint can increase flexibility, clarity, and visual impact.",
   "categoryName": "Scenic Design",
@@ -218,6 +229,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "online-portfolio-theatrical-design-2026": {
   "title": "The Modern Theatrical Design Portfolio: A Guide for 2026",
+  "status": "published",
   "featured": false,
   "excerpt": "How to build a scenic-focused digital portfolio in 2026 with stronger structure, better indexing, and clearer project storytelling.",
   "categoryName": "Tools & Technology",
@@ -232,6 +244,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "operas-foundations-the-evolution-of-scenic-design-in-opera": {
   "title": "Opera's Foundations: The First Act in American Entertainment",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic design history of opera from Baroque machinery to contemporary staging, and what those traditions still teach designers now.",
   "categoryName": "Performance History & Culture",
@@ -246,6 +259,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "publishing-vectorworks-renderings-for-presentation": {
   "title": "Publishing Vectorworks Renderings for Presentation",
+  "status": "published",
   "featured": false,
   "excerpt": "A publishing workflow for exporting finished Vectorworks renderings as presentation-ready images without keeping heavy live viewports in the file.",
   "categoryName": "Tools & Technology",
@@ -266,6 +280,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "scenic-design-process": {
   "title": "Navigating the Scenic Design Process: A Comprehensive Guide",
+  "status": "published",
   "featured": false,
   "excerpt": "A practical step-by-step guide to the scenic design process, from script analysis and visual research through drafting, tech, and opening night.",
   "categoryName": "Design Process",
@@ -285,6 +300,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "setting-up-vectorworks-cameras-for-scenic-renderings": {
   "title": "Setting Up Vectorworks Cameras for Scenic Renderings",
+  "status": "published",
   "featured": false,
   "excerpt": "A camera setup workflow for scenic renderings in Vectorworks: create a visualization layer, place the camera, frame the shot, and turn the view into a renderable viewport.",
   "categoryName": "Tools & Technology",
@@ -305,6 +321,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "sora-in-the-studio-testing-ais-potential-for-theatrical-design": {
   "title": "Sora in the Studio: Testing AI's Potential for Theatrical Design",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic designer's field test of Sora for concept development and team communication, with practical guidance for production use.",
   "categoryName": "Tools & Technology",
@@ -319,6 +336,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "studio-ghibli-inspired-immersive-dining-experience": {
   "title": "Studio Ghibli-Inspired Immersive Dining Experience",
+  "status": "published",
   "featured": false,
   "excerpt": "A themed entertainment studio project exploring how theatre design students translated environmental storytelling into a Studio Ghibli-inspired immersive dining concept.",
   "categoryName": "Themed Entertainment",
@@ -338,6 +356,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion": {
   "title": "The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
+  "status": "published",
   "featured": false,
   "excerpt": "How 1960s musicals disrupted inherited formulas and reshaped scenic language across film, stage, and popular culture.",
   "categoryName": "Performance History & Culture",
@@ -352,6 +371,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-1980s-musical-cinema-revolution-when-mtv-met-broadway-on-the-silver-screen": {
   "title": "The 1980s Musical Cinema Revolution: When MTV Met Broadway on the Silver Screen",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic-focused study of how MTV aesthetics, youth-driven film narratives, and cross-platform adaptation reshaped musical storytelling in the 1980s.",
   "categoryName": "Performance History & Culture",
@@ -366,6 +386,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-art-of-presenting-theatre-design-a-guide-for-designers": {
   "title": "The Art of Presenting Theatre Design: A Guide for Designers",
+  "status": "published",
   "featured": false,
   "excerpt": "How to present scenic design ideas with clarity and authority to directors, producers, shops, and creative teams.",
   "categoryName": "Tools & Technology",
@@ -380,6 +401,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything": {
   "title": "The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experiences",
+  "status": "published",
   "featured": false,
   "excerpt": "A design-history survey tracing themed entertainment from early spectacle gardens to contemporary immersive environments and experience-led storytelling.",
   "categoryName": "Themed Entertainment",
@@ -399,6 +421,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-evolutionof-narrativein-cinema": {
   "title": "The Evolution of Narrative in Cinema",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic-focused history of early film language, tracing how editing, camera placement, synchronized sound, color, and mise-en-scene reshaped visual storytelling before the 1940s.",
   "categoryName": "Performance History & Culture",
@@ -413,6 +436,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-golden-age-of-broadway-a-defining-era-in-musical-theatre": {
   "title": "The Golden Age of Broadway: A Defining Era in Musical Theatre",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic lens on Broadway's Golden Age and the design vocabulary that still shapes musical theatre production today.",
   "categoryName": "Performance History & Culture",
@@ -427,6 +451,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-golden-age-of-cinema-musicals-in-the-spotlight": {
   "title": "The Golden Age of Cinema: Musicals in the Spotlight",
+  "status": "published",
   "featured": false,
   "excerpt": "How Hollywood's musical era fused choreography, camera, and scenic composition into a visual language that still influences stage design.",
   "categoryName": "Performance History & Culture",
@@ -441,6 +466,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-lights-were-already-on-maude-adams-legacy-at-stephens-college": {
   "title": "The Lights Were Already On: Maude Adams' Legacy at Stephens College",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic reflection on how Maude Adams' legacy at Stephens College continues to influence theatre training, pedagogy, and design values.",
   "categoryName": "Scenic Design",
@@ -455,6 +481,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "the-visual-language-of-scenic-design": {
   "title": "The Visual Language of Scenic Design",
+  "status": "published",
   "featured": false,
   "excerpt": "How the elements and principles of design shape live performance before an audience understands the story intellectually.",
   "categoryName": "Scenic Design",
@@ -475,6 +502,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar": {
   "title": "Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic breakdown of Urinetown focused on authoritarian architecture, class contrast, and the mechanics of dystopian satire.",
   "categoryName": "Design Process",
@@ -496,6 +524,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "vectorworks-rendering-workflow-file-size-and-speed": {
   "title": "Vectorworks Rendering Workflow: File Size and Speed",
+  "status": "published",
   "featured": false,
   "excerpt": "A practical rendering workflow for keeping Vectorworks scenic files responsive by managing imported models, USDZ handoffs, mesh cleanup, texture size, and final output decisions.",
   "categoryName": "Tools & Technology",
@@ -516,6 +545,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "video-game-environments-lessons-for-scenic-design": {
   "title": "Video Game Environments: Lessons for Scenic Design",
+  "status": "published",
   "featured": false,
   "excerpt": "How environment design lessons from games can sharpen scenic world-building, audience orientation, and spatial storytelling.",
   "categoryName": "Scenic Design",
@@ -530,6 +560,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "voyagela-rising-stars-interview": {
   "title": "VoyageLA: Rising Stars Interview",
+  "status": "published",
   "featured": true,
   "excerpt": "VoyageLA featured Brandon PT Davis in a Rising Stars profile focused on scenic design growth, artistic voice, and long-term career direction in Southern California.",
   "categoryName": "Profiles & Interviews",
@@ -546,6 +577,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "what-does-a-scenic-designer-do": {
   "title": "What Does a Scenic Designer Do?",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic designer does more than make a set. Scenic design turns script, space, collaboration, and performance into a world the audience can read.",
   "categoryName": "Scenic Design",
@@ -569,6 +601,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "what-makes-a-good-scenic-design-rendering": {
   "title": "What Makes a Good Scenic Design Rendering?",
+  "status": "published",
   "featured": false,
   "excerpt": "What makes a scenic rendering useful in production: clear visual hierarchy, material logic, and communication choices teams can actually build from.",
   "categoryName": "Tools & Technology",
@@ -588,6 +621,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s": {
   "title": "The Rise of the Concept Musical in the 1970s",
+  "status": "published",
   "featured": false,
   "excerpt": "A scenic-focused history of the concept musical and the artists who pushed Broadway away from tidy plots and toward thematic structure, fragmentation, and theatrical self-awareness.",
   "categoryName": "Performance History & Culture",
@@ -605,6 +639,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "when-broadway-got-spectacular-the-rise-of-the-british-megamusical": {
   "title": "When Broadway Got Spectacular: The Rise of the British Megamusical",
+  "status": "published",
   "featured": false,
   "excerpt": "How Andrew Lloyd Webber, Cameron Mackintosh, and their collaborators transformed musical theater from intimate dramas into global blockbuster entertainment.",
   "categoryName": "Performance History & Culture",
@@ -622,6 +657,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "working-offstage-expanding-a-scenic-design-career-beyond-theatre": {
   "title": "Working Offstage: Expanding a Scenic Design Career Beyond Theatre",
+  "status": "published",
   "featured": false,
   "excerpt": "A practical essay on how scenic designers can expand into themed entertainment, architectural visualization, rendering, and other adjacent industries without abandoning theatre.",
   "categoryName": "Design Process",
@@ -642,6 +678,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "year-39": {
   "title": "39",
+  "status": "published",
   "featured": true,
   "excerpt": "A birthday reflection on creative work, unseen growth, collaboration, curiosity, and staying open to what comes next.",
   "categoryName": "Personal Essay",
@@ -657,6 +694,7 @@ export const fileFirstArticleFieldsBySlug = {
 },
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": {
   "title": "You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision",
+  "status": "published",
   "featured": false,
   "excerpt": "A reflective essay on critique, revision, and the moment scenic design shifted from presentation toward real-time design thinking.",
   "categoryName": "Design Process",
