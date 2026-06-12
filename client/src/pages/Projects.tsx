@@ -26,6 +26,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import MotionReveal from "@/components/MotionReveal";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
@@ -104,6 +105,7 @@ function ProjectCard({
   scenicAlt,
   eager,
   sizes,
+  revealDelay = 0,
 }: {
   href: string;
   layoutClass?: string;
@@ -112,51 +114,54 @@ function ProjectCard({
   scenicAlt: (title: string) => string;
   eager?: boolean;
   sizes: string;
+  revealDelay?: number;
 }) {
   return (
-    <a
-      href={href}
-      onClick={(event) => onNavigate(event, href)}
-      className={`portfolio-focus-card group block border-b border-r border-white/12 ${layoutClass || ""}`}
-    >
-      <article className="bg-[#111111]">
-        <div
-          className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]"
-          style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
-        >
-          {project.coverImageUrl ? (
-            <Image
-              src={project.coverImageUrl}
-              alt={scenicAlt(project.title)}
-              fill
-              quality={eager ? 84 : 78}
-              className="site-media-square object-cover object-center"
-              style={{
-                objectPosition: project.coverImagePosition || "center",
-              }}
-              priority={Boolean(eager)}
-              loading={eager ? "eager" : "lazy"}
-              fetchPriority={eager ? "high" : "auto"}
-              sizes={sizes}
-            />
-          ) : (
-            <div className="aspect-[4/3] w-full bg-muted" />
-          )}
-        </div>
-        <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
-          <div>
-            <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white">
-              {project.title}
-            </h2>
-            {getVenueLabel(project) ? (
-              <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
-                {getVenueLabel(project)}
-              </p>
-            ) : null}
+    <MotionReveal className={`${layoutClass || ""} h-full`} delay={revealDelay}>
+      <a
+        href={href}
+        onClick={(event) => onNavigate(event, href)}
+        className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+      >
+        <article className="h-full bg-[#111111]">
+          <div
+            className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]"
+            style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
+          >
+            {project.coverImageUrl ? (
+              <Image
+                src={project.coverImageUrl}
+                alt={scenicAlt(project.title)}
+                fill
+                quality={eager ? 84 : 78}
+                className="site-media-square object-cover object-center"
+                style={{
+                  objectPosition: project.coverImagePosition || "center",
+                }}
+                priority={Boolean(eager)}
+                loading={eager ? "eager" : "lazy"}
+                fetchPriority={eager ? "high" : "auto"}
+                sizes={sizes}
+              />
+            ) : (
+              <div className="aspect-[4/3] w-full bg-muted" />
+            )}
           </div>
-        </div>
-      </article>
-    </a>
+          <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+            <div>
+              <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                {project.title}
+              </h2>
+              {getVenueLabel(project) ? (
+                <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
+                  {getVenueLabel(project)}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </article>
+      </a>
+    </MotionReveal>
   );
 }
 
@@ -450,7 +455,7 @@ export default function Projects({
         <section className="bg-[#111111] pt-12 md:pt-16">
           <div className="w-full">
             <div className="px-[clamp(1.5rem,5vw,6rem)]">
-              <div className="mb-5 pb-4">
+              <MotionReveal className="mb-5 pb-4">
                 <div>
                   <p className="max-w-2xl text-[0.95rem] leading-6 tracking-[-0.015em] text-white/54">
                     {currentHeading === pageTitle ? pageSubtitle : pageTitle}
@@ -461,13 +466,18 @@ export default function Projects({
                     </p>
                   ) : null}
                 </div>
-              </div>
-              <h1 className="font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-white">
-                {heroDisplayTitle}
-              </h1>
+              </MotionReveal>
+              <MotionReveal delay={120}>
+                <h1 className="font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-white">
+                  {heroDisplayTitle}
+                </h1>
+              </MotionReveal>
             </div>
 
-            <div className="mt-6 flex flex-col gap-5 px-[clamp(1.5rem,5vw,6rem)] py-4 lg:flex-row lg:items-center lg:justify-between">
+            <MotionReveal
+              className="mt-6 flex flex-col gap-5 px-[clamp(1.5rem,5vw,6rem)] py-4 lg:flex-row lg:items-center lg:justify-between"
+              delay={210}
+            >
               <div className="md:hidden">
                 <div className="-mx-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   <div className="flex min-w-max items-center gap-2 px-1">
@@ -713,7 +723,7 @@ export default function Projects({
                   </button>
                 </div>
               </div>
-            </div>
+            </MotionReveal>
 
             {(selectedVenue !== "all" || selectedYear !== "all" || sortKey !== "newest") && (
               <div className="flex flex-wrap items-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-sm text-white/52">
@@ -745,6 +755,7 @@ export default function Projects({
                       layoutClass={getProjectPanelClass(index)}
                       onNavigate={navigateWithTransition}
                       project={project}
+                      revealDelay={(index % 10) * 70}
                       scenicAlt={scenicAlt}
                       sizes={getProjectImageSizes(index)}
                     />

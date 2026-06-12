@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import MotionReveal from "@/components/MotionReveal";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -1496,6 +1497,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                     let h2Index = 0;
                     let paragraphIndex = 0;
                     return processedSections.map((section: any, index: number) => {
+                    const renderedSection = (() => {
                     switch (section.type) {
                       case 'update_note':
                         return (
@@ -1627,6 +1629,13 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
                       case 'quote':
                         const quoteText = normalizeQuoteText(section.text || section.content || '');
+                        const repeatsHeroExcerpt =
+                          index === 0 &&
+                          article.excerpt &&
+                          quoteText.toLowerCase() === normalizeQuoteText(article.excerpt).toLowerCase();
+
+                        if (repeatsHeroExcerpt) return null;
+
                         return (
                           <blockquote key={index} className="my-16 py-2 text-center">
                             <p className="mx-auto max-w-[42rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-white/92">
@@ -1986,59 +1995,76 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                           </div>
                         );
 
-                      default:
-                        return null;
-                    }
-                  });
+	                      default:
+	                        return null;
+	                    }
+                    })();
+
+                    if (!renderedSection) return null;
+
+                    return (
+                      <MotionReveal
+                        key={`article-content-section-${index}`}
+                        className="article-body-reveal"
+                        delay={(index % 4) * 45}
+                      >
+                        {renderedSection}
+                      </MotionReveal>
+                    );
+	                  });
                   })()}
                 </div>
               </div>
 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
-                <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-                  <h3 className={`mb-4 font-sans ${isNarrativeArticle ? "text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48" : "text-[1.08rem] font-medium tracking-[-0.025em] text-black/50"}`}>
-                    Tagged With
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {article.tags.map((tag: any) => (
-                      <span
-                        key={tag.id}
-                        className={`rounded-full border px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] ${isNarrativeArticle ? "border-white/10 bg-white/[0.03] text-white/64" : "border-black/10 bg-black/[0.035] text-black/58"}`}
-                      >
-                        {tag.name}
-                      </span>
-                    ))}
+                <MotionReveal className="article-body-reveal" delay={80}>
+                  <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
+                    <h3 className={`mb-4 font-sans ${isNarrativeArticle ? "text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48" : "text-[1.08rem] font-medium tracking-[-0.025em] text-black/50"}`}>
+                      Tagged With
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {article.tags.map((tag: any) => (
+                        <span
+                          key={tag.id}
+                          className={`rounded-full border px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] ${isNarrativeArticle ? "border-white/10 bg-white/[0.03] text-white/64" : "border-black/10 bg-black/[0.035] text-black/58"}`}
+                        >
+                          {tag.name}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </MotionReveal>
               )}
 
 
 
               {/* Author Bio with Engagement */}
-              <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
-                      <img
-                        src={AUTHOR_HEADSHOT_URL}
-                        alt="Brandon PT Davis"
-                        className="h-full w-full translate-y-[16%] scale-[1.34] object-cover object-center"
-                        loading="lazy"
-                      />
+              <MotionReveal className="article-body-reveal" delay={80}>
+                <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
+                        <img
+                          src={AUTHOR_HEADSHOT_URL}
+                          alt="Brandon PT Davis"
+                          className="h-full w-full translate-y-[16%] scale-[1.34] object-cover object-center"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
+                      <p className={`mb-4 text-sm ${isNarrativeArticle ? "uppercase tracking-wider text-white/48" : "font-medium tracking-[-0.015em] text-black/42"}`}>Scenic Designer</p>
+                      <p className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}>
+                        Brandon PT Davis is a scenic designer based in San Diego.
+                        His work explores the intersection of physical space, digital technology, and narrative storytelling.
+                      </p>
+
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
-                    <p className={`mb-4 text-sm ${isNarrativeArticle ? "uppercase tracking-wider text-white/48" : "font-medium tracking-[-0.015em] text-black/42"}`}>Scenic Designer</p>
-                    <p className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}>
-                      Brandon PT Davis is a scenic designer based in San Diego.
-                      His work explores the intersection of physical space, digital technology, and narrative storytelling.
-                    </p>
-
-                  </div>
                 </div>
-              </div>
+              </MotionReveal>
 
               {/* Related Articles */}
             </div>
@@ -2109,7 +2135,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
         <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303] text-white" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}>
           <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-10">
             <div className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-              <div className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+              <MotionReveal className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
                 <div className="max-w-3xl">
                   <p className={`mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}>
                     {isLearningPortalArticle ? "Scenic design tutorials" : "Scenic design writing"}
@@ -2124,14 +2150,14 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                 >
                   {isLearningPortalArticle ? "View tutorials" : "View articles"}
                 </Link>
-              </div>
+              </MotionReveal>
 
               <div
                 ref={relatedArticleRailRef}
                 className="-mx-1 overflow-x-auto px-1 pb-10 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               >
                 <div className="flex min-w-max snap-x snap-mandatory gap-4 pr-5">
-                  {related.map((relatedArticle) => {
+                  {related.map((relatedArticle, index) => {
                     const relatedTitle = decodeHTMLEntities(
                       isLearningPortalArticle
                         ? relatedArticle.title
@@ -2149,14 +2175,18 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                       .join(" · ");
 
                     return (
+                      <MotionReveal
+                        key={relatedArticle.id}
+                        className="w-[min(22rem,78vw)] flex-none snap-start md:w-[25rem]"
+                        delay={(index % 6) * 80}
+                      >
                         <Link
-                          key={relatedArticle.id}
                           href={`${articleBasePath}/${relatedArticle.slug}`}
-                          className={`${isNarrativeArticle ? "border-white/10 bg-[#0b0b0b] shadow-[0_8px_24px_rgba(0,0,0,0.24)]" : "border-black/10 bg-[#fbfaf7] shadow-[0_8px_24px_rgba(29,29,31,0.035)]"} group w-[min(22rem,78vw)] flex-none snap-start overflow-hidden rounded-[1.15rem] border no-underline transition-transform duration-300 hover:-translate-y-0.5 md:w-[25rem]`}
+                          className={`${isNarrativeArticle ? "border-white/10 bg-[#0b0b0b] shadow-[0_8px_24px_rgba(0,0,0,0.24)]" : "border-black/10 bg-[#fbfaf7] shadow-[0_8px_24px_rgba(29,29,31,0.035)]"} publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border no-underline transition-transform duration-300 hover:-translate-y-0.5`}
                         >
                           {relatedArticle.coverImageUrl && (
                             <div
-                              className={`site-media-square relative aspect-video overflow-hidden rounded-none ${isNarrativeArticle ? "bg-white/[0.04]" : "bg-[#e5e3dc]"}`}
+                              className={`publish-card-media site-media-square relative aspect-video overflow-hidden rounded-none ${isNarrativeArticle ? "bg-white/[0.04]" : "bg-[#e5e3dc]"}`}
                             >
                               <img
                                 src={relatedArticle.coverImageUrl}
@@ -2167,7 +2197,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                             </div>
                           )}
 
-                          <div className="flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
+                          <div className="publish-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
                             <h3 className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#7b2cff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}>
                               {relatedTitle}
                             </h3>
@@ -2175,6 +2205,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                             <p className={`${isNarrativeArticle ? "text-white/50" : "text-[#6e6e73]"} mt-5 text-[0.88rem] font-semibold tracking-[-0.02em]`}>{metadata}</p>
                           </div>
                         </Link>
+                      </MotionReveal>
                     );
                   })}
                 </div>

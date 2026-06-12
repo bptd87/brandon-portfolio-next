@@ -3,6 +3,7 @@
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MotionReveal from "@/components/MotionReveal";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
@@ -158,7 +159,7 @@ export default function RenderingPortfolio() {
       <main>
         <section className="bg-[#111111] pt-12 md:pt-16">
           <div className="px-[clamp(1.5rem,5vw,6rem)]">
-            <div className="mb-5 flex flex-wrap items-end justify-between gap-4 pb-4">
+            <MotionReveal className="mb-5 flex flex-wrap items-end justify-between gap-4 pb-4">
               <div>
                 <p className="font-mono text-[0.68rem] uppercase leading-none tracking-[0.16em] text-white/46">
                   Rendering as scenic design.
@@ -171,12 +172,12 @@ export default function RenderingPortfolio() {
               <p className="font-mono text-[0.72rem] uppercase leading-none tracking-[0.16em] text-white/42">
                 {allRenderingItems.length} studies
               </p>
-            </div>
-            <div>
+            </MotionReveal>
+            <MotionReveal delay={120}>
               <h1 className="font-sans text-7xl font-medium uppercase leading-[0.78] tracking-normal text-white sm:text-8xl md:text-[9rem] lg:text-[11rem] xl:text-[14rem]">
                 Rendering
               </h1>
-            </div>
+            </MotionReveal>
           </div>
         </section>
 
@@ -184,47 +185,52 @@ export default function RenderingPortfolio() {
           <section id="rendering" className="scroll-mt-24 border-t border-white/12 bg-[#111111]">
             <div className="portfolio-focus-grid grid w-full grid-cols-1 border-l border-white/12 md:grid-cols-4">
               {allRenderingItems.map((item, index) => (
-                <Link
+                <MotionReveal
                   key={item.id}
-                  href={`/projects/rendering/${item.slug}`}
-                  className={`portfolio-focus-card group block border-b border-r border-white/12 ${index % 6 < 2 ? "md:col-span-2" : ""}`}
+                  className={`${index % 6 < 2 ? "md:col-span-2" : ""} h-full`}
+                  delay={(index % 10) * 70}
                 >
-                  <article className="bg-[#111111]">
-                    <div className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
-                      {item.imageUrl ? (
-                        <ProgressiveImage
-                          src={item.imageUrl}
-                          alt={item.altText}
-                          aspectRatio="4 / 3"
-                          objectFit="cover"
-                          containerClassName="site-media-square h-full w-full"
-                          className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                          loading={index < eagerRenderingCount ? "eager" : "lazy"}
-                          fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center text-white/42">
-                          Image unavailable
-                        </div>
-                      )}
-                    </div>
-                    <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
-                      <div>
-                        <p className="font-mono text-[0.66rem] uppercase leading-none tracking-[0.13em] text-white/80">
-                          Rendering
-                        </p>
-                        <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
-                          {item.title}
-                        </h2>
+                  <Link
+                    href={`/projects/rendering/${item.slug}`}
+                    className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+                  >
+                    <article className="h-full bg-[#111111]">
+                      <div className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
+                        {item.imageUrl ? (
+                          <ProgressiveImage
+                            src={item.imageUrl}
+                            alt={item.altText}
+                            aspectRatio="4 / 3"
+                            objectFit="cover"
+                            containerClassName="site-media-square h-full w-full"
+                            className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                            loading={index < eagerRenderingCount ? "eager" : "lazy"}
+                            fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-white/42">
+                            Image unavailable
+                          </div>
+                        )}
                       </div>
-                      {[item.client, item.year].filter(Boolean).length > 0 ? (
-                        <p className="max-w-[16ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52 md:text-right">
-                          {[item.client, item.year].filter(Boolean).join(" / ")}
-                        </p>
-                      ) : null}
-                    </div>
-                  </article>
-                </Link>
+                      <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
+                        <div>
+                          <p className="font-mono text-[0.66rem] uppercase leading-none tracking-[0.13em] text-white/80">
+                            Rendering
+                          </p>
+                          <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
+                            {item.title}
+                          </h2>
+                        </div>
+                        {[item.client, item.year].filter(Boolean).length > 0 ? (
+                          <p className="max-w-[16ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52 md:text-right">
+                            {[item.client, item.year].filter(Boolean).join(" / ")}
+                          </p>
+                        ) : null}
+                      </div>
+                    </article>
+                  </Link>
+                </MotionReveal>
               ))}
             </div>
           </section>

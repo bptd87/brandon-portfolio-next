@@ -10,6 +10,7 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import MotionReveal from "@/components/MotionReveal";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { SEO } from "@/components/SEO";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
@@ -220,54 +221,65 @@ export default function About() {
             <AnimatedSection delay={120} className="mx-auto max-w-[78rem]">
               <article>
                 <div className="mx-auto max-w-[62rem] space-y-8 text-[1.18rem] font-medium leading-9 tracking-[-0.026em] text-foreground/84 md:text-[1.34rem] md:leading-10">
-                  <p>
-                    Brandon PT Davis is a scenic designer whose work begins with
-                    the pressure of a room: how a space holds memory, how
-                    architecture shapes behavior, and how scenery can give a
-                    production its physical rhythm. His designs are built from
-                    research, dramaturgy, collaboration, and a belief that the
-                    stage picture should clarify the emotional life of a play.
-                  </p>
-                  <p>
-                    Based in San Diego, California, Brandon designs for regional
-                    theatres, summer stock companies, festivals, and academic
-                    institutions across the United States. His portfolio spans
-                    intimate dramas, musicals, Shakespeare, comedies, new work,
-                    and productions that move between realism, memory, and
-                    theatrical abstraction.
-                  </p>
-
-                  <blockquote className="py-8 md:py-10">
-                    <p className="font-sans text-[clamp(2rem,4.4vw,4.9rem)] font-medium leading-[0.95] tracking-[-0.075em]">
-                      <span className="bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text text-transparent">
-                        I try not to arrive. The useful work usually starts
-                        somewhere past certainty, a little further out than
-                        feels comfortable.
-                      </span>
+                  <MotionReveal className="about-body-reveal">
+                    <p>
+                      Brandon PT Davis is a scenic designer whose work begins with
+                      the pressure of a room: how a space holds memory, how
+                      architecture shapes behavior, and how scenery can give a
+                      production its physical rhythm. His designs are built from
+                      research, dramaturgy, collaboration, and a belief that the
+                      stage picture should clarify the emotional life of a play.
                     </p>
-                  </blockquote>
+                  </MotionReveal>
+                  <MotionReveal className="about-body-reveal" delay={70}>
+                    <p>
+                      Based in San Diego, California, Brandon designs for regional
+                      theatres, summer stock companies, festivals, and academic
+                      institutions across the United States. His portfolio spans
+                      intimate dramas, musicals, Shakespeare, comedies, new work,
+                      and productions that move between realism, memory, and
+                      theatrical abstraction.
+                    </p>
+                  </MotionReveal>
 
-                  <p>
-                    His recent work includes productions for South Coast
-                    Repertory, Maples Repertory Theatre, Okoboji Summer Theatre,
-                    New Swan Theatre Festival, Utah Shakespeare Festival,
-                    Stephens College, and the University of Missouri. Across
-                    those rooms, the goal remains consistent: create scenic
-                    environments that support actors, directors, technicians,
-                    and audiences in the same act of storytelling.
-                  </p>
-                  <p>
-                    Alongside professional design practice, Brandon teaches
-                    scenic design, rendering, drafting, and visual
-                    communication. His classroom work is connected to his
-                    professional work: helping emerging designers build clear
-                    process, stronger taste, and practical tools for
-                    collaboration.
-                  </p>
+                  <MotionReveal className="about-body-reveal" delay={90}>
+                    <blockquote className="py-8 md:py-10">
+                      <p className="font-sans text-[clamp(2rem,4.4vw,4.9rem)] font-medium leading-[0.95] tracking-[-0.075em]">
+                        <span className="bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text text-transparent">
+                          I try not to arrive. The useful work usually starts
+                          somewhere past certainty, a little further out than
+                          feels comfortable.
+                        </span>
+                      </p>
+                    </blockquote>
+                  </MotionReveal>
+
+                  <MotionReveal className="about-body-reveal" delay={70}>
+                    <p>
+                      His recent work includes productions for South Coast
+                      Repertory, Maples Repertory Theatre, Okoboji Summer Theatre,
+                      New Swan Theatre Festival, Utah Shakespeare Festival,
+                      Stephens College, and the University of Missouri. Across
+                      those rooms, the goal remains consistent: create scenic
+                      environments that support actors, directors, technicians,
+                      and audiences in the same act of storytelling.
+                    </p>
+                  </MotionReveal>
+                  <MotionReveal className="about-body-reveal" delay={80}>
+                    <p>
+                      Alongside professional design practice, Brandon teaches
+                      scenic design, rendering, drafting, and visual
+                      communication. His classroom work is connected to his
+                      professional work: helping emerging designers build clear
+                      process, stronger taste, and practical tools for
+                      collaboration.
+                    </p>
+                  </MotionReveal>
                 </div>
 
                 <div className="mx-auto mt-12 grid max-w-[62rem] gap-5 md:grid-cols-2">
-                  <div className="overflow-hidden rounded-[1.5rem] bg-[#101010] p-6 text-white shadow-[0_18px_54px_rgba(17,17,17,0.12)]">
+                  <MotionReveal delay={90}>
+                  <div className="h-full overflow-hidden rounded-[1.5rem] bg-[#101010] p-6 text-white shadow-[0_18px_54px_rgba(17,17,17,0.12)]">
                     <p className="inline-flex items-center gap-2 text-[0.95rem] font-medium tracking-[-0.02em] text-white/58">
                       <GraduationCap className="h-5 w-5" strokeWidth={2.2} aria-hidden="true" />
                       Education
@@ -285,8 +297,10 @@ export default function About() {
                       Stephens College
                     </p>
                   </div>
+                  </MotionReveal>
 
-                  <div className="rounded-[1.5rem] bg-white p-6 shadow-[0_18px_54px_rgba(17,17,17,0.07)]">
+                  <MotionReveal delay={150}>
+                  <div className="h-full rounded-[1.5rem] bg-white p-6 shadow-[0_18px_54px_rgba(17,17,17,0.07)]">
                     <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/48">
                       Practice
                     </p>
@@ -297,12 +311,13 @@ export default function About() {
                       <p>Drafting and Visualization</p>
                     </div>
                   </div>
+                  </MotionReveal>
                 </div>
 
                 <div className="mx-auto mt-5 grid max-w-[62rem] gap-4">
-                  {PROFILE_ARTICLE_LINKS.map((profileLink) => (
+                  {PROFILE_ARTICLE_LINKS.map((profileLink, index) => (
+                    <MotionReveal key={profileLink.href} delay={index * 80}>
                     <ExternalLinkPreview
-                      key={profileLink.href}
                       href={profileLink.href}
                       className="group grid gap-6 rounded-[1.5rem] bg-white/78 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.08)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
                       previewLabel={profileLink.previewLabel}
@@ -323,6 +338,7 @@ export default function About() {
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </span>
                     </ExternalLinkPreview>
+                    </MotionReveal>
                   ))}
                 </div>
               </article>
@@ -361,11 +377,14 @@ export default function About() {
             >
               <div className="flex min-w-max snap-x snap-mandatory gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
                 {navigationCards.map((card, index) => (
-                  <Link
+                  <MotionReveal
                     key={card.href}
+                    className="h-[26rem] w-[min(19rem,82vw)] shrink-0 snap-start md:h-[30rem] md:w-[22rem]"
+                    delay={index * 70}
+                  >
+                  <Link
                     href={card.href}
-                    className="group relative flex h-[26rem] w-[min(19rem,82vw)] shrink-0 snap-start flex-col overflow-hidden rounded-[1.25rem] bg-[#f7f6f2] p-5 shadow-[0_18px_50px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.025] transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_70px_rgba(17,17,17,0.12)] md:h-[30rem] md:w-[22rem] md:rounded-[2rem] md:p-6"
-                    style={{ transitionDelay: `${Math.min(index * 35, 140)}ms` }}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] bg-[#f7f6f2] p-5 shadow-[0_18px_50px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.025] transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_70px_rgba(17,17,17,0.12)] md:rounded-[2rem] md:p-6"
                   >
                     <div className="relative z-10">
                       <p className="text-[0.95rem] font-semibold tracking-[-0.02em] text-foreground/58">
@@ -394,6 +413,7 @@ export default function About() {
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </div>
                   </Link>
+                  </MotionReveal>
                 ))}
               </div>
             </div>
@@ -434,10 +454,14 @@ export default function About() {
               </h2>
               <div className="mt-9 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className="flex snap-x snap-mandatory gap-4 pr-[clamp(1rem,5vw,6rem)]">
-                  {galleryImages.map((image) => (
-                    <figure
+                  {galleryImages.map((image, index) => (
+                    <MotionReveal
                       key={image.url}
-                      className="site-media-square w-[min(20rem,82vw)] shrink-0 snap-start overflow-hidden border border-black/10 bg-black"
+                      className="w-[min(20rem,82vw)] shrink-0 snap-start"
+                      delay={index * 60}
+                    >
+                    <figure
+                      className="site-media-square overflow-hidden border border-black/10 bg-black"
                     >
                       <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-black">
                         <img
@@ -452,6 +476,7 @@ export default function About() {
                         {image.caption}
                       </figcaption>
                     </figure>
+                    </MotionReveal>
                   ))}
                 </div>
               </div>
@@ -553,7 +578,8 @@ export default function About() {
           />
 
           <div className="relative flex min-h-[calc(62svh-7rem)] items-center justify-center md:min-h-[calc(78svh-10rem)]">
-            <div className="w-full max-w-[76rem] rounded-[1.25rem] bg-black p-[clamp(1.25rem,5vw,4rem)] text-white shadow-[0_34px_120px_rgba(17,17,17,0.18)] md:rounded-[1.75rem]">
+            <MotionReveal className="w-full max-w-[76rem]">
+            <div className="rounded-[1.25rem] bg-black p-[clamp(1.25rem,5vw,4rem)] text-white shadow-[0_34px_120px_rgba(17,17,17,0.18)] md:rounded-[1.75rem]">
               <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] md:items-end">
                 <div>
                   <p className="section-kicker text-white/42">
@@ -590,6 +616,7 @@ export default function About() {
                 </div>
               </div>
             </div>
+            </MotionReveal>
           </div>
         </section>
       </main>

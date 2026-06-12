@@ -17,9 +17,9 @@ import {
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Brandon PT Davis | Scenic Designer Portfolio",
+  title: "Brandon PT Davis | Scenic Designer",
   description:
-    "Brandon PT Davis is a San Diego-based scenic designer giving form to how stories reflect our world through theatre environments, renderings, and production design.",
+    "Scenic design portfolio of Brandon PT Davis, a San Diego-based scenic designer creating theatrical environments for plays, musicals, Shakespeare, TYA, rendering, and experiential design.",
   pathname: "/",
 });
 
@@ -34,9 +34,9 @@ function getHomePageJsonLd(projects: ScenicProjectSummary[]) {
       "@type": "WebPage",
       "@id": absoluteUrl("/#home"),
       url: absoluteUrl("/"),
-      name: "Brandon PT Davis | Scenic Designer Portfolio",
+      name: "Brandon PT Davis | Scenic Designer",
       description:
-        "Selected scenic design projects, theatrical renderings, and production environments that give form to how stories reflect our world.",
+        "Scenic design portfolio of Brandon PT Davis, a San Diego-based scenic designer creating theatrical environments for plays, musicals, Shakespeare, TYA, rendering, and experiential design.",
       isPartOf: {
         "@id": BRANDON_WEBSITE_ID,
       },

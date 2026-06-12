@@ -688,6 +688,7 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
     sampleSlugs: ["first-bank-lollipops-commercial", "first-bank-lollipops"],
     summary:
       "A campaign-focused experiential project that pairs concept visualization with live documentation, framing how the First Bank Lollipops idea moves from pitch asset to on-site experience.",
+    seoTitle: "First Bank Experiential Design",
     sections: [
       {
         heading: "Concept and Delivery",
@@ -736,6 +737,7 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
       "Two walkthrough videos for The Industrial, a Las Vegas event space, created through my work with Adaptive Design Services in July 2024.",
     heroSummary:
       "A July 2024 walkthrough-video project for The Industrial in Las Vegas, created through my work with Adaptive Design Services.",
+    seoTitle: "Industrial Las Vegas Event Design",
     coverImageUrl: "https://i.ytimg.com/vi/8SG_gjUUU2A/hqdefault.jpg",
     coverVideoUrl: "https://www.youtube.com/watch?v=8SG_gjUUU2A",
     coverAltText: "The Industrial Las Vegas event space walkthrough video thumbnail",
@@ -865,7 +867,7 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
     coverImageUrl: "https://i.ytimg.com/vi/ZjGy_3Ipk_w/maxresdefault.jpg",
     coverVideoUrl: "https://www.youtube.com/watch?v=ZjGy_3Ipk_w",
     coverAltText: "Lysistrata outdoor scenic design walkthrough video thumbnail",
-    seoTitle: "Lysistrata Outdoor Scenic Design | Experiential Design | Brandon PT Davis",
+    seoTitle: "Lysistrata Outdoor Scenic Design",
     seoDescription:
       "Outdoor scenic design for Lysistrata at UTEP in 2021, including renderings, walkthrough video, and COVID-era documentation for the department's first pandemic production.",
     sections: [
@@ -894,7 +896,7 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
       "Renderings and venue documentation for New Swan, showing the open-air performance space as both image and technical environment.",
     heroSummary:
       "Renderings and venue documentation for an open-air performance environment.",
-    seoTitle: "New Swan Renderings | Experiential Design | Brandon PT Davis",
+    seoTitle: "New Swan Renderings | Venue Study",
     seoDescription:
       "Renderings and venue documentation for New Swan, showing the open-air performance space as both image and technical environment.",
     sections: [
@@ -1152,7 +1154,7 @@ function buildLocalExperientialProjects(): LocalExperientialProject[] {
         title: definition.title,
         summary: definition.summary,
         heroSummary: definition.heroSummary,
-        seoTitle: definition.seoTitle || `${definition.title} | Experiential Design | Brandon PT Davis`,
+        seoTitle: definition.seoTitle || `${definition.title} | Experiential Design`,
         seoDescription,
         year: derivedYear,
         month: derivedMonth,

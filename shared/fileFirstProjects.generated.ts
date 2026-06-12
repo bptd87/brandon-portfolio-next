@@ -9,7 +9,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "A Funny Thing Happened on the Way to the Forum | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Forum Scenic Design | Lake Dillon Theatre",
   "seoDescription": "Scenic design for A Funny Thing Happened on the Way to the Forum at Lake Dillon Theatre Company, using playful Roman architecture and three distinct house façades to support the pace and absurdity of farce.",
   "seoKeywords": "A Funny Thing Happened on the Way to the Forum, scenic design, Lake Dillon Theatre Company, musical comedy, farce, Brandon PT Davis",
   "creativeTeam": [
@@ -83,7 +83,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 11,
   "status": "published",
   "featured": false,
-  "seoTitle": "A Smalltowne Christmas | Scenic Design by Brandon PT Davis",
+  "seoTitle": "A Smalltowne Christmas Scenic Design",
   "seoDescription": "Scenic design for A Smalltowne Christmas at Stephens College, capturing the warmth, nostalgia, and festive spirit of a small-town holiday celebration.",
   "seoKeywords": "A Smalltowne Christmas, scenic design, Stephens College, holiday musical, Brandon PT Davis",
   "creativeTeam": [
@@ -156,7 +156,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 10,
   "status": "published",
   "featured": false,
-  "seoTitle": "All My Sons | Scenic Design by Brandon PT Davis",
+  "seoTitle": "All My Sons Scenic Design",
   "seoDescription": "Scenic design for All My Sons at Stephens College, using a postwar suburban home and open yard to support realism, moral pressure, and the unraveling of the American Dream.",
   "seoKeywords": "All My Sons, scenic design, Stephens College, Arthur Miller, drama, Brandon PT Davis",
   "creativeTeam": [
@@ -284,7 +284,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "American Idiot | Scenic Design by Brandon PT Davis",
+  "seoTitle": "American Idiot Scenic Design",
   "seoDescription": "Scenic design for American Idiot at University of California Irvine, using modular concrete architecture, projection, and industrial atmosphere to support rebellion and transformation.",
   "seoKeywords": "American Idiot, scenic design, UC Irvine, Green Day, musical theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -370,7 +370,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 10,
   "status": "published",
   "featured": false,
-  "seoTitle": "An Enemy of the People | Scenic Design by Brandon PT Davis",
+  "seoTitle": "An Enemy of the People Scenic Design",
   "seoDescription": "Scenic design for An Enemy of the People at Stephens College, using a grayscale illustrated world and red accents to heighten moral tension and exposure.",
   "seoKeywords": "An Enemy of the People scenic design, Stephens College theatre, Brandon PT Davis, grayscale set design, dramatic theatre scenery",
   "creativeTeam": [
@@ -431,7 +431,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "An Inspector Calls | Scenic Design by Brandon PT Davis",
+  "seoTitle": "An Inspector Calls Scenic Design",
   "seoDescription": "Scenic design for An Inspector Calls at Okoboji Summer Theatre, using period restraint, controlled entrances, and unstable domestic order to support Priestley’s moral thriller.",
   "seoKeywords": "An Inspector Calls, scenic design, Okoboji Summer Theatre, J.B. Priestley, Brandon PT Davis, drama, theatre design",
   "creativeTeam": [
@@ -497,7 +497,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "Angel Street | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Angel Street Scenic Design",
   "seoDescription": "Scenic design for Angel Street at Okoboji Summer Theatre, building a formal Victorian drawing room where domestic realism and psychological tension coexist.",
   "seoKeywords": "Angel Street, Gaslight, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -697,7 +697,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "Bingo: The Winning Musical | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Bingo Scenic Design | Okoboji",
   "seoDescription": "Scenic design for Bingo: The Winning Musical at Okoboji Summer Theatre, blending nautical themes with playful color to capture the spirit of the Okoboji Lakes region.",
   "seoKeywords": "Bingo The Winning Musical, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -770,7 +770,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 2,
   "status": "published",
   "featured": false,
-  "seoTitle": "Boeing, Boeing | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Boeing Boeing Scenic Design",
   "seoDescription": "Scenic design for Boeing, Boeing at Stephens College, using midcentury architecture, color, and precise door placement to support the timing and choreography of classic farce.",
   "seoKeywords": "Boeing Boeing, scenic design, Stephens College, farce, comedy, midcentury modern, Brandon PT Davis",
   "creativeTeam": [
@@ -837,7 +837,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "Cole | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Cole Scenic Design | Okoboji",
   "seoDescription": "Scenic design for Cole at Okoboji Summer Theatre, using a jazz-age bar, integrated band, and cabaret intimacy to support Cole Porter’s music.",
   "seoKeywords": "Cole scenic design, Okoboji Summer Theatre, cabaret scenic design, jazz-age stage design, Brandon PT Davis, musical revue scenery",
   "creativeTeam": [
@@ -981,7 +981,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 8,
   "status": "published",
   "featured": false,
-  "seoTitle": "Dial “M” for Murder | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Dial M for Murder Scenic Design",
   "seoDescription": "Scenic design for Dial “M” for Murder at Okoboji Summer Theatre, using a precise apartment interior, negative space, and controlled sightlines to heighten suspense.",
   "seoKeywords": "Dial M for Murder scenic design, Okoboji Summer Theatre, suspense scenic design, Brandon PT Davis, dramatic apartment set",
   "creativeTeam": [
@@ -1042,7 +1042,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "Don't Dress for Dinner | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Don't Dress for Dinner Scenic Design",
   "seoDescription": "Scenic design for Don't Dress for Dinner at Okoboji Summer Theatre, using a French farmhouse setting with timber framing, rustic detail, and precise farce-driven layout.",
   "seoKeywords": "Don't Dress for Dinner, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
   "creativeTeam": [
@@ -1253,7 +1253,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "Head Over Heels | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Head Over Heels Scenic Design",
   "seoDescription": "Scenic design for Head Over Heels at Theatre SilCo, using club-culture energy, modular scenery, and vibrant color to support transformation, rebellion, and joy.",
   "seoKeywords": "Head Over Heels scenic design, Theatre SilCo, Brandon PT Davis, musical theatre design, Go-Go's musical, club-inspired stage design",
   "coverImagePosition": "center",
@@ -1332,7 +1332,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "Last Train to Nibroc | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Last Train to Nibroc Scenic Design",
   "seoDescription": "Scenic design for Last Train to Nibroc at Okoboji Summer Theatre, creating an intimate barn-wood frame inside a large proscenium to support closeness, memory, and gentle transition.",
   "seoKeywords": "Last Train to Nibroc, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   "creativeTeam": [
@@ -1393,7 +1393,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 8,
   "status": "published",
   "featured": false,
-  "seoTitle": "Little Shop of Horrors | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Little Shop of Horrors Scenic Design",
   "seoDescription": "Scenic design for Little Shop of Horrors at Okoboji Summer Theatre, creating a gritty Skid Row storefront with real pressure, texture, and claustrophobic tension.",
   "seoKeywords": "Little Shop of Horrors, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -1462,7 +1462,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 3,
   "status": "published",
   "featured": false,
-  "seoTitle": "¡LOTERIA: GAME ON! | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Loteria Game On Scenic Design",
   "seoDescription": "Scenic design for ¡LOTERIA: GAME ON! at Theatre SilCo, moving from a suburban family basement into a bright, 8-bit-inspired Loteria universe built for theatrical play and young audiences.",
   "seoKeywords": "Loteria Game On, scenic design, Theatre SilCo, theatre for young audiences, projection design, Brandon PT Davis",
   "creativeTeam": [
@@ -1621,7 +1621,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": true,
-  "seoTitle": "Much Ado About Nothing | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Much Ado About Nothing Scenic Design",
   "seoDescription": "Scenic design for Much Ado About Nothing at New Swan Theatre Festival, reimagining Shakespeare’s comedy through the language of the spaghetti western and the architecture of a frontier saloon.",
   "seoKeywords": "Much Ado About Nothing, scenic design, New Swan Theatre Festival, Shakespeare, Brandon PT Davis, western scenic design",
   "creativeTeam": [
@@ -1687,7 +1687,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "Not Now, Darling | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Not Now Darling Scenic Design",
   "seoDescription": "Scenic design for Not Now, Darling at Okoboji Summer Theatre, blending British elegance with Wes Anderson-inspired color and farce-ready architecture.",
   "seoKeywords": "Not Now, Darling, scenic design, Okoboji Summer Theatre, comedy, farce, Brandon PT Davis",
   "creativeTeam": [
@@ -1748,7 +1748,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 2,
   "status": "published",
   "featured": false,
-  "seoTitle": "Parliament Square | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Parliament Square Scenic Design",
   "seoDescription": "Scenic design for Parliament Square at University of California Irvine, using a circular stone path, fractured concrete, and a cold ritual landscape to support protest and political tension.",
   "seoKeywords": "Parliament Square, scenic design, UC Irvine, drama, Brandon PT Davis",
   "creativeTeam": [
@@ -1818,7 +1818,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "Rich Girl | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Rich Girl Scenic Design",
   "seoDescription": "Scenic design for Rich Girl at Okoboji Summer Theatre, using a sleek Manhattan penthouse to balance polish, privilege, and emotional vulnerability.",
   "seoKeywords": "Rich Girl, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   "creativeTeam": [
@@ -1954,7 +1954,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 4,
   "status": "published",
   "featured": false,
-  "seoTitle": "The 25th Annual Putnam County Spelling Bee | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Putnam County Spelling Bee Scenic Design",
   "seoDescription": "Scenic design for The 25th Annual Putnam County Spelling Bee at Stephens College, using a detailed middle school gymnasium to support comedy, competition, and emotional sincerity.",
   "seoKeywords": "Putnam County Spelling Bee scenic design, Stephens College theatre, Brandon PT Davis, musical theatre scenic design, school gymnasium set",
   "creativeTeam": [
@@ -2011,7 +2011,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 1,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Bald Soprano | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Bald Soprano Scenic Design",
   "seoDescription": "Scenic and lighting design for The Bald Soprano at Stephens College, featuring a distorted domestic setting that reflects miscommunication, repetition, and the breakdown of meaning.",
   "seoKeywords": "The Bald Soprano, Eugene Ionesco, scenic design, lighting design, Stephens College, absurdism, Brandon PT Davis",
   "creativeTeam": [
@@ -2068,7 +2068,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Complete Works of William Shakespeare (abridged) | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Complete Works Scenic Design | Okoboji",
   "seoDescription": "Scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, featuring a playful and modular set built for fast transitions and comic energy.",
   "seoKeywords": "The Complete Works of William Shakespeare abridged, scenic design, Okoboji Summer Theatre, comedy, Shakespeare, Brandon PT Davis",
   "creativeTeam": [
@@ -2129,7 +2129,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Effect of Gamma Rays on Man-in-the-Moon Marigolds | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Gamma Rays Scenic Design | Okoboji",
   "seoDescription": "Scenic design for The Effect of Gamma Rays on Man-in-the-Moon Marigolds at Okoboji Summer Theatre, using distressed wallpaper, reclaimed dock lumber, and a compressed interior to support emotional instability and resilience.",
   "seoKeywords": "The Effect of Gamma Rays on Man-in-the-Moon Marigolds, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   "creativeTeam": [
@@ -2319,7 +2319,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 8,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Liar | Scenic Design by Brandon PT Davis",
+  "seoTitle": "The Liar Scenic Design",
   "seoDescription": "Scenic design for The Liar at Okoboji Summer Theatre, blending classical elegance with bold playful elements to heighten the comedy's wit and charm.",
   "seoKeywords": "The Liar, David Ives, Pierre Corneille, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
   "creativeTeam": [
@@ -2380,7 +2380,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Man of La Mancha | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Man of La Mancha Scenic Design",
   "seoDescription": "Scenic design for The Man of La Mancha at Lake Dillon Theatre Company, using industrial textures, modular construction, and a ritual central arena to support Don Quixote’s world of imagination and resilience.",
   "seoKeywords": "The Man of La Mancha, scenic design, Lake Dillon Theatre Company, musical theatre, Don Quixote, Brandon PT Davis",
   "creativeTeam": [
@@ -2457,7 +2457,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 7,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Marvelous Wonderettes: Dream On | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Marvelous Wonderettes Scenic Design",
   "seoDescription": "Scenic design for The Marvelous Wonderettes: Dream On at Okoboji Summer Theatre, using a high school reunion gym that evolves from early-1960s polish into 1970s nostalgia.",
   "seoKeywords": "The Marvelous Wonderettes Dream On, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -2522,7 +2522,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 2,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Merry Wives of Windsor | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Merry Wives of Windsor Scenic Design",
   "seoDescription": "Scenic design for The Merry Wives of Windsor at Stephens College, reimagined through the campy visual language of a 1950s sitcom with flown color doors, graphic framing, and playful theatrical transitions.",
   "seoKeywords": "The Merry Wives of Windsor, scenic design, Stephens College, Shakespeare, comedy, Brandon PT Davis",
   "creativeTeam": [
@@ -2588,7 +2588,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 6,
   "status": "published",
   "featured": false,
-  "seoTitle": "The Pajama Game | Scenic Design by Brandon PT Davis",
+  "seoTitle": "The Pajama Game Scenic Design",
   "seoDescription": "Scenic design for The Pajama Game at University of California Irvine, using bold factory signage, modular staging, and 1950s graphic language to support dance, romance, and labor conflict.",
   "seoKeywords": "The Pajama Game, scenic design, UC Irvine, musical theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -2740,7 +2740,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 3,
   "status": "published",
   "featured": false,
-  "seoTitle": "Tomás and the Library Lady | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Tomás and the Library Lady Scenic Design",
   "seoDescription": "Scenic design for Tomás and the Library Lady at Lake Dillon Theatre Company, using warm, readable spaces and library motifs as portals into literacy, belonging, and imaginative growth.",
   "seoKeywords": "Tomás and the Library Lady, scenic design, Lake Dillon Theatre Company, theatre for young audiences, bilingual theatre, Brandon PT Davis",
   "creativeTeam": [
@@ -2956,7 +2956,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "month": 2,
   "status": "published",
   "featured": false,
-  "seoTitle": "Vanya and Sonia and Masha and Spike | Scenic Design by Brandon PT Davis",
+  "seoTitle": "Vanya and Sonia Scenic Design",
   "seoDescription": "Scenic design for Vanya and Sonia and Masha and Spike at Stephens College, using a Bucks County porch and warm domestic architecture to support nostalgia, comedy, and emotional tension.",
   "seoKeywords": "Vanya and Sonia and Masha and Spike, scenic design, Stephens College, comedy, Brandon PT Davis",
   "creativeTeam": [

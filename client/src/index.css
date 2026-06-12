@@ -417,6 +417,14 @@
 
 @layer components {
   @media (min-width: 768px) and (hover: hover) {
+    .portfolio-focus-card .portfolio-focus-media img,
+    .portfolio-focus-card .portfolio-focus-media picture,
+    .portfolio-focus-card .portfolio-focus-media video {
+      transform: scale(1.015);
+      transition: transform 1300ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
     .portfolio-focus-media {
       transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform;
@@ -425,6 +433,160 @@
     .portfolio-focus-card:hover .portfolio-focus-media,
     .portfolio-focus-card:focus-visible .portfolio-focus-media {
       transform: scale(1.008);
+    }
+
+    .portfolio-focus-card:hover .portfolio-focus-media img,
+    .portfolio-focus-card:focus-visible .portfolio-focus-media img,
+    .portfolio-focus-card:hover .portfolio-focus-media picture,
+    .portfolio-focus-card:focus-visible .portfolio-focus-media picture,
+    .portfolio-focus-card:hover .portfolio-focus-media video,
+    .portfolio-focus-card:focus-visible .portfolio-focus-media video {
+      transform: scale(1.055);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-reveal .portfolio-focus-media img,
+    .motion-reveal .portfolio-focus-media picture,
+    .motion-reveal .portfolio-focus-media video {
+      filter: saturate(0.9) brightness(0.82);
+      transform: scale(1.085);
+      transition:
+        filter 980ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: 90ms;
+      will-change: filter, transform;
+    }
+
+    .motion-reveal .portfolio-focus-copy {
+      opacity: 0;
+      filter: blur(2px);
+      transform: translateY(1rem);
+      transition:
+        opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
+        filter 720ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: 210ms;
+      will-change: opacity, filter, transform;
+    }
+
+    .motion-reveal .publish-card-media img,
+    .motion-reveal .learning-card-media img,
+    .motion-reveal .learning-card-media iframe {
+      filter: saturate(0.9) brightness(0.82);
+      transform: scale(1.085);
+      transition:
+        filter 980ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: 90ms;
+      will-change: filter, transform;
+    }
+
+    .motion-reveal .publish-card-copy,
+    .motion-reveal .learning-card-copy {
+      opacity: 0;
+      filter: blur(2px);
+      transform: translateY(1rem);
+      transition:
+        opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
+        filter 720ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: 210ms;
+      will-change: opacity, filter, transform;
+    }
+
+    .motion-reveal--visible .portfolio-focus-media img,
+    .motion-reveal--visible .portfolio-focus-media picture,
+    .motion-reveal--visible .portfolio-focus-media video {
+      filter: saturate(1) brightness(1);
+      transform: scale(1.015);
+    }
+
+    .motion-reveal--visible .portfolio-focus-copy {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    .motion-reveal--visible .publish-card-media img,
+    .motion-reveal--visible .learning-card-media img,
+    .motion-reveal--visible .learning-card-media iframe {
+      filter: saturate(1) brightness(1);
+      transform: scale(1.015);
+    }
+
+    .motion-reveal--visible .publish-card-copy,
+    .motion-reveal--visible .learning-card-copy {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    .portfolio-focus-grid > *:not(.motion-reveal) {
+      opacity: 0;
+      transform: translateY(1.6rem);
+      animation: portfolio-grid-item-in 760ms cubic-bezier(0.16, 1, 0.3, 1)
+        forwards;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 1):not(.motion-reveal) {
+      animation-delay: 0ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 2):not(.motion-reveal) {
+      animation-delay: 70ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 3):not(.motion-reveal) {
+      animation-delay: 140ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 4):not(.motion-reveal) {
+      animation-delay: 210ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 5):not(.motion-reveal) {
+      animation-delay: 280ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 6):not(.motion-reveal) {
+      animation-delay: 350ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 7):not(.motion-reveal) {
+      animation-delay: 420ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 8):not(.motion-reveal) {
+      animation-delay: 490ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n + 9):not(.motion-reveal) {
+      animation-delay: 560ms;
+    }
+
+    .portfolio-focus-grid > :nth-child(10n):not(.motion-reveal) {
+      animation-delay: 630ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) and (hover: hover) {
+    .motion-reveal--visible .portfolio-focus-card:hover .portfolio-focus-media img,
+    .motion-reveal--visible .portfolio-focus-card:focus-visible .portfolio-focus-media img,
+    .motion-reveal--visible .portfolio-focus-card:hover .portfolio-focus-media picture,
+    .motion-reveal--visible .portfolio-focus-card:focus-visible .portfolio-focus-media picture,
+    .motion-reveal--visible .portfolio-focus-card:hover .portfolio-focus-media video,
+    .motion-reveal--visible .portfolio-focus-card:focus-visible .portfolio-focus-media video {
+      transform: scale(1.055);
+    }
+
+    .motion-reveal--visible .publish-motion-card:hover .publish-card-media img,
+    .motion-reveal--visible .publish-motion-card:focus-visible .publish-card-media img,
+    .motion-reveal--visible .publish-motion-card:hover .learning-card-media img,
+    .motion-reveal--visible .publish-motion-card:focus-visible .learning-card-media img,
+    .motion-reveal--visible .publish-motion-card:hover .learning-card-media iframe,
+    .motion-reveal--visible .publish-motion-card:focus-visible .learning-card-media iframe {
+      transform: scale(1.045);
     }
   }
 
@@ -665,6 +827,17 @@
     opacity: 1;
     transform: scale(1);
     filter: blur(0);
+  }
+}
+
+@keyframes portfolio-grid-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

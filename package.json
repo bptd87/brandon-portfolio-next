@@ -17,7 +17,8 @@
     "generate:file-first-project-overrides": "node --import tsx scripts/generate-file-first-project-overrides.ts",
     "export:project-content": "node --import tsx scripts/export-project-content.ts",
     "migrate:manus-assets:blob": "node --import tsx scripts/migrate-manus-assets-to-blob.ts",
-    "migrate:becoming-photos:blob": "node --import tsx scripts/upload-becoming-photos-to-blob.ts"
+    "migrate:becoming-photos:blob": "node --import tsx scripts/upload-becoming-photos-to-blob.ts",
+    "migrate:article-audio:blob": "node --import tsx scripts/upload-article-audio-to-blob.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

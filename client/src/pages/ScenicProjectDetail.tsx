@@ -6,6 +6,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import MotionReveal from "@/components/MotionReveal";
 import { SEO } from "@/components/SEO";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
 import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
@@ -516,6 +517,7 @@ export default function ScenicProjectDetail({
             className="relative z-10 mt-auto grid w-full gap-8 lg:grid-cols-[minmax(0,0.84fr)_minmax(21rem,0.48fr)] lg:items-end"
             style={{ transform: "translateY(calc(-1 * clamp(6rem, 16vh, 12rem)))" }}
           >
+            <MotionReveal eager>
             <div>
               <div className="mb-4 text-[clamp(1rem,1.15vw,1.24rem)] font-medium tracking-[0.02em] text-white/74">
                 Scenic Design
@@ -526,7 +528,9 @@ export default function ScenicProjectDetail({
                 {project.title}
               </h1>
             </div>
+            </MotionReveal>
 
+            <MotionReveal eager delay={140}>
             <div className="border-t border-white/22 pt-5">
               <p
                 className="max-w-[31rem] text-[clamp(1rem,1.25vw,1.24rem)] font-normal leading-[1.52] tracking-[-0.025em] text-white/70"
@@ -569,10 +573,12 @@ export default function ScenicProjectDetail({
                 </a>
               </div>
             </div>
+            </MotionReveal>
           </header>
         </section>
 
         <section className="border-y border-white/12 bg-black px-[clamp(1.5rem,5vw,5.5rem)] text-white">
+          <MotionReveal>
           <button
             type="button"
             onClick={() => setIsProjectDetailsOpen((open) => !open)}
@@ -593,8 +599,10 @@ export default function ScenicProjectDetail({
               ) : null}
             </span>
           </button>
+          </MotionReveal>
 
           {isProjectDetailsOpen ? (
+            <MotionReveal delay={80}>
             <div
               id="scenic-project-details"
               className="mx-auto grid w-full max-w-[88rem] gap-x-10 gap-y-10 border-t border-white/10 py-8 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(24rem,1fr)_minmax(17rem,0.58fr)_minmax(14rem,0.46fr)] md:py-10"
@@ -718,6 +726,7 @@ export default function ScenicProjectDetail({
                 <div aria-hidden="true" />
               )}
             </div>
+            </MotionReveal>
           ) : null}
         </section>
 
@@ -733,7 +742,11 @@ export default function ScenicProjectDetail({
                 const blockClass = getScenicMediaBlockClass(item, index, isFullWidth);
 
                 return (
-                  <AnimatedSection key={item.key} className={`site-media-square ${blockClass}`}>
+                  <MotionReveal
+                    key={item.key}
+                    className={`site-media-square ${blockClass}`}
+                    delay={(index % 4) * 60}
+                  >
                     <figure className="site-media-square">
                       {item.mediaType === "image" ? (
                         <button
@@ -800,7 +813,7 @@ export default function ScenicProjectDetail({
                         </figcaption>
                       ) : null}
                     </figure>
-                  </AnimatedSection>
+                  </MotionReveal>
                 );
               })}
             </div>
@@ -826,12 +839,14 @@ export default function ScenicProjectDetail({
 
               <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
                   {moreScenicProjects.map((item, index) => (
-                    <Link
+                    <MotionReveal
                       key={item.slug}
+                      className={index % 6 < 2 ? "md:col-span-2" : ""}
+                      delay={(index % 4) * 80}
+                    >
+                    <Link
                       href={`/project/${item.slug}`}
-                      className={`group block border-b border-r border-white/12 text-white ${
-                        index % 6 < 2 ? "md:col-span-2" : ""
-                      }`}
+                      className="group block h-full border-b border-r border-white/12 text-white"
                     >
                       <article className="bg-[#111111]">
                         <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
@@ -857,6 +872,7 @@ export default function ScenicProjectDetail({
                         </div>
                       </article>
                     </Link>
+                    </MotionReveal>
                   ))}
                 </div>
             </AnimatedSection>

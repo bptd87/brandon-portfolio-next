@@ -2,11 +2,17 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import {
   CalendarDays,
-  ChevronLeft,
   ChevronRight,
+  Drama,
   Heart,
+  Laugh,
+  Music,
+  Theater,
+  UsersRound,
+  type LucideIcon,
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
@@ -45,6 +51,16 @@ const HOME_RENDERING_FLIP_WORDS = [
 const HOME_LOGO_SRC = "/images/site-assets/brand/brandon-pt-davis-white.png";
 const HOME_LOADER_EXIT_START_MS = 1280;
 const HOME_LOADER_DONE_MS = 1860;
+const HOME_FEATURED_SCENIC_SLUGS = [
+  "the-glass-menagerie",
+  "million-dollar-quartet",
+  "the-penelopiad",
+  "tomas-and-the-library-lady",
+  "romero",
+  "boeing-boeing",
+  "alls-well-that-ends-well",
+  "the-merry-wives-of-windsor",
+];
 
 type PublishCard = {
   kind: "Article" | "Tutorial";
@@ -62,6 +78,11 @@ type HomeRenderingRailCard = {
   imageAlt: string;
   title: string;
   meta: string;
+};
+
+type ProcessCard = {
+  title: string;
+  text: string;
 };
 
 function FlipWords({
@@ -276,9 +297,7 @@ const getHomePublishCards = (): PublishCard[] => {
       imageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
       timestamp: getPublishTimestamp(article.publishedAt, article.updatedAt, article.createdAt),
     }))
-    .filter(card => card.image)
-    .sort((a, b) => b.timestamp - a.timestamp)
-    .slice(0, 4);
+    .filter(card => card.image);
 
   const tutorialArticleCards = localArticles
     .filter(article => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
@@ -310,14 +329,10 @@ const getHomePublishCards = (): PublishCard[] => {
       ),
     }));
 
-  const latestTutorialCards = [...tutorialArticleCards, ...tutorialCards]
+  return [...articleCards, ...tutorialArticleCards, ...tutorialCards]
     .filter(card => card.image)
     .sort((a, b) => b.timestamp - a.timestamp)
     .slice(0, 4);
-
-  return Array.from({ length: 4 }).flatMap((_, index) =>
-    [articleCards[index], latestTutorialCards[index]].filter(Boolean)
-  );
 };
 
 const portfolioCategoryRows: Array<{
@@ -325,11 +340,13 @@ const portfolioCategoryRows: Array<{
   match: string[];
   href: string;
   description: string;
+  icon: LucideIcon;
 }> = [
   {
     title: "Drama",
     match: ["Drama"],
     href: "/tags/drama",
+    icon: Drama,
     description:
       "Rooms under pressure. Places where memory, grief, class, and consequence become visible.",
   },
@@ -337,6 +354,7 @@ const portfolioCategoryRows: Array<{
     title: "Comedy",
     match: ["Comedy"],
     href: "/tags/comedy",
+    icon: Laugh,
     description:
       "Spaces tuned for timing: entrances, exits, reversals, hiding places, and social misreadings.",
   },
@@ -344,6 +362,7 @@ const portfolioCategoryRows: Array<{
     title: "Musical Theatre",
     match: ["Musical Theatre"],
     href: "/tags/musical-theatre",
+    icon: Music,
     description:
       "Design that can carry rhythm, scale, spectacle, and emotional turn-on-a-dime transformation.",
   },
@@ -351,6 +370,7 @@ const portfolioCategoryRows: Array<{
     title: "Shakespeare",
     match: ["Shakespeare"],
     href: "/tags/shakespeare",
+    icon: Theater,
     description:
       "Old texts reframed through contemporary space, civic pressure, ritual, and bodies in public.",
   },
@@ -358,8 +378,27 @@ const portfolioCategoryRows: Array<{
     title: "TYA",
     match: ["Theatre for Young Audiences"],
     href: "/tags/theatre-for-young-audiences",
+    icon: UsersRound,
     description:
       "Clear, generous environments for young audiences: playful enough to invite, precise enough to guide.",
+  },
+];
+
+const processCards: ProcessCard[] = [
+  {
+    title: "Research + Dramaturgy",
+    text:
+      "Design choices rooted in text, context, period, metaphor, and the production's central questions.",
+  },
+  {
+    title: "Visualization",
+    text:
+      "Sketches, models, renderings, and drawings that help the team understand atmosphere, scale, movement, and intent.",
+  },
+  {
+    title: "Production Thinking",
+    text:
+      "Scenic ideas shaped for actors, directors, shops, budgets, schedules, venues, and audiences.",
   },
 ];
 
@@ -515,6 +554,250 @@ function HomeThesisSection() {
             ))}
           </dl>
         </div>
+      </div>
+    </section>
+  );
+}
+
+const getFeaturedProjectPanelClass = (index: number) => {
+  return index % 6 < 2 ? "md:col-span-2" : "";
+};
+
+const getFeaturedProjectImageSizes = (index: number) => {
+  return index % 6 < 2
+    ? "(max-width: 768px) 100vw, 50vw"
+    : "(max-width: 768px) 100vw, 25vw";
+};
+
+const getExperientialProjectPanelClass = (index: number) => {
+  return index < 2 ? "md:col-span-2" : "";
+};
+
+function HomeFeaturedScenicGrid({
+  projects,
+}: {
+  projects: ScenicProjectSummary[];
+}) {
+  const featuredProjects = HOME_FEATURED_SCENIC_SLUGS.map(slug =>
+    projects.find(project => project.slug === slug && project.coverImageUrl)
+  ).filter((project): project is ScenicProjectSummary => Boolean(project));
+
+  if (!featuredProjects.length) return null;
+
+  return (
+    <section
+      id="featured-scenic-work"
+      className="border-t border-white/12 bg-[#111111] text-white"
+    >
+      <div className="grid gap-8 border-b border-white/12 px-[clamp(1.25rem,4vw,5rem)] py-[clamp(3rem,7vw,6rem)] lg:grid-cols-[0.9fr_1.2fr] lg:items-end">
+        <FadeUpReveal>
+          <p className="section-kicker mb-5 text-white/42">Featured Scenic Design</p>
+          <h2 className="max-w-[13ch] font-sans text-[clamp(2.6rem,6.2vw,6.9rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
+            Places where the story becomes visible.
+          </h2>
+        </FadeUpReveal>
+        <FadeUpReveal className="max-w-[44rem] lg:justify-self-end" delay={120}>
+          <p className="font-sans text-[clamp(1.18rem,2.1vw,2.05rem)] font-medium leading-[1.08] tracking-[-0.052em] text-white/78">
+            A curated selection of scenic environments for plays, musicals,
+            Shakespeare, comedy, and theatre for young audiences. Each design
+            begins with the same question: what does this story need the
+            audience to see, feel, and understand before anyone says a word?
+          </p>
+          <a
+            href="/projects"
+            className="mt-7 inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+          >
+            View full portfolio
+          </a>
+        </FadeUpReveal>
+      </div>
+
+      <div className="portfolio-focus-grid grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+        {featuredProjects.map((project, index) => (
+          <FadeUpReveal
+            key={project.slug}
+            className={`${getFeaturedProjectPanelClass(index)} h-full`}
+            delay={90 + index * 70}
+          >
+            <a
+              href={getProjectPath(project)}
+              className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+              aria-label={`${project.title} scenic design by Brandon PT Davis`}
+            >
+              <article className="h-full bg-[#111111]">
+                <div className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
+                  <Image
+                    src={project.coverImageUrl || ""}
+                    alt={`${project.title} scenic design by Brandon PT Davis`}
+                    fill
+                    quality={index < 2 ? 84 : 78}
+                    className="site-media-square object-cover object-center motion-safe:scale-[1.015] motion-safe:transition-transform motion-safe:duration-[1300ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.055]"
+                    priority={index < 2}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    fetchPriority={index < 2 ? "high" : "auto"}
+                    sizes={getFeaturedProjectImageSizes(index)}
+                  />
+                </div>
+                <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+                  <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                    {project.title}
+                  </h3>
+                  {project.client ? (
+                    <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
+                      {project.client}
+                    </p>
+                  ) : null}
+                </div>
+              </article>
+            </a>
+          </FadeUpReveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function HomePortfolioExploreStrip() {
+  return (
+    <section className="border-t border-white/12 bg-black text-white">
+      <div className="grid gap-8 px-[clamp(1.25rem,4vw,5rem)] py-[clamp(2.5rem,5vw,4.5rem)] lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+        <FadeUpReveal>
+          <p className="section-kicker mb-4 text-white/42">Explore</p>
+          <h2 className="max-w-[13ch] font-sans text-[clamp(2rem,4.5vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.065em] text-white">
+            Different stories ask for different rooms.
+          </h2>
+        </FadeUpReveal>
+        <FadeUpReveal className="max-w-[42rem] font-sans text-[clamp(1.02rem,1.55vw,1.35rem)] font-medium leading-[1.22] tracking-[-0.035em] text-white/62" delay={110}>
+          Move through the work by the kind of story being staged, from rooms
+          under pressure to worlds built for rhythm, language, comedy, and young
+          audiences.
+        </FadeUpReveal>
+      </div>
+
+      <div className="grid border-l border-t border-white/12 sm:grid-cols-2 lg:grid-cols-5">
+        {portfolioCategoryRows.map((row, index) => {
+          const Icon = row.icon;
+
+          return (
+            <FadeUpReveal
+              key={row.title}
+              className="h-full"
+              delay={90 + index * 65}
+            >
+              <a
+                href={row.href}
+                className="group block h-full min-h-[15rem] border-b border-r border-white/12 bg-[#111111] p-[clamp(1rem,2vw,1.35rem)] transition-colors hover:bg-[#181818] lg:min-h-[18rem]"
+              >
+                <Icon
+                  aria-hidden="true"
+                  className="mb-8 h-6 w-6 text-[#c77dff] transition-[color,transform] duration-500 group-hover:-translate-y-1 group-hover:text-white"
+                  strokeWidth={1.7}
+                />
+                <h3 className="font-sans text-[clamp(1.25rem,1.7vw,1.7rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                  {row.title}
+                </h3>
+                <p className="mt-4 max-w-[22rem] text-[0.92rem] leading-6 tracking-[-0.018em] text-white/54">
+                  {row.description}
+                </p>
+              </a>
+            </FadeUpReveal>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function FadeUpReveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const revealRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = revealRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.16 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={revealRef}
+      className={`motion-reveal ${isVisible ? "motion-reveal--visible" : ""} ${className} transition-[opacity,transform,filter] duration-[760ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-0 ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ProcessSection() {
+  return (
+    <section className="border-t border-white/12 bg-[#111111] text-white">
+      <div className="grid gap-12 px-[clamp(1.25rem,4vw,5rem)] py-[clamp(4.5rem,8vw,7rem)] lg:grid-cols-[0.86fr_1.34fr] lg:items-start lg:pb-[clamp(3rem,5vw,4.5rem)]">
+        <FadeUpReveal>
+          <p className="section-kicker mb-5 text-white/42">Process</p>
+          <h2 className="max-w-[12ch] font-sans text-[clamp(2.35rem,5.8vw,6.2rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
+            Start with the question the room has to answer.
+          </h2>
+        </FadeUpReveal>
+
+        <div className="lg:pt-[clamp(2.25rem,5.2vw,5.25rem)]">
+          <FadeUpReveal delay={90}>
+            <div className="max-w-[52rem] space-y-6 font-sans text-[clamp(1.08rem,1.6vw,1.38rem)] font-medium leading-[1.32] tracking-[-0.035em] text-white/72">
+              <p>
+                Every production asks something different of its space. Some
+                plays need a room that traps people together. Some need a world
+                that can turn on a dime. Some need a visual metaphor strong
+                enough to carry memory, myth, or music.
+              </p>
+              <p>
+                Brandon's design process moves from script analysis and research
+                into sketches, models, renderings, drafting, production
+                conversations, and built space. The work is collaborative,
+                practical, and story-first.
+              </p>
+            </div>
+          </FadeUpReveal>
+        </div>
+      </div>
+
+      <div className="grid border-l border-t border-white/12 md:grid-cols-3">
+        {processCards.map((card, index) => (
+          <FadeUpReveal key={card.title} delay={120 + index * 95}>
+            <article className="flex min-h-[16rem] h-full flex-col border-b border-r border-white/12 bg-black/24 p-[clamp(1rem,2vw,1.5rem)] lg:min-h-[18rem]">
+              <p className="font-sans text-[0.72rem] font-medium uppercase tracking-[0.24em] text-[#c77dff]">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-8 max-w-[13ch] font-sans text-[clamp(1.55rem,2.6vw,2.7rem)] font-medium leading-[0.92] tracking-[-0.06em] text-white">
+                {card.title}
+              </h3>
+              <p className="mt-auto max-w-[28rem] pt-8 text-[1rem] leading-6 tracking-[-0.02em] text-white/56">
+                {card.text}
+              </p>
+            </article>
+          </FadeUpReveal>
+        ))}
       </div>
     </section>
   );
@@ -1017,7 +1300,6 @@ function UpcomingSection() {
   );
 }
 function HomeExperientialAndRenderingSection() {
-  const isDesktopViewport = useIsDesktopViewport();
   const experientialProjects = getLocalExperientialProjects()
     .filter(project => project.coverImageUrl)
     .sort(
@@ -1033,7 +1315,7 @@ function HomeExperientialAndRenderingSection() {
           month: a.month,
         })
     )
-    .slice(0, 4);
+    .slice(0, 6);
   const renderingRailCards: HomeRenderingRailCard[] = getLocalRenderingGallery()
     .map(item => ({
       href: item.project?.slug
@@ -1055,12 +1337,12 @@ function HomeExperientialAndRenderingSection() {
         list.findIndex(candidate => candidate.href === card.href) === index
     )
     .slice(0, 10);
-  const movingRenderingCards = isDesktopViewport ? [...renderingRailCards, ...renderingRailCards] : [];
+  const movingRenderingCards = [...renderingRailCards, ...renderingRailCards];
 
   if (!experientialProjects.length && !renderingRailCards.length) return null;
 
   return (
-    <section className="bg-black py-12 text-white md:py-16">
+    <section className="bg-black text-white">
       <style>
         {`
           @keyframes home-flip-word {
@@ -1068,26 +1350,21 @@ function HomeExperientialAndRenderingSection() {
             55% { opacity: 1; filter: blur(0); }
             100% { opacity: 1; transform: translateY(0); filter: blur(0); }
           }
-        `}
-      </style>
-      {isDesktopViewport ? (
-      <style>
-        {`
+
           @keyframes home-rendering-rail {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
           }
         `}
       </style>
-      ) : null}
 
-      <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mx-auto mb-10 flex max-w-[70rem] flex-col items-center text-center">
-          <p className="section-kicker mb-4 text-white">
+      <div className="grid gap-8 border-t border-white/12 px-[clamp(1.25rem,4vw,5rem)] py-[clamp(3rem,7vw,6rem)] lg:grid-cols-[0.9fr_1.2fr] lg:items-end">
+        <FadeUpReveal>
+          <p className="section-kicker mb-5 text-white/42">
             Rendering + Experiential Design
           </p>
           <h2
-            className="mx-auto max-w-[13.5ch] font-sans text-[clamp(2rem,10vw,3.45rem)] font-medium leading-[1] tracking-[-0.055em] text-white md:max-w-[15ch] md:text-[clamp(2.35rem,4.8vw,5.15rem)]"
+            className="max-w-[13.5ch] font-sans text-[clamp(2.35rem,5.8vw,6.2rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white"
             aria-label="Designing renderings, drawings, installations, and environments beyond the proscenium."
           >
             Designing{" "}
@@ -1097,12 +1374,14 @@ function HomeExperientialAndRenderingSection() {
             />{" "}
             beyond the proscenium.
           </h2>
-          <p className="mt-6 max-w-[47rem] font-sans text-[clamp(1.05rem,1.65vw,1.45rem)] font-medium leading-[1.3] tracking-[-0.035em] text-white/56">
+        </FadeUpReveal>
+        <FadeUpReveal className="max-w-[44rem] lg:justify-self-end" delay={120}>
+          <p className="font-sans text-[clamp(1.08rem,1.75vw,1.5rem)] font-medium leading-[1.22] tracking-[-0.04em] text-white/66">
             Renderings, drawings, installations, and commercial environments
             still begin with a scenic question: how should a space guide
             attention, feeling, memory, and action?
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="/projects/experiential"
               className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-white/24 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/78 transition-colors hover:border-white hover:text-white"
@@ -1116,102 +1395,82 @@ function HomeExperientialAndRenderingSection() {
               View renderings
             </a>
           </div>
-        </div>
+        </FadeUpReveal>
       </div>
 
       {experientialProjects.length ? (
-        <div className="grid gap-3 px-[clamp(1rem,2vw,1.5rem)] md:grid-cols-2">
+        <div className="portfolio-focus-grid grid grid-cols-1 border-l border-t border-white/12 md:grid-cols-4">
           {experientialProjects.map((project, index) => (
-            <a
+            <FadeUpReveal
               key={project.slug}
-              href={getLocalExperientialProjectHref(project)}
-              className="site-media-square group relative block aspect-[3/2] overflow-hidden rounded-none bg-white/[0.04] ring-1 ring-white/10 transition duration-300 hover:-translate-y-1"
+              className={`${getExperientialProjectPanelClass(index)} h-full`}
+              delay={100 + index * 75}
             >
-              <img
-                src={project.coverImageUrl || ""}
-                alt={
-                  project.coverAltText ||
-                  `${project.title} experiential design by Brandon PT Davis`
-                }
-                className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.82)_100%)]" />
-              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
-                  Experiential Design
-                </p>
-                <h3 className="mt-3 max-w-[15ch] font-sans text-[clamp(1.45rem,2.1vw,2.15rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-                  {project.title}
-                </h3>
-              </div>
-            </a>
+              <a
+                href={getLocalExperientialProjectHref(project)}
+                className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+              >
+                <article className="h-full bg-[#111111]">
+                  <div className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
+                    <img
+                      src={project.coverImageUrl || ""}
+                      alt={
+                        project.coverAltText ||
+                        `${project.title} experiential design by Brandon PT Davis`
+                      }
+                      className="site-media-square h-full w-full object-cover motion-safe:scale-[1.015] motion-safe:transition-transform motion-safe:duration-[1300ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.055]"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+                    <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/42">
+                      Experiential Design
+                    </p>
+                    <h3 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                      {project.title}
+                    </h3>
+                  </div>
+                </article>
+              </a>
+            </FadeUpReveal>
           ))}
         </div>
       ) : null}
 
       {renderingRailCards.length ? (
-        <div className={experientialProjects.length ? "mt-3" : ""}>
-          {!isDesktopViewport ? (
-            <div className="overflow-x-auto px-[clamp(1rem,2vw,1.5rem)]">
-              <div className="flex snap-x gap-3">
-                {renderingRailCards.slice(0, 6).map((card) => (
-                  <a
-                    key={card.href}
-                    href={card.href}
-                    className="site-media-square group relative block h-[8rem] w-[min(15.5rem,64vw)] shrink-0 snap-start overflow-hidden rounded-none bg-black ring-1 ring-white/10"
-                  >
-                    <img
-                      src={card.image}
-                      alt={card.imageAlt}
-                      className="site-media-square h-full w-full rounded-none object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
-                    <div className="absolute inset-x-0 bottom-0 p-4">
-                      <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
-                        Rendering
-                      </p>
-                      <h3 className="mt-2 max-w-[14ch] font-sans text-[1.22rem] font-medium leading-[0.96] tracking-[-0.045em] text-white">
-                        {card.title}
-                      </h3>
+        <FadeUpReveal className="border-t border-white/12" delay={140}>
+          <div className="h-[12.5rem] overflow-hidden md:h-[14rem]">
+            <div className="flex h-full w-max gap-0 motion-safe:animate-[home-rendering-rail_54s_linear_infinite] motion-safe:md:hover:[animation-play-state:paused]">
+              {movingRenderingCards.map((card, index) => (
+                <a
+                  key={`${card.href}-${index}`}
+                  href={card.href}
+                  className="portfolio-focus-card group block h-full w-[16rem] shrink-0 border-b border-r border-white/12 md:w-[18rem]"
+                >
+                  <article className="h-full bg-[#0f0f0f]">
+                    <div className="site-media-square relative h-full overflow-hidden bg-[#181818]">
+                      <img
+                        src={card.image}
+                        alt={card.imageAlt}
+                        className="site-media-square h-full w-full object-cover motion-safe:scale-[1.015] motion-safe:transition-transform motion-safe:duration-[1200ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.055]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.12)_46%,rgba(0,0,0,0.84)_100%)]" />
+                      <div className="absolute inset-x-0 bottom-0 p-4">
+                        <p className="font-sans text-[0.68rem] font-semibold tracking-[-0.015em] text-white/52">
+                          Rendering
+                        </p>
+                        <h3 className="mt-2 max-w-[15ch] font-sans text-[1.08rem] font-medium leading-[0.96] tracking-[-0.05em] text-white transition-colors duration-500 group-hover:text-[#e0aaff] md:text-[1.22rem]">
+                          {card.title}
+                        </h3>
+                      </div>
                     </div>
-                  </a>
-                ))}
-              </div>
+                  </article>
+                </a>
+              ))}
             </div>
-          ) : null}
-
-          {isDesktopViewport ? (
-            <div className="h-[11rem] overflow-hidden">
-              <div className="flex h-full w-max gap-3 px-[clamp(1rem,2vw,1.5rem)] motion-safe:animate-[home-rendering-rail_52s_linear_infinite] motion-safe:hover:[animation-play-state:paused]">
-                {movingRenderingCards.map((card, index) => (
-                  <a
-                    key={`${card.href}-${index}`}
-                    href={card.href}
-                    className="site-media-square group relative block h-full w-[min(15.5rem,64vw)] shrink-0 overflow-hidden rounded-none bg-black ring-1 ring-white/10 md:w-[18rem]"
-                  >
-                    <img
-                      src={card.image}
-                      alt={card.imageAlt}
-                      className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
-                    <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
-                      <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
-                        Rendering
-                      </p>
-                      <h3 className="mt-2 max-w-[14ch] font-sans text-[1.22rem] font-medium leading-[0.96] tracking-[-0.045em] text-white md:text-[1.35rem]">
-                        {card.title}
-                      </h3>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
+          </div>
+        </FadeUpReveal>
       ) : null}
     </section>
   );
@@ -1219,27 +1478,34 @@ function HomeExperientialAndRenderingSection() {
 
 function PublishSection() {
   const publishCards = getHomePublishCards();
-  const cardsRef = useRef<HTMLDivElement | null>(null);
-  const scrollCards = (direction: "previous" | "next") => {
-    cardsRef.current?.scrollBy({
-      left: direction === "next" ? 760 : -760,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <section className="bg-black py-16 text-white md:py-24">
       <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
-          <div>
+        <div className="mb-10 grid gap-8 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-end">
+          <FadeUpReveal>
             <p className="mb-4 section-kicker text-white">
-              Article + Tutorials
+              Articles + Tutorials
             </p>
             <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
               Notes from the studio.
             </h2>
-          </div>
-          <div className="flex flex-wrap gap-3 md:justify-end">
+          </FadeUpReveal>
+          <FadeUpReveal delay={110}>
+            <div className="max-w-[48rem] space-y-5 font-sans text-[clamp(1.02rem,1.45vw,1.24rem)] font-medium leading-[1.34] tracking-[-0.03em] text-white/66">
+              <p>
+                Writing on scenic design, rendering workflows, theatrical
+                storytelling, teaching, process, and the ways scenic thinking
+                can move beyond the stage.
+              </p>
+              <p>
+                These articles and tutorials open the studio process: how
+                designs develop, how renderings communicate, how tools like
+                Vectorworks support the work, and how theatrical space can teach
+                us to look more carefully at the built world.
+              </p>
+            </div>
+            <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="/articles"
               className="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 font-sans text-sm font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/86"
@@ -1252,73 +1518,47 @@ function PublishSection() {
             >
               Tutorials
             </a>
-          </div>
+            </div>
+          </FadeUpReveal>
         </div>
-      </div>
 
-      <div
-        ref={cardsRef}
-        className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-          {publishCards.map(card => (
-            <a
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {publishCards.map((card, index) => (
+            <FadeUpReveal
               key={`${card.kind}-${card.href}`}
-              href={card.href}
-              className="group relative flex h-[26rem] w-[min(19rem,82vw)] flex-col justify-end overflow-hidden rounded-[1.25rem] bg-black p-5 text-white shadow-[0_12px_28px_rgba(0,0,0,0.2)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.24)] md:h-[30rem] md:w-[22rem] md:rounded-[2rem] md:p-6"
-              aria-label={`${card.kind}: ${card.title}`}
+              className="h-full"
+              delay={120 + index * 80}
             >
-              <img
-                src={card.image}
-                alt={card.imageAlt}
-                className="site-media-square absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-black/18" />
-              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
-              <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
+              <a
+                href={card.href}
+                className="group relative flex h-[25rem] flex-col justify-end overflow-hidden rounded-[1.25rem] bg-black p-5 text-white shadow-[0_12px_28px_rgba(0,0,0,0.2)] ring-1 ring-white/10 transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.24)] md:h-[28rem] md:rounded-[1.5rem] md:p-6"
+                aria-label={`${card.kind}: ${card.title}`}
+              >
+                <img
+                  src={card.image}
+                  alt={card.imageAlt}
+                  className="site-media-square absolute inset-0 h-full w-full object-cover motion-safe:scale-[1.015] motion-safe:transition-transform motion-safe:duration-[1200ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.055]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black/18" />
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
 
-              <div className="relative z-10">
-                <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
-                  {card.kind}
-                </p>
-                <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white">
-                  {card.title}
-                </h3>
-                <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">
-                  {card.description}
-                </p>
-              </div>
-            </a>
+                <div className="relative z-10">
+                  <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
+                    {card.kind}
+                  </p>
+                  <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">
+                    {card.description}
+                  </p>
+                </div>
+              </a>
+            </FadeUpReveal>
           ))}
         </div>
-      </div>
-
-      <div className="-mt-5 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-        <button
-          type="button"
-          onClick={() => scrollCards("previous")}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
-          aria-label="Previous studio cards"
-        >
-          <ChevronLeft
-            className="h-5 w-5"
-            strokeWidth={2.5}
-            aria-hidden="true"
-          />
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollCards("next")}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
-          aria-label="Next studio cards"
-        >
-          <ChevronRight
-            className="h-5 w-5"
-            strokeWidth={2.5}
-            aria-hidden="true"
-          />
-        </button>
       </div>
     </section>
   );
@@ -1334,7 +1574,7 @@ function HomeCta() {
       <img
         src={HOME_CTA_IMAGE_URL}
         alt="The Merry Wives of Windsor scenic design detail by Brandon PT Davis"
-        className="site-media-square absolute inset-0 h-full w-full object-cover"
+        className="site-media-square absolute inset-0 h-full w-full object-cover motion-safe:scale-[1.02] motion-safe:transition-transform motion-safe:duration-[1600ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
         loading="lazy"
       />
       <div className="absolute inset-0 bg-black/28" />
@@ -1423,7 +1663,10 @@ export default function Home({
           <>
             <HomeIntro introReady={introReady} />
             <HomeThesisSection />
-            <PortfolioCategoryRows projects={projects} />
+            <HomeFeaturedScenicGrid projects={projects} />
+            <HomePortfolioExploreStrip />
+            <BrandonSection />
+            <ProcessSection />
             <UpcomingSection />
             <HomeExperientialAndRenderingSection />
             <PublishSection />

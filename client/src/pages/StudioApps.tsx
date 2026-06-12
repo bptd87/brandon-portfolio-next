@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useMemo, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
@@ -124,6 +124,16 @@ export default function StudioApps() {
 
     setIsAppClosing(false);
     setActiveApp(app);
+  }
+
+  function handleStudioAppLink(event: MouseEvent<HTMLAnchorElement>, app: StudioApp) {
+    if (
+      typeof window !== "undefined" &&
+      !window.matchMedia("(max-width: 767px)").matches
+    ) {
+      event.preventDefault();
+      openStudioApp(app);
+    }
   }
 
   function closeStudioApp() {
@@ -258,21 +268,21 @@ export default function StudioApps() {
                   model making: turn full-size feet and inches into millimeters,
                   then check whether the part fits a common 3D printer bed.
                 </p>
-                <button
-                  type="button"
-                  onClick={() => openStudioApp(featuredApp)}
+                <Link
+                  href={featuredApp.href}
+                  onClick={(event) => handleStudioAppLink(event, featuredApp)}
                   className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
                 >
                   Launch {featuredApp.shortTitle}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </button>
+                </Link>
               </div>
             </AnimatedSection>
 
             <AnimatedSection delay={90}>
-              <button
-                type="button"
-                onClick={() => openStudioApp(featuredApp)}
+              <Link
+                href={featuredApp.href}
+                onClick={(event) => handleStudioAppLink(event, featuredApp)}
                 className="group mx-auto block w-full max-w-[28rem] text-left"
               >
                 <div className="relative mx-auto aspect-[768/1572] max-w-[24rem] overflow-hidden shadow-[0_34px_120px_rgba(0,0,0,0.68)]">
@@ -285,7 +295,7 @@ export default function StudioApps() {
                     className="object-contain"
                   />
                 </div>
-              </button>
+              </Link>
             </AnimatedSection>
           </div>
         </section>
@@ -298,9 +308,9 @@ export default function StudioApps() {
                 className={`h-full ${app === converterTool ? "md:hidden" : ""}`}
                 delay={index * 55}
               >
-                <button
-                  type="button"
-                  onClick={() => openStudioApp(app)}
+                <Link
+                  href={app.href}
+                  onClick={(event) => handleStudioAppLink(event, app)}
                   className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-none border-b border-r border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors hover:bg-white md:min-h-[27rem] md:border-t"
                 >
                   <div className="site-media-square relative aspect-square w-full overflow-hidden rounded-none border-b border-black/8 bg-black [border-radius:0]">
@@ -330,7 +340,7 @@ export default function StudioApps() {
                       <ArrowRight className="h-4 w-4" />
                     </div>
                   </div>
-                </button>
+                </Link>
               </AnimatedSection>
             ))}
           </div>

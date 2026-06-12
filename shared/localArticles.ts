@@ -125,6 +125,16 @@ const normalizeArticleCategory = (categoryName?: string | null) => {
 };
 
 const audioBySlug: Record<string, LocalArticleAudio> = {
+  "what-does-a-scenic-designer-do": {
+    url: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/audio/articles/what-does-a-scenic-designer-do/what-does-a-scenic-designer-do-395ff9064a.mp3",
+    label: "Listen to article",
+    durationLabel: "8:00",
+  },
+  "year-39": {
+    url: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/audio/articles/year-39/39-0d33219937.mp3",
+    label: "Listen to article",
+    durationLabel: "2:17",
+  },
   "empowering-theatre-students-with-computer-literacy": {
     url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/audio/migrated/supabase/local-articles/computer-literacy-751a62f4.mp3",
     label: "Listen to article",

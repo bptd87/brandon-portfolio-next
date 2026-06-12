@@ -141,7 +141,38 @@ const normalizeYouTubeThumbnail = (value?: string | null) =>
   typeof value === "string" ? value.replace("/maxresdefault.jpg", "/hqdefault.jpg") : value;
 
 const tutorialMetadataOverrides: Record<string, Partial<LocalTutorial>> = {
+  "creating-2d-drafting-from-3d": {
+    seo_title: "Vectorworks 2D Drafting from 3D",
+  },
+  "creating-camera-rendering": {
+    seo_title: "Vectorworks Camera Rendering Tutorial",
+  },
+  "modeling-a-table": {
+    seo_title: "Vectorworks Table Modeling Tutorial",
+  },
+  "creating-24x36-pdfs": {
+    seo_title: "Vectorworks 24x36 PDF Export Tutorial",
+  },
+  "3d-modeling-tools": {
+    seo_title: "Vectorworks 3D Modeling Tools",
+  },
+  "basics-of-textures": {
+    seo_title: "Vectorworks Texture Basics",
+  },
+  "hybrid-symbols": {
+    seo_title: "Vectorworks Hybrid Symbols Tutorial",
+  },
+  "3d-modeling-basics": {
+    seo_title: "Vectorworks 3D Modeling Basics",
+  },
+  "2d-annotations-dimensioning": {
+    seo_title: "Vectorworks 2D Annotation Tutorial",
+  },
+  "resource-manager-basics": {
+    seo_title: "Vectorworks Resource Manager Basics",
+  },
   "2d-edit-modify-tricks": {
+    seo_title: "Vectorworks 2D Edit and Modify Tools",
     key_concepts: [
       {
         title: "MIRROR TOOL",
@@ -181,6 +212,7 @@ const tutorialMetadataOverrides: Record<string, Partial<LocalTutorial>> = {
     ],
   },
   "understanding-symbols": {
+    seo_title: "Vectorworks Symbols Tutorial",
     description:
       "Learn how 2D symbols behave in Vectorworks, including Resource Manager color coding, placed instances, grouped symbols, page-based symbols, scaling, and symbol definition edits.",
     learning_objectives: [
@@ -219,7 +251,23 @@ const tutorialMetadataOverrides: Record<string, Partial<LocalTutorial>> = {
       },
     ],
   },
+  "creating-trim-profiles-polyline": {
+    seo_title: "Vectorworks Trim Profiles with Polyline",
+  },
+  "sheet-layers": {
+    seo_title: "Vectorworks Sheet Layers Tutorial",
+  },
+  "basics-tool-palette": {
+    seo_title: "Vectorworks Tool Palette Basics",
+  },
+  "installing-workspace-template": {
+    seo_title: "Vectorworks Workspace Template Setup",
+  },
+  "understanding-design-layers": {
+    seo_title: "Vectorworks Design Layers Tutorial",
+  },
   "understanding-classes": {
+    seo_title: "Vectorworks Classes Tutorial",
     related_tutorials: [
       {
         slug: "navigating-user-interface",
@@ -236,6 +284,7 @@ const tutorialMetadataOverrides: Record<string, Partial<LocalTutorial>> = {
     ],
   },
   "navigating-user-interface": {
+    seo_title: "Vectorworks Interface Tutorial",
     related_tutorials: [
       {
         slug: "understanding-classes",

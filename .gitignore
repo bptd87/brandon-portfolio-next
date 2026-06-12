@@ -127,3 +127,4 @@ client/public/images/teaching-gallery/student-scenic-renderings.jpeg
 *.sqlite
 *.sqlite3
 .vercel
+.env*.local

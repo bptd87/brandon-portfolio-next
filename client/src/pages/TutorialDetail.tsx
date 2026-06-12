@@ -4,6 +4,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import MotionReveal from "@/components/MotionReveal";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
@@ -1635,44 +1636,53 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
               )}
             </section>
 
-            <section className="mt-16 border-t border-white/12 pt-12">
-              <Tabs defaultValue={featureMoments[1]?.value || featureMoments[0]?.value} className="mx-auto max-w-[50rem]">
-                <TabsList className={articlePillTabsListClass}>
+            <MotionReveal className="tutorial-body-reveal" delay={60}>
+              <section className="mt-16 border-t border-white/12 pt-12">
+                <Tabs defaultValue={featureMoments[1]?.value || featureMoments[0]?.value} className="mx-auto max-w-[50rem]">
+                  <TabsList className={articlePillTabsListClass}>
+                    {featureMoments.map((moment) => (
+                      <TabsTrigger
+                        key={moment.value}
+                        value={moment.value}
+                        className={articlePillTabsTriggerClass}
+                      >
+                        {moment.label}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+
                   {featureMoments.map((moment) => (
-                    <TabsTrigger
-                      key={moment.value}
-                      value={moment.value}
-                      className={articlePillTabsTriggerClass}
-                    >
-                      {moment.label}
-                    </TabsTrigger>
+                    <TabsContent key={moment.value} value={moment.value} className="mt-8">
+                      <div className="mx-auto max-w-[42rem] text-center">
+                        <h2 className="font-sans text-[clamp(1.8rem,2.35vw,2.45rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+                          {moment.title}
+                        </h2>
+                        <p className="mx-auto mt-5 max-w-[39rem] text-[1.02rem] leading-8 tracking-[-0.01em] text-white/68">
+                          {moment.body}
+                        </p>
+                        <p className="mx-auto mt-5 max-w-[35rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/52">
+                          {moment.detail}
+                        </p>
+                      </div>
+                    </TabsContent>
                   ))}
-                </TabsList>
+                </Tabs>
+              </section>
+            </MotionReveal>
 
-                {featureMoments.map((moment) => (
-                  <TabsContent key={moment.value} value={moment.value} className="mt-8">
-                    <div className="mx-auto max-w-[42rem] text-center">
-                      <h2 className="font-sans text-[clamp(1.8rem,2.35vw,2.45rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
-                        {moment.title}
-                      </h2>
-                      <p className="mx-auto mt-5 max-w-[39rem] text-[1.02rem] leading-8 tracking-[-0.01em] text-white/68">
-                        {moment.body}
-                      </p>
-                      <p className="mx-auto mt-5 max-w-[35rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/52">
-                        {moment.detail}
-                      </p>
-                    </div>
-                  </TabsContent>
-                ))}
-              </Tabs>
-            </section>
+            <MotionReveal className="tutorial-body-reveal" delay={70}>
+              <CustomLessonEnhancement tutorial={tutorial} />
+            </MotionReveal>
 
-            <CustomLessonEnhancement tutorial={tutorial} />
-
-            {tutorial.slug === "2d-edit-modify-tricks" ? <TwoDEditCommandMap /> : null}
+            {tutorial.slug === "2d-edit-modify-tricks" ? (
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <TwoDEditCommandMap />
+              </MotionReveal>
+            ) : null}
 
             {whyItMatters ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <section className="mt-20 border-t border-white/12 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     {whyItMatters.title}
@@ -1688,53 +1698,62 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     ))}
                   </div>
                 </div>
-              </section>
+                </section>
+              </MotionReveal>
             ) : null}
 
-            <section className="mt-20">
-              <div className="mx-auto max-w-[46rem] text-center">
-                <p className="text-[0.82rem] font-medium uppercase tracking-[0.18em] text-white/38">
-                  One guiding idea
-                </p>
-                <blockquote className="mt-6 font-sans text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.08] tracking-[-0.055em] text-white">
-                  “{primaryQuote}”
-                </blockquote>
-              </div>
-            </section>
+            <MotionReveal className="tutorial-body-reveal" delay={90}>
+              <section className="mt-20">
+                <div className="mx-auto max-w-[46rem] text-center">
+                  <p className="text-[0.82rem] font-medium uppercase tracking-[0.18em] text-white/38">
+                    One guiding idea
+                  </p>
+                  <blockquote className="mt-6 font-sans text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.08] tracking-[-0.055em] text-white">
+                    “{primaryQuote}”
+                  </blockquote>
+                </div>
+              </section>
+            </MotionReveal>
 
             {articleBodySections.length > 0 ? (
               <section className="mt-20">
                 <div className="space-y-16">
                   {articleBodySections.map((section, index) => (
-                    <section
+                    <MotionReveal
                       key={section.title}
-                      id={`step-${index + 1}`}
-                      className="mx-auto max-w-[50rem] border-t border-white/10 pt-12 first:border-t-0 first:pt-0"
+                      className="tutorial-body-reveal"
+                      delay={(index % 4) * 45}
                     >
-                      <p className="font-sans text-[clamp(1.45rem,1.9vw,1.85rem)] font-medium leading-none tracking-[-0.055em] text-white/26">
-                        {section.number}
-                      </p>
-                      <h2 className="mt-4 max-w-[17ch] font-sans text-[clamp(2.1rem,3vw,3.35rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
-                        {section.title}
-                      </h2>
-                      <div className="mt-7 space-y-7">
-                        {section.paragraphs.map((paragraph) => (
-                          <p
-                            key={paragraph}
-                            className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/72 md:text-[1.07rem]"
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                    </section>
+                      <section
+                        id={`step-${index + 1}`}
+                        className="mx-auto max-w-[50rem] border-t border-white/10 pt-12 first:border-t-0 first:pt-0"
+                      >
+                        <p className="font-sans text-[clamp(1.45rem,1.9vw,1.85rem)] font-medium leading-none tracking-[-0.055em] text-white/26">
+                          {section.number}
+                        </p>
+                        <h2 className="mt-4 max-w-[17ch] font-sans text-[clamp(2.1rem,3vw,3.35rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
+                          {section.title}
+                        </h2>
+                        <div className="mt-7 space-y-7">
+                          {section.paragraphs.map((paragraph) => (
+                            <p
+                              key={paragraph}
+                              className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/72 md:text-[1.07rem]"
+                            >
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      </section>
+                    </MotionReveal>
                   ))}
                 </div>
               </section>
             ) : null}
 
             {comparisonRows.length > 0 ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <section className="mt-20 border-t border-white/12 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Symbol behavior
@@ -1765,11 +1784,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     </div>
                   ))}
                 </div>
-              </section>
+                </section>
+              </MotionReveal>
             ) : null}
 
             {decisionGuide.length > 0 ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <section className="mt-20 border-t border-white/12 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Decision guide
@@ -1788,11 +1809,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     </div>
                   ))}
                 </div>
-              </section>
+                </section>
+              </MotionReveal>
             ) : null}
 
             {instanceDefinitionExample ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <section className="mt-20 border-t border-white/12 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     {instanceDefinitionExample.title}
@@ -1811,11 +1834,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     ))}
                   </div>
                 </div>
-              </section>
+                </section>
+              </MotionReveal>
             ) : null}
 
             {scenicUseParagraphs.length > 0 ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <section className="mt-20 border-t border-white/12 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Why scenic designers rely on symbols
@@ -1831,11 +1856,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     ))}
                   </div>
                 </div>
-              </section>
+                </section>
+              </MotionReveal>
             ) : null}
 
-            <section className="mt-20 border-t border-white/12 pt-12">
-              <Tabs defaultValue="resources" className="mx-auto max-w-[50rem] text-center">
+            <MotionReveal className="tutorial-body-reveal" delay={80}>
+              <section className="mt-20 border-t border-white/12 pt-12">
+                <Tabs defaultValue="resources" className="mx-auto max-w-[50rem] text-center">
                 <div className="mx-auto max-w-[38rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Supporting material
@@ -1913,11 +1940,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     </div>
                   </div>
                 </TabsContent>
-              </Tabs>
-            </section>
+                </Tabs>
+              </section>
+            </MotionReveal>
 
             {examQuestions.length > 0 ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
+              <MotionReveal className="tutorial-body-reveal" delay={80}>
+                <section className="mt-20 border-t border-white/12 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Potential exam questions
@@ -1979,12 +2008,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     </div>
                   </section>
                 </div>
-              </section>
+                </section>
+              </MotionReveal>
             ) : null}
 
             <section className="mt-20 border-t border-black/10 pt-12">
               <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-5 sm:px-8 lg:px-10">
-                <div className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+                <MotionReveal className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
                   <div className="max-w-3xl">
                     <p className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
                       Scenic design tutorials
@@ -1999,14 +2029,14 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   >
                     View tutorials
                   </Link>
-                </div>
+                </MotionReveal>
 
                 <div
                   ref={relatedTutorialRailRef}
                   className="-mx-1 overflow-x-auto px-1 pb-10 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 >
                   <div className="flex min-w-max snap-x snap-mandatory gap-4 pr-5">
-                  {relatedTutorialCards.map((card) => {
+                  {relatedTutorialCards.map((card, index) => {
                     const metadata = [
                       getCategoryLabel(card.category),
                       getDifficultyLabel(card.difficulty),
@@ -2016,30 +2046,35 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                       .join(" · ");
 
                     return (
-                      <Link
+                      <MotionReveal
                         key={card.href}
-                        href={card.href}
-                        className="group w-[min(22rem,78vw)] flex-none snap-start overflow-hidden rounded-[1.15rem] border border-black/10 bg-[#fbfaf7] no-underline shadow-[0_8px_24px_rgba(29,29,31,0.035)] transition-transform duration-300 hover:-translate-y-0.5 md:w-[25rem]"
+                        className="w-[min(22rem,78vw)] flex-none snap-start md:w-[25rem]"
+                        delay={(index % 6) * 80}
                       >
-                        <div className="relative aspect-video overflow-hidden bg-[#e5e3dc]">
-                          <Image
-                            src={card.cover.src}
-                            alt={card.cover.alt}
-                            fill
-                            quality={84}
-                            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                            loading="lazy"
-                            sizes="(min-width: 1024px) 25rem, 78vw"
-                          />
-                        </div>
+                        <Link
+                          href={card.href}
+                          className="publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border border-black/10 bg-[#fbfaf7] no-underline shadow-[0_8px_24px_rgba(29,29,31,0.035)] transition-transform duration-300 hover:-translate-y-0.5"
+                        >
+                          <div className="learning-card-media relative aspect-video overflow-hidden bg-[#e5e3dc]">
+                            <Image
+                              src={card.cover.src}
+                              alt={card.cover.alt}
+                              fill
+                              quality={84}
+                              className="learning-card-image object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                              loading="lazy"
+                              sizes="(min-width: 1024px) 25rem, 78vw"
+                            />
+                          </div>
 
-                        <div className="flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                          <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
-                            {card.title}
-                          </p>
-                          <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">{metadata}</p>
-                        </div>
-                      </Link>
+                          <div className="learning-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
+                            <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
+                              {card.title}
+                            </p>
+                            <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">{metadata}</p>
+                          </div>
+                        </Link>
+                      </MotionReveal>
                     );
                   })}
                   </div>

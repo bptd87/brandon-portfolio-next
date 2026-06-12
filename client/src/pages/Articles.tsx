@@ -22,6 +22,7 @@ import {
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import MotionReveal from "@/components/MotionReveal";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
@@ -183,78 +184,82 @@ function ArticleGridCard({
   href,
   onNavigate,
   onCategoryNavigate,
+  revealDelay = 0,
 }: {
   article: ArticleCardItem;
   eager?: boolean;
   href: string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
   onCategoryNavigate: (category: string | null | undefined) => void;
+  revealDelay?: number;
 }) {
   const categoryStyle = getCategoryStyle(article.categoryName);
   const CategoryIcon = categoryStyle.icon;
   const dateLabel = formatArticleDate(article);
 
   return (
-    <a
-      href={href}
-      onClick={(event) => onNavigate(event, href)}
-      className="group block h-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_14px_34px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(17,17,17,0.11)]"
-    >
-      <div className="flex h-full flex-col">
-        <div
-          className="publish-card-media transition-card relative aspect-[16/9] overflow-hidden bg-black/[0.04]"
-          style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
-        >
-          {article.coverImageUrl ? (
-            <Image
-              src={article.coverImageUrl}
-              alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
-              fill
-              quality={82}
-              className="publish-card-image object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
-              style={{ objectPosition: COVER_OBJECT_POSITION_BY_SLUG[article.slug] || "center" }}
-              loading={eager ? "eager" : "lazy"}
-              sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
-            />
-          ) : (
-            <div className="h-full w-full bg-muted" />
-          )}
-        </div>
+    <MotionReveal className="h-full" delay={revealDelay}>
+      <a
+        href={href}
+        onClick={(event) => onNavigate(event, href)}
+        className="publish-motion-card group block h-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_14px_34px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(17,17,17,0.11)]"
+      >
+        <div className="flex h-full flex-col">
+          <div
+            className="publish-card-media transition-card relative aspect-[16/9] overflow-hidden bg-black/[0.04]"
+            style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
+          >
+            {article.coverImageUrl ? (
+              <Image
+                src={article.coverImageUrl}
+                alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
+                fill
+                quality={82}
+                className="publish-card-image object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
+                style={{ objectPosition: COVER_OBJECT_POSITION_BY_SLUG[article.slug] || "center" }}
+                loading={eager ? "eager" : "lazy"}
+                sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
+              />
+            ) : (
+              <div className="h-full w-full bg-muted" />
+            )}
+          </div>
 
-        <div className="flex min-h-[13.75rem] flex-1 flex-col px-8 pb-8 pt-7">
-          <div className="mb-5 flex items-center gap-2">
-            <span
-              role="link"
-              tabIndex={0}
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                onCategoryNavigate(article.categoryName);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
+          <div className="publish-card-copy flex min-h-[13.75rem] flex-1 flex-col px-8 pb-8 pt-7">
+            <div className="mb-5 flex items-center gap-2">
+              <span
+                role="link"
+                tabIndex={0}
+                onClick={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
                   onCategoryNavigate(article.categoryName);
-                }
-              }}
-              className={`publish-category-chip inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.82rem] font-semibold leading-none tracking-[-0.015em] shadow-[0_5px_16px_rgba(17,17,17,0.12)] transition-transform hover:scale-[1.025] ${categoryStyle.chip}`}
-            >
-              <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
-              {article.categoryName || "Article"}
-            </span>
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onCategoryNavigate(article.categoryName);
+                  }
+                }}
+                className={`publish-category-chip inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.82rem] font-semibold leading-none tracking-[-0.015em] shadow-[0_5px_16px_rgba(17,17,17,0.12)] transition-transform hover:scale-[1.025] ${categoryStyle.chip}`}
+              >
+                <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
+                {article.categoryName || "Article"}
+              </span>
+            </div>
+            <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#7b2cff]">
+              {decodeHTMLEntities(article.title)}
+            </p>
+            {dateLabel ? (
+              <span className="mt-auto pt-8 text-[1rem] font-semibold tracking-[-0.025em] text-[#6f6b64]">
+                {dateLabel}
+              </span>
+            ) : null}
           </div>
-          <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#7b2cff]">
-            {decodeHTMLEntities(article.title)}
-          </p>
-          {dateLabel ? (
-            <span className="mt-auto pt-8 text-[1rem] font-semibold tracking-[-0.025em] text-[#6f6b64]">
-              {dateLabel}
-            </span>
-          ) : null}
         </div>
-      </div>
-    </a>
+      </a>
+    </MotionReveal>
   );
 }
 
@@ -573,6 +578,7 @@ export default function Articles() {
                         href={href}
                         onNavigate={navigateWithTransition}
                         onCategoryNavigate={navigateToCategory}
+                        revealDelay={(index % 8) * 80}
                       />
                     );
                   })}

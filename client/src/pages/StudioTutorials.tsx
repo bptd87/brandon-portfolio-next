@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import MotionReveal from "@/components/MotionReveal";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
@@ -236,7 +237,7 @@ function StoryImage({
       fill
       priority={priority}
       quality={86}
-      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+      className="learning-card-image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
       sizes={sizes}
     />
   );
@@ -244,11 +245,11 @@ function StoryImage({
 
 function FeaturedStory({ item, priority = false }: { item: LearningCardItem; priority?: boolean }) {
   return (
-    <a href={item.href} className="group block">
-      <div className="relative aspect-[16/8.2] min-h-[18rem] overflow-hidden rounded-[1.65rem] bg-[#e8e8ed] shadow-[0_24px_70px_rgba(29,29,31,0.08)] md:min-h-[30rem]">
+    <a href={item.href} className="publish-motion-card group block">
+      <div className="learning-card-media relative aspect-[16/8.2] min-h-[18rem] overflow-hidden rounded-[1.65rem] bg-[#e8e8ed] shadow-[0_24px_70px_rgba(29,29,31,0.08)] md:min-h-[30rem]">
         <StoryImage item={item} priority={priority} sizes="(min-width: 1280px) 76rem, 92vw" />
       </div>
-      <div className="pt-8">
+      <div className="learning-card-copy pt-8">
         <span className={`inline-flex rounded-full px-2.5 py-1 text-[0.82rem] font-semibold uppercase leading-none tracking-[-0.01em] ${getCategoryChipClass(item.categoryLabel)}`}>
           {item.categoryLabel}
         </span>
@@ -275,11 +276,15 @@ function StoryGroup({
   return (
     <section className="bg-[#f1f0ec] pb-24 md:pb-32">
       <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
-        <FeaturedStory item={featuredItem} priority={priority} />
+        <MotionReveal>
+          <FeaturedStory item={featuredItem} priority={priority} />
+        </MotionReveal>
         {spotlightItems.length ? (
           <div className="mt-20 grid gap-9 md:grid-cols-2">
-            {spotlightItems.map((item) => (
-              <SpotlightCard key={item.id} item={item} />
+            {spotlightItems.map((item, index) => (
+              <MotionReveal key={item.id} delay={120 + index * 90}>
+                <SpotlightCard item={item} />
+              </MotionReveal>
             ))}
           </div>
         ) : null}
@@ -290,11 +295,11 @@ function StoryGroup({
 
 function SpotlightCard({ item }: { item: LearningCardItem }) {
   return (
-    <a href={item.href} className="group block">
-      <div className="relative aspect-[1.02/1] overflow-hidden rounded-[1.65rem] bg-[#e8e8ed]">
+    <a href={item.href} className="publish-motion-card group block">
+      <div className="learning-card-media relative aspect-[1.02/1] overflow-hidden rounded-[1.65rem] bg-[#e8e8ed]">
         <StoryImage item={item} sizes="(min-width: 1024px) 36vw, 90vw" />
       </div>
-      <div className="pt-6">
+      <div className="learning-card-copy pt-6">
         <span className={`inline-flex rounded-full px-2.5 py-1 text-[0.78rem] font-semibold uppercase leading-none tracking-[-0.01em] ${getCategoryChipClass(item.categoryLabel)}`}>
           {item.categoryLabel}
         </span>
@@ -311,25 +316,27 @@ function SpotlightCard({ item }: { item: LearningCardItem }) {
 
 function ArchiveRow({ item }: { item: LearningCardItem }) {
   return (
-    <a
-      href={item.href}
-      className="group grid gap-6 border-t border-[#d2d2d7] py-8 transition-colors hover:border-[#a1a1a6] md:grid-cols-[20rem_minmax(0,1fr)] md:gap-9 md:py-10"
-    >
-      <div className="relative aspect-[16/9] overflow-hidden rounded-[1.35rem] bg-[#e8e8ed]">
-        <StoryImage item={item} sizes="(min-width: 1024px) 20rem, 90vw" />
-      </div>
-      <div className="self-center">
-        <p className="text-[0.86rem] font-semibold uppercase tracking-[-0.01em] text-[#6e6e73]">
-          {item.categoryLabel}
-        </p>
-        <h3 className="mt-3 max-w-[28ch] text-[clamp(1.55rem,2.4vw,2.15rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
-          {item.title}
-        </h3>
-        <p className="mt-5 text-[1rem] font-medium tracking-[-0.02em] text-[#6e6e73]">
-          {item.metaLabel}
-        </p>
-      </div>
-    </a>
+    <MotionReveal>
+      <a
+        href={item.href}
+        className="publish-motion-card group grid gap-6 border-t border-[#d2d2d7] py-8 transition-colors hover:border-[#a1a1a6] md:grid-cols-[20rem_minmax(0,1fr)] md:gap-9 md:py-10"
+      >
+        <div className="learning-card-media relative aspect-[16/9] overflow-hidden rounded-[1.35rem] bg-[#e8e8ed]">
+          <StoryImage item={item} sizes="(min-width: 1024px) 20rem, 90vw" />
+        </div>
+        <div className="learning-card-copy self-center">
+          <p className="text-[0.86rem] font-semibold uppercase tracking-[-0.01em] text-[#6e6e73]">
+            {item.categoryLabel}
+          </p>
+          <h3 className="mt-3 max-w-[28ch] text-[clamp(1.55rem,2.4vw,2.15rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
+            {item.title}
+          </h3>
+          <p className="mt-5 text-[1rem] font-medium tracking-[-0.02em] text-[#6e6e73]">
+            {item.metaLabel}
+          </p>
+        </div>
+      </a>
+    </MotionReveal>
   );
 }
 
@@ -523,12 +530,16 @@ export default function StudioTutorials({ variant = "landing" }: StudioTutorials
           <>
             <section className="bg-[#f1f0ec] pb-16 pt-24 md:pb-24 md:pt-32">
               <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)] text-center">
-                <p className="text-[clamp(3.6rem,8vw,7rem)] font-semibold leading-none tracking-[-0.075em] text-black">
-                  Studio Tutorials
-                </p>
-                <h1 className="mx-auto mt-7 max-w-[31rem] text-[clamp(1.65rem,2.5vw,2.25rem)] font-semibold leading-[1.05] tracking-[-0.05em] text-[#1d1d1f]">
-                  Practical scenic design lessons for drafting, modeling, rendering, and production workflows.
-                </h1>
+                <MotionReveal>
+                  <p className="text-[clamp(3.6rem,8vw,7rem)] font-semibold leading-none tracking-[-0.075em] text-black">
+                    Studio Tutorials
+                  </p>
+                </MotionReveal>
+                <MotionReveal delay={140}>
+                  <h1 className="mx-auto mt-7 max-w-[31rem] text-[clamp(1.65rem,2.5vw,2.25rem)] font-semibold leading-[1.05] tracking-[-0.05em] text-[#1d1d1f]">
+                    Practical scenic design lessons for drafting, modeling, rendering, and production workflows.
+                  </h1>
+                </MotionReveal>
               </div>
             </section>
 

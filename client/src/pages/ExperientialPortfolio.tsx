@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import MotionReveal from "@/components/MotionReveal";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
@@ -248,20 +249,29 @@ export default function ExperientialPortfolio() {
       <main>
         <section className="flex min-h-[min(72svh,46rem)] items-center justify-center bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center text-white md:py-16">
           <header className="mx-auto max-w-[66rem]">
-            <p className="text-[0.82rem] font-medium tracking-[-0.01em] text-[#c9ff3d]">
-              {projects.length} projects / Selected work
-            </p>
-            <h1 className="mx-auto mt-4 max-w-[12ch] font-sans text-[clamp(3rem,6.2vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
-              {experientialPortfolioLandingCopy.title}
-            </h1>
-            <p className="mx-auto mt-5 max-w-[39rem] text-[clamp(1rem,1.2vw,1.18rem)] leading-[1.58] tracking-[-0.02em] text-white/78">
-              {experientialPortfolioLandingCopy.intro}
-            </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.92rem] tracking-[-0.018em] text-white/52">
+            <MotionReveal>
+              <p className="text-[0.82rem] font-medium tracking-[-0.01em] text-[#c9ff3d]">
+                {projects.length} projects / Selected work
+              </p>
+            </MotionReveal>
+            <MotionReveal delay={120}>
+              <h1 className="mx-auto mt-4 max-w-[12ch] font-sans text-[clamp(3rem,6.2vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+                {experientialPortfolioLandingCopy.title}
+              </h1>
+            </MotionReveal>
+            <MotionReveal delay={220}>
+              <p className="mx-auto mt-5 max-w-[39rem] text-[clamp(1rem,1.2vw,1.18rem)] leading-[1.58] tracking-[-0.02em] text-white/78">
+                {experientialPortfolioLandingCopy.intro}
+              </p>
+            </MotionReveal>
+            <MotionReveal
+              className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.92rem] tracking-[-0.018em] text-white/52"
+              delay={310}
+            >
               <span>Renderings</span>
               <span>Technical drawing</span>
               <span>Finished work</span>
-            </div>
+            </MotionReveal>
           </header>
         </section>
 
@@ -274,68 +284,73 @@ export default function ExperientialPortfolio() {
                 const imageTreatment = getProjectImageTreatment(project);
 
                 return (
-                  <a
+                  <MotionReveal
                     key={project.slug}
-                    href={href}
-                    onClick={(event) => navigateWithTransition(event, href)}
-                    className={`portfolio-focus-card group block border-b border-r border-white/12 ${isFeatureCard ? "md:col-span-2" : ""}`}
+                    className={`${isFeatureCard ? "md:col-span-2" : ""} h-full`}
+                    delay={(index % 10) * 70}
                   >
-                    <article className="bg-[#111111]">
-                      <div
-                        className={`portfolio-focus-media transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
-                        style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
-                      >
-                        {project.coverVideoUrl ? (
-                          <>
+                    <a
+                      href={href}
+                      onClick={(event) => navigateWithTransition(event, href)}
+                      className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+                    >
+                      <article className="h-full bg-[#111111]">
+                        <div
+                          className={`portfolio-focus-media transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
+                          style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
+                        >
+                          {project.coverVideoUrl ? (
+                            <>
+                              <img
+                                src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
+                                alt={`${project.title} video preview poster`}
+                                className="site-media-square h-full w-full object-cover object-center transition-opacity duration-500 group-hover:opacity-90"
+                                loading={index < eagerProjectCount ? "eager" : "lazy"}
+                                fetchPriority={index < eagerProjectCount ? "high" : "auto"}
+                              />
+                              <iframe
+                                src={getYoutubeEmbedUrl(project.coverVideoUrl)}
+                                title={`${project.title} video preview`}
+                                aria-label={`${project.title} video preview`}
+                                className="site-media-square pointer-events-none absolute left-1/2 top-1/2 h-full w-[120%] -translate-x-1/2 -translate-y-1/2 border-0"
+                                allow="autoplay; encrypted-media; picture-in-picture"
+                                loading={index < eagerProjectCount ? "eager" : "lazy"}
+                              />
+                            </>
+                          ) : project.coverImageUrl ? (
                             <img
-                              src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
-                              alt={`${project.title} video preview poster`}
-                              className="site-media-square h-full w-full object-cover object-center transition-opacity duration-500 group-hover:opacity-90"
+                              src={project.coverImageUrl}
+                              alt={experientialAlt(project.title)}
+                              className={`site-media-square h-full w-full object-center transition-opacity duration-500 group-hover:opacity-90 ${imageTreatment.image}`}
                               loading={index < eagerProjectCount ? "eager" : "lazy"}
                               fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                             />
-                            <iframe
-                              src={getYoutubeEmbedUrl(project.coverVideoUrl)}
-                              title={`${project.title} video preview`}
-                              aria-label={`${project.title} video preview`}
-                              className="site-media-square pointer-events-none absolute left-1/2 top-1/2 h-full w-[120%] -translate-x-1/2 -translate-y-1/2 border-0"
-                              allow="autoplay; encrypted-media; picture-in-picture"
-                              loading={index < eagerProjectCount ? "eager" : "lazy"}
-                            />
-                          </>
-                        ) : project.coverImageUrl ? (
-                          <img
-                            src={project.coverImageUrl}
-                            alt={experientialAlt(project.title)}
-                            className={`site-media-square h-full w-full object-center transition-opacity duration-500 group-hover:opacity-90 ${imageTreatment.image}`}
-                            loading={index < eagerProjectCount ? "eager" : "lazy"}
-                            fetchPriority={index < eagerProjectCount ? "high" : "auto"}
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center text-white/42">
-                            Image unavailable
-                          </div>
-                        )}
-                      </div>
-                      <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
-                        <div>
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] font-medium uppercase leading-none tracking-[0.12em] text-[#c9ff3d]">
-                            {project.mediaTypes.slice(0, 2).map((type) => (
-                              <span key={type}>{MEDIA_LABELS[type]}</span>
-                            ))}
-                          </div>
-                          <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
-                            {project.title}
-                          </h2>
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center text-white/42">
+                              Image unavailable
+                            </div>
+                          )}
                         </div>
-                        {project.year ? (
-                          <p className="font-sans text-[clamp(1.3rem,2vw,2.1rem)] font-normal leading-none tracking-[-0.055em] text-[#c9ff3d]/82">
-                            {project.year}
-                          </p>
-                        ) : null}
-                      </div>
-                    </article>
-                  </a>
+                        <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
+                          <div>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] font-medium uppercase leading-none tracking-[0.12em] text-[#c9ff3d]">
+                              {project.mediaTypes.slice(0, 2).map((type) => (
+                                <span key={type}>{MEDIA_LABELS[type]}</span>
+                              ))}
+                            </div>
+                            <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
+                              {project.title}
+                            </h2>
+                          </div>
+                          {project.year ? (
+                            <p className="font-sans text-[clamp(1.3rem,2vw,2.1rem)] font-normal leading-none tracking-[-0.055em] text-[#c9ff3d]/82">
+                              {project.year}
+                            </p>
+                          ) : null}
+                        </div>
+                      </article>
+                    </a>
+                  </MotionReveal>
                 );
               })}
             </div>
