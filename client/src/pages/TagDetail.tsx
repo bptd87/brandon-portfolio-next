@@ -217,7 +217,7 @@ export default function TagDetail({
                 <h1 className="font-sans text-[clamp(3.2rem,7vw,6.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-white">
                   {tagName}
                 </h1>
-                <p className="mt-5 max-w-[38rem] bg-gradient-to-r from-[#2f6dff] via-[#9d4edd] to-[#d6a8ff] bg-clip-text font-sans text-[clamp(1.25rem,2.1vw,2rem)] font-medium leading-[1.08] tracking-[-0.055em] text-transparent">
+                <p className="mt-5 max-w-[38rem] bg-gradient-to-r from-[#2f6dff] via-[#6f2dff] to-[#a78bff] bg-clip-text font-sans text-[clamp(1.25rem,2.1vw,2rem)] font-medium leading-[1.08] tracking-[-0.055em] text-transparent">
                   {heroTagline}
                 </p>
               </div>
@@ -305,7 +305,7 @@ export default function TagDetail({
                         <p className="mt-4 text-[0.98rem] leading-6 tracking-[-0.015em] text-white/58">
                           {category.description}
                         </p>
-                        <span className="mt-auto pt-6 text-[0.96rem] font-medium tracking-[-0.02em] text-[#63a4ff] transition-colors group-hover:text-[#c77dff]">
+                        <span className="mt-auto pt-6 text-[0.96rem] font-medium tracking-[-0.02em] text-[#63a4ff] transition-colors group-hover:text-[#7c3cff]">
                           View category
                         </span>
                       </Link>

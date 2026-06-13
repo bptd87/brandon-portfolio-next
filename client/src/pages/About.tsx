@@ -245,7 +245,7 @@ export default function About() {
                   <MotionReveal className="about-body-reveal" delay={90}>
                     <blockquote className="py-8 md:py-10">
                       <p className="font-sans text-[clamp(2rem,4.4vw,4.9rem)] font-medium leading-[0.95] tracking-[-0.075em]">
-                        <span className="bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-[#2458ff] via-[#6f2dff] to-[#7c3cff] bg-clip-text text-transparent">
                           I try not to arrive. The useful work usually starts
                           somewhere past certainty, a little further out than
                           feels comfortable.

@@ -92,9 +92,9 @@ type CategoryStyle = {
 const CATEGORY_STYLES: Record<string, CategoryStyle> = {
   "Design Process": {
     icon: PenLine,
-    color: "text-[#5f16ff]",
-    bg: "bg-[#5f16ff]/12",
-    chip: "bg-[#5f16ff] text-white",
+    color: "text-[#5b21d9]",
+    bg: "bg-[#5b21d9]/12",
+    chip: "bg-[#5b21d9] text-white",
   },
   "Scenic Design": {
     icon: Drama,
@@ -134,9 +134,9 @@ const CATEGORY_STYLES: Record<string, CategoryStyle> = {
   },
   "Themed Entertainment": {
     icon: Shapes,
-    color: "text-[#ce2fff]",
-    bg: "bg-[#ce2fff]/[0.14]",
-    chip: "bg-[#ce2fff] text-white",
+    color: "text-[#7c3cff]",
+    bg: "bg-[#7c3cff]/[0.14]",
+    chip: "bg-[#7c3cff] text-white",
   },
   "Personal Essay": {
     icon: Brush,
@@ -248,7 +248,7 @@ function ArticleGridCard({
                 {article.categoryName || "Article"}
               </span>
             </div>
-            <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#7b2cff]">
+            <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#6f2dff]">
               {decodeHTMLEntities(article.title)}
             </p>
             {dateLabel ? (
@@ -529,7 +529,7 @@ export default function Articles() {
                 <button
                   type="button"
                   onClick={applyFilters}
-                  className="rounded-full bg-[#7b2cff] px-7 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-white transition-colors hover:bg-[#6822e6]"
+                  className="rounded-full bg-[#6f2dff] px-7 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-white transition-colors hover:bg-[#6822e6]"
                 >
                   Apply
                 </button>
@@ -632,7 +632,7 @@ export default function Articles() {
                     onClick={() => navigateToCategory(path.category)}
                     className="group min-h-[11rem] rounded-[1.15rem] bg-[#fbfaf7] p-6 text-left shadow-[0_10px_30px_rgba(17,17,17,0.045)] ring-1 ring-black/[0.06] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_42px_rgba(17,17,17,0.08)]"
                   >
-                    <span className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111] transition-colors group-hover:text-[#7b2cff]">
+                    <span className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111] transition-colors group-hover:text-[#6f2dff]">
                       {path.title}
                     </span>
                     <span className="mt-4 block max-w-[22rem] text-[0.98rem] leading-7 tracking-[-0.015em] text-[#5d5851]">

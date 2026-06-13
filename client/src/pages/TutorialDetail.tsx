@@ -1547,7 +1547,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Open tutorial on YouTube"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                   >
                     <ExternalLink className="h-4 w-4" />
                   </a>
@@ -1556,14 +1556,14 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   type="button"
                   onClick={handleShare}
                   aria-label={linkCopied ? "Tutorial link copied" : "Copy tutorial link"}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                 >
                   {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
                 </button>
                 <a
                   href={emailShareUrl}
                   aria-label="Share tutorial by email"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                 >
                   <Mail className="h-4 w-4" />
                 </a>
@@ -1572,7 +1572,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Share tutorial on LinkedIn"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                 >
                   <Linkedin className="h-4 w-4" />
                 </a>
@@ -1581,7 +1581,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Share tutorial on Facebook"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                 >
                   f
                 </a>
@@ -2019,13 +2019,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     <p className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
                       Scenic design tutorials
                     </p>
-                    <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+                    <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
                       Keep learning.
                     </h2>
                   </div>
                   <Link
                     href="/studio/tutorials/archive"
-                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black md:justify-self-end"
+                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#4f2fd8] transition-colors hover:border-[#4f2fd8] hover:text-black md:justify-self-end"
                   >
                     View tutorials
                   </Link>
@@ -2068,7 +2068,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                           </div>
 
                           <div className="learning-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                            <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
+                            <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1d1d1f] transition-colors group-hover:text-[#6f2dff]">
                               {card.title}
                             </p>
                             <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">{metadata}</p>

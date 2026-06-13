@@ -227,7 +227,7 @@ export default function Collaborators() {
                   the rooms that have shaped how I think about space, process, and theatrical
                   memory.
                 </p>
-                <blockquote className="py-8 font-sans text-[clamp(2.45rem,5.4vw,6.25rem)] font-medium leading-[0.92] tracking-[-0.082em] text-transparent bg-[linear-gradient(105deg,#2458ff_0%,#8d42df_48%,#c477ff_100%)] bg-clip-text md:py-10">
+                <blockquote className="py-8 font-sans text-[clamp(2.45rem,5.4vw,6.25rem)] font-medium leading-[0.92] tracking-[-0.082em] text-transparent bg-[linear-gradient(105deg,#2458ff_0%,#5b21d9_48%,#7c3cff_100%)] bg-clip-text md:py-10">
                   The best rooms build a shared language before they build the world.
                 </blockquote>
               </div>

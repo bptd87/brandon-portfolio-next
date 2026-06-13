@@ -59,7 +59,7 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
             name="q"
             type="search"
             placeholder="Search studio"
-            className={`h-9 w-full rounded-full border-0 pl-9 pr-4 text-[0.9rem] font-medium tracking-[-0.02em] outline-none focus:ring-2 focus:ring-[#7b2cff]/30 ${
+            className={`h-9 w-full rounded-full border-0 pl-9 pr-4 text-[0.9rem] font-medium tracking-[-0.02em] outline-none focus:ring-2 focus:ring-[#6f2dff]/30 ${
               isDark
                 ? "bg-white/[0.08] text-white placeholder:text-white/46 focus:bg-white/[0.12]"
                 : "bg-[#e5e3dc] text-[#111111] placeholder:text-[#5d5851] focus:bg-[#fbfaf7]"

@@ -298,9 +298,9 @@ export default function TeachingPhilosophy() {
           </section>
 
           <section className="px-5 py-12 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
-            <AnimatedSection className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:items-end">
-              <div>
-                <h2 className="max-w-[12ch] font-sans text-5xl font-semibold leading-[0.95] tracking-[0] text-black sm:text-7xl lg:text-[6.5rem]">
+            <AnimatedSection className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.46fr)_minmax(0,0.54fr)] lg:items-end">
+              <div className="min-w-0">
+                <h2 className="max-w-[12ch] font-sans text-5xl font-semibold leading-[0.95] tracking-[0] text-black sm:text-7xl lg:text-[clamp(4.5rem,7vw,5.8rem)] 2xl:text-[6.5rem]">
                   Mentorship for an evolving landscape.
                 </h2>
                 <p className="mt-6 max-w-[34rem] text-[1.08rem] leading-8 tracking-[0] text-black/62">
@@ -310,7 +310,7 @@ export default function TeachingPhilosophy() {
                 </p>
               </div>
               <motion.figure
-                className="relative min-h-[32rem] overflow-hidden bg-black md:min-h-[42rem]"
+                className="relative min-h-[32rem] min-w-0 overflow-hidden bg-black md:min-h-[42rem]"
                 initial={{ opacity: 0, y: 34 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.32 }}
@@ -323,7 +323,7 @@ export default function TeachingPhilosophy() {
                   priority
                   quality={86}
                   sizes="(min-width: 1024px) 52vw, 92vw"
-                  className="object-cover"
+                  className="object-cover object-[72%_50%]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_44%,rgba(0,0,0,0.7))]" />
                 <figcaption className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-7">

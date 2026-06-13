@@ -2799,7 +2799,7 @@ const articlesWithManualEntries = [
   ...manualArticles,
 ];
 
-export const localArticles = articlesWithManualEntries
+const allLocalArticles = articlesWithManualEntries
   .map(mergeArticleSources)
   .map((article) => ({
     ...article,
@@ -2811,8 +2811,11 @@ export const localArticles = articlesWithManualEntries
     createdAt: article.createdAt || article.publishedAt,
     updatedAt: article.updatedAt || article.publishedAt,
   }))
-  .filter((article) => isPublicArticle(article))
   .map((article) => applyBlobMediaManifest(article))
+  .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+export const localArticles = allLocalArticles
+  .filter((article) => isPublicArticle(article))
   .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 export function getLocalArticles() {
@@ -2867,6 +2870,12 @@ export function toLocalArticleRecord(article: LocalArticle) {
 
 export function getLocalArticleRecordBySlug(slug?: string | null) {
   const article = getLocalArticleBySlug(slug);
+  return article ? toLocalArticleRecord(article) : undefined;
+}
+
+export function getLocalArticlePreviewRecordBySlug(slug?: string | null) {
+  if (!slug) return undefined;
+  const article = allLocalArticles.find((candidate) => candidate.slug === slug);
   return article ? toLocalArticleRecord(article) : undefined;
 }
 

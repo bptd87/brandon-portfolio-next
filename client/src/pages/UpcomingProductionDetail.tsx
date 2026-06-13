@@ -242,7 +242,7 @@ function ProductionExploreRail({ currentId }: { currentId: string }) {
           <p className="text-[1.04rem] tracking-[-0.035em] text-[#111111]/50">
             Production archive
           </p>
-          <h2 className="mt-2 max-w-[12ch] bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.25rem,4vw,4.9rem)] font-medium leading-[0.9] tracking-[-0.08em] text-transparent">
+          <h2 className="mt-2 max-w-[12ch] bg-gradient-to-r from-[#2458ff] via-[#6f2dff] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.25rem,4vw,4.9rem)] font-medium leading-[0.9] tracking-[-0.08em] text-transparent">
             Explore more productions.
           </h2>
         </div>

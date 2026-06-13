@@ -149,7 +149,7 @@ function ProjectCard({
           </div>
           <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
             <div>
-              <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+              <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#a78bff]">
                 {project.title}
               </h2>
               {getVenueLabel(project) ? (

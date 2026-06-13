@@ -1,4 +1,5 @@
 import artisticVisionInScenicDesignFindingMyCreativeVoiceBlocks from "../content/articles/artistic-vision-in-scenic-design-finding-my-creative-voice/blocks.json";
+import atmosphereAsAttractionOrangeCountyRestaurantEnvironmentsBlocks from "../content/articles/atmosphere-as-attraction-orange-county-restaurant-environments/blocks.json";
 import becomingAScenicDesignerAComprehensiveGuideBlocks from "../content/articles/becoming-a-scenic-designer-a-comprehensive-guide/blocks.json";
 import buildingTheVisualWorldArtDirectionInFilmTelevisionBlocks from "../content/articles/building-the-visual-world-art-direction-in-film-television/blocks.json";
 import computerHardwareWhyScenicDesignersAndAllTheatreDesignersNeedToCareBlocks from "../content/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care/blocks.json";
@@ -52,6 +53,27 @@ export const fileFirstArticleFieldsBySlug = {
   "publishedAt": "2025-03-03T00:00:00+00:00",
   "updatedAt": "2026-02-12T15:04:13+00:00",
   "linkedScenicProjectSlugs": []
+},
+  "atmosphere-as-attraction-orange-county-restaurant-environments": {
+  "title": "Atmosphere as Attraction: Five Orange County Restaurant Environments I Kept Coming Back To",
+  "status": "scheduled",
+  "featured": false,
+  "excerpt": "A scenic designer reflects on five accessible Orange County restaurant environments that use atmosphere, set dressing, lighting, layout, and mood to create small-scale themed experiences beyond the theme park.",
+  "categoryName": "Themed Entertainment",
+  "coverImageAlt": "Tiki-inspired restaurant interior with layered decor, warm lighting, and immersive themed details.",
+  "seoTitle": "Atmosphere as Attraction: Orange County Restaurant Environments",
+  "seoDescription": "A scenic designer looks at Orange County restaurant environments that use atmosphere, set dressing, lighting, layout, and mood as small-scale themed experiences beyond the theme park.",
+  "seoKeywords": "restaurant design, environmental storytelling, scenic design, orange county restaurant design, themed environments, themed entertainment",
+  "readTime": 13,
+  "publishedAt": "2026-07-15T09:00:00-07:00",
+  "updatedAt": "2026-07-15T09:00:00-07:00",
+  "linkedScenicProjectSlugs": [],
+  "series": {
+    "name": "Themed Experience",
+    "slug": "themed-experience",
+    "order": 3
+  },
+  "coverImageUrl": "/images/articles/orange-county-restaurant-environments/oc-restaurant-environments-hero.jpg"
 },
   "becoming-a-scenic-designer-a-comprehensive-guide": {
   "title": "Becoming a Scenic Designer: A Comprehensive Guide",
@@ -716,6 +738,7 @@ export const fileFirstArticleFieldsBySlug = {
 
 export const fileFirstArticleContentBySlug = {
   "artistic-vision-in-scenic-design-finding-my-creative-voice": artisticVisionInScenicDesignFindingMyCreativeVoiceBlocks,
+  "atmosphere-as-attraction-orange-county-restaurant-environments": atmosphereAsAttractionOrangeCountyRestaurantEnvironmentsBlocks,
   "becoming-a-scenic-designer-a-comprehensive-guide": becomingAScenicDesignerAComprehensiveGuideBlocks,
   "building-the-visual-world-art-direction-in-film-television": buildingTheVisualWorldArtDirectionInFilmTelevisionBlocks,
   "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care": computerHardwareWhyScenicDesignersAndAllTheatreDesignersNeedToCareBlocks,

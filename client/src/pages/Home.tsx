@@ -108,12 +108,20 @@ function FlipWords({
 
   return (
     <span
-      className={`relative inline-block overflow-hidden align-baseline ${className}`}
+      className={`relative inline-grid overflow-visible align-baseline ${className}`}
       aria-hidden="true"
     >
+      {words.map((word) => (
+        <span
+          key={`measure-${word}`}
+          className="invisible col-start-1 row-start-1 whitespace-nowrap"
+        >
+          {word}
+        </span>
+      ))}
       <span
         key={words[wordIndex]}
-        className="inline-block motion-safe:animate-[home-flip-word_560ms_cubic-bezier(0.22,1,0.36,1)]"
+        className="col-start-1 row-start-1 inline-block whitespace-nowrap motion-safe:animate-[home-flip-word_560ms_cubic-bezier(0.22,1,0.36,1)]"
       >
         {words[wordIndex]}
       </span>
@@ -492,13 +500,13 @@ function HomeIntro({ introReady }: { introReady: boolean }) {
           <div className="mt-7 flex flex-col gap-3 min-[420px]:flex-row md:mt-8 md:flex-wrap">
             <a
               href="/projects"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-[#6f2dff] px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#7c3cff]"
             >
               View portfolio
             </a>
             <a
               href="/about"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-[#a78bff] transition-colors hover:border-[#7c3cff] hover:text-white"
             >
               About Brandon
             </a>
@@ -544,7 +552,7 @@ function HomeThesisSection() {
           <dl className="mt-12 grid gap-7 border-t border-white/12 pt-8 md:grid-cols-3">
             {ideas.map(idea => (
               <div key={idea.label}>
-                <dt className="font-sans text-[0.72rem] font-medium uppercase tracking-[0.24em] text-[#c77dff]">
+                <dt className="font-sans text-[0.72rem] font-medium uppercase tracking-[0.24em] text-[#7c3cff]">
                   {idea.label}
                 </dt>
                 <dd className="mt-3 max-w-[15rem] font-sans text-[1.05rem] font-medium leading-[1.35] tracking-[-0.025em] text-white/62">
@@ -605,7 +613,7 @@ function HomeFeaturedScenicGrid({
           </p>
           <a
             href="/projects"
-            className="mt-7 inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+            className="mt-7 inline-flex h-10 items-center justify-center rounded-full bg-[#6f2dff] px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#7c3cff]"
           >
             View full portfolio
           </a>
@@ -639,7 +647,7 @@ function HomeFeaturedScenicGrid({
                   />
                 </div>
                 <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
-                  <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                  <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#a78bff]">
                     {project.title}
                   </h3>
                   {project.client ? (
@@ -690,10 +698,10 @@ function HomePortfolioExploreStrip() {
               >
                 <Icon
                   aria-hidden="true"
-                  className="mb-8 h-6 w-6 text-[#c77dff] transition-[color,transform] duration-500 group-hover:-translate-y-1 group-hover:text-white"
+                  className="mb-8 h-6 w-6 text-[#7c3cff] transition-[color,transform] duration-500 group-hover:-translate-y-1 group-hover:text-white"
                   strokeWidth={1.7}
                 />
-                <h3 className="font-sans text-[clamp(1.25rem,1.7vw,1.7rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                <h3 className="font-sans text-[clamp(1.25rem,1.7vw,1.7rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#a78bff]">
                   {row.title}
                 </h3>
                 <p className="mt-4 max-w-[22rem] text-[0.92rem] leading-6 tracking-[-0.018em] text-white/54">
@@ -786,7 +794,7 @@ function ProcessSection() {
         {processCards.map((card, index) => (
           <FadeUpReveal key={card.title} delay={120 + index * 95}>
             <article className="flex min-h-[16rem] h-full flex-col border-b border-r border-white/12 bg-black/24 p-[clamp(1rem,2vw,1.5rem)] lg:min-h-[18rem]">
-              <p className="font-sans text-[0.72rem] font-medium uppercase tracking-[0.24em] text-[#c77dff]">
+              <p className="font-sans text-[0.72rem] font-medium uppercase tracking-[0.24em] text-[#7c3cff]">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-8 max-w-[13ch] font-sans text-[clamp(1.55rem,2.6vw,2.7rem)] font-medium leading-[0.92] tracking-[-0.06em] text-white">
@@ -927,14 +935,14 @@ function PortfolioCategoryRows({
             >
               <a
                 href={row.href}
-                className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+                className="inline-flex h-10 items-center justify-center rounded-full bg-[#6f2dff] px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#7c3cff]"
               >
                 View collection
               </a>
               {leadProject ? (
                 <a
                   href={getProjectPath(leadProject)}
-                  className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
+                  className="inline-flex h-10 items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-[#a78bff] transition-colors hover:border-[#7c3cff] hover:text-white"
                 >
                   Featured project
                 </a>
@@ -1092,13 +1100,13 @@ function BrandonSection({
           <div className="mt-8 flex flex-col gap-3 min-[420px]:flex-row md:mt-9 md:flex-wrap">
             <a
               href="/about"
-              className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 text-sm font-medium text-white transition-colors hover:bg-[#c77dff]"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-[#6f2dff] px-5 text-sm font-medium text-white transition-colors hover:bg-[#7c3cff]"
             >
               About Brandon
             </a>
             <a
               href="/resume"
-              className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 text-sm font-medium text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 text-sm font-medium text-[#4f2fd8] transition-colors hover:border-[#4f2fd8] hover:text-black"
             >
               Resume / CV
             </a>
@@ -1193,7 +1201,7 @@ function UpcomingSection() {
               className="group flex min-h-20 items-center justify-between gap-4 border-t border-white/14 py-4"
               aria-label={`View ${production.title}`}
             >
-              <span className="min-w-0 font-sans text-[1.45rem] font-medium uppercase leading-[0.94] tracking-[-0.055em] text-white transition-colors group-hover:text-[#e0aaff]">
+              <span className="min-w-0 font-sans text-[1.45rem] font-medium uppercase leading-[0.94] tracking-[-0.055em] text-white transition-colors group-hover:text-[#a78bff]">
                 {production.title}
               </span>
               <ChevronRight
@@ -1358,21 +1366,25 @@ function HomeExperientialAndRenderingSection() {
         `}
       </style>
 
-      <div className="grid gap-8 border-t border-white/12 px-[clamp(1.25rem,4vw,5rem)] py-[clamp(3rem,7vw,6rem)] lg:grid-cols-[0.9fr_1.2fr] lg:items-end">
+      <div className="grid gap-8 border-t border-white/12 px-[clamp(1.25rem,4vw,5rem)] py-[clamp(3rem,7vw,6rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(24rem,0.85fr)] lg:items-end">
         <FadeUpReveal>
           <p className="section-kicker mb-5 text-white/42">
             Rendering + Experiential Design
           </p>
           <h2
-            className="max-w-[13.5ch] font-sans text-[clamp(2.35rem,5.8vw,6.2rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white"
+            className="max-w-[22ch] font-sans text-[clamp(2.35rem,4.7vw,5.2rem)] font-medium leading-[0.98] tracking-[-0.065em] text-white"
             aria-label="Designing renderings, drawings, installations, and environments beyond the proscenium."
           >
-            Designing{" "}
-            <FlipWords
-              words={HOME_RENDERING_FLIP_WORDS}
-              className="text-[#c77dff]"
-            />{" "}
-            beyond the proscenium.
+            <span className="block md:whitespace-nowrap">
+              Designing{" "}
+              <FlipWords
+                words={HOME_RENDERING_FLIP_WORDS}
+                className="text-[#7c3cff]"
+              />
+            </span>
+            <span className="block md:whitespace-nowrap">
+              beyond the proscenium.
+            </span>
           </h2>
         </FadeUpReveal>
         <FadeUpReveal className="max-w-[44rem] lg:justify-self-end" delay={120}>
@@ -1426,7 +1438,7 @@ function HomeExperientialAndRenderingSection() {
                     <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/42">
                       Experiential Design
                     </p>
-                    <h3 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                    <h3 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#a78bff]">
                       {project.title}
                     </h3>
                   </div>
@@ -1460,7 +1472,7 @@ function HomeExperientialAndRenderingSection() {
                         <p className="font-sans text-[0.68rem] font-semibold tracking-[-0.015em] text-white/52">
                           Rendering
                         </p>
-                        <h3 className="mt-2 max-w-[15ch] font-sans text-[1.08rem] font-medium leading-[0.96] tracking-[-0.05em] text-white transition-colors duration-500 group-hover:text-[#e0aaff] md:text-[1.22rem]">
+                        <h3 className="mt-2 max-w-[15ch] font-sans text-[1.08rem] font-medium leading-[0.96] tracking-[-0.05em] text-white transition-colors duration-500 group-hover:text-[#a78bff] md:text-[1.22rem]">
                           {card.title}
                         </h3>
                       </div>
@@ -1487,7 +1499,7 @@ function PublishSection() {
             <p className="mb-4 section-kicker text-white">
               Articles + Tutorials
             </p>
-            <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+            <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
               Notes from the studio.
             </h2>
           </FadeUpReveal>
@@ -1548,7 +1560,7 @@ function PublishSection() {
                   <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
                     {card.kind}
                   </p>
-                  <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#e0aaff]">
+                  <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#a78bff]">
                     {card.title}
                   </h3>
                   <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">

@@ -123,7 +123,7 @@ function DesktopMenuPanel({
               isLight ? "text-black/54" : "text-white/58"
             }`}
           >
-            <span className="h-2 w-2 bg-[#8f7aff]" aria-hidden="true" />
+            <span className="h-2 w-2 bg-[#725cff]" aria-hidden="true" />
             {category.label}
           </div>
           <div className="grid gap-3">
@@ -184,8 +184,8 @@ function DesktopMenuPanel({
               aria-hidden="true"
             />
             <div
-              className={`mt-2.5 inline-flex w-fit bg-[#8f7aff]/16 px-2.5 py-1.5 text-[0.74rem] font-medium leading-none tracking-[-0.01em] transition-colors ${
-                isLight ? "text-[#5f4fd0] group-hover:text-[#33228f]" : "text-[#cec5ff] group-hover:text-white"
+              className={`mt-2.5 inline-flex w-fit bg-[#725cff]/16 px-2.5 py-1.5 text-[0.74rem] font-medium leading-none tracking-[-0.01em] transition-colors ${
+                isLight ? "text-[#4f2fd8] group-hover:text-[#2d1b8f]" : "text-[#b8a8ff] group-hover:text-white"
               }`}
             >
               {previewFeature.label}
@@ -710,7 +710,9 @@ export default function Header() {
               : "border-black/10 bg-[#f1f0ec]/78 supports-[backdrop-filter]:bg-[#f1f0ec]/66"
             : useImmersiveChrome && !isScrolled
               ? "border-transparent bg-transparent shadow-none backdrop-blur-0"
-              : "border-white/10 bg-background/40 supports-[backdrop-filter]:bg-background/25"
+              : isArticleDetailRoute
+                ? "border-white/10 bg-black shadow-[0_12px_40px_rgba(0,0,0,0.34)] supports-[backdrop-filter]:bg-black"
+              : "border-white/10 bg-black/55 supports-[backdrop-filter]:bg-black/42"
         } ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}

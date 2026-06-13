@@ -51,7 +51,7 @@ export default function PublishingCard({
           <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#6f6b64]">
             {metaLabel}
           </p>
-          <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#7b2cff]">
+          <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#6f2dff]">
             {title}
           </p>
           {description ? (

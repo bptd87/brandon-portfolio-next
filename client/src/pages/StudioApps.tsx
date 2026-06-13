@@ -95,7 +95,7 @@ const allApps: StudioApp[] = [
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
     tone: "Research",
-    accent: "from-[#b597ff] to-[#ff9bd2]",
+    accent: "from-[#7c3cff] to-[#ff9bd2]",
   },
 ];
 

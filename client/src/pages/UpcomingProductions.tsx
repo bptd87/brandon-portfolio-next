@@ -57,7 +57,7 @@ function ProductionCard({
             {production.company}
           </span>
           <ArrowUpRight
-            className="h-4 w-4 shrink-0 text-[#7b2cff] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            className="h-4 w-4 shrink-0 text-[#6f2dff] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
             aria-hidden="true"
           />
         </div>
@@ -74,7 +74,7 @@ function UpcomingProductionCards() {
           <p className="text-[1.14rem] tracking-[-0.04em] text-[#111111]/54">
             2026 season
           </p>
-          <h2 className="mt-2 max-w-[12ch] bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.9rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.08em] text-transparent">
+          <h2 className="mt-2 max-w-[12ch] bg-gradient-to-r from-[#2458ff] via-[#6f2dff] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.9rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.08em] text-transparent">
             The season ahead.
           </h2>
         </div>

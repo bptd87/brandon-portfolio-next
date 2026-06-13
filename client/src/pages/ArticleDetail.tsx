@@ -1270,14 +1270,14 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                     type="button"
                     onClick={handleShare}
                     aria-label={linkCopied ? "Article link copied" : "Copy article link"}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                   >
                     {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
                   </button>
                   <a
                     href={emailShareUrl}
                     aria-label="Share article by email"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                   >
                     <Mail className="h-4 w-4" />
                   </a>
@@ -1286,7 +1286,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Share article on LinkedIn"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                   >
                     <Linkedin className="h-4 w-4" />
                   </a>
@@ -1295,7 +1295,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Share article on Facebook"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                   >
                     f
                   </a>
@@ -1378,7 +1378,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                 {article.categoryName ? (
                   <Link
                     href={`/articles?category=${encodeURIComponent(article.categoryName)}`}
-                    className="rounded-full bg-[#a64dff] px-4 py-1.5 text-white no-underline transition-colors hover:bg-[#b86aff]"
+                    className="rounded-full bg-[#6f2dff] px-4 py-1.5 text-white no-underline transition-colors hover:bg-[#7c3cff]"
                   >
                     {article.categoryName}
                   </Link>
@@ -1839,7 +1839,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                                   type="button"
                                   aria-label="Previous gallery images"
                                   onClick={() => scrollGallery(index, "prev")}
-                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b2cff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
+                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
                                 >
                                   <ChevronLeft className="h-4 w-4" />
                                 </button>
@@ -1847,7 +1847,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                                   type="button"
                                   aria-label="Next gallery images"
                                   onClick={() => scrollGallery(index, "next")}
-                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7b2cff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
+                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
                                 >
                                   <ChevronRight className="h-4 w-4" />
                                 </button>
@@ -1935,7 +1935,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                                     className={`border-b last:border-b-0 ${isNarrativeArticle ? "border-white/8" : "border-black/[0.08]"}`}
                                   >
                                     <AccordionTrigger
-                                      className={`group/faq rounded-none py-0 text-left hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-[#7b2cff]/28 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:border-[#7b2cff] [&[data-state=open]_.faq-plus-ring]:bg-[#7b2cff] [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0 ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                                      className={`group/faq rounded-none py-0 text-left hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-[#6f2dff]/28 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:border-[#6f2dff] [&[data-state=open]_.faq-plus-ring]:bg-[#6f2dff] [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0 ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
                                     >
                                       <div className="flex w-full items-center justify-between gap-5 py-5">
                                         <div className={`pr-2 text-[1.02rem] font-medium leading-[1.35] tracking-[-0.026em] md:text-[1.08rem] ${isNarrativeArticle ? "text-white" : "text-[#24211f]"}`}>
@@ -2140,13 +2140,13 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   <p className={`mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}>
                     {isLearningPortalArticle ? "Scenic design tutorials" : "Scenic design writing"}
                   </p>
-                  <h2 className={`${isNarrativeArticle ? "text-white" : "bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text text-transparent"} max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em]`}>
+                  <h2 className={`${isNarrativeArticle ? "text-white" : "bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text text-transparent"} max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em]`}>
                     {isLearningPortalArticle ? "Keep learning." : article.series ? `More in ${article.series.name}` : "Keep reading."}
                   </h2>
                 </div>
                 <Link
                   href={isLearningPortalArticle ? "/studio/tutorials/archive" : articleBasePath}
-                  className={`${isNarrativeArticle ? "border-white/18 text-white/70 hover:border-white/36 hover:text-white" : "border-[#9d4edd]/72 text-[#7b2cbf] hover:border-[#7b2cbf] hover:text-black"} inline-flex h-10 w-fit items-center justify-center rounded-full border px-5 font-sans text-sm font-medium tracking-[-0.02em] transition-colors md:justify-self-end`}
+                  className={`${isNarrativeArticle ? "border-white/18 text-white/70 hover:border-white/36 hover:text-white" : "border-[#6f2dff]/72 text-[#4f2fd8] hover:border-[#4f2fd8] hover:text-black"} inline-flex h-10 w-fit items-center justify-center rounded-full border px-5 font-sans text-sm font-medium tracking-[-0.02em] transition-colors md:justify-self-end`}
                 >
                   {isLearningPortalArticle ? "View tutorials" : "View articles"}
                 </Link>
@@ -2198,7 +2198,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                           )}
 
                           <div className="publish-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                            <h3 className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#7b2cff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}>
+                            <h3 className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#6f2dff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}>
                               {relatedTitle}
                             </h3>
 

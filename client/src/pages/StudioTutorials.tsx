@@ -212,7 +212,7 @@ const getCategoryChipClass = (category: string) => {
   const token = normalizeToken(category);
   if (token.includes("render")) return "bg-[#0066cc] text-white";
   if (token.includes("model")) return "bg-[#0a7d73] text-white";
-  if (token.includes("draft")) return "bg-[#7b2cff] text-white";
+  if (token.includes("draft")) return "bg-[#6f2dff] text-white";
   if (token.includes("career") || token.includes("practice")) return "bg-[#d97800] text-white";
   return "bg-[#1d1d1f] text-white";
 };
@@ -328,7 +328,7 @@ function ArchiveRow({ item }: { item: LearningCardItem }) {
           <p className="text-[0.86rem] font-semibold uppercase tracking-[-0.01em] text-[#6e6e73]">
             {item.categoryLabel}
           </p>
-          <h3 className="mt-3 max-w-[28ch] text-[clamp(1.55rem,2.4vw,2.15rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
+          <h3 className="mt-3 max-w-[28ch] text-[clamp(1.55rem,2.4vw,2.15rem)] font-semibold leading-[1.04] tracking-[-0.055em] text-[#1d1d1f] transition-colors group-hover:text-[#6f2dff]">
             {item.title}
           </h3>
           <p className="mt-5 text-[1rem] font-medium tracking-[-0.02em] text-[#6e6e73]">

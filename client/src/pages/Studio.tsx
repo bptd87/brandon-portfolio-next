@@ -351,20 +351,20 @@ export default function Studio() {
                 <p className="mb-4 section-kicker text-black/42">
                   Latest Articles
                 </p>
-                <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+                <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
                   Notes from the studio.
                 </h2>
               </div>
               <div className="flex flex-wrap gap-3 md:justify-end">
                 <Link
                   href="/articles"
-                  className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+                  className="inline-flex h-10 items-center justify-center rounded-full bg-[#6f2dff] px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#7c3cff]"
                 >
                   Articles
                 </Link>
                 <Link
                   href="/studio/tutorials"
-                  className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
+                  className="inline-flex h-10 items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#4f2fd8] transition-colors hover:border-[#4f2fd8] hover:text-black"
                 >
                   Tutorials
                 </Link>
@@ -451,13 +451,13 @@ export default function Studio() {
                 <p className="mb-4 text-[clamp(1.05rem,1.35vw,1.22rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
                   Studio Tools
                 </p>
-                <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+                <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
                   Practical design utilities.
                 </h2>
               </div>
               <Link
                 href="/studio/apps"
-                className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black md:justify-self-end"
+                className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#4f2fd8] transition-colors hover:border-[#4f2fd8] hover:text-black md:justify-self-end"
               >
                 View all tools
               </Link>
