@@ -678,25 +678,25 @@ export const fileFirstArticleFieldsBySlug = {
   "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/cover.webp"
 },
   "working-offstage-expanding-a-scenic-design-career-beyond-theatre": {
-  "title": "Working Offstage: Expanding a Scenic Design Career Beyond Theatre",
+  "title": "Working Offstage: How Scenic Designers Build Sustainable Careers Beyond Theatre",
   "status": "published",
   "featured": false,
-  "excerpt": "A practical essay on how scenic designers can expand into themed entertainment, architectural visualization, rendering, and other adjacent industries without abandoning theatre.",
+  "excerpt": "A practical essay on how scenic designers can build sustainable careers across theatre, themed entertainment, visualization, rendering, freelance practice, and other adjacent spatial design fields.",
   "categoryName": "Design Process",
-  "coverImageAlt": "Abstract theatrical architecture opening into adjacent design worlds beyond the stage, with a solitary figure standing in a warm amber haze.",
-  "seoTitle": "Scenic Design Careers Beyond Theatre | Working Offstage",
-  "seoDescription": "A practical guide for scenic designers expanding into themed entertainment, rendering, visualization, and freelance design work without losing their theatre foundation.",
-  "seoKeywords": "scenic design career, themed entertainment careers, architectural rendering freelance, scenic designer freelance rates, offstage design work, experiential design career, scenic design beyond theatre",
-  "readTime": 6,
+  "coverImageAlt": "Editorial architectural artwork of a scenic design workspace expanding into theatre, themed entertainment, architectural visualization, and production design worlds.",
+  "seoTitle": "Working Offstage: Scenic Design Careers Beyond Theatre",
+  "seoDescription": "A practical guide for scenic designers building sustainable careers beyond theatre through themed entertainment, visualization, rendering, production design, freelance pricing, and scope management.",
+  "seoKeywords": "scenic design career, themed entertainment careers, architectural rendering freelance, scenic designer freelance rates, offstage design work, experiential design career, scenic design beyond theatre, freelance pricing, production design, architectural visualization",
+  "readTime": 10,
   "publishedAt": "2026-03-26",
-  "updatedAt": "2026-03-26",
+  "updatedAt": "2026-06-13",
   "linkedScenicProjectSlugs": [],
   "series": {
     "name": "Process and Practice",
     "slug": "process-and-practice",
     "order": 6
   },
-  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/cover.webp"
+  "coverImageUrl": "/images/articles/working-offstage/career-expansion-hero.jpg"
 },
   "year-39": {
   "title": "39",
