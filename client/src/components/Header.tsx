@@ -3,10 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Link } from "wouter";
 import { useState, useRef, useEffect } from "react";
-import {
-  Search,
-  X,
-} from "lucide-react";
+import { Search, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import {
   recentArticlePreview,
@@ -21,6 +18,7 @@ type MenuItem = {
   name: string;
   path: string;
   description: string;
+  external?: boolean;
   feature?: MenuFeature;
 };
 
@@ -36,13 +34,22 @@ type MenuFeature = {
   path: string;
   image: string;
   imageFit?: "cover" | "contain";
+  external?: boolean;
 };
 
 type DesktopCategory = {
-  label: "Portfolio" | "About" | "Studio";
+  label: "Portfolio" | "About" | "Studio" | "Instagram";
+  path: string;
+  external?: boolean;
   groups: MenuGroup[];
   feature: MenuFeature;
 };
+
+const INSTAGRAM_PORTFOLIO_URL =
+  "https://www.instagram.com/brandonptdavisdesign/";
+const INSTAGRAM_FEATURED_POST_URL = "https://www.instagram.com/p/DY_lcJ5le5B/";
+const INSTAGRAM_FEATURED_POST_IMAGE =
+  "/images/site-assets/social/instagram-featured-romeo-and-juliet.jpeg";
 
 const NAV_FEATURE_IMAGES = {
   portfolio:
@@ -73,6 +80,33 @@ const NAV_FEATURE_IMAGES = {
   studioApps: "/assets/studio-apps/icons/scale-calculator.jpg",
 };
 
+function getHeaderPillClass({
+  lightChrome,
+  active = false,
+  iconOnly = false,
+}: {
+  lightChrome: boolean;
+  active?: boolean;
+  iconOnly?: boolean;
+}) {
+  const sizing = iconOnly ? "h-9 w-9 px-0" : "h-9 px-4";
+  const base = `inline-flex ${sizing} items-center justify-center gap-2 rounded-full border text-[0.76rem] font-medium uppercase leading-none tracking-normal transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`;
+
+  if (lightChrome) {
+    return `${base} ${
+      active
+        ? "border-black/20 bg-black/[0.085] text-black focus-visible:ring-black/22 focus-visible:ring-offset-[#f1f0ec]"
+        : "border-black/12 bg-black/[0.025] text-black/62 hover:border-black/20 hover:bg-black/[0.065] hover:text-black focus-visible:ring-black/22 focus-visible:ring-offset-[#f1f0ec]"
+    }`;
+  }
+
+  return `${base} ${
+    active
+      ? "border-white/24 bg-white/[0.12] text-white focus-visible:ring-white/34 focus-visible:ring-offset-black"
+      : "border-white/13 bg-white/[0.035] text-white/66 hover:border-white/24 hover:bg-white/[0.09] hover:text-white focus-visible:ring-white/34 focus-visible:ring-offset-black"
+  }`;
+}
+
 function DesktopMenuPanel({
   category,
   onClose,
@@ -84,13 +118,19 @@ function DesktopMenuPanel({
   currentPath: string;
   tone?: "dark" | "light";
 }) {
-  const items = category.groups.flatMap((group) => group.items);
+  const items = category.groups.flatMap(group => group.items);
   const isLight = tone === "light";
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
-  const hoveredItem = items.find((item) => item.path === hoveredPath);
-  const activeItem = [...items].sort((a, b) => b.path.length - a.path.length).find(
-    (item) => currentPath === item.path || (item.path !== "/projects" && currentPath.startsWith(`${item.path}/`))
-  );
+  const hoveredItem = items.find(item => item.path === hoveredPath);
+  const activeItem = [...items]
+    .sort((a, b) => b.path.length - a.path.length)
+    .find(
+      item =>
+        (!item.external && currentPath === item.path) ||
+        (!item.external &&
+          item.path !== "/projects" &&
+          currentPath.startsWith(`${item.path}/`))
+    );
   const previewItem = hoveredItem || activeItem;
   const previewFeature = previewItem
     ? previewItem.feature || {
@@ -110,26 +150,62 @@ function DesktopMenuPanel({
 
   return (
     <div
-      className={`absolute left-1/2 top-[calc(100%+0.7rem)] h-[19rem] w-[24rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-[18px] border shadow-[0_28px_90px_rgba(0,0,0,0.34)] backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200 ${
+      className={`absolute left-1/2 top-[calc(100%+0.68rem)] h-[19.5rem] w-[26.5rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-[1.7rem] border shadow-[0_28px_90px_rgba(0,0,0,0.34)] backdrop-blur-xl animate-in fade-in zoom-in-95 slide-in-from-top-2 duration-200 ${
         isLight
-          ? "border-black/10 bg-[#f1f0ec]/97 shadow-[0_28px_80px_rgba(17,17,17,0.14)]"
-          : "border-white/10 bg-[#050505]/97"
+          ? "border-black/10 bg-[#f1f0ec]/98 shadow-[0_28px_80px_rgba(17,17,17,0.14)]"
+          : "border-white/10 bg-[#050505]/98"
       }`}
     >
-      <div className="grid h-full grid-cols-[7.45rem_13.75rem] gap-3 px-3 py-3.5">
+      <div className="grid h-full grid-cols-[9rem_14.25rem] gap-3 px-3.5 py-3.5">
         <div className="flex flex-col justify-center">
           <div
             className={`mb-5 flex items-center gap-2 text-[0.74rem] font-medium tracking-[-0.01em] ${
               isLight ? "text-black/54" : "text-white/58"
             }`}
           >
-            <span className="h-2 w-2 bg-[#725cff]" aria-hidden="true" />
+            <span
+              className="h-2 w-2 rounded-full bg-[#725cff]"
+              aria-hidden="true"
+            />
             {category.label}
           </div>
-          <div className="grid gap-3">
-            {items.map((item) => {
+          <div className="grid gap-2.5">
+            {items.map(item => {
               const isActive =
-                currentPath === item.path || (item.path !== "/projects" && currentPath.startsWith(`${item.path}/`));
+                !item.external &&
+                (currentPath === item.path ||
+                  (item.path !== "/projects" &&
+                    currentPath.startsWith(`${item.path}/`)));
+              const itemClassName = `block whitespace-nowrap rounded-full px-3 py-2 font-sans text-[0.96rem] font-medium leading-none tracking-normal transition-colors ${
+                isLight
+                  ? isActive
+                    ? "bg-black text-white"
+                    : "text-black/60 hover:bg-black/[0.065] hover:text-black"
+                  : isActive
+                    ? "bg-white text-black"
+                    : "text-white/60 hover:bg-white/[0.08] hover:text-white"
+              }`;
+
+              if (item.external) {
+                return (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={onClose}
+                    onMouseEnter={() => setHoveredPath(item.path)}
+                    onMouseMove={() => setHoveredPath(item.path)}
+                    onPointerEnter={() => setHoveredPath(item.path)}
+                    onPointerMove={() => setHoveredPath(item.path)}
+                    onFocus={() => setHoveredPath(item.path)}
+                    aria-label={`${item.name}: ${item.description}`}
+                    className={itemClassName}
+                  >
+                    {item.name}
+                  </a>
+                );
+              }
 
               return (
                 <Link
@@ -142,15 +218,7 @@ function DesktopMenuPanel({
                   onPointerMove={() => setHoveredPath(item.path)}
                   onFocus={() => setHoveredPath(item.path)}
                   aria-label={`${item.name}: ${item.description}`}
-                  className={`block py-1 font-sans text-[1.02rem] font-medium leading-none tracking-[-0.025em] transition-colors ${
-                    isLight
-                      ? isActive
-                        ? "text-black"
-                        : "text-black/56 hover:text-black"
-                      : isActive
-                        ? "text-white"
-                        : "text-white/58 hover:text-white"
-                  }`}
+                  className={itemClassName}
                 >
                   {item.name}
                 </Link>
@@ -159,53 +227,109 @@ function DesktopMenuPanel({
           </div>
         </div>
 
-        <Link
-          href={previewFeature.path}
-          onClick={onClose}
-          className={`group block h-full rounded-[10px] border p-2.5 transition-colors ${
-            isLight
-              ? "border-black/10 bg-white/46 shadow-[0_18px_50px_rgba(17,17,17,0.1)] hover:border-black/18 hover:bg-white/68"
-              : "border-white/10 bg-white/[0.055] shadow-[0_18px_60px_rgba(0,0,0,0.32)] hover:border-white/20 hover:bg-white/[0.075]"
-          }`}
-        >
-          <div
-            key={previewFeature.path}
-            className="flex h-full flex-col animate-in fade-in slide-in-from-bottom-2 zoom-in-95 duration-300 ease-out"
+        {previewFeature.external ? (
+          <a
+            href={previewFeature.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className={`group block h-full rounded-[1.35rem] border p-3 transition-colors ${
+              isLight
+                ? "border-black/10 bg-white/58 shadow-[0_18px_50px_rgba(17,17,17,0.1)] hover:border-black/18 hover:bg-white/78"
+                : "border-white/10 bg-white/[0.06] shadow-[0_18px_60px_rgba(0,0,0,0.32)] hover:border-white/20 hover:bg-white/[0.085]"
+            }`}
           >
             <div
-              className={`h-[7.95rem] rounded-[6px] bg-center bg-no-repeat transition-transform duration-500 ease-out group-hover:scale-[1.012] ${
-                previewUsesContain
-                  ? isLight
-                    ? "bg-contain bg-[#f7f6f2]"
-                    : "bg-contain bg-white/[0.045]"
-                  : "bg-cover"
-              }`}
-              style={{ backgroundImage: `url(${previewFeature.image})` }}
-              aria-hidden="true"
-            />
-            <div
-              className={`mt-2.5 inline-flex w-fit bg-[#725cff]/16 px-2.5 py-1.5 text-[0.74rem] font-medium leading-none tracking-[-0.01em] transition-colors ${
-                isLight ? "text-[#4f2fd8] group-hover:text-[#2d1b8f]" : "text-[#b8a8ff] group-hover:text-white"
-              }`}
+              key={previewFeature.path}
+              className="flex h-full flex-col animate-in fade-in slide-in-from-bottom-2 zoom-in-95 duration-300 ease-out"
             >
-              {previewFeature.label}
+              <div
+                className={`h-[7.75rem] rounded-[0.9rem] bg-center bg-no-repeat transition-transform duration-500 ease-out group-hover:scale-[1.012] ${
+                  previewUsesContain
+                    ? isLight
+                      ? "bg-contain bg-[#f7f6f2]"
+                      : "bg-contain bg-white/[0.045]"
+                    : "bg-cover"
+                }`}
+                style={{ backgroundImage: `url(${previewFeature.image})` }}
+                aria-hidden="true"
+              />
+              <div
+                className={`mt-2.5 inline-flex w-fit rounded-full px-2.5 py-1.5 text-[0.74rem] font-medium leading-none tracking-normal transition-colors ${
+                  isLight
+                    ? "bg-black/[0.07] text-black/64 group-hover:text-black"
+                    : "bg-white/[0.09] text-white/68 group-hover:text-white"
+                }`}
+              >
+                {previewFeature.label}
+              </div>
+              <div
+                className={`mt-3 min-h-[2.3rem] overflow-hidden text-[1.02rem] font-medium leading-[1.12] tracking-[-0.045em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
+                  isLight ? "text-black" : "text-white"
+                }`}
+              >
+                {previewFeature.title}
+              </div>
+              <p
+                className={`mt-1.5 max-w-[20rem] overflow-hidden text-[0.78rem] leading-[1.35] tracking-[-0.018em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
+                  isLight ? "text-black/52" : "text-white/50"
+                }`}
+              >
+                {previewFeature.description}
+              </p>
             </div>
+          </a>
+        ) : (
+          <Link
+            href={previewFeature.path}
+            onClick={onClose}
+            className={`group block h-full rounded-[1.35rem] border p-3 transition-colors ${
+              isLight
+                ? "border-black/10 bg-white/58 shadow-[0_18px_50px_rgba(17,17,17,0.1)] hover:border-black/18 hover:bg-white/78"
+                : "border-white/10 bg-white/[0.06] shadow-[0_18px_60px_rgba(0,0,0,0.32)] hover:border-white/20 hover:bg-white/[0.085]"
+            }`}
+          >
             <div
-              className={`mt-3 min-h-[2.3rem] overflow-hidden text-[1.02rem] font-medium leading-[1.12] tracking-[-0.045em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
-                isLight ? "text-black" : "text-white"
-              }`}
+              key={previewFeature.path}
+              className="flex h-full flex-col animate-in fade-in slide-in-from-bottom-2 zoom-in-95 duration-300 ease-out"
             >
-              {previewFeature.title}
+              <div
+                className={`h-[7.75rem] rounded-[0.9rem] bg-center bg-no-repeat transition-transform duration-500 ease-out group-hover:scale-[1.012] ${
+                  previewUsesContain
+                    ? isLight
+                      ? "bg-contain bg-[#f7f6f2]"
+                      : "bg-contain bg-white/[0.045]"
+                    : "bg-cover"
+                }`}
+                style={{ backgroundImage: `url(${previewFeature.image})` }}
+                aria-hidden="true"
+              />
+              <div
+                className={`mt-2.5 inline-flex w-fit rounded-full px-2.5 py-1.5 text-[0.74rem] font-medium leading-none tracking-normal transition-colors ${
+                  isLight
+                    ? "bg-black/[0.07] text-black/64 group-hover:text-black"
+                    : "bg-white/[0.09] text-white/68 group-hover:text-white"
+                }`}
+              >
+                {previewFeature.label}
+              </div>
+              <div
+                className={`mt-3 min-h-[2.3rem] overflow-hidden text-[1.02rem] font-medium leading-[1.12] tracking-[-0.045em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
+                  isLight ? "text-black" : "text-white"
+                }`}
+              >
+                {previewFeature.title}
+              </div>
+              <p
+                className={`mt-1.5 max-w-[20rem] overflow-hidden text-[0.78rem] leading-[1.35] tracking-[-0.018em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
+                  isLight ? "text-black/52" : "text-white/50"
+                }`}
+              >
+                {previewFeature.description}
+              </p>
             </div>
-            <p
-              className={`mt-1.5 max-w-[20rem] overflow-hidden text-[0.78rem] leading-[1.35] tracking-[-0.018em] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] ${
-                isLight ? "text-black/52" : "text-white/50"
-              }`}
-            >
-              {previewFeature.description}
-            </p>
-          </div>
-        </Link>
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -252,11 +376,17 @@ function BrandLink({
 }
 
 function getBrandDescriptor(path: string) {
-  if (/^\/projects\/experiential(?:\/|$)/.test(path) || /^\/experiential-design(?:\/|$)/.test(path)) {
+  if (
+    /^\/projects\/experiential(?:\/|$)/.test(path) ||
+    /^\/experiential-design(?:\/|$)/.test(path)
+  ) {
     return "EXPERIENTIAL DESIGN";
   }
 
-  if (/^\/projects\/rendering(?:\/|$)/.test(path) || path === "/theatre-renderings") {
+  if (
+    /^\/projects\/rendering(?:\/|$)/.test(path) ||
+    path === "/theatre-renderings"
+  ) {
     return "RENDERING";
   }
 
@@ -264,11 +394,18 @@ function getBrandDescriptor(path: string) {
     return "PHOTOGRAPHY";
   }
 
-  if (path === "/assistant-scenic-design" || /^\/design-process\/assistant-scenic-design(?:\/|$)/.test(path)) {
+  if (
+    path === "/assistant-scenic-design" ||
+    /^\/design-process\/assistant-scenic-design(?:\/|$)/.test(path)
+  ) {
     return "ASSISTANT SCENIC";
   }
 
-  if (/^\/project(?:\/|$)/.test(path) || path === "/projects" || path === "/projects/scenic-design") {
+  if (
+    /^\/project(?:\/|$)/.test(path) ||
+    path === "/projects" ||
+    path === "/projects/scenic-design"
+  ) {
     return "SCENIC DESIGN";
   }
 
@@ -278,7 +415,8 @@ function getBrandDescriptor(path: string) {
 export default function Header() {
   const location = usePathname() || "/";
   const router = useRouter();
-  const [activeDesktopCategory, setActiveDesktopCategory] = useState<DesktopCategory | null>(null);
+  const [activeDesktopCategory, setActiveDesktopCategory] =
+    useState<DesktopCategory | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -315,9 +453,12 @@ export default function Header() {
     /^\/upcoming-productions(?:\/|$)/.test(location);
   const isHomeRoute = location === "/";
   const useLightChrome =
-    !isStudioAppsRoute && ((isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute);
-  const useWhiteLightChrome = isContactRoute || isInfoRoute || location === "/studio";
-  const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
+    !isStudioAppsRoute &&
+    ((isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute);
+  const useWhiteLightChrome =
+    isContactRoute || isInfoRoute || location === "/studio";
+  const useImmersiveChrome =
+    isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
   const brandDescriptor = getBrandDescriptor(location);
 
   const headerRef = useRef<HTMLElement>(null);
@@ -387,7 +528,11 @@ export default function Header() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (desktopMenuOpen && headerRef.current && !headerRef.current.contains(event.target as Node)) {
+      if (
+        desktopMenuOpen &&
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node)
+      ) {
         closeDesktopMenu();
       }
     };
@@ -404,7 +549,11 @@ export default function Header() {
         setSearchOpen(true);
       }
 
-      if (event.key === "/" && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement)) {
+      if (
+        event.key === "/" &&
+        !(event.target instanceof HTMLInputElement) &&
+        !(event.target instanceof HTMLTextAreaElement)
+      ) {
         event.preventDefault();
         closeDesktopMenu();
         setSearchOpen(true);
@@ -423,7 +572,7 @@ export default function Header() {
 
   const toggleSearchBar = () => {
     closeDesktopMenu();
-    setSearchOpen((value) => !value);
+    setSearchOpen(value => !value);
   };
 
   const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
@@ -445,7 +594,8 @@ export default function Header() {
         {
           name: "Scenic Design",
           path: "/projects",
-          description: "Full production archive across plays, musicals, and regional theatre work.",
+          description:
+            "Full production archive across plays, musicals, and regional theatre work.",
           feature: {
             label: "Recent portfolio",
             title: recentScenicProjects[0].title,
@@ -457,7 +607,8 @@ export default function Header() {
         {
           name: "Renderings",
           path: "/projects/rendering",
-          description: "Concept images, presentation sets, and scenic visualization studies.",
+          description:
+            "Concept images, presentation sets, and scenic visualization studies.",
           feature: {
             label: "Recent rendering",
             title: recentRenderingPreview.title,
@@ -469,7 +620,8 @@ export default function Header() {
         {
           name: "Experiential",
           path: "/projects/experiential",
-          description: "Immersive environments, drafting, and built event design work.",
+          description:
+            "Immersive environments, drafting, and built event design work.",
           feature: {
             label: "Recent experiential",
             title: recentExperientialPreview.title,
@@ -481,11 +633,13 @@ export default function Header() {
         {
           name: "Assistant Scenic",
           path: "/assistant-scenic-design",
-          description: "Production support, drafting systems, and collaboration as assistant scenic.",
+          description:
+            "Production support, drafting systems, and collaboration as assistant scenic.",
           feature: {
             label: "Portfolio",
             title: "Assistant Scenic",
-            description: "Production support, drafting systems, and collaboration as assistant scenic.",
+            description:
+              "Production support, drafting systems, and collaboration as assistant scenic.",
             path: "/assistant-scenic-design",
             image: NAV_FEATURE_IMAGES.assistant,
           },
@@ -493,11 +647,13 @@ export default function Header() {
         {
           name: "Photography",
           path: "/projects/photography",
-          description: "A chronological photo portfolio and visual reference archive.",
+          description:
+            "A chronological photo portfolio and visual reference archive.",
           feature: {
             label: "Portfolio",
             title: "Photography",
-            description: "A chronological photo portfolio and visual reference archive.",
+            description:
+              "A chronological photo portfolio and visual reference archive.",
             path: "/projects/photography",
             image: NAV_FEATURE_IMAGES.photography,
           },
@@ -513,11 +669,13 @@ export default function Header() {
         {
           name: "Profile",
           path: "/about",
-          description: "Biography, current work, and the broader design perspective behind the site.",
+          description:
+            "Biography, current work, and the broader design perspective behind the site.",
           feature: {
             label: "Profile",
             title: "About Brandon",
-            description: "Biography, teaching, collaborators, and the wider practice behind the work.",
+            description:
+              "Biography, teaching, collaborators, and the wider practice behind the work.",
             path: "/about",
             image: NAV_FEATURE_IMAGES.about,
           },
@@ -525,11 +683,13 @@ export default function Header() {
         {
           name: "Upcoming",
           path: "/upcoming-productions",
-          description: "Public production windows and scenic design commitments currently on the calendar.",
+          description:
+            "Public production windows and scenic design commitments currently on the calendar.",
           feature: {
             label: "About",
             title: "Upcoming",
-            description: "Public production windows and scenic design commitments currently on the calendar.",
+            description:
+              "Public production windows and scenic design commitments currently on the calendar.",
             path: "/upcoming-productions",
             image: NAV_FEATURE_IMAGES.upcoming,
             imageFit: "contain",
@@ -538,11 +698,13 @@ export default function Header() {
         {
           name: "Resume / CV",
           path: "/resume",
-          description: "Production credits, teaching, training, and linked portfolio references.",
+          description:
+            "Production credits, teaching, training, and linked portfolio references.",
           feature: {
             label: "About",
             title: "Resume / CV",
-            description: "Production credits, teaching, training, and linked portfolio references.",
+            description:
+              "Production credits, teaching, training, and linked portfolio references.",
             path: "/resume",
             image: NAV_FEATURE_IMAGES.resume,
             imageFit: "contain",
@@ -551,11 +713,13 @@ export default function Header() {
         {
           name: "Creative",
           path: "/creative-statement",
-          description: "The artistic values shaping scenic work, collaboration, and storytelling.",
+          description:
+            "The artistic values shaping scenic work, collaboration, and storytelling.",
           feature: {
             label: "About",
             title: "Creative",
-            description: "The artistic values shaping scenic work, collaboration, and storytelling.",
+            description:
+              "The artistic values shaping scenic work, collaboration, and storytelling.",
             path: "/creative-statement",
             image: NAV_FEATURE_IMAGES.creative,
             imageFit: "contain",
@@ -564,11 +728,13 @@ export default function Header() {
         {
           name: "Teaching",
           path: "/about/teaching",
-          description: "How design instruction, studio process, and student learning connect.",
+          description:
+            "How design instruction, studio process, and student learning connect.",
           feature: {
             label: "About",
             title: "Teaching",
-            description: "How design instruction, studio process, and student learning connect.",
+            description:
+              "How design instruction, studio process, and student learning connect.",
             path: "/about/teaching",
             image: NAV_FEATURE_IMAGES.teaching,
             imageFit: "contain",
@@ -577,11 +743,13 @@ export default function Header() {
         {
           name: "Collaborators",
           path: "/about/collaborators",
-          description: "Directors, designers, companies, and long-running creative collaborators.",
+          description:
+            "Directors, designers, companies, and long-running creative collaborators.",
           feature: {
             label: "About",
             title: "Collaborators",
-            description: "Directors, designers, companies, and long-running creative collaborators.",
+            description:
+              "Directors, designers, companies, and long-running creative collaborators.",
             path: "/about/collaborators",
             image: NAV_FEATURE_IMAGES.collaborators,
             imageFit: "contain",
@@ -598,7 +766,8 @@ export default function Header() {
         {
           name: "Articles",
           path: "/articles",
-          description: "Scenic design writing, process essays, tutorials, and cultural analysis.",
+          description:
+            "Scenic design writing, process essays, tutorials, and cultural analysis.",
           feature: {
             label: "Latest article",
             title: recentArticlePreview.title,
@@ -610,7 +779,8 @@ export default function Header() {
         {
           name: "Tutorials",
           path: "/studio/tutorials",
-          description: "Vectorworks instruction and workflow demonstrations used in teaching.",
+          description:
+            "Vectorworks instruction and workflow demonstrations used in teaching.",
           feature: {
             label: "Recent tutorial",
             title: recentTutorialPreview.title,
@@ -622,11 +792,13 @@ export default function Header() {
         {
           name: "Directory",
           path: "/studio/directory",
-          description: "A curated directory of scenic resources, suppliers, archives, and software.",
+          description:
+            "A curated directory of scenic resources, suppliers, archives, and software.",
           feature: {
             label: "Studio",
             title: "Directory",
-            description: "A curated directory of scenic resources, suppliers, archives, and software.",
+            description:
+              "A curated directory of scenic resources, suppliers, archives, and software.",
             path: "/studio/directory",
             image: NAV_FEATURE_IMAGES.studioDirectory,
           },
@@ -647,9 +819,50 @@ export default function Header() {
     },
   ];
 
+  const instagramGroups: MenuGroup[] = [
+    {
+      heading: "Instagram",
+      items: [
+        {
+          name: "Profile",
+          path: INSTAGRAM_PORTFOLIO_URL,
+          external: true,
+          description:
+            "Current portfolio updates and studio process on Instagram.",
+          feature: {
+            label: "Instagram",
+            title: "@brandonptdavisdesign",
+            description:
+              "Current portfolio updates and studio process on Instagram.",
+            path: INSTAGRAM_PORTFOLIO_URL,
+            image: INSTAGRAM_FEATURED_POST_IMAGE,
+            external: true,
+          },
+        },
+        {
+          name: "Featured Post",
+          path: INSTAGRAM_FEATURED_POST_URL,
+          external: true,
+          description:
+            "Romeo and Juliet scenic design for New Swan Theatre Festival.",
+          feature: {
+            label: "Featured post",
+            title: "@brandonptdavisdesign",
+            description:
+              "Romeo and Juliet scenic design for New Swan Theatre Festival.",
+            path: INSTAGRAM_FEATURED_POST_URL,
+            image: INSTAGRAM_FEATURED_POST_IMAGE,
+            external: true,
+          },
+        },
+      ],
+    },
+  ];
+
   const desktopCategories: DesktopCategory[] = [
     {
       label: "Portfolio",
+      path: "/projects",
       groups: portfolioGroups,
       feature: {
         label: "Recent portfolio",
@@ -661,17 +874,20 @@ export default function Header() {
     },
     {
       label: "About",
+      path: "/about",
       groups: aboutGroups,
       feature: {
         label: "Profile",
         title: "About Brandon",
-        description: "Biography, teaching, collaborators, and the wider practice behind the work.",
+        description:
+          "Biography, teaching, collaborators, and the wider practice behind the work.",
         path: "/about",
         image: NAV_FEATURE_IMAGES.about,
       },
     },
     {
       label: "Studio",
+      path: "/studio",
       groups: studioGroups,
       feature: {
         label: "Latest article",
@@ -681,16 +897,41 @@ export default function Header() {
         image: recentArticlePreview.imageUrl,
       },
     },
+    {
+      label: "Instagram",
+      path: INSTAGRAM_PORTFOLIO_URL,
+      external: true,
+      groups: instagramGroups,
+      feature: {
+        label: "Featured post",
+        title: "@brandonptdavisdesign",
+        description:
+          "Romeo and Juliet scenic design for New Swan Theatre Festival.",
+        path: INSTAGRAM_FEATURED_POST_URL,
+        image: INSTAGRAM_FEATURED_POST_IMAGE,
+        external: true,
+      },
+    },
   ];
 
   const isCategoryRouteActive = (category: DesktopCategory) =>
-    category.groups.some((group) =>
-      group.items.some((item) => location === item.path || location.startsWith(`${item.path}/`))
-    );
+    !category.external &&
+    (location === category.path ||
+      location.startsWith(`${category.path}/`) ||
+      category.groups.some(group =>
+        group.items.some(
+          item =>
+            !item.external &&
+            (location === item.path || location.startsWith(`${item.path}/`))
+        )
+      ));
 
   return (
     <>
-      <div className="h-[64px] md:h-[74px]" aria-hidden="true" />
+      <div
+        className={isHomeRoute ? "h-0" : "h-[64px] md:h-[74px]"}
+        aria-hidden="true"
+      />
       {desktopMenuOpen ? (
         <button
           type="button"
@@ -708,58 +949,56 @@ export default function Header() {
             ? useWhiteLightChrome
               ? "border-black/10 bg-white/82 supports-[backdrop-filter]:bg-white/72"
               : "border-black/10 bg-[#f1f0ec]/78 supports-[backdrop-filter]:bg-[#f1f0ec]/66"
-            : useImmersiveChrome && !isScrolled
-              ? "border-transparent bg-transparent shadow-none backdrop-blur-0"
+            : useImmersiveChrome
+              ? "border-transparent bg-transparent shadow-none !backdrop-blur-0 [backdrop-filter:none]"
               : isArticleDetailRoute
                 ? "border-white/10 bg-black shadow-[0_12px_40px_rgba(0,0,0,0.34)] supports-[backdrop-filter]:bg-black"
-              : "border-white/10 bg-black/55 supports-[backdrop-filter]:bg-black/42"
-        } ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
+                : "border-white/10 bg-black/55 supports-[backdrop-filter]:bg-black/42"
+        } ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
       >
         <div className="px-[clamp(1rem,5vw,6rem)] py-3 md:px-[clamp(1.5rem,5vw,6rem)] md:py-4">
           <nav className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-8">
-            <BrandLink descriptor={brandDescriptor} tone={useLightChrome ? "light" : "dark"} />
+            <BrandLink
+              descriptor={brandDescriptor}
+              tone={useLightChrome ? "light" : "dark"}
+            />
 
-            <div
-              className="hidden items-center justify-center gap-1 lg:flex"
-            >
-              {desktopCategories.map((category) => {
+            <div className="hidden items-center justify-center gap-2 lg:flex">
+              {desktopCategories.map(category => {
                 const isActive =
-                  activeDesktopCategory?.label === category.label || isCategoryRouteActive(category);
+                  activeDesktopCategory?.label === category.label ||
+                  isCategoryRouteActive(category);
 
                 return (
-                  <button
+                  <a
                     key={category.label}
-                    type="button"
+                    href={category.path}
                     onMouseEnter={() => openDesktopMenu(category)}
                     onFocus={() => openDesktopMenu(category)}
-                    onClick={() => openDesktopMenu(category)}
-                    aria-expanded={activeDesktopCategory?.label === category.label}
-                    className={`relative inline-flex h-10 items-center px-3 text-[0.86rem] font-medium tracking-[-0.018em] transition-colors focus-visible:outline-none ${
-                      useLightChrome
-                        ? isActive
-                          ? "text-black"
-                          : "text-black/58 hover:text-black"
-                        : isActive
-                          ? "text-white"
-                          : "text-white/62 hover:text-white"
-                    }`}
+                    onClick={event => {
+                      closeDesktopMenu();
+                      if (category.external) return;
+
+                      event.preventDefault();
+                      router.push(category.path);
+                    }}
+                    aria-haspopup="true"
+                    aria-expanded={
+                      activeDesktopCategory?.label === category.label
+                    }
+                    className={getHeaderPillClass({
+                      lightChrome: useLightChrome,
+                      active: isActive,
+                    })}
                   >
                     {category.label}
-                    <span
-                      className={`absolute inset-x-3 bottom-1 h-px origin-left transition-transform duration-300 ${
-                        isActive ? "scale-x-100" : "scale-x-0"
-                      } ${useLightChrome ? "bg-black" : "bg-white"}`}
-                      aria-hidden="true"
-                    />
-                  </button>
+                  </a>
                 );
               })}
             </div>
 
             <div className="hidden justify-end lg:flex">
-              <div className="flex items-center justify-end gap-3">
+              <div className="flex items-center justify-end gap-2">
                 <form
                   onSubmit={submitSearch}
                   className={`grid overflow-hidden transition-[grid-template-columns,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -785,7 +1024,7 @@ export default function Header() {
                     <input
                       ref={searchInputRef}
                       value={searchQuery}
-                      onChange={(event) => setSearchQuery(event.target.value)}
+                      onChange={event => setSearchQuery(event.target.value)}
                       type="search"
                       placeholder="Search the site"
                       className={`site-header-search-input h-10 w-full appearance-none bg-[transparent] pl-11 pr-5 text-[0.92rem] font-medium tracking-[-0.025em] outline-none [background-color:transparent] ${
@@ -801,16 +1040,14 @@ export default function Header() {
                   type="button"
                   onClick={toggleSearchBar}
                   aria-expanded={searchOpen}
-                  aria-label={searchOpen ? "Close search bar" : "Open search bar"}
-                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-                    useLightChrome
-                      ? searchOpen
-                        ? "bg-black/[0.055] text-black"
-                        : "text-black/56 hover:text-black"
-                      : searchOpen
-                        ? "bg-white/[0.08] text-white"
-                        : "text-white/58 hover:text-white"
-                  }`}
+                  aria-label={
+                    searchOpen ? "Close search bar" : "Open search bar"
+                  }
+                  className={getHeaderPillClass({
+                    lightChrome: useLightChrome,
+                    active: searchOpen,
+                    iconOnly: true,
+                  })}
                 >
                   {searchOpen ? (
                     <X className="h-[1.05rem] w-[1.05rem]" />
@@ -820,11 +1057,10 @@ export default function Header() {
                 </button>
                 <Link
                   href="/contact"
-                  className={`inline-flex h-10 items-center justify-center rounded-full border px-5 text-[0.9rem] font-medium tracking-[-0.02em] transition-colors ${
-                    useLightChrome
-                      ? "border-black/22 text-black hover:border-black/38 hover:bg-black/[0.045]"
-                      : "border-white/22 text-white hover:border-white/36 hover:bg-white/[0.05]"
-                  }`}
+                  className={getHeaderPillClass({
+                    lightChrome: useLightChrome,
+                    active: isContactRoute,
+                  })}
                 >
                   Contact
                 </Link>

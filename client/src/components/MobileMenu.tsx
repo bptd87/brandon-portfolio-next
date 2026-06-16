@@ -9,6 +9,9 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
+const INSTAGRAM_PORTFOLIO_URL =
+  "https://www.instagram.com/brandonptdavisdesign/";
+
 const MENU_LINKS = [
   { label: "Scenic Design", href: "/projects" },
   { label: "Rendering", href: "/projects/rendering" },
@@ -18,19 +21,42 @@ const MENU_LINKS = [
   { label: "Resume", href: "/resume" },
   { label: "Upcoming", href: "/upcoming-productions" },
   { label: "Apps", href: "/studio/apps" },
+  {
+    label: "Instagram",
+    href: INSTAGRAM_PORTFOLIO_URL,
+    external: true,
+  },
   { label: "Contact", href: "/contact" },
 ] as const;
+
+type MenuLinkItem = (typeof MENU_LINKS)[number];
 
 function MenuLink({
   item,
   onClose,
   pathname,
 }: {
-  item: { label: string; href: string };
+  item: MenuLinkItem;
   onClose: () => void;
   pathname: string;
 }) {
-  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+  const active =
+    !("external" in item) &&
+    (pathname === item.href || pathname.startsWith(`${item.href}/`));
+
+  if ("external" in item) {
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClose}
+        className="block py-[0.34rem] font-sans leading-[1.12] tracking-[-0.055em] text-white/82 transition-colors hover:text-white"
+      >
+        {item.label}
+      </a>
+    );
+  }
 
   return (
     <Link
@@ -83,8 +109,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         <div className="min-h-full px-8 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(4.8rem,calc(env(safe-area-inset-top)+4.8rem))]">
           <nav aria-label="Mobile navigation">
             <div className="text-[clamp(2.45rem,11.8vw,3.3rem)] font-semibold">
-              {MENU_LINKS.map((item) => (
-                <MenuLink key={item.href} item={item} onClose={onClose} pathname={pathname} />
+              {MENU_LINKS.map(item => (
+                <MenuLink
+                  key={item.href}
+                  item={item}
+                  onClose={onClose}
+                  pathname={pathname}
+                />
               ))}
             </div>
           </nav>

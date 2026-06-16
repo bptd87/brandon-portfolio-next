@@ -7,11 +7,28 @@ import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import MotionReveal from "@/components/MotionReveal";
-import { ProgressiveImage } from '@/components/ProgressiveImage';
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause, ArrowUpRight, Mail, Linkedin } from "lucide-react";
+import {
+  Sparkles,
+  Copy,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Link as LinkIcon,
+  Play,
+  Pause,
+  ArrowUpRight,
+  Mail,
+  Linkedin,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -19,7 +36,10 @@ import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
-import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
+import {
+  getLocalArticleRecordBySlug,
+  getLocalArticles,
+} from "@shared/localArticles";
 import {
   LEARNING_PORTAL_ARTICLE_SLUG_SET,
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
@@ -27,9 +47,12 @@ import {
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 
-const Lightbox = dynamic(() => import("@/components/Lightbox").then((mod) => mod.Lightbox), {
-  ssr: false,
-});
+const Lightbox = dynamic(
+  () => import("@/components/Lightbox").then(mod => mod.Lightbox),
+  {
+    ssr: false,
+  }
+);
 
 const AUTHOR_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
@@ -69,12 +92,15 @@ const decodeHTMLEntities = (text: string): string => {
       const code = Number.parseInt(value, 16);
       return Number.isNaN(code) ? _ : String.fromCodePoint(code);
     })
-    .replace(/&([a-z]+);/gi, (entity, name) => NAMED_HTML_ENTITIES[name.toLowerCase()] ?? entity);
+    .replace(
+      /&([a-z]+);/gi,
+      (entity, name) => NAMED_HTML_ENTITIES[name.toLowerCase()] ?? entity
+    );
 };
 
 const normalizeQuoteText = (text: string): string => {
-  const decoded = decodeHTMLEntities(text || '').trim();
-  return decoded.replace(/^["“”']+|["“”']+$/g, '').trim();
+  const decoded = decodeHTMLEntities(text || "").trim();
+  return decoded.replace(/^["“”']+|["“”']+$/g, "").trim();
 };
 
 const getArticleMediaUrl = (url: string): string => {
@@ -104,11 +130,19 @@ const getHtmlTextContent = (html: string): string => {
     .trim();
 };
 
-const MIN_TUTORIAL_UPDATED_DATE = new Date("2025-05-01T00:00:00.000Z").getTime();
+const MIN_TUTORIAL_UPDATED_DATE = new Date(
+  "2025-05-01T00:00:00.000Z"
+).getTime();
 
-const getDisplayUpdatedDate = (dateString: string | Date | null | undefined) => {
+const getDisplayUpdatedDate = (
+  dateString: string | Date | null | undefined
+) => {
   const timestamp = dateString ? new Date(dateString).getTime() : Number.NaN;
-  return new Date(Number.isFinite(timestamp) ? Math.max(timestamp, MIN_TUTORIAL_UPDATED_DATE) : MIN_TUTORIAL_UPDATED_DATE).toISOString();
+  return new Date(
+    Number.isFinite(timestamp)
+      ? Math.max(timestamp, MIN_TUTORIAL_UPDATED_DATE)
+      : MIN_TUTORIAL_UPDATED_DATE
+  ).toISOString();
 };
 
 const getImageAttribute = (tag: string, name: string) => {
@@ -120,7 +154,10 @@ const getImageAttribute = (tag: string, name: string) => {
 };
 
 const removeImageAttribute = (tag: string, name: string) =>
-  tag.replace(new RegExp(`\\s${name}\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "gi"), "");
+  tag.replace(
+    new RegExp(`\\s${name}\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "gi"),
+    ""
+  );
 
 const setImageAttribute = (tag: string, name: string, value: string) => {
   const escapedValue = value.replace(/"/g, "&quot;");
@@ -143,12 +180,13 @@ const processHTMLImages = (html: string): string => {
 
     // Find all img tags and proxy their source attrs
     const images = div.querySelectorAll("img");
-    images.forEach((img) => {
+    images.forEach(img => {
       const src =
         img.getAttribute("src") ||
         img.getAttribute("data-src") ||
         img.getAttribute("data-lazy-src");
-      const srcset = img.getAttribute("srcset") || img.getAttribute("data-srcset");
+      const srcset =
+        img.getAttribute("srcset") || img.getAttribute("data-srcset");
 
       if (src) {
         img.setAttribute("src", getArticleMediaUrl(src));
@@ -156,7 +194,7 @@ const processHTMLImages = (html: string): string => {
         // Safari-safe fallback: use first candidate URL as src if src is missing.
         const firstCandidate = srcset
           .split(",")
-          .map((entry) => entry.trim().split(/\s+/)[0])
+          .map(entry => entry.trim().split(/\s+/)[0])
           .find(Boolean);
         if (firstCandidate) {
           img.setAttribute("src", getArticleMediaUrl(firstCandidate));
@@ -175,14 +213,18 @@ const processHTMLImages = (html: string): string => {
     return div.innerHTML;
   }
 
-  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+  return html.replace(/<img\b[^>]*>/gi, tag => {
     const src =
       getImageAttribute(tag, "src") ||
       getImageAttribute(tag, "data-src") ||
       getImageAttribute(tag, "data-lazy-src");
-    const srcset = getImageAttribute(tag, "srcset") || getImageAttribute(tag, "data-srcset");
+    const srcset =
+      getImageAttribute(tag, "srcset") || getImageAttribute(tag, "data-srcset");
 
-    let nextTag = removeImageAttribute(removeImageAttribute(tag, "srcset"), "sizes");
+    let nextTag = removeImageAttribute(
+      removeImageAttribute(tag, "srcset"),
+      "sizes"
+    );
     if (src) {
       nextTag = setImageAttribute(nextTag, "src", getArticleMediaUrl(src));
       return nextTag;
@@ -191,10 +233,14 @@ const processHTMLImages = (html: string): string => {
     if (srcset) {
       const firstCandidate = srcset
         .split(",")
-        .map((entry) => entry.trim().split(/\s+/)[0])
+        .map(entry => entry.trim().split(/\s+/)[0])
         .find(Boolean);
       if (firstCandidate) {
-        nextTag = setImageAttribute(nextTag, "src", getArticleMediaUrl(firstCandidate));
+        nextTag = setImageAttribute(
+          nextTag,
+          "src",
+          getArticleMediaUrl(firstCandidate)
+        );
       }
     }
 
@@ -211,8 +257,14 @@ type ArticleDetailProps = {
   };
 };
 
-export default function ArticleDetail({ slug, article, variant }: ArticleDetailProps = {}) {
-  return <ArticleDetailContent slug={slug} article={article} variant={variant} />;
+export default function ArticleDetail({
+  slug,
+  article,
+  variant,
+}: ArticleDetailProps = {}) {
+  return (
+    <ArticleDetailContent slug={slug} article={article} variant={variant} />
+  );
 }
 
 function getArticleVideoMimeType(url: string) {
@@ -224,10 +276,18 @@ function getArticleVideoMimeType(url: string) {
 
 function isArticleInlineVideoUrl(url: string) {
   const normalizedUrl = url.toLowerCase().split("?")[0] || "";
-  return [".mp4", ".m4v", ".mov"].some((extension) => normalizedUrl.endsWith(extension));
+  return [".mp4", ".m4v", ".mov"].some(extension =>
+    normalizedUrl.endsWith(extension)
+  );
 }
 
-function ArticleInlineVideo({ url, caption }: { url: string; caption?: string }) {
+function ArticleInlineVideo({
+  url,
+  caption,
+}: {
+  url: string;
+  caption?: string;
+}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -313,7 +373,11 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
           onClick={handleToggle}
           className="absolute bottom-4 left-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-black/40 text-white/80 opacity-0 backdrop-blur transition-all duration-200 group-hover:opacity-100 focus-visible:opacity-100 hover:border-white/24 hover:text-white"
         >
-          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
+          {isPlaying ? (
+            <Pause className="h-4 w-4" />
+          ) : (
+            <Play className="ml-0.5 h-4 w-4" />
+          )}
         </button>
       </div>
       {caption && (
@@ -372,8 +436,12 @@ function ArticleImageCompare({ section }: { section: any }) {
               style={{ clipPath: `inset(0 ${100 - divider}% 0 0)` }}
             />
             <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-between p-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/86">
-              <span className="rounded-full bg-black/48 px-3 py-1 backdrop-blur">{beforeLabel}</span>
-              <span className="rounded-full bg-black/48 px-3 py-1 backdrop-blur">{afterLabel}</span>
+              <span className="rounded-full bg-black/48 px-3 py-1 backdrop-blur">
+                {beforeLabel}
+              </span>
+              <span className="rounded-full bg-black/48 px-3 py-1 backdrop-blur">
+                {afterLabel}
+              </span>
             </div>
             <div
               aria-hidden="true"
@@ -390,7 +458,7 @@ function ArticleImageCompare({ section }: { section: any }) {
               max="100"
               value={divider}
               aria-label={`Compare ${beforeLabel} and ${afterLabel}`}
-              onChange={(event) => setDivider(Number(event.target.value))}
+              onChange={event => setDivider(Number(event.target.value))}
               className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
             />
           </div>
@@ -407,7 +475,9 @@ function ArticleSettingStep({
   section: any;
   onImageClick?: () => void;
 }) {
-  const paragraphs = Array.isArray(section.paragraphs) ? section.paragraphs : [];
+  const paragraphs = Array.isArray(section.paragraphs)
+    ? section.paragraphs
+    : [];
 
   return (
     <section className="relative left-1/2 my-10 w-screen max-w-[74rem] -translate-x-1/2 px-5 sm:px-6">
@@ -490,7 +560,9 @@ function ArticleRenderChoice({
 
         <div className="space-y-9">
           {choices.map((choice: any, choiceIndex: number) => {
-            const paragraphs = Array.isArray(choice.paragraphs) ? choice.paragraphs : [];
+            const paragraphs = Array.isArray(choice.paragraphs)
+              ? choice.paragraphs
+              : [];
             return (
               <article
                 key={choice.label || choiceIndex}
@@ -499,7 +571,9 @@ function ArticleRenderChoice({
                 <figure>
                   <ProgressiveImage
                     src={getArticleMediaUrl(choice.imageUrl)}
-                    alt={choice.imageAlt || choice.caption || choice.label || ""}
+                    alt={
+                      choice.imageAlt || choice.caption || choice.label || ""
+                    }
                     loading="lazy"
                     enableScrollAnimation={false}
                     containerClassName="w-full"
@@ -509,7 +583,9 @@ function ArticleRenderChoice({
                   />
                   {(choice.caption || choice.imageAlt) && (
                     <figcaption className="mt-3 text-[0.76rem] italic leading-5 text-white/56">
-                      {decodeHTMLEntities(choice.caption || choice.imageAlt || "")}
+                      {decodeHTMLEntities(
+                        choice.caption || choice.imageAlt || ""
+                      )}
                     </figcaption>
                   )}
                 </figure>
@@ -520,14 +596,16 @@ function ArticleRenderChoice({
                   <h4 className="mb-4 font-sans text-[clamp(1.45rem,2vw,2rem)] font-medium leading-[1] tracking-[-0.045em] text-white">
                     {decodeHTMLEntities(choice.label || "")}
                   </h4>
-                  {paragraphs.map((paragraph: string, paragraphIndex: number) => (
-                    <p
-                      key={paragraphIndex}
-                      className="mb-5 text-[1rem] leading-8 tracking-[-0.015em] text-white/72 last:mb-0"
-                    >
-                      {decodeHTMLEntities(paragraph)}
-                    </p>
-                  ))}
+                  {paragraphs.map(
+                    (paragraph: string, paragraphIndex: number) => (
+                      <p
+                        key={paragraphIndex}
+                        className="mb-5 text-[1rem] leading-8 tracking-[-0.015em] text-white/72 last:mb-0"
+                      >
+                        {decodeHTMLEntities(paragraph)}
+                      </p>
+                    )
+                  )}
                 </div>
               </article>
             );
@@ -546,8 +624,12 @@ function ArticleMediaTabs({ section }: { section: any }) {
   if (!activeItem) return null;
 
   const isSettingsLayout = section.layout === "settings";
-  const settingsRows = Array.isArray(activeItem.settings) ? activeItem.settings : [];
-  const activeParagraphs = Array.isArray(activeItem.paragraphs) ? activeItem.paragraphs : [];
+  const settingsRows = Array.isArray(activeItem.settings)
+    ? activeItem.settings
+    : [];
+  const activeParagraphs = Array.isArray(activeItem.paragraphs)
+    ? activeItem.paragraphs
+    : [];
   const shouldCropImage = section.crop === "inset";
 
   return (
@@ -582,7 +664,9 @@ function ArticleMediaTabs({ section }: { section: any }) {
                     : "text-white/58 hover:bg-white/[0.06] hover:text-white"
                 }`}
               >
-                {decodeHTMLEntities(item.label || item.title || `Item ${itemIndex + 1}`)}
+                {decodeHTMLEntities(
+                  item.label || item.title || `Item ${itemIndex + 1}`
+                )}
               </button>
             );
           })}
@@ -626,14 +710,16 @@ function ArticleMediaTabs({ section }: { section: any }) {
                 {decodeHTMLEntities(activeItem.body)}
               </p>
             )}
-            {activeParagraphs.map((paragraph: string, paragraphIndex: number) => (
-              <p
-                key={paragraphIndex}
-                className="mb-7 text-[1.04rem] leading-8 tracking-[-0.015em] text-white/72 last:mb-0"
-              >
-                {decodeHTMLEntities(paragraph)}
-              </p>
-            ))}
+            {activeParagraphs.map(
+              (paragraph: string, paragraphIndex: number) => (
+                <p
+                  key={paragraphIndex}
+                  className="mb-7 text-[1.04rem] leading-8 tracking-[-0.015em] text-white/72 last:mb-0"
+                >
+                  {decodeHTMLEntities(paragraph)}
+                </p>
+              )
+            )}
             {settingsRows.length > 0 && (
               <div className="mt-10">
                 <p className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white/34">
@@ -695,18 +781,21 @@ function ArticleMediaTabs({ section }: { section: any }) {
                 {decodeHTMLEntities(activeItem.body)}
               </p>
             )}
-            {Array.isArray(activeItem.points) && activeItem.points.length > 0 && (
-              <ul className="mt-6 space-y-3 text-left">
-                {activeItem.points.map((point: string, pointIndex: number) => (
-                  <li
-                    key={pointIndex}
-                    className="border-t border-white/10 pt-3 text-[0.98rem] leading-7 tracking-[-0.012em] text-white/64"
-                  >
-                    {decodeHTMLEntities(point)}
-                  </li>
-                ))}
-              </ul>
-            )}
+            {Array.isArray(activeItem.points) &&
+              activeItem.points.length > 0 && (
+                <ul className="mt-6 space-y-3 text-left">
+                  {activeItem.points.map(
+                    (point: string, pointIndex: number) => (
+                      <li
+                        key={pointIndex}
+                        className="border-t border-white/10 pt-3 text-[0.98rem] leading-7 tracking-[-0.012em] text-white/64"
+                      >
+                        {decodeHTMLEntities(point)}
+                      </li>
+                    )
+                  )}
+                </ul>
+              )}
           </div>
         </div>
       )}
@@ -714,7 +803,12 @@ function ArticleMediaTabs({ section }: { section: any }) {
   );
 }
 
-function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant, params }: ArticleDetailProps) {
+function ArticleDetailContent({
+  slug: slugProp,
+  article: initialArticle,
+  variant,
+  params,
+}: ArticleDetailProps) {
   const slug = slugProp || params?.slug || "";
   const article = initialArticle || getLocalArticleRecordBySlug(slug);
 
@@ -723,11 +817,17 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   const relatedArticleRailRef = useRef<HTMLDivElement | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxImages, setLightboxImages] = useState<
-    Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>
+    Array<{
+      imageUrl: string | null;
+      caption: string | null;
+      altText: string | null;
+    }>
   >([]);
   const [linkCopied, setLinkCopied] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [audioDurationSeconds, setAudioDurationSeconds] = useState<number | null>(null);
+  const [audioDurationSeconds, setAudioDurationSeconds] = useState<
+    number | null
+  >(null);
   const [audioCurrentTimeSeconds, setAudioCurrentTimeSeconds] = useState(0);
   const [heroScrollProgress, setHeroScrollProgress] = useState(0);
   const [heroIntroProgress, setHeroIntroProgress] = useState(0);
@@ -750,14 +850,18 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     };
 
     updateHeroScrollProgress();
-    window.addEventListener("scroll", updateHeroScrollProgress, { passive: true });
+    window.addEventListener("scroll", updateHeroScrollProgress, {
+      passive: true,
+    });
     return () => window.removeEventListener("scroll", updateHeroScrollProgress);
   }, []);
 
   const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
     const container = galleryRefs.current[sectionIndex];
     if (!container) return;
-    const figures = Array.from(container.querySelectorAll("figure")) as HTMLElement[];
+    const figures = Array.from(
+      container.querySelectorAll("figure")
+    ) as HTMLElement[];
     if (!figures.length) return;
 
     const currentScroll = container.scrollLeft;
@@ -773,7 +877,10 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
     const targetIndex =
       direction === "next"
-        ? Math.min(figures.length - 1, currentIndex === 0 ? 2 : currentIndex + 2)
+        ? Math.min(
+            figures.length - 1,
+            currentIndex === 0 ? 2 : currentIndex + 2
+          )
         : Math.max(0, currentIndex <= 2 ? 0 : currentIndex - 2);
 
     container.scrollTo({
@@ -839,7 +946,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   };
 
   const displayedAudioTime = (() => {
-    if (articleAudio?.durationLabel && !isAudioPlaying && !audioDurationSeconds) {
+    if (
+      articleAudio?.durationLabel &&
+      !isAudioPlaying &&
+      !audioDurationSeconds
+    ) {
       return articleAudio.durationLabel;
     }
 
@@ -848,10 +959,15 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     }
 
     if (!isAudioPlaying) {
-      return articleAudio?.durationLabel || formatAudioDuration(audioDurationSeconds);
+      return (
+        articleAudio?.durationLabel || formatAudioDuration(audioDurationSeconds)
+      );
     }
 
-    const remaining = Math.max(0, audioDurationSeconds - audioCurrentTimeSeconds);
+    const remaining = Math.max(
+      0,
+      audioDurationSeconds - audioCurrentTimeSeconds
+    );
     return formatAudioDuration(remaining);
   })();
 
@@ -860,8 +976,12 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       <div className="min-h-screen bg-background">
         <Header />
         <div className="container py-20 text-center">
-          <h1 className="mb-4 font-sans text-4xl font-medium tracking-[-0.05em]">Article Not Found</h1>
-          <p className="mb-8 text-white/62">The article you're looking for doesn't exist.</p>
+          <h1 className="mb-4 font-sans text-4xl font-medium tracking-[-0.05em]">
+            Article Not Found
+          </h1>
+          <p className="mb-8 text-white/62">
+            The article you're looking for doesn't exist.
+          </p>
           <Link href="/articles">
             <Button>Back to Articles</Button>
           </Link>
@@ -874,11 +994,12 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   // Parse content sections
   let contentSections: any[] = [];
   try {
-    contentSections = typeof article.content === 'string'
-      ? JSON.parse(article.content)
-      : article.content || [];
+    contentSections =
+      typeof article.content === "string"
+        ? JSON.parse(article.content)
+        : article.content || [];
   } catch (e) {
-    contentSections = [{ type: 'html', content: article.content }];
+    contentSections = [{ type: "html", content: article.content }];
   }
 
   // Detect and group FAQ sections
@@ -902,8 +1023,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     }
 
     // Check if this is an FAQ heading
-    if (section.type === 'heading' && section.level === 2 &&
-      (section.text || '').toLowerCase().includes('frequently asked questions')) {
+    if (
+      section.type === "heading" &&
+      section.level === 2 &&
+      (section.text || "").toLowerCase().includes("frequently asked questions")
+    ) {
       // Collect all FAQ items (H3 questions followed by paragraphs)
       const faqItems: Array<{ question: string; answer: string }> = [];
       i++; // Move past FAQ heading
@@ -912,26 +1036,35 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
         const current = contentSections[i];
 
         // FAQ question (H3 ending with ?)
-        if (current.type === 'heading' && current.level === 3) {
-          const question = (current.text || '').replace(/\+$/, ''); // Remove trailing +
+        if (current.type === "heading" && current.level === 3) {
+          const question = (current.text || "").replace(/\+$/, ""); // Remove trailing +
           i++;
 
           // Collect answer text/paragraphs until next heading
           const answerParts: string[] = [];
-          while (i < contentSections.length &&
-            !(contentSections[i].type === 'heading')) {
-            if (contentSections[i].type === 'paragraph' || contentSections[i].type === 'text') {
-              answerParts.push(contentSections[i].content || contentSections[i].text || '');
+          while (
+            i < contentSections.length &&
+            !(contentSections[i].type === "heading")
+          ) {
+            if (
+              contentSections[i].type === "paragraph" ||
+              contentSections[i].type === "text"
+            ) {
+              answerParts.push(
+                contentSections[i].content || contentSections[i].text || ""
+              );
             }
             i++;
           }
 
-          faqItems.push({ question, answer: answerParts.join('\n\n') });
+          faqItems.push({ question, answer: answerParts.join("\n\n") });
 
           // If we hit another H2, break out of FAQ section
-          if (i < contentSections.length &&
-            contentSections[i].type === 'heading' &&
-            contentSections[i].level === 2) {
+          if (
+            i < contentSections.length &&
+            contentSections[i].type === "heading" &&
+            contentSections[i].level === 2
+          ) {
             break;
           }
         } else {
@@ -941,8 +1074,8 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
       if (faqItems.length > 0) {
         processedSections.push({
-          type: 'faq',
-          heading: section.text || 'Frequently Asked Questions',
+          type: "faq",
+          heading: section.text || "Frequently Asked Questions",
           items: faqItems,
         });
       }
@@ -950,26 +1083,27 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     }
 
     // Check for plain-text FAQ format in HTML content (Q: and A: pattern)
-    if (section.type === 'html' && section.content) {
+    if (section.type === "html" && section.content) {
       const htmlContent = section.content;
-
 
       // Extract text content from HTML to find Q&A pairs
       const textContent = getHtmlTextContent(htmlContent);
 
       // Look for Q: and A: pattern in the text content
-      const lines = textContent.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      const lines = textContent
+        .split("\n")
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
       const faqItems: Array<{ question: string; answer: string }> = [];
-
 
       let qCount = 0;
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        if (line.startsWith('Q:')) {
+        if (line.startsWith("Q:")) {
           qCount++;
           const question = line.substring(2).trim();
           // Look for the corresponding A: on the next line
-          if (i + 1 < lines.length && lines[i + 1].startsWith('A:')) {
+          if (i + 1 < lines.length && lines[i + 1].startsWith("A:")) {
             const answer = lines[i + 1].substring(2).trim();
             faqItems.push({ question, answer });
             i++; // Skip the answer line
@@ -977,25 +1111,24 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
         }
       }
 
-
       // If we found FAQ items (at least 3 Q&A pairs), convert this section to FAQ accordion
       if (faqItems.length >= 3) {
-
-
         // Check if there's an FAQ heading in this section
         const faqHeadingMatch = htmlContent.match(/<h2[^>]*>(.*?)<\/h2>/i);
         if (faqHeadingMatch) {
           const faqHeadingIndex = htmlContent.indexOf(faqHeadingMatch[0]);
           const beforeFaq = htmlContent.substring(0, faqHeadingIndex).trim();
           if (beforeFaq) {
-            processedSections.push({ type: 'html', content: beforeFaq });
+            processedSections.push({ type: "html", content: beforeFaq });
           }
         }
 
         // FAQ accordion
         processedSections.push({
-          type: 'faq',
-          heading: faqHeadingMatch ? getHtmlTextContent(faqHeadingMatch[1]) : 'Frequently Asked Questions',
+          type: "faq",
+          heading: faqHeadingMatch
+            ? getHtmlTextContent(faqHeadingMatch[1])
+            : "Frequently Asked Questions",
           items: faqItems,
         });
 
@@ -1010,7 +1143,8 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   // Calculate read time
   const wordCount = JSON.stringify(contentSections).split(/\s+/).length;
 
-  const articleImageSlides: Array<{ key: string; src: string; alt?: string }> = [];
+  const articleImageSlides: Array<{ key: string; src: string; alt?: string }> =
+    [];
   if (article.coverImageUrl) {
     articleImageSlides.push({
       key: "cover",
@@ -1077,23 +1211,32 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     .filter(Boolean);
 
   const relatedCandidates = getLocalArticles()
-    .map((candidate) => getLocalArticleRecordBySlug(candidate.slug))
-    .filter((candidate): candidate is NonNullable<typeof article> => Boolean(candidate))
-    .filter((candidate) => candidate.id !== article.id)
-    .filter((candidate) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(candidate.slug))
+    .map(candidate => getLocalArticleRecordBySlug(candidate.slug))
+    .filter((candidate): candidate is NonNullable<typeof article> =>
+      Boolean(candidate)
+    )
+    .filter(candidate => candidate.id !== article.id)
+    .filter(candidate => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(candidate.slug))
     .filter(
-      (candidate) =>
+      candidate =>
         LEARNING_PORTAL_ARTICLE_SLUG_SET.has(candidate.slug) ===
         LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
     );
 
   const sameSeries = article.series
-    ? relatedCandidates.filter((candidate) => candidate.series?.slug === article.series?.slug)
+    ? relatedCandidates.filter(
+        candidate => candidate.series?.slug === article.series?.slug
+      )
     : [];
-  const sameCategory = relatedCandidates.filter((candidate) => candidate.categoryName === article.categoryName);
-  const related = [...sameSeries, ...sameCategory, ...relatedCandidates].filter(
-    (candidate, index, array) => array.findIndex((item) => item.id === candidate.id) === index
-  ).slice(0, 8);
+  const sameCategory = relatedCandidates.filter(
+    candidate => candidate.categoryName === article.categoryName
+  );
+  const related = [...sameSeries, ...sameCategory, ...relatedCandidates]
+    .filter(
+      (candidate, index, array) =>
+        array.findIndex(item => item.id === candidate.id) === index
+    )
+    .slice(0, 8);
   const articleKeywords = article.seoKeywords
     ? article.seoKeywords
     : [
@@ -1108,23 +1251,40 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   const articleDescription =
     article.excerpt ||
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
-  const isLearningPortalArticle = variant === "tutorial" || LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
+  const isLearningPortalArticle =
+    variant === "tutorial" ||
+    LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
   const isNarrativeArticle = !isLearningPortalArticle;
-  const hasOpeningDropCap = isNarrativeArticle && article.slug !== "what-does-a-scenic-designer-do";
-  const articleBasePath = isLearningPortalArticle ? "/studio/tutorials" : "/articles";
+  const hasOpeningDropCap =
+    isNarrativeArticle && article.slug !== "what-does-a-scenic-designer-do";
+  const articleBasePath = isLearningPortalArticle
+    ? "/studio/tutorials"
+    : "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
-  const articleDisplayUpdatedAt = getDisplayUpdatedDate(article.updatedAt || article.publishedAt || article.createdAt);
+  const articleDisplayUpdatedAt = getDisplayUpdatedDate(
+    article.updatedAt || article.publishedAt || article.createdAt
+  );
   const encodedArticleUrl = encodeURIComponent(articleUrl);
-  const encodedArticleTitle = encodeURIComponent(decodeHTMLEntities(article.title));
+  const encodedArticleTitle = encodeURIComponent(
+    decodeHTMLEntities(article.title)
+  );
   const emailShareUrl = `mailto:?subject=${encodedArticleTitle}&body=${encodedArticleTitle}%0A%0A${encodedArticleUrl}`;
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedArticleUrl}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedArticleUrl}`;
   const rawHeroProgress = Math.max(heroScrollProgress, heroIntroProgress);
   const heroProgress = isMobileHero ? 1 : rawHeroProgress;
-  const heroTitleProgress = isMobileHero ? 1 : Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
+  const usesStaticHeroTitle =
+    article.slug === "what-theatre-designers-get-paid";
+  const heroTitleProgress = isMobileHero
+    ? 1
+    : Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
+  const heroTitleOpacity = usesStaticHeroTitle ? 1 : heroTitleProgress;
+  const heroOverlayOpacity = usesStaticHeroTitle
+    ? Math.min(0.58, 0.3 + heroProgress * 0.28)
+    : heroProgress * 0.58;
 
   useEffect(() => {
-    if (!isNarrativeArticle) return;
+    if (!isNarrativeArticle || usesStaticHeroTitle) return;
     if (isMobileHero) {
       heroIntroProgressRef.current = 1;
       setHeroIntroProgress(1);
@@ -1135,9 +1295,13 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     setHeroIntroProgress(0);
 
     const advanceIntro = (delta: number) => {
-      if (delta <= 0 || window.scrollY > 2 || heroIntroProgressRef.current >= 1) return false;
+      if (delta <= 0 || window.scrollY > 2 || heroIntroProgressRef.current >= 1)
+        return false;
 
-      const nextProgress = Math.min(1, heroIntroProgressRef.current + delta / 420);
+      const nextProgress = Math.min(
+        1,
+        heroIntroProgressRef.current + delta / 420
+      );
       heroIntroProgressRef.current = nextProgress;
       setHeroIntroProgress(nextProgress);
       return true;
@@ -1175,10 +1339,16 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [article.slug, isMobileHero, isNarrativeArticle]);
+  }, [article.slug, isMobileHero, isNarrativeArticle, usesStaticHeroTitle]);
 
   return (
-    <div className={isNarrativeArticle ? "min-h-screen bg-[#030303] text-white" : "publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]"}>
+    <div
+      className={
+        isNarrativeArticle
+          ? "min-h-screen bg-[#030303] text-white"
+          : "publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]"
+      }
+    >
       <SEO
         title={`${article.title} | Brandon PT Davis`}
         description={articleDescription}
@@ -1186,71 +1356,95 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
         imageAlt={article.coverImageAlt || article.title}
         type="article"
         author="Brandon PT Davis"
-        publishedTime={article.publishedAt ? new Date(article.publishedAt).toISOString() : undefined}
-        modifiedTime={article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined}
+        publishedTime={
+          article.publishedAt
+            ? new Date(article.publishedAt).toISOString()
+            : undefined
+        }
+        modifiedTime={
+          article.updatedAt
+            ? new Date(article.updatedAt).toISOString()
+            : undefined
+        }
         keywords={articleKeywords}
         url={articleUrl}
       />
       <Header />
-      <PublishingTopBar active={isLearningPortalArticle ? "tutorials" : "articles"} tone={isNarrativeArticle ? "dark" : "light"} />
-      <article className={isNarrativeArticle ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24" : "article-editorial article-editorial-light article-editorial-learning overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"}>
+      <PublishingTopBar
+        active={isLearningPortalArticle ? "tutorials" : "articles"}
+        tone={isNarrativeArticle ? "dark" : "light"}
+      />
+      <article
+        className={
+          isNarrativeArticle
+            ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24"
+            : "article-editorial article-editorial-light article-editorial-learning overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"
+        }
+      >
         {isNarrativeArticle ? (
           <section className="relative min-h-[64svh] overflow-hidden bg-black md:min-h-[calc(100svh-8.5rem)]">
-              {article.coverImageUrl ? (
-                <button
-                  type="button"
-                  aria-label="Open article image"
-                  className="absolute inset-0 block h-full w-full"
-                  onClick={() => openArticleLightboxAt("cover")}
-                >
-                  <Image
-                    src={article.coverImageUrl}
-                    alt={article.coverImageAlt || article.title}
-                    fill
-                    priority
-                    unoptimized
-                    loading="eager"
-                    fetchPriority="high"
-                    sizes="100vw"
-                    className="object-cover"
-                  />
-                </button>
-              ) : null}
+            {article.coverImageUrl ? (
+              <button
+                type="button"
+                aria-label="Open article image"
+                className="absolute inset-0 block h-full w-full"
+                onClick={() => openArticleLightboxAt("cover")}
+              >
+                <Image
+                  src={article.coverImageUrl}
+                  alt={article.coverImageAlt || article.title}
+                  fill
+                  priority
+                  unoptimized
+                  loading="eager"
+                  fetchPriority="high"
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </button>
+            ) : null}
+            <div
+              className="absolute inset-0 transition-colors duration-200"
+              style={{
+                backgroundColor: `rgba(0, 0, 0, ${heroOverlayOpacity})`,
+              }}
+            />
+            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/72 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#030303] via-[#030303]/68 to-transparent" />
+
+            <div className="relative z-10 flex min-h-[64svh] items-center justify-center px-[clamp(1.5rem,5vw,6rem)] py-14 text-center md:min-h-[calc(100svh-8.5rem)] md:py-20">
               <div
-                className="absolute inset-0 transition-colors duration-200"
-                style={{ backgroundColor: `rgba(0, 0, 0, ${heroProgress * 0.58})` }}
-              />
-              <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/72 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#030303] via-[#030303]/68 to-transparent" />
-
-              <div className="relative z-10 flex min-h-[64svh] items-center justify-center px-[clamp(1.5rem,5vw,6rem)] py-14 text-center md:min-h-[calc(100svh-8.5rem)] md:py-20">
-                <div
-                  className="mx-auto max-w-[58rem] transition-opacity duration-150"
-                  style={{ opacity: heroTitleProgress }}
-                >
-                  <div className="mb-5 text-[0.86rem] font-semibold tracking-[-0.02em] text-white/72">
-                    Article
-                  </div>
-
-                  <h1 className="mx-auto max-w-[16ch] text-balance font-sans text-[clamp(2.35rem,4.7vw,5rem)] font-semibold leading-[0.94] tracking-[-0.072em] text-white drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.42)]">
-                    {decodeHTMLEntities(article.title)}
-                  </h1>
-
-                  {article.excerpt && (
-                    <p className="mx-auto mt-6 max-w-[40rem] text-balance text-[clamp(1rem,1.38vw,1.28rem)] font-medium leading-[1.34] tracking-[-0.032em] text-white/84 drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.45)]">
-                      {decodeHTMLEntities(article.excerpt)}
-                    </p>
-                  )}
+                className="mx-auto max-w-[58rem] transition-opacity duration-150"
+                style={{ opacity: heroTitleOpacity }}
+              >
+                <div className="mb-5 text-[0.86rem] font-semibold tracking-[-0.02em] text-white/72">
+                  Article
                 </div>
+
+                <h1 className="mx-auto max-w-[16ch] text-balance font-sans text-[clamp(2.35rem,4.7vw,5rem)] font-semibold leading-[0.94] tracking-[-0.072em] text-white drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.42)]">
+                  {decodeHTMLEntities(article.title)}
+                </h1>
+
+                {article.excerpt && (
+                  <p className="mx-auto mt-6 max-w-[40rem] text-balance text-[clamp(1rem,1.38vw,1.28rem)] font-medium leading-[1.34] tracking-[-0.032em] text-white/84 drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.45)]">
+                    {decodeHTMLEntities(article.excerpt)}
+                  </p>
+                )}
               </div>
+            </div>
           </section>
         ) : isLearningPortalArticle ? (
           <section className="px-5 pb-6 pt-16 sm:px-8 md:pt-24 lg:px-10">
             <AnimatedSection>
               <header className="mx-auto max-w-[48rem] text-left">
                 <div className="text-[1rem] font-medium leading-6 tracking-[-0.02em] text-[#6e6e73]">
-                  <p className="text-[0.92rem] tracking-[-0.02em] text-[#6e6e73]/82">Updated</p>
-                  <time className="mt-1 block" dateTime={articleDisplayUpdatedAt}>
+                  <p className="text-[0.92rem] tracking-[-0.02em] text-[#6e6e73]/82">
+                    Updated
+                  </p>
+                  <time
+                    className="mt-1 block"
+                    dateTime={articleDisplayUpdatedAt}
+                  >
                     {formatUtcDate(articleDisplayUpdatedAt, "long")}
                   </time>
                 </div>
@@ -1269,10 +1463,16 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   <button
                     type="button"
                     onClick={handleShare}
-                    aria-label={linkCopied ? "Article link copied" : "Copy article link"}
+                    aria-label={
+                      linkCopied ? "Article link copied" : "Copy article link"
+                    }
                     className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
                   >
-                    {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                    {linkCopied ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <LinkIcon className="h-4 w-4" />
+                    )}
                   </button>
                   <a
                     href={emailShareUrl}
@@ -1373,7 +1573,9 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
         {!isLearningPortalArticle ? (
           <section className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
-            <div className={`mx-auto flex max-w-[44rem] items-center justify-between gap-5 border-y py-4 ${isNarrativeArticle ? "border-white/16" : "border-black/10"}`}>
+            <div
+              className={`mx-auto flex max-w-[44rem] items-center justify-between gap-5 border-y py-4 ${isNarrativeArticle ? "border-white/16" : "border-black/10"}`}
+            >
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.98rem] font-semibold tracking-[-0.025em]">
                 {article.categoryName ? (
                   <Link
@@ -1384,10 +1586,17 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   </Link>
                 ) : null}
                 <time
-                  dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}
-                  className={isNarrativeArticle ? "text-white/54" : "text-[#777169]"}
+                  dateTime={new Date(
+                    article.publishedAt || article.createdAt
+                  ).toISOString()}
+                  className={
+                    isNarrativeArticle ? "text-white/54" : "text-[#777169]"
+                  }
                 >
-                  {formatUtcDate(article.publishedAt || article.createdAt, "long")}
+                  {formatUtcDate(
+                    article.publishedAt || article.createdAt,
+                    "long"
+                  )}
                 </time>
               </div>
               <div className="flex shrink-0 items-center gap-2">
@@ -1397,8 +1606,16 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                       ref={audioRef}
                       preload="metadata"
                       src={articleAudio.url}
-                      onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
-                      onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
+                      onLoadedMetadata={event =>
+                        setAudioDurationSeconds(
+                          event.currentTarget.duration || null
+                        )
+                      }
+                      onTimeUpdate={event =>
+                        setAudioCurrentTimeSeconds(
+                          event.currentTarget.currentTime || 0
+                        )
+                      }
                       onEnded={() => {
                         setIsAudioPlaying(false);
                         setAudioCurrentTimeSeconds(0);
@@ -1409,20 +1626,34 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                     <button
                       type="button"
                       onClick={handleAudioToggle}
-                      aria-label={isAudioPlaying ? "Pause article audio" : "Play article audio"}
+                      aria-label={
+                        isAudioPlaying
+                          ? "Pause article audio"
+                          : "Play article audio"
+                      }
                       className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
                     >
-                      {isAudioPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
+                      {isAudioPlaying ? (
+                        <Pause className="h-4 w-4" />
+                      ) : (
+                        <Play className="ml-0.5 h-4 w-4" />
+                      )}
                     </button>
                   </>
                 ) : null}
                 <button
                   type="button"
                   onClick={handleShare}
-                  aria-label={linkCopied ? "Article link copied" : "Copy article link"}
+                  aria-label={
+                    linkCopied ? "Article link copied" : "Copy article link"
+                  }
                   className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
                 >
-                  {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                  {linkCopied ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <LinkIcon className="h-4 w-4" />
+                  )}
                 </button>
                 <a
                   href={emailShareUrl}
@@ -1454,12 +1685,14 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
           </section>
         ) : null}
 
-        <div className={`mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8 ${isLearningPortalArticle ? "mt-14" : ""}`}>
+        <div
+          className={`mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8 ${isLearningPortalArticle ? "mt-14" : ""}`}
+        >
           <AnimatedSection delay={120} className="mx-auto max-w-[44rem]">
-          <div>
-            <div className="min-w-0">
-              <div className="relative">
-                <style>{`
+            <div>
+              <div className="min-w-0">
+                <div className="relative">
+                  <style>{`
                   .article-content-${article.id} ul li::marker {
                     color: rgba(255,255,255,0.55);
                   }
@@ -1472,8 +1705,8 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   }
                 `}</style>
 
-                <div
-                  className="article-content article-content-${article.id} article-html-content mx-auto max-w-none
+                  <div
+                    className="article-content article-content-${article.id} article-html-content mx-auto max-w-none
                   prose prose-lg prose-invert
                   prose-headings:font-sans prose-headings:font-medium prose-headings:leading-[0.98] prose-headings:tracking-[-0.05em]
                   prose-h2:text-[clamp(2rem,2.75vw,2.8rem)] prose-h2:mt-20 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:text-white
@@ -1492,612 +1725,876 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
                   [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-full [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
-                >
-                  {Array.isArray(processedSections) && (() => {
-                    let h2Index = 0;
-                    let paragraphIndex = 0;
-                    return processedSections.map((section: any, index: number) => {
-                    const renderedSection = (() => {
-                    switch (section.type) {
-                      case 'update_note':
-                        return (
-                          <div key={index} className="mb-12 p-6 rounded-xl border-2 border-primary/30 bg-primary/5 backdrop-blur-sm">
-                            <div className="flex items-start gap-3">
-                              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2 animate-pulse" />
-                              <p
-                                className="text-sm leading-relaxed text-white/80 [&_strong]:text-base [&_strong]:font-bold [&_strong]:text-white"
-                                dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
-                              />
-                            </div>
-                          </div>
-                        );
-
-                      case 'heading':
-                        const level = section.level || 2;
-                        const headingText = decodeHTMLEntities(section.text || section.content || '');
-                        const isGhibliShowcaseHeading =
-                          article.slug === "studio-ghibli-inspired-immersive-dining-experience" &&
-                          level === 2 &&
-                          headingText.trim().toLowerCase() === "visual showcase";
-                        const numberedHeadingMatch = level === 3 ? headingText.match(/^(\d+)\.\s+(.+)$/) : null;
-                        const headingClassName =
-                          isGhibliShowcaseHeading
-                            ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-white"
-                            : isLearningPortalArticle && level === 2
-                              ? "mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
-                            : isLearningPortalArticle && level === 3
-                              ? "mt-12 mb-4 font-sans text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-[#24211f]"
-                            : isLearningPortalArticle
-                              ? "mt-9 mb-3 font-sans text-[1.08rem] font-medium leading-[1.28] tracking-[-0.025em] text-[#3d3832]"
-                            : level === 2
-                            ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-white"
-                            : level === 3
-                              ? "mt-16 mb-5 font-sans text-[clamp(1.75rem,2.2vw,2.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white"
-                              : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48";
-
-                        const headingId = level === 2
-                          ? getHeadingId(headingText, h2Index)
-                          : getHeadingId(headingText, index);
-
-                        if (level === 2) {
-                          h2Index += 1;
-                        }
-
-                        if (level === 2) {
-                          return <h2 key={index} id={headingId} className={headingClassName}>{headingText}</h2>;
-                        } else if (level === 3) {
-                          if (numberedHeadingMatch) {
-                            if (isLearningPortalArticle) {
-                              return (
-                                <h2
-                                  key={index}
-                                  id={headingId}
-                                  className="article-learning-numbered-heading mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
-                                >
-                                  {headingText}
-                                </h2>
-                              );
-                            }
-
-                            return (
-                              <div key={index} className="mt-18 mb-7 border-t border-white/10 pt-6">
-                                <div className="flex items-end gap-4 md:gap-5">
-                                  <span className={`shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] ${isLearningPortalArticle ? "text-black/24" : "text-white/34"}`}>
-                                  {numberedHeadingMatch[1]}
-                                  </span>
-                                  <h3
-                                    id={headingId}
-                                    className={`font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isLearningPortalArticle ? "text-[#1d1d1f]" : "text-white"}`}
-                                  >
-                                    {numberedHeadingMatch[2]}
-                                  </h3>
-                                </div>
-                              </div>
-                            );
-                          }
-                          return <h3 key={index} id={headingId} className={headingClassName}>{headingText}</h3>;
-                        } else if (level === 4) {
-                          return <h4 key={index} id={headingId} className={headingClassName}>{headingText}</h4>;
-                        } else {
-                          return <h2 key={index} id={headingId} className={headingClassName}>{headingText}</h2>;
-                        }
-
-                      case 'paragraph':
-                        const isOpeningParagraph = paragraphIndex === 0;
-                        paragraphIndex += 1;
-                        return (
-                          <p
-                            key={index}
-                            className={`${isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"} ${
-                              isOpeningParagraph && hasOpeningDropCap
-                                ? "first-letter:float-left first-letter:mr-3 first-letter:mt-2 first-letter:font-sans first-letter:text-[5.4rem] first-letter:font-semibold first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-white"
-                                : ""
-                            }`}
-                            dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
-                          />
-                        );
-
-                      case 'resource_callout':
-                        return (
-                          <Link
-                            key={index}
-                            href={section.href || "#"}
-                            className="group my-10 block rounded-[1.1rem] border border-white/12 bg-white/[0.025] p-6 transition-colors hover:border-white/24 hover:bg-white/[0.045] md:p-7"
-                          >
-                            <div className="flex items-start justify-between gap-5">
-                              <div>
-                                {section.eyebrow && (
-                                  <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/38">
-                                    {decodeHTMLEntities(section.eyebrow)}
-                                  </p>
-                                )}
-                                <h3 className="font-sans text-[clamp(1.35rem,2vw,1.95rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
-                                  {decodeHTMLEntities(section.title || "")}
-                                </h3>
-                                {section.description && (
-                                  <p className="mt-4 max-w-[42rem] text-[0.98rem] leading-7 tracking-[-0.01em] text-white/62">
-                                    {decodeHTMLEntities(section.description)}
-                                  </p>
-                                )}
-                              </div>
-                              <span className="mt-1 grid h-10 w-10 flex-none place-items-center rounded-full border border-white/12 text-white/58 transition-colors group-hover:border-white/28 group-hover:text-white">
-                                <ArrowUpRight className="h-4 w-4" />
-                              </span>
-                            </div>
-                          </Link>
-                        );
-
-                      case 'quote':
-                        const quoteText = normalizeQuoteText(section.text || section.content || '');
-                        const repeatsHeroExcerpt =
-                          index === 0 &&
-                          article.excerpt &&
-                          quoteText.toLowerCase() === normalizeQuoteText(article.excerpt).toLowerCase();
-
-                        if (repeatsHeroExcerpt) return null;
-
-                        return (
-                          <blockquote key={index} className="my-16 py-2 text-center">
-                            <p className="mx-auto max-w-[42rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-white/92">
-                              <span aria-hidden="true" className="mr-[0.08em] text-white/54">“</span>
-                              {quoteText}
-                              <span aria-hidden="true" className="ml-[0.04em] text-white/54">”</span>
-                            </p>
-                            {section.author && (
-                              <footer className="mt-5 text-[0.82rem] not-italic font-semibold uppercase tracking-[0.22em] text-white/42">
-                                {decodeHTMLEntities(section.author)}
-                              </footer>
-                            )}
-                          </blockquote>
-                        );
-
-                      case 'media_tabs':
-                        return <ArticleMediaTabs key={index} section={section} />;
-
-                      case 'image_compare':
-                        return <ArticleImageCompare key={index} section={section} />;
-
-                      case 'setting_step':
-                        return (
-                          <ArticleSettingStep
-                            key={index}
-                            section={section}
-                            onImageClick={() => openArticleLightboxAt(`setting-step-${index}`)}
-                          />
-                        );
-
-                      case 'render_choice':
-                        return (
-                          <ArticleRenderChoice
-                            key={index}
-                            section={section}
-                            onImageClick={(choiceIndex) => openArticleLightboxAt(`render-choice-${index}-${choiceIndex}`)}
-                          />
-                        );
-
-                      case 'image':
-                        if (section.display === 'artwork') {
-                          return (
-                            <figure
-                              key={index}
-                              className="relative left-1/2 my-12 flex w-screen max-w-[68rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
-                            >
-                              <div className="w-full">
-                                <ProgressiveImage
-                                  src={getArticleMediaUrl(section.url)}
-                                  alt={section.alt || section.caption || ''}
-                                  loading="lazy"
-                                  enableScrollAnimation={false}
-                                  containerClassName="w-full"
-                                  sizes="(min-width: 1280px) 1088px, 100vw"
-                                  className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
-                                  onClick={() => openArticleLightboxAt(`image-${index}`)}
-                                />
-                              </div>
-                              {(section.caption || section.alt) && (
-                                <figcaption className="mt-4 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
-                                  {decodeHTMLEntities(section.caption || section.alt || '')}
-                                </figcaption>
-                              )}
-                            </figure>
-                          );
-                        }
-
-                        if (section.display === 'infographic') {
-                          return (
-                            <figure
-                              key={index}
-                              className="mx-auto my-8 flex w-full max-w-[58rem] flex-col items-center"
-                            >
-                              <ProgressiveImage
-                                src={getArticleMediaUrl(section.url)}
-                                alt={section.alt || section.caption || ''}
-                                loading="lazy"
-                                enableScrollAnimation={false}
-                                containerClassName="w-full"
-                                sizes="(min-width: 1024px) 58rem, 100vw"
-                                className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-95"
-                                onClick={() => openArticleLightboxAt(`image-${index}`)}
-                              />
-                              {(section.caption || section.alt) && (
-                                <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
-                                  {decodeHTMLEntities(section.caption || section.alt || '')}
-                                </figcaption>
-                              )}
-                            </figure>
-                          );
-                        }
-
-                        if (section.display === 'settings') {
-                          return (
-                            <figure
-                              key={index}
-                              className="relative left-1/2 my-10 flex w-screen max-w-[64rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
-                            >
-                              <ProgressiveImage
-                                src={getArticleMediaUrl(section.url)}
-                                alt={section.alt || section.caption || ''}
-                                loading="lazy"
-                                enableScrollAnimation={false}
-                                containerClassName="w-full"
-                                sizes="(min-width: 1024px) 64rem, 100vw"
-                                className="mx-auto max-h-[54rem] w-full cursor-pointer bg-transparent object-contain transition-opacity hover:opacity-95"
-                                onClick={() => openArticleLightboxAt(`image-${index}`)}
-                              />
-                              {(section.caption || section.alt) && (
-                                <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white/72">
-                                  {decodeHTMLEntities(section.caption || section.alt || '')}
-                                </figcaption>
-                              )}
-                            </figure>
-                          );
-                        }
-
-                        return (
-                          <figure key={index} className="flex w-full flex-col items-center">
-                            <ProgressiveImage
-                              src={getArticleMediaUrl(section.url)}
-                              alt={section.alt || section.caption || ''}
-                              loading="lazy"
-                              enableScrollAnimation={false}
-                              containerClassName="w-full"
-                              sizes="(min-width: 1024px) 58rem, 100vw"
-                              className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
-                              onClick={() => openArticleLightboxAt(`image-${index}`)}
-                            />
-                            {(section.caption || section.alt) && (
-                              <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
-                                {decodeHTMLEntities(section.caption || section.alt || '')}
-                              </figcaption>
-                            )}
-                          </figure>
-                        );
-
-                      case 'image_placeholder':
-                        return (
-                          <figure
-                            key={index}
-                            className="my-10 rounded-[0.8rem] border border-dashed border-white/16 bg-white/[0.02] p-6 md:p-8"
-                          >
-                            <div className="aspect-[16/9] rounded-[0.65rem] border border-white/10 bg-black/20" />
-                            <figcaption className="mt-5 space-y-2">
-                              <p className="text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/42">
-                                Image Placeholder
-                              </p>
-                              <p className="font-sans text-[1.08rem] font-medium tracking-[-0.03em] text-white">
-                                {decodeHTMLEntities(section.title || 'Planned image')}
-                              </p>
-                              {section.note && (
-                                <p className="max-w-[56rem] text-[0.98rem] leading-7 text-white/62">
-                                  {decodeHTMLEntities(section.note)}
-                                </p>
-                              )}
-                            </figcaption>
-                          </figure>
-                        );
-
-                      case 'video':
-                        const videoUrl = section.url || '';
-
-                        if (isArticleInlineVideoUrl(videoUrl)) {
-                          return <ArticleInlineVideo key={index} url={videoUrl} caption={section.caption} />;
-                        }
-
-                        // Extract YouTube video ID from URL
-                        const getYouTubeId = (url: string) => {
-                          const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-                          const match = url.match(regExp);
-                          return (match && match[2].length === 11) ? match[2] : null;
-                        };
-
-                        const videoId = getYouTubeId(videoUrl);
-
-                        return (
-                          <figure key={index} className="my-12">
-                            <div className="mx-auto max-w-[64rem]">
-                              <DeferredYouTubeEmbed
-                                videoId={videoId || ""}
-                                title={section.caption || "Article video"}
-                                className="bg-transparent"
-                              />
-                            </div>
-                            {section.caption && (
-                              <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-white/58">
-                                {decodeHTMLEntities(section.caption)}
-                              </figcaption>
-                            )}
-                          </figure>
-                        );
-
-                      case 'gallery':
-                        const galleryImages = section.images || [];
-                        return (
-                          <section key={index} className={`article-image-gallery relative left-1/2 my-24 w-screen max-w-[92rem] -translate-x-1/2 px-5 sm:px-8 lg:px-12 ${isNarrativeArticle ? "article-image-gallery-dark" : "article-image-gallery-light"}`}>
-                            <div className="mx-auto mb-4 flex max-w-[78rem] items-center justify-end">
-                              <div className="hidden items-center gap-1.5 md:flex">
-                                <button
-                                  type="button"
-                                  aria-label="Previous gallery images"
-                                  onClick={() => scrollGallery(index, "prev")}
-                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
-                                >
-                                  <ChevronLeft className="h-4 w-4" />
-                                </button>
-                                <button
-                                  type="button"
-                                  aria-label="Next gallery images"
-                                  onClick={() => scrollGallery(index, "next")}
-                                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
-                                >
-                                  <ChevronRight className="h-4 w-4" />
-                                </button>
-                              </div>
-                            </div>
-                            <div className="overflow-hidden">
-                              <div
-                                ref={(el) => {
-                                  galleryRefs.current[index] = el;
-                                }}
-                                className="flex gap-4 overflow-x-auto pb-5 snap-x snap-mandatory sm:gap-5 md:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-                              >
-                                {galleryImages.map((img: any, imgIndex: number) => (
-                                  <figure
-                                    key={imgIndex}
-                                    className="group/gallery-card flex-none w-[82vw] max-w-[52rem] snap-start sm:w-[66vw] md:w-[min(62vw,52rem)] lg:w-[min(54vw,52rem)]"
-                                  >
-                                    <ProgressiveImage
-                                      src={getArticleMediaUrl(img.url)}
-                                      alt={img.alt || img.caption || ''}
-                                      loading="lazy"
-                                      enableScrollAnimation={false}
-                                      sizes="(min-width: 1024px) 52rem, 82vw"
-                                      className="cursor-pointer transition duration-300 group-hover/gallery-card:opacity-92"
-                                      onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
-                                    />
-                                    {img.caption && (
-                                      <figcaption className={`mt-3 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}>
-                                        {decodeHTMLEntities(img.caption)}
-                                      </figcaption>
-                                    )}
-                                  </figure>
-                                ))}
-                              </div>
-                            </div>
-                          </section>
-                        );
-
-                      case 'list':
-                        const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
-                        return (
-                          <ListTag
-                            key={index}
-                            className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} [&_strong]:font-bold`}
-                          >
-                            {section.items?.map((item: string, itemIndex: number) => (
-                              <li key={itemIndex} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(item) }} />
-                            ))}
-                          </ListTag>
-                        );
-
-                      case 'text':
-                        return (
-                          <div
-                            key={index}
-                            className="article-html-content [&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
-                            dangerouslySetInnerHTML={{ __html: processHTMLImages(decodeHTMLEntities(section.content)) }}
-                          />
-                        );
-
-                      case 'html':
-                        return (
-                          <div
-                            key={index}
-                            className="[&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
-                            dangerouslySetInnerHTML={{ __html: processHTMLImages(section.content) }}
-                          />
-                        );
-
-                      case 'faq':
-                        return (
-                          <section
-                            key={index}
-                            className="mb-20 mt-12 max-w-[50rem]"
-                          >
-                            <h2 className={`mb-5 font-sans text-[clamp(1.65rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}>
-                              {decodeHTMLEntities(section.heading || "Frequently Asked Questions")}
-                            </h2>
-                            <div className={`overflow-hidden rounded-[1.15rem] border shadow-[0_14px_40px_rgba(17,17,17,0.035)] ${isNarrativeArticle ? "border-white/8 bg-white/[0.02] shadow-none" : "border-black/[0.08] bg-[#fbfaf7]"}`}>
-                              <Accordion type="single" collapsible className="space-y-0 px-5 py-1 md:px-6 md:py-2">
-                                {section.items?.map((item: any, faqIndex: number) => (
-                                  <AccordionItem
-                                    key={faqIndex}
-                                    value={`faq-${faqIndex}`}
-                                    className={`border-b last:border-b-0 ${isNarrativeArticle ? "border-white/8" : "border-black/[0.08]"}`}
-                                  >
-                                    <AccordionTrigger
-                                      className={`group/faq rounded-none py-0 text-left hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-[#6f2dff]/28 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:border-[#6f2dff] [&[data-state=open]_.faq-plus-ring]:bg-[#6f2dff] [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0 ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                  >
+                    {Array.isArray(processedSections) &&
+                      (() => {
+                        let h2Index = 0;
+                        let paragraphIndex = 0;
+                        return processedSections.map(
+                          (section: any, index: number) => {
+                            const renderedSection = (() => {
+                              switch (section.type) {
+                                case "update_note":
+                                  return (
+                                    <div
+                                      key={index}
+                                      className="mb-12 p-6 rounded-xl border-2 border-primary/30 bg-primary/5 backdrop-blur-sm"
                                     >
-                                      <div className="flex w-full items-center justify-between gap-5 py-5">
-                                        <div className={`pr-2 text-[1.02rem] font-medium leading-[1.35] tracking-[-0.026em] md:text-[1.08rem] ${isNarrativeArticle ? "text-white" : "text-[#24211f]"}`}>
-                                          {decodeHTMLEntities(item.question)}
-                                        </div>
-                                        <span
-                                          aria-hidden="true"
-                                          className={`faq-plus-ring relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-out group-hover/faq:scale-105 ${isNarrativeArticle ? "border-white/14 bg-white/[0.04]" : "border-black/10 bg-black/[0.035]"}`}
+                                      <div className="flex items-start gap-3">
+                                        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2 animate-pulse" />
+                                        <p
+                                          className="text-sm leading-relaxed text-white/80 [&_strong]:text-base [&_strong]:font-bold [&_strong]:text-white"
+                                          dangerouslySetInnerHTML={{
+                                            __html: decodeHTMLEntities(
+                                              section.text ||
+                                                section.content ||
+                                                ""
+                                            ),
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+
+                                case "heading":
+                                  const level = section.level || 2;
+                                  const headingText = decodeHTMLEntities(
+                                    section.text || section.content || ""
+                                  );
+                                  const isGhibliShowcaseHeading =
+                                    article.slug ===
+                                      "studio-ghibli-inspired-immersive-dining-experience" &&
+                                    level === 2 &&
+                                    headingText.trim().toLowerCase() ===
+                                      "visual showcase";
+                                  const numberedHeadingMatch =
+                                    level === 3
+                                      ? headingText.match(/^(\d+)\.\s+(.+)$/)
+                                      : null;
+                                  const headingClassName =
+                                    isGhibliShowcaseHeading
+                                      ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-white"
+                                      : isLearningPortalArticle && level === 2
+                                        ? "mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
+                                        : isLearningPortalArticle && level === 3
+                                          ? "mt-12 mb-4 font-sans text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-[#24211f]"
+                                          : isLearningPortalArticle
+                                            ? "mt-9 mb-3 font-sans text-[1.08rem] font-medium leading-[1.28] tracking-[-0.025em] text-[#3d3832]"
+                                            : level === 2
+                                              ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-white"
+                                              : level === 3
+                                                ? "mt-16 mb-5 font-sans text-[clamp(1.75rem,2.2vw,2.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white"
+                                                : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48";
+
+                                  const headingId =
+                                    level === 2
+                                      ? getHeadingId(headingText, h2Index)
+                                      : getHeadingId(headingText, index);
+
+                                  if (level === 2) {
+                                    h2Index += 1;
+                                  }
+
+                                  if (level === 2) {
+                                    return (
+                                      <h2
+                                        key={index}
+                                        id={headingId}
+                                        className={headingClassName}
+                                      >
+                                        {headingText}
+                                      </h2>
+                                    );
+                                  } else if (level === 3) {
+                                    if (numberedHeadingMatch) {
+                                      if (isLearningPortalArticle) {
+                                        return (
+                                          <h2
+                                            key={index}
+                                            id={headingId}
+                                            className="article-learning-numbered-heading mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
+                                          >
+                                            {headingText}
+                                          </h2>
+                                        );
+                                      }
+
+                                      return (
+                                        <div
+                                          key={index}
+                                          className="mt-18 mb-7 border-t border-white/10 pt-6"
                                         >
-                                          <span className={`faq-plus-line absolute h-[2px] w-4 rounded-full transition-colors duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`} />
-                                          <span className={`faq-plus-line faq-plus-vertical absolute h-[2px] w-4 rotate-90 rounded-full transition-all duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`} />
+                                          <div className="flex items-end gap-4 md:gap-5">
+                                            <span
+                                              className={`shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] ${isLearningPortalArticle ? "text-black/24" : "text-white/34"}`}
+                                            >
+                                              {numberedHeadingMatch[1]}
+                                            </span>
+                                            <h3
+                                              id={headingId}
+                                              className={`font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isLearningPortalArticle ? "text-[#1d1d1f]" : "text-white"}`}
+                                            >
+                                              {numberedHeadingMatch[2]}
+                                            </h3>
+                                          </div>
+                                        </div>
+                                      );
+                                    }
+                                    return (
+                                      <h3
+                                        key={index}
+                                        id={headingId}
+                                        className={headingClassName}
+                                      >
+                                        {headingText}
+                                      </h3>
+                                    );
+                                  } else if (level === 4) {
+                                    return (
+                                      <h4
+                                        key={index}
+                                        id={headingId}
+                                        className={headingClassName}
+                                      >
+                                        {headingText}
+                                      </h4>
+                                    );
+                                  } else {
+                                    return (
+                                      <h2
+                                        key={index}
+                                        id={headingId}
+                                        className={headingClassName}
+                                      >
+                                        {headingText}
+                                      </h2>
+                                    );
+                                  }
+
+                                case "paragraph":
+                                  const isOpeningParagraph =
+                                    paragraphIndex === 0;
+                                  paragraphIndex += 1;
+                                  return (
+                                    <p
+                                      key={index}
+                                      className={`${isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"} ${
+                                        isOpeningParagraph && hasOpeningDropCap
+                                          ? "first-letter:float-left first-letter:mr-3 first-letter:mt-2 first-letter:font-sans first-letter:text-[5.4rem] first-letter:font-semibold first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-white"
+                                          : ""
+                                      }`}
+                                      dangerouslySetInnerHTML={{
+                                        __html: decodeHTMLEntities(
+                                          section.text || section.content || ""
+                                        ),
+                                      }}
+                                    />
+                                  );
+
+                                case "resource_callout":
+                                  return (
+                                    <Link
+                                      key={index}
+                                      href={section.href || "#"}
+                                      className="group my-10 block rounded-[1.1rem] border border-white/12 bg-white/[0.025] p-6 transition-colors hover:border-white/24 hover:bg-white/[0.045] md:p-7"
+                                    >
+                                      <div className="flex items-start justify-between gap-5">
+                                        <div>
+                                          {section.eyebrow && (
+                                            <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/38">
+                                              {decodeHTMLEntities(
+                                                section.eyebrow
+                                              )}
+                                            </p>
+                                          )}
+                                          <h3 className="font-sans text-[clamp(1.35rem,2vw,1.95rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
+                                            {decodeHTMLEntities(
+                                              section.title || ""
+                                            )}
+                                          </h3>
+                                          {section.description && (
+                                            <p className="mt-4 max-w-[42rem] text-[0.98rem] leading-7 tracking-[-0.01em] text-white/62">
+                                              {decodeHTMLEntities(
+                                                section.description
+                                              )}
+                                            </p>
+                                          )}
+                                        </div>
+                                        <span className="mt-1 grid h-10 w-10 flex-none place-items-center rounded-full border border-white/12 text-white/58 transition-colors group-hover:border-white/28 group-hover:text-white">
+                                          <ArrowUpRight className="h-4 w-4" />
                                         </span>
                                       </div>
-                                    </AccordionTrigger>
-                                    <AccordionContent className="pb-5">
-                                      <div
-                                        className={`max-w-3xl pr-8 text-[0.98rem] leading-7 tracking-[-0.01em] [&_p]:mb-4 [&_a]:underline [&_a]:underline-offset-4 ${isNarrativeArticle ? "text-white/64 [&_a]:text-white [&_a]:decoration-white/30" : "text-black/64 [&_a]:text-[#111111] [&_a]:decoration-black/25"}`}
-                                        dangerouslySetInnerHTML={{ __html: item.answer }}
+                                    </Link>
+                                  );
+
+                                case "quote":
+                                  const quoteText = normalizeQuoteText(
+                                    section.text || section.content || ""
+                                  );
+                                  const repeatsHeroExcerpt =
+                                    index === 0 &&
+                                    article.excerpt &&
+                                    quoteText.toLowerCase() ===
+                                      normalizeQuoteText(
+                                        article.excerpt
+                                      ).toLowerCase();
+
+                                  if (repeatsHeroExcerpt) return null;
+
+                                  return (
+                                    <blockquote
+                                      key={index}
+                                      className="my-16 py-2 text-center"
+                                    >
+                                      <p className="mx-auto max-w-[42rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-white/92">
+                                        <span
+                                          aria-hidden="true"
+                                          className="mr-[0.08em] text-white/54"
+                                        >
+                                          “
+                                        </span>
+                                        {quoteText}
+                                        <span
+                                          aria-hidden="true"
+                                          className="ml-[0.04em] text-white/54"
+                                        >
+                                          ”
+                                        </span>
+                                      </p>
+                                      {section.author && (
+                                        <footer className="mt-5 text-[0.82rem] not-italic font-semibold uppercase tracking-[0.22em] text-white/42">
+                                          {decodeHTMLEntities(section.author)}
+                                        </footer>
+                                      )}
+                                    </blockquote>
+                                  );
+
+                                case "media_tabs":
+                                  return (
+                                    <ArticleMediaTabs
+                                      key={index}
+                                      section={section}
+                                    />
+                                  );
+
+                                case "image_compare":
+                                  return (
+                                    <ArticleImageCompare
+                                      key={index}
+                                      section={section}
+                                    />
+                                  );
+
+                                case "setting_step":
+                                  return (
+                                    <ArticleSettingStep
+                                      key={index}
+                                      section={section}
+                                      onImageClick={() =>
+                                        openArticleLightboxAt(
+                                          `setting-step-${index}`
+                                        )
+                                      }
+                                    />
+                                  );
+
+                                case "render_choice":
+                                  return (
+                                    <ArticleRenderChoice
+                                      key={index}
+                                      section={section}
+                                      onImageClick={choiceIndex =>
+                                        openArticleLightboxAt(
+                                          `render-choice-${index}-${choiceIndex}`
+                                        )
+                                      }
+                                    />
+                                  );
+
+                                case "image":
+                                  if (section.display === "artwork") {
+                                    return (
+                                      <figure
+                                        key={index}
+                                        className="relative left-1/2 my-12 flex w-screen max-w-[68rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
+                                      >
+                                        <div className="w-full">
+                                          <ProgressiveImage
+                                            src={getArticleMediaUrl(
+                                              section.url
+                                            )}
+                                            alt={
+                                              section.alt ||
+                                              section.caption ||
+                                              ""
+                                            }
+                                            loading="lazy"
+                                            enableScrollAnimation={false}
+                                            containerClassName="w-full"
+                                            sizes="(min-width: 1280px) 1088px, 100vw"
+                                            className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
+                                            onClick={() =>
+                                              openArticleLightboxAt(
+                                                `image-${index}`
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                        {(section.caption || section.alt) && (
+                                          <figcaption className="mt-4 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
+                                            {decodeHTMLEntities(
+                                              section.caption ||
+                                                section.alt ||
+                                                ""
+                                            )}
+                                          </figcaption>
+                                        )}
+                                      </figure>
+                                    );
+                                  }
+
+                                  if (section.display === "infographic") {
+                                    return (
+                                      <figure
+                                        key={index}
+                                        className="mx-auto my-8 flex w-full max-w-[58rem] flex-col items-center"
+                                      >
+                                        <ProgressiveImage
+                                          src={getArticleMediaUrl(section.url)}
+                                          alt={
+                                            section.alt || section.caption || ""
+                                          }
+                                          loading="lazy"
+                                          enableScrollAnimation={false}
+                                          containerClassName="w-full"
+                                          sizes="(min-width: 1024px) 58rem, 100vw"
+                                          className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-95"
+                                          onClick={() =>
+                                            openArticleLightboxAt(
+                                              `image-${index}`
+                                            )
+                                          }
+                                        />
+                                        {(section.caption || section.alt) && (
+                                          <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
+                                            {decodeHTMLEntities(
+                                              section.caption ||
+                                                section.alt ||
+                                                ""
+                                            )}
+                                          </figcaption>
+                                        )}
+                                      </figure>
+                                    );
+                                  }
+
+                                  if (section.display === "settings") {
+                                    return (
+                                      <figure
+                                        key={index}
+                                        className="relative left-1/2 my-10 flex w-screen max-w-[64rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
+                                      >
+                                        <ProgressiveImage
+                                          src={getArticleMediaUrl(section.url)}
+                                          alt={
+                                            section.alt || section.caption || ""
+                                          }
+                                          loading="lazy"
+                                          enableScrollAnimation={false}
+                                          containerClassName="w-full"
+                                          sizes="(min-width: 1024px) 64rem, 100vw"
+                                          className="mx-auto max-h-[54rem] w-full cursor-pointer bg-transparent object-contain transition-opacity hover:opacity-95"
+                                          onClick={() =>
+                                            openArticleLightboxAt(
+                                              `image-${index}`
+                                            )
+                                          }
+                                        />
+                                        {(section.caption || section.alt) && (
+                                          <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white/72">
+                                            {decodeHTMLEntities(
+                                              section.caption ||
+                                                section.alt ||
+                                                ""
+                                            )}
+                                          </figcaption>
+                                        )}
+                                      </figure>
+                                    );
+                                  }
+
+                                  return (
+                                    <figure
+                                      key={index}
+                                      className="flex w-full flex-col items-center"
+                                    >
+                                      <ProgressiveImage
+                                        src={getArticleMediaUrl(section.url)}
+                                        alt={
+                                          section.alt || section.caption || ""
+                                        }
+                                        loading="lazy"
+                                        enableScrollAnimation={false}
+                                        containerClassName="w-full"
+                                        sizes="(min-width: 1024px) 58rem, 100vw"
+                                        className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
+                                        onClick={() =>
+                                          openArticleLightboxAt(
+                                            `image-${index}`
+                                          )
+                                        }
                                       />
-                                    </AccordionContent>
-                                  </AccordionItem>
-                                ))}
-                              </Accordion>
-                            </div>
-                          </section>
-                        );
+                                      {(section.caption || section.alt) && (
+                                        <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
+                                          {decodeHTMLEntities(
+                                            section.caption || section.alt || ""
+                                          )}
+                                        </figcaption>
+                                      )}
+                                    </figure>
+                                  );
 
-                      case 'ai_prompt':
-                        return (
-                          <div key={index} className="group relative my-10 rounded-xl border border-border/60 bg-white/[0.02] p-6">
-                            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 text-white/56 hover:bg-white/[0.04] hover:text-white"
-                                onClick={async () => {
-                                  // Handle both flat (prompt) and nested (content) structures
-                                  const text = section.prompt || section.content?.prompt || section.content || '';
-                                  const copied = await copyTextToClipboard(text);
-                                  if (copied) toast.success("Prompt copied to clipboard!");
-                                }}
+                                case "image_placeholder":
+                                  return (
+                                    <figure
+                                      key={index}
+                                      className="my-10 rounded-[0.8rem] border border-dashed border-white/16 bg-white/[0.02] p-6 md:p-8"
+                                    >
+                                      <div className="aspect-[16/9] rounded-[0.65rem] border border-white/10 bg-black/20" />
+                                      <figcaption className="mt-5 space-y-2">
+                                        <p className="text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/42">
+                                          Image Placeholder
+                                        </p>
+                                        <p className="font-sans text-[1.08rem] font-medium tracking-[-0.03em] text-white">
+                                          {decodeHTMLEntities(
+                                            section.title || "Planned image"
+                                          )}
+                                        </p>
+                                        {section.note && (
+                                          <p className="max-w-[56rem] text-[0.98rem] leading-7 text-white/62">
+                                            {decodeHTMLEntities(section.note)}
+                                          </p>
+                                        )}
+                                      </figcaption>
+                                    </figure>
+                                  );
+
+                                case "video":
+                                  const videoUrl = section.url || "";
+
+                                  if (isArticleInlineVideoUrl(videoUrl)) {
+                                    return (
+                                      <ArticleInlineVideo
+                                        key={index}
+                                        url={videoUrl}
+                                        caption={section.caption}
+                                      />
+                                    );
+                                  }
+
+                                  // Extract YouTube video ID from URL
+                                  const getYouTubeId = (url: string) => {
+                                    const regExp =
+                                      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                                    const match = url.match(regExp);
+                                    return match && match[2].length === 11
+                                      ? match[2]
+                                      : null;
+                                  };
+
+                                  const videoId = getYouTubeId(videoUrl);
+
+                                  return (
+                                    <figure key={index} className="my-12">
+                                      <div className="mx-auto max-w-[64rem]">
+                                        <DeferredYouTubeEmbed
+                                          videoId={videoId || ""}
+                                          title={
+                                            section.caption || "Article video"
+                                          }
+                                          className="bg-transparent"
+                                        />
+                                      </div>
+                                      {section.caption && (
+                                        <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-white/58">
+                                          {decodeHTMLEntities(section.caption)}
+                                        </figcaption>
+                                      )}
+                                    </figure>
+                                  );
+
+                                case "gallery":
+                                  const galleryImages = section.images || [];
+                                  return (
+                                    <section
+                                      key={index}
+                                      className={`article-image-gallery relative left-1/2 my-24 w-screen max-w-[92rem] -translate-x-1/2 px-5 sm:px-8 lg:px-12 ${isNarrativeArticle ? "article-image-gallery-dark" : "article-image-gallery-light"}`}
+                                    >
+                                      <div className="mx-auto mb-4 flex max-w-[78rem] items-center justify-end">
+                                        <div className="hidden items-center gap-1.5 md:flex">
+                                          <button
+                                            type="button"
+                                            aria-label="Previous gallery images"
+                                            onClick={() =>
+                                              scrollGallery(index, "prev")
+                                            }
+                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
+                                          >
+                                            <ChevronLeft className="h-4 w-4" />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            aria-label="Next gallery images"
+                                            onClick={() =>
+                                              scrollGallery(index, "next")
+                                            }
+                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
+                                          >
+                                            <ChevronRight className="h-4 w-4" />
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <div className="overflow-hidden">
+                                        <div
+                                          ref={el => {
+                                            galleryRefs.current[index] = el;
+                                          }}
+                                          className="flex gap-4 overflow-x-auto pb-5 snap-x snap-mandatory sm:gap-5 md:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                                        >
+                                          {galleryImages.map(
+                                            (img: any, imgIndex: number) => (
+                                              <figure
+                                                key={imgIndex}
+                                                className="group/gallery-card flex-none w-[82vw] max-w-[52rem] snap-start sm:w-[66vw] md:w-[min(62vw,52rem)] lg:w-[min(54vw,52rem)]"
+                                              >
+                                                <ProgressiveImage
+                                                  src={getArticleMediaUrl(
+                                                    img.url
+                                                  )}
+                                                  alt={
+                                                    img.alt || img.caption || ""
+                                                  }
+                                                  loading="lazy"
+                                                  enableScrollAnimation={false}
+                                                  sizes="(min-width: 1024px) 52rem, 82vw"
+                                                  className="cursor-pointer transition duration-300 group-hover/gallery-card:opacity-92"
+                                                  onClick={() =>
+                                                    openArticleLightboxAt(
+                                                      `gallery-${index}-${imgIndex}`
+                                                    )
+                                                  }
+                                                />
+                                                {img.caption && (
+                                                  <figcaption
+                                                    className={`mt-3 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}
+                                                  >
+                                                    {decodeHTMLEntities(
+                                                      img.caption
+                                                    )}
+                                                  </figcaption>
+                                                )}
+                                              </figure>
+                                            )
+                                          )}
+                                        </div>
+                                      </div>
+                                    </section>
+                                  );
+
+                                case "list":
+                                  const ListTag =
+                                    section.listType === "numbered"
+                                      ? "ol"
+                                      : "ul";
+                                  return (
+                                    <ListTag
+                                      key={index}
+                                      className={`my-6 space-y-3 ml-6 ${section.listType === "numbered" ? "list-decimal" : "list-disc"} [&_strong]:font-bold`}
+                                    >
+                                      {section.items?.map(
+                                        (item: string, itemIndex: number) => (
+                                          <li
+                                            key={itemIndex}
+                                            className="leading-relaxed"
+                                            dangerouslySetInnerHTML={{
+                                              __html: decodeHTMLEntities(item),
+                                            }}
+                                          />
+                                        )
+                                      )}
+                                    </ListTag>
+                                  );
+
+                                case "text":
+                                  return (
+                                    <div
+                                      key={index}
+                                      className="article-html-content [&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
+                                      dangerouslySetInnerHTML={{
+                                        __html: processHTMLImages(
+                                          decodeHTMLEntities(section.content)
+                                        ),
+                                      }}
+                                    />
+                                  );
+
+                                case "html":
+                                  return (
+                                    <div
+                                      key={index}
+                                      className="[&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
+                                      dangerouslySetInnerHTML={{
+                                        __html: processHTMLImages(
+                                          section.content
+                                        ),
+                                      }}
+                                    />
+                                  );
+
+                                case "faq":
+                                  return (
+                                    <section
+                                      key={index}
+                                      className="mb-20 mt-12 max-w-[50rem]"
+                                    >
+                                      <h2
+                                        className={`mb-5 font-sans text-[clamp(1.65rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                                      >
+                                        {decodeHTMLEntities(
+                                          section.heading ||
+                                            "Frequently Asked Questions"
+                                        )}
+                                      </h2>
+                                      <div
+                                        className={`overflow-hidden rounded-[1.15rem] border shadow-[0_14px_40px_rgba(17,17,17,0.035)] ${isNarrativeArticle ? "border-white/8 bg-white/[0.02] shadow-none" : "border-black/[0.08] bg-[#fbfaf7]"}`}
+                                      >
+                                        <Accordion
+                                          type="single"
+                                          collapsible
+                                          className="space-y-0 px-5 py-1 md:px-6 md:py-2"
+                                        >
+                                          {section.items?.map(
+                                            (item: any, faqIndex: number) => (
+                                              <AccordionItem
+                                                key={faqIndex}
+                                                value={`faq-${faqIndex}`}
+                                                className={`border-b last:border-b-0 ${isNarrativeArticle ? "border-white/8" : "border-black/[0.08]"}`}
+                                              >
+                                                <AccordionTrigger
+                                                  className={`group/faq rounded-none py-0 text-left hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-[#6f2dff]/28 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:border-[#6f2dff] [&[data-state=open]_.faq-plus-ring]:bg-[#6f2dff] [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0 ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                                                >
+                                                  <div className="flex w-full items-center justify-between gap-5 py-5">
+                                                    <div
+                                                      className={`pr-2 text-[1.02rem] font-medium leading-[1.35] tracking-[-0.026em] md:text-[1.08rem] ${isNarrativeArticle ? "text-white" : "text-[#24211f]"}`}
+                                                    >
+                                                      {decodeHTMLEntities(
+                                                        item.question
+                                                      )}
+                                                    </div>
+                                                    <span
+                                                      aria-hidden="true"
+                                                      className={`faq-plus-ring relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-out group-hover/faq:scale-105 ${isNarrativeArticle ? "border-white/14 bg-white/[0.04]" : "border-black/10 bg-black/[0.035]"}`}
+                                                    >
+                                                      <span
+                                                        className={`faq-plus-line absolute h-[2px] w-4 rounded-full transition-colors duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`}
+                                                      />
+                                                      <span
+                                                        className={`faq-plus-line faq-plus-vertical absolute h-[2px] w-4 rotate-90 rounded-full transition-all duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`}
+                                                      />
+                                                    </span>
+                                                  </div>
+                                                </AccordionTrigger>
+                                                <AccordionContent className="pb-5">
+                                                  <div
+                                                    className={`max-w-3xl pr-8 text-[0.98rem] leading-7 tracking-[-0.01em] [&_p]:mb-4 [&_a]:underline [&_a]:underline-offset-4 ${isNarrativeArticle ? "text-white/64 [&_a]:text-white [&_a]:decoration-white/30" : "text-black/64 [&_a]:text-[#111111] [&_a]:decoration-black/25"}`}
+                                                    dangerouslySetInnerHTML={{
+                                                      __html: item.answer,
+                                                    }}
+                                                  />
+                                                </AccordionContent>
+                                              </AccordionItem>
+                                            )
+                                          )}
+                                        </Accordion>
+                                      </div>
+                                    </section>
+                                  );
+
+                                case "ai_prompt":
+                                  return (
+                                    <div
+                                      key={index}
+                                      className="group relative my-10 rounded-xl border border-border/60 bg-white/[0.02] p-6"
+                                    >
+                                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Button
+                                          variant="ghost"
+                                          size="icon"
+                                          className="h-8 w-8 text-white/56 hover:bg-white/[0.04] hover:text-white"
+                                          onClick={async () => {
+                                            // Handle both flat (prompt) and nested (content) structures
+                                            const text =
+                                              section.prompt ||
+                                              section.content?.prompt ||
+                                              section.content ||
+                                              "";
+                                            const copied =
+                                              await copyTextToClipboard(text);
+                                            if (copied)
+                                              toast.success(
+                                                "Prompt copied to clipboard!"
+                                              );
+                                          }}
+                                        >
+                                          <Copy className="h-4 w-4" />
+                                        </Button>
+                                      </div>
+                                      <div className="flex items-start gap-3">
+                                        <div className="mt-1 rounded-md bg-white/[0.04] p-1.5 text-white/62">
+                                          <Sparkles className="w-4 h-4" />
+                                        </div>
+                                        <div className="flex-1">
+                                          <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white/56">
+                                            AI Prompt
+                                          </p>
+                                          <p className="font-mono whitespace-pre-wrap text-sm leading-relaxed text-white/86">
+                                            {section.prompt ||
+                                              section.content?.prompt ||
+                                              section.content ||
+                                              ""}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+
+                                default:
+                                  return null;
+                              }
+                            })();
+
+                            if (!renderedSection) return null;
+
+                            return (
+                              <MotionReveal
+                                key={`article-content-section-${index}`}
+                                className="article-body-reveal"
+                                delay={(index % 4) * 45}
                               >
-                                <Copy className="h-4 w-4" />
-                              </Button>
-                            </div>
-                            <div className="flex items-start gap-3">
-                              <div className="mt-1 rounded-md bg-white/[0.04] p-1.5 text-white/62">
-                                <Sparkles className="w-4 h-4" />
-                              </div>
-                              <div className="flex-1">
-                                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white/56">AI Prompt</p>
-                                <p className="font-mono whitespace-pre-wrap text-sm leading-relaxed text-white/86">
-                                  {section.prompt || section.content?.prompt || section.content || ''}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
+                                {renderedSection}
+                              </MotionReveal>
+                            );
+                          }
                         );
-
-	                      default:
-	                        return null;
-	                    }
-                    })();
-
-                    if (!renderedSection) return null;
-
-                    return (
-                      <MotionReveal
-                        key={`article-content-section-${index}`}
-                        className="article-body-reveal"
-                        delay={(index % 4) * 45}
-                      >
-                        {renderedSection}
-                      </MotionReveal>
-                    );
-	                  });
-                  })()}
+                      })()}
+                  </div>
                 </div>
-              </div>
 
-              {/* Tags Section */}
-              {article.tags && article.tags.length > 0 && (
+                {/* Tags Section */}
+                {article.tags && article.tags.length > 0 && (
+                  <MotionReveal className="article-body-reveal" delay={80}>
+                    <div
+                      className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+                    >
+                      <h3
+                        className={`mb-4 font-sans ${isNarrativeArticle ? "text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48" : "text-[1.08rem] font-medium tracking-[-0.025em] text-black/50"}`}
+                      >
+                        Tagged With
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {article.tags.map((tag: any) => (
+                          <span
+                            key={tag.id}
+                            className={`rounded-full border px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] ${isNarrativeArticle ? "border-white/10 bg-white/[0.03] text-white/64" : "border-black/10 bg-black/[0.035] text-black/58"}`}
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </MotionReveal>
+                )}
+
+                {/* Author Bio with Engagement */}
                 <MotionReveal className="article-body-reveal" delay={80}>
-                  <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-                    <h3 className={`mb-4 font-sans ${isNarrativeArticle ? "text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48" : "text-[1.08rem] font-medium tracking-[-0.025em] text-black/50"}`}>
-                      Tagged With
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {article.tags.map((tag: any) => (
-                        <span
-                          key={tag.id}
-                          className={`rounded-full border px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] ${isNarrativeArticle ? "border-white/10 bg-white/[0.03] text-white/64" : "border-black/10 bg-black/[0.035] text-black/58"}`}
+                  <div
+                    className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+                  >
+                    <div className="flex items-start gap-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
+                          <img
+                            src={AUTHOR_HEADSHOT_URL}
+                            alt="Brandon PT Davis"
+                            className="h-full w-full translate-y-[16%] scale-[1.34] object-cover object-center"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">
+                          Brandon PT Davis
+                        </h3>
+                        <p
+                          className={`mb-4 text-sm ${isNarrativeArticle ? "uppercase tracking-wider text-white/48" : "font-medium tracking-[-0.015em] text-black/42"}`}
                         >
-                          {tag.name}
-                        </span>
-                      ))}
+                          Scenic Designer
+                        </p>
+                        <p
+                          className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}
+                        >
+                          Brandon PT Davis is a scenic designer based in San
+                          Diego. His work explores the intersection of physical
+                          space, digital technology, and narrative storytelling.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </MotionReveal>
-              )}
 
-
-
-              {/* Author Bio with Engagement */}
-              <MotionReveal className="article-body-reveal" delay={80}>
-                <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0">
-                      <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
-                        <img
-                          src={AUTHOR_HEADSHOT_URL}
-                          alt="Brandon PT Davis"
-                          className="h-full w-full translate-y-[16%] scale-[1.34] object-cover object-center"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
-                      <p className={`mb-4 text-sm ${isNarrativeArticle ? "uppercase tracking-wider text-white/48" : "font-medium tracking-[-0.015em] text-black/42"}`}>Scenic Designer</p>
-                      <p className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}>
-                        Brandon PT Davis is a scenic designer based in San Diego.
-                        His work explores the intersection of physical space, digital technology, and narrative storytelling.
-                      </p>
-
-                    </div>
-                  </div>
-                </div>
-              </MotionReveal>
-
-              {/* Related Articles */}
+                {/* Related Articles */}
+              </div>
             </div>
-
-          </div>
           </AnimatedSection>
         </div>
       </article>
 
       {linkedScenicProjects.length > 0 && (
-        <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303]" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} ${related.length > 0 ? "pb-10" : "pb-20"}`}>
+        <section
+          className={`${isNarrativeArticle ? "article-editorial bg-[#030303]" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} ${related.length > 0 ? "pb-10" : "pb-20"}`}
+        >
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
-            <div className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
+            <div
+              className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+            >
               <div className="mb-8 flex items-end justify-between">
                 <div>
-                  <p className={`mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] ${isNarrativeArticle ? "text-white/40" : "text-black/42"}`}>
+                  <p
+                    className={`mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] ${isNarrativeArticle ? "text-white/40" : "text-black/42"}`}
+                  >
                     Scenic Design Project
                   </p>
-                  <h2 className={`text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#111111]"}`}>
+                  <h2
+                    className={`text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#111111]"}`}
+                  >
                     Related production
                   </h2>
                 </div>
               </div>
 
-              <div className={`grid grid-cols-1 gap-6 ${linkedScenicProjects.length === 1 ? "lg:grid-cols-6" : "lg:grid-cols-3"}`}>
-                {linkedScenicProjects.map((project) => {
+              <div
+                className={`grid grid-cols-1 gap-6 ${linkedScenicProjects.length === 1 ? "lg:grid-cols-6" : "lg:grid-cols-3"}`}
+              >
+                {linkedScenicProjects.map(project => {
                   if (!project) return null;
                   const singleProject = linkedScenicProjects.length === 1;
                   return (
                     <Link
                       key={project.slug}
                       href={`/project/${project.slug}`}
-                      className={singleProject ? "lg:col-span-2 xl:col-span-1" : ""}
+                      className={
+                        singleProject ? "lg:col-span-2 xl:col-span-1" : ""
+                      }
                     >
                       <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
                         <div className="aspect-square overflow-hidden bg-white/[0.02]">
@@ -2112,12 +2609,20 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                         </div>
 
                         <div className="pt-4">
-                          <h3 className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-sans font-normal leading-[1.12] tracking-[-0.04em] transition-colors ${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#111111] group-hover:text-black/72"}`}>
+                          <h3
+                            className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-sans font-normal leading-[1.12] tracking-[-0.04em] transition-colors ${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#111111] group-hover:text-black/72"}`}
+                          >
                             {project.title}
                           </h3>
-                          <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}>
-                            <span>{project.subcategory || "Scenic Design"}</span>
-                            {project.client ? <span>{project.client}</span> : null}
+                          <div
+                            className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}
+                          >
+                            <span>
+                              {project.subcategory || "Scenic Design"}
+                            </span>
+                            {project.client ? (
+                              <span>{project.client}</span>
+                            ) : null}
                             {project.year ? <span>{project.year}</span> : null}
                           </div>
                         </div>
@@ -2132,20 +2637,38 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       )}
 
       {related.length > 0 && (
-        <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303] text-white" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}>
+        <section
+          className={`${isNarrativeArticle ? "article-editorial bg-[#030303] text-white" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}
+        >
           <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-10">
-            <div className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
+            <div
+              className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+            >
               <MotionReveal className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
                 <div className="max-w-3xl">
-                  <p className={`mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}>
-                    {isLearningPortalArticle ? "Scenic design tutorials" : "Scenic design writing"}
+                  <p
+                    className={`mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}
+                  >
+                    {isLearningPortalArticle
+                      ? "Scenic design tutorials"
+                      : "Scenic design writing"}
                   </p>
-                  <h2 className={`${isNarrativeArticle ? "text-white" : "bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text text-transparent"} max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em]`}>
-                    {isLearningPortalArticle ? "Keep learning." : article.series ? `More in ${article.series.name}` : "Keep reading."}
+                  <h2
+                    className={`${isNarrativeArticle ? "text-white" : "bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text text-transparent"} max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em]`}
+                  >
+                    {isLearningPortalArticle
+                      ? "Keep learning."
+                      : article.series
+                        ? `More in ${article.series.name}`
+                        : "Keep reading."}
                   </h2>
                 </div>
                 <Link
-                  href={isLearningPortalArticle ? "/studio/tutorials/archive" : articleBasePath}
+                  href={
+                    isLearningPortalArticle
+                      ? "/studio/tutorials/archive"
+                      : articleBasePath
+                  }
                   className={`${isNarrativeArticle ? "border-white/18 text-white/70 hover:border-white/36 hover:text-white" : "border-[#6f2dff]/72 text-[#4f2fd8] hover:border-[#4f2fd8] hover:text-black"} inline-flex h-10 w-fit items-center justify-center rounded-full border px-5 font-sans text-sm font-medium tracking-[-0.02em] transition-colors md:justify-self-end`}
                 >
                   {isLearningPortalArticle ? "View tutorials" : "View articles"}
@@ -2169,7 +2692,9 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                     const metadata = [
                       relatedArticle.categoryName,
                       formatUtcDate(relatedArticle.publishedAt, "short"),
-                      relatedArticle.readTime ? `${relatedArticle.readTime} min read` : null,
+                      relatedArticle.readTime
+                        ? `${relatedArticle.readTime} min read`
+                        : null,
                     ]
                       .filter(Boolean)
                       .join(" · ");
@@ -2190,7 +2715,10 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                             >
                               <img
                                 src={relatedArticle.coverImageUrl}
-                                alt={relatedArticle.coverImageAlt || decodeHTMLEntities(relatedArticle.title)}
+                                alt={
+                                  relatedArticle.coverImageAlt ||
+                                  decodeHTMLEntities(relatedArticle.title)
+                                }
                                 className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-500 group-hover:scale-105"
                                 loading="lazy"
                               />
@@ -2198,11 +2726,17 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                           )}
 
                           <div className="publish-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                            <h3 className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#6f2dff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}>
+                            <h3
+                              className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#6f2dff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}
+                            >
                               {relatedTitle}
                             </h3>
 
-                            <p className={`${isNarrativeArticle ? "text-white/50" : "text-[#6e6e73]"} mt-5 text-[0.88rem] font-semibold tracking-[-0.02em]`}>{metadata}</p>
+                            <p
+                              className={`${isNarrativeArticle ? "text-white/50" : "text-[#6e6e73]"} mt-5 text-[0.88rem] font-semibold tracking-[-0.02em]`}
+                            >
+                              {metadata}
+                            </p>
                           </div>
                         </Link>
                       </MotionReveal>
@@ -2218,7 +2752,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   className={`${isNarrativeArticle ? "bg-white/[0.08] text-white/62 hover:bg-white hover:text-black" : "bg-black/[0.08] text-black/62 hover:bg-black hover:text-white"} inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors`}
                   aria-label="Previous related article cards"
                 >
-                  <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+                  <ChevronLeft
+                    className="h-5 w-5"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  />
                 </button>
                 <button
                   type="button"
@@ -2226,7 +2764,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                   className={`${isNarrativeArticle ? "bg-white/[0.12] text-white/72 hover:bg-white hover:text-black" : "bg-black/[0.12] text-black/72 hover:bg-black hover:text-white"} inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors`}
                   aria-label="Next related article cards"
                 >
-                  <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+                  <ChevronRight
+                    className="h-5 w-5"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
             </div>
@@ -2234,7 +2776,9 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
         </section>
       )}
 
-      <div className={`relative z-20 ${isNarrativeArticle ? "bg-background" : "bg-[#f1f0ec]"}`}>
+      <div
+        className={`relative z-20 ${isNarrativeArticle ? "bg-background" : "bg-[#f1f0ec]"}`}
+      >
         <Footer tone={isNarrativeArticle ? "dark" : "light"} />
       </div>
 
@@ -2457,12 +3001,14 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
           currentIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
           onNext={() =>
-            setLightboxIndex((current) =>
-              current === null ? 0 : Math.min(current + 1, lightboxImages.length - 1)
+            setLightboxIndex(current =>
+              current === null
+                ? 0
+                : Math.min(current + 1, lightboxImages.length - 1)
             )
           }
           onPrev={() =>
-            setLightboxIndex((current) =>
+            setLightboxIndex(current =>
               current === null ? 0 : Math.max(current - 1, 0)
             )
           }
