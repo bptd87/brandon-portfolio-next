@@ -1,6 +1,7 @@
 "use client";
 
-import { Link } from "wouter";
+import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MotionReveal from "@/components/MotionReveal";
@@ -26,14 +27,54 @@ const RENDERING_PORTFOLIO_KEYWORDS = [
   "Brandon PT Davis",
 ].join(", ");
 
+type RenderingDisplayImage = {
+  id: number;
+  url: string;
+  caption?: string | null;
+  altText?: string | null;
+};
+
+type RenderingDisplayItem = {
+  id: number;
+  title: string;
+  imageUrl: string | null;
+  altText: string;
+  slug: string;
+  year: number | null;
+  client?: string;
+  excerpt?: string;
+  designNotes?: string;
+  images?: RenderingDisplayImage[];
+};
+
+const getRenderingImages = (item: RenderingDisplayItem) => {
+  const images = [
+    item.imageUrl
+      ? {
+          id: -1,
+          url: item.imageUrl,
+          caption: null,
+          altText: item.altText || item.title,
+        }
+      : null,
+    ...(item.images || []),
+  ].filter((image): image is RenderingDisplayImage => Boolean(image?.url));
+
+  return images.filter(
+    (image, index, list) => list.findIndex((candidate) => candidate.url === image.url) === index
+  );
+};
+
 export default function RenderingPortfolio() {
   const isDesktopViewport = useIsDesktopViewport();
+  const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const projects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
   const galleryItems = getLocalRenderingGallery();
   const isLoading = false;
 
   // 1. Process Gallery Items (for the middle section)
-  const galleryDisplayItems = galleryItems?.map(item => ({
+  const galleryDisplayItems: RenderingDisplayItem[] = galleryItems?.map(item => ({
     id: item.project?.id || 0,
     title: item.displayTitle || item.project?.title || '',
     imageUrl: item.project?.coverImageUrl || null,
@@ -55,7 +96,7 @@ export default function RenderingPortfolio() {
   // Filter out any projects that are already in the gallery to avoid duplicates
   const galleryProjectIds = new Set(galleryDisplayItems.map(item => item.id));
 
-  const featuredDisplayItems = projects?.filter(p => !galleryProjectIds.has(p.id)).map(p => ({
+  const featuredDisplayItems: RenderingDisplayItem[] = projects?.filter(p => !galleryProjectIds.has(p.id)).map(p => ({
     id: p.id,
     title: p.title,
     imageUrl: p.coverImageUrl || null,
@@ -63,7 +104,14 @@ export default function RenderingPortfolio() {
     slug: p.slug,
     year: p.year,
     client: p.client,
-    excerpt: p.excerpt
+    excerpt: p.excerpt,
+    designNotes: p.designNotes,
+    images: (p.images || []).map(img => ({
+      id: img.id,
+      url: img.imageUrl || '',
+      caption: img.caption,
+      altText: img.altText
+    }))
   })) || [];
 
   const allRenderingItems = [...featuredDisplayItems, ...galleryDisplayItems]
@@ -85,8 +133,55 @@ export default function RenderingPortfolio() {
         .filter((value): value is string => Boolean(value))
     )
   ).slice(0, 12);
+  const selectedItem =
+    selectedItemIndex === null ? null : allRenderingItems[selectedItemIndex] || null;
+  const selectedImages = selectedItem ? getRenderingImages(selectedItem) : [];
+  const selectedImage = selectedImages[selectedImageIndex] || selectedImages[0] || null;
+  const canMoveImage = selectedImages.length > 1;
+
+  const openRenderingLightbox = (index: number) => {
+    setSelectedItemIndex(index);
+    setSelectedImageIndex(0);
+  };
+
+  const closeRenderingLightbox = () => {
+    setSelectedItemIndex(null);
+    setSelectedImageIndex(0);
+  };
+
+  const showPreviousImage = () => {
+    setSelectedImageIndex((current) =>
+      current > 0 ? current - 1 : Math.max(selectedImages.length - 1, 0)
+    );
+  };
+
+  const showNextImage = () => {
+    setSelectedImageIndex((current) =>
+      selectedImages.length ? (current + 1) % selectedImages.length : 0
+    );
+  };
+
+  useEffect(() => {
+    if (!selectedItem) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeRenderingLightbox();
+      if (event.key === "ArrowLeft" && canMoveImage) showPreviousImage();
+      if (event.key === "ArrowRight" && canMoveImage) showNextImage();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedItem, canMoveImage, selectedImages.length]);
+
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title={RENDERING_PORTFOLIO_TITLE}
         description={RENDERING_PORTFOLIO_DESCRIPTION}
@@ -118,7 +213,7 @@ export default function RenderingPortfolio() {
               .map((item, index) => ({
                 position: index + 1,
                 name: item.title,
-                url: `${RENDERING_PORTFOLIO_URL}/${item.slug}`,
+                url: `${RENDERING_PORTFOLIO_URL}#${item.slug}`,
                 datePublished: item.year ? `${item.year}-01-01` : undefined,
                 image: item.imageUrl || undefined,
               })),
@@ -157,79 +252,56 @@ export default function RenderingPortfolio() {
       <PortfolioTopBar />
 
       <main>
-        <section className="bg-[#111111] pt-12 md:pt-16">
-          <div className="px-[clamp(1.5rem,5vw,6rem)]">
-            <MotionReveal className="mb-5 flex flex-wrap items-end justify-between gap-4 pb-4">
-              <div>
-                <p className="font-mono text-[0.68rem] uppercase leading-none tracking-[0.16em] text-white/46">
-                  Rendering as scenic design.
-                </p>
-                <p className="mt-3 max-w-2xl text-[1rem] leading-6 text-white/58 md:text-[1.08rem]">
-                  Concept images and production visualizations used to test atmosphere,
-                  scale, color, and intent before the work reaches the stage.
-                </p>
-              </div>
-              <p className="font-mono text-[0.72rem] uppercase leading-none tracking-[0.16em] text-white/42">
-                {allRenderingItems.length} studies
-              </p>
-            </MotionReveal>
-            <MotionReveal delay={120}>
-              <h1 className="font-sans text-7xl font-medium uppercase leading-[0.78] tracking-normal text-white sm:text-8xl md:text-[9rem] lg:text-[11rem] xl:text-[14rem]">
+        <section className="border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
+          <MotionReveal className="mx-auto max-w-[92rem]">
+            <div>
+              <h1 className="font-sans text-[clamp(3.8rem,9.2vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-[#111111]">
                 Rendering
               </h1>
-            </MotionReveal>
-          </div>
+              <div className="mt-8 grid gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-start">
+                <p className="max-w-3xl text-[clamp(1.08rem,1.55vw,1.34rem)] font-medium leading-8 tracking-[-0.024em] text-black/62">
+                  Concept images and production visualizations used to test
+                  atmosphere, scale, color, and intent before the work reaches
+                  the stage.
+                </p>
+              </div>
+            </div>
+          </MotionReveal>
         </section>
 
         {allRenderingItems.length > 0 && (
-          <section id="rendering" className="scroll-mt-24 border-t border-white/12 bg-[#111111]">
-            <div className="portfolio-focus-grid grid w-full grid-cols-1 border-l border-white/12 md:grid-cols-4">
+          <section id="rendering" className="scroll-mt-24 py-0">
+            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {allRenderingItems.map((item, index) => (
                 <MotionReveal
                   key={item.id}
-                  className={`${index % 6 < 2 ? "md:col-span-2" : ""} h-full`}
-                  delay={(index % 10) * 70}
+                  delay={Math.min(index * 18, 220)}
                 >
-                  <Link
-                    href={`/projects/rendering/${item.slug}`}
-                    className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+                  <button
+                    type="button"
+                    id={item.slug}
+                    aria-label={`Open ${item.title} rendering gallery`}
+                    onClick={() => openRenderingLightbox(index)}
+                    className="group relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
                   >
-                    <article className="h-full bg-[#111111]">
-                      <div className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
-                        {item.imageUrl ? (
-                          <ProgressiveImage
-                            src={item.imageUrl}
-                            alt={item.altText}
-                            aspectRatio="4 / 3"
-                            objectFit="cover"
-                            containerClassName="site-media-square h-full w-full"
-                            className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                            loading={index < eagerRenderingCount ? "eager" : "lazy"}
-                            fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center text-white/42">
-                            Image unavailable
-                          </div>
-                        )}
+                    {item.imageUrl ? (
+                      <ProgressiveImage
+                        src={item.imageUrl}
+                        alt={item.altText}
+                        aspectRatio="1 / 1"
+                        objectFit="cover"
+                        containerClassName="h-full w-full"
+                        className="h-full w-full object-cover transition duration-700 group-hover:brightness-110"
+                        loading={index < eagerRenderingCount ? "eager" : "lazy"}
+                        fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
+                        sizes="(max-width: 768px) 92vw, 44vw"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-black/42">
+                        Image unavailable
                       </div>
-                      <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
-                        <div>
-                          <p className="font-mono text-[0.66rem] uppercase leading-none tracking-[0.13em] text-white/80">
-                            Rendering
-                          </p>
-                          <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
-                            {item.title}
-                          </h2>
-                        </div>
-                        {[item.client, item.year].filter(Boolean).length > 0 ? (
-                          <p className="max-w-[16ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52 md:text-right">
-                            {[item.client, item.year].filter(Boolean).join(" / ")}
-                          </p>
-                        ) : null}
-                      </div>
-                    </article>
-                  </Link>
+                    )}
+                  </button>
                 </MotionReveal>
               ))}
             </div>
@@ -238,7 +310,93 @@ export default function RenderingPortfolio() {
 
       </main>
 
-      <Footer />
+      <Footer tone="light" />
+
+      {selectedItem && selectedImage ? (
+        <div
+          className="fixed inset-0 z-[100] flex bg-black/90 text-white backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selectedItem.title} rendering gallery`}
+          onClick={closeRenderingLightbox}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 z-30 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white/78 transition hover:bg-white/18 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-8 md:top-8"
+            aria-label="Close rendering gallery"
+            onClick={closeRenderingLightbox}
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          {canMoveImage ? (
+            <>
+              <button
+                type="button"
+                className="absolute left-3 top-1/2 z-30 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white/76 transition hover:bg-white/18 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:left-8"
+                aria-label="Previous rendering"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showPreviousImage();
+                }}
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 z-30 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white/76 transition hover:bg-white/18 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-8"
+                aria-label="Next rendering"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showNextImage();
+                }}
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </>
+          ) : null}
+
+          <div
+            className="flex min-h-0 w-full flex-col items-center justify-center gap-5 px-5 py-16 md:px-20 md:py-12"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+              <img
+                src={selectedImage.url}
+                alt={selectedImage.altText || selectedItem.title}
+                className="max-h-[68vh] max-w-[92vw] object-contain md:max-h-[72vh]"
+              />
+            </div>
+
+            <div className="w-full max-w-5xl text-center">
+              <h2 className="font-sans text-[clamp(1.55rem,3vw,3.2rem)] font-medium leading-[0.92] tracking-[-0.055em]">
+                {selectedItem.title}
+              </h2>
+              {selectedImage.caption ? (
+                <p className="mx-auto mt-3 max-w-3xl text-[0.95rem] leading-6 text-white/62">
+                  {selectedImage.caption}
+                </p>
+              ) : null}
+              {selectedImages.length > 1 ? (
+                <div className="mt-5 flex flex-wrap justify-center gap-2">
+                  {selectedImages.map((image, index) => (
+                    <button
+                      key={`${image.id}-${image.url}`}
+                      type="button"
+                      aria-label={`Show rendering ${index + 1} of ${selectedImages.length}`}
+                      aria-pressed={selectedImageIndex === index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={`h-2.5 w-2.5 border border-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+                        selectedImageIndex === index ? "bg-white" : "bg-transparent"
+                      }`}
+                    />
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

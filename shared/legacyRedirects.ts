@@ -6,7 +6,7 @@ import {
 } from "./localPortfolios";
 import { getLocalArticleBySlug, getLocalArticles } from "./localArticles";
 import { getLocalScenicProjectBySlug, getLocalScenicProjects } from "./localScenicProjects";
-import { getLocalCollaborators, getLocalTutorialBySlug } from "./localStudio";
+import { getLocalTutorialBySlug } from "./localStudio";
 
 const LEGACY_PROJECT_ALIASES: Record<string, string> = {
   all: "/projects",
@@ -58,11 +58,6 @@ const LEGACY_TAG_ALIASES: Record<string, string> = {
   scr: "south-coast-repertory-theatre",
 };
 
-const LEGACY_COLLABORATOR_ALIASES: Record<string, string> = {
-  "andy-hudson": "hudson-waldrop",
-  utep: "university-of-texas-el-paso",
-};
-
 const LEGACY_ARTICLE_ALIASES: Record<string, string> = {
   "minimalist-theatre-2025": "minimalist-scenic-design-dominating-regional-theatres-in-2025",
   "minimalist-scenic-design-trends": "minimalist-scenic-design-dominating-regional-theatres-in-2025",
@@ -95,10 +90,6 @@ const KNOWN_TAG_SLUGS = new Set(
   ].filter(Boolean)
 );
 
-const KNOWN_COLLABORATOR_SLUGS = new Set(
-  getLocalCollaborators().map((collaborator) => collaborator.slug).filter(Boolean)
-);
-
 function normalizeLegacySlug(value?: string | null) {
   return String(value || "")
     .trim()
@@ -121,11 +112,7 @@ export function resolveLegacyTagPath(rawSlug?: string | null) {
 }
 
 export function resolveLegacyCollaboratorPath(rawSlug?: string | null) {
-  const normalized = normalizeLegacySlug(rawSlug);
-  if (!normalized) return null;
-
-  const slug = LEGACY_COLLABORATOR_ALIASES[normalized] || normalized;
-  return KNOWN_COLLABORATOR_SLUGS.has(slug) ? `/about/collaborators#${slug}` : null;
+  return null;
 }
 
 export function resolveLegacyTutorialPath(rawSlug?: string | null) {

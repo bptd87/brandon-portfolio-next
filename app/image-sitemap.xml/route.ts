@@ -84,10 +84,6 @@ export function GET() {
   const aboutProcessArt = toAbsoluteImageUrl(
     resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png"
   );
-  const aboutCollaboratorsArt = toAbsoluteImageUrl(
-    resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png") ||
-      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png"
-  );
   const portfolioHomepageImages = getLocalScenicProjects()
     .filter((project) => project.coverImageUrl)
     .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
@@ -181,12 +177,6 @@ export function GET() {
       imageUrl: aboutProcessArt,
       title: "Creative Statement",
       caption: "Creative statement page artwork for Brandon PT Davis.",
-    },
-    {
-      pathname: "/about/collaborators",
-      imageUrl: aboutCollaboratorsArt,
-      title: "Collaborators",
-      caption: "Collaborators page artwork for Brandon PT Davis.",
     },
     ...getLocalScenicProjects().flatMap((project) => [
       ...(project.coverImageUrl

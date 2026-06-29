@@ -11,6 +11,7 @@ export type ScenicProjectSummary = Pick<
   | "year"
   | "month"
   | "coverImageUrl"
+  | "coverImagePosition"
   | "createdAt"
   | "updatedAt"
   | "publishedAt"
@@ -39,6 +40,7 @@ export const toScenicProjectSummary = (
   year: project.year,
   month: project.month,
   coverImageUrl: project.coverImageUrl,
+  coverImagePosition: project.coverImagePosition,
   createdAt: project.createdAt,
   updatedAt: project.updatedAt,
   publishedAt: project.publishedAt,

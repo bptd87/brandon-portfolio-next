@@ -12,7 +12,6 @@ const FOOTER_SECTIONS = [
       { label: "Scenic Design", href: "/projects", internal: true },
       { label: "Experiential", href: "/projects/experiential", internal: true },
       { label: "Rendering", href: "/projects/rendering", internal: true },
-      { label: "Assistant Scenic Design", href: "/assistant-scenic-design", internal: true },
       { label: "Photography", href: "/projects/photography", internal: true },
     ],
   },

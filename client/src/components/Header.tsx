@@ -64,11 +64,9 @@ const NAV_FEATURE_IMAGES = {
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp",
   about:
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/brandon-pt-davis-about-home.jpg",
-  upcoming: "/images/about/icons/upcoming-icon.png",
   resume: "/images/about/icons/resume-icon.png",
   creative: "/images/about/icons/creative-statement-icon.png",
   teaching: "/images/about/icons/teaching-icon.png",
-  collaborators: "/images/about/icons/collaboration-icon.png",
   studio:
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
   studioArticles:
@@ -164,7 +162,7 @@ function DesktopMenuPanel({
             }`}
           >
             <span
-              className="h-2 w-2 rounded-full bg-[#725cff]"
+              className={`h-2 w-2 rounded-full ${isLight ? "bg-black/58" : "bg-white/58"}`}
               aria-hidden="true"
             />
             {category.label}
@@ -448,13 +446,20 @@ export default function Header() {
     isInfoRoute ||
     location === "/search" ||
     location === "/about/teaching" ||
-    location === "/about/collaborators" ||
-    /^\/syllabus(?:\/|$)/.test(location) ||
-    /^\/upcoming-productions(?:\/|$)/.test(location);
+    /^\/syllabus(?:\/|$)/.test(location);
   const isHomeRoute = location === "/";
+  const isScenicPortfolioRoute =
+    location === "/projects" ||
+    location === "/projects/scenic-design" ||
+    /^\/projects\/experiential(?:\/|$)/.test(location) ||
+    /^\/projects\/rendering(?:\/|$)/.test(location) ||
+    /^\/projects\/photography(?:\/|$)/.test(location);
   const useLightChrome =
     !isStudioAppsRoute &&
-    ((isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute);
+    (isHomeRoute ||
+      isScenicPortfolioRoute ||
+      (isEditorialRoute && !isArticleDetailRoute) ||
+      isProfileLightRoute);
   const useWhiteLightChrome =
     isContactRoute || isInfoRoute || location === "/studio";
   const useImmersiveChrome =
@@ -471,6 +476,11 @@ export default function Header() {
   };
 
   const openDesktopMenu = (category: DesktopCategory) => {
+    if (category.groups.length === 0) {
+      setActiveDesktopCategory(null);
+      return;
+    }
+
     clearDesktopMenuCloseTimer();
     setActiveDesktopCategory(category);
   };
@@ -605,19 +615,6 @@ export default function Header() {
           },
         },
         {
-          name: "Renderings",
-          path: "/projects/rendering",
-          description:
-            "Concept images, presentation sets, and scenic visualization studies.",
-          feature: {
-            label: "Recent rendering",
-            title: recentRenderingPreview.title,
-            description: recentRenderingPreview.meta,
-            path: recentRenderingPreview.href,
-            image: recentRenderingPreview.imageUrl,
-          },
-        },
-        {
           name: "Experiential",
           path: "/projects/experiential",
           description:
@@ -631,17 +628,16 @@ export default function Header() {
           },
         },
         {
-          name: "Assistant Scenic",
-          path: "/assistant-scenic-design",
+          name: "Renderings",
+          path: "/projects/rendering",
           description:
-            "Production support, drafting systems, and collaboration as assistant scenic.",
+            "Concept images, presentation sets, and scenic visualization studies.",
           feature: {
-            label: "Portfolio",
-            title: "Assistant Scenic",
-            description:
-              "Production support, drafting systems, and collaboration as assistant scenic.",
-            path: "/assistant-scenic-design",
-            image: NAV_FEATURE_IMAGES.assistant,
+            label: "Recent rendering",
+            title: recentRenderingPreview.title,
+            description: recentRenderingPreview.meta,
+            path: recentRenderingPreview.href,
+            image: recentRenderingPreview.imageUrl,
           },
         },
         {
@@ -656,103 +652,6 @@ export default function Header() {
               "A chronological photo portfolio and visual reference archive.",
             path: "/projects/photography",
             image: NAV_FEATURE_IMAGES.photography,
-          },
-        },
-      ],
-    },
-  ];
-
-  const aboutGroups: MenuGroup[] = [
-    {
-      heading: "About",
-      items: [
-        {
-          name: "Profile",
-          path: "/about",
-          description:
-            "Biography, current work, and the broader design perspective behind the site.",
-          feature: {
-            label: "Profile",
-            title: "About Brandon",
-            description:
-              "Biography, teaching, collaborators, and the wider practice behind the work.",
-            path: "/about",
-            image: NAV_FEATURE_IMAGES.about,
-          },
-        },
-        {
-          name: "Upcoming",
-          path: "/upcoming-productions",
-          description:
-            "Public production windows and scenic design commitments currently on the calendar.",
-          feature: {
-            label: "About",
-            title: "Upcoming",
-            description:
-              "Public production windows and scenic design commitments currently on the calendar.",
-            path: "/upcoming-productions",
-            image: NAV_FEATURE_IMAGES.upcoming,
-            imageFit: "contain",
-          },
-        },
-        {
-          name: "Resume / CV",
-          path: "/resume",
-          description:
-            "Production credits, teaching, training, and linked portfolio references.",
-          feature: {
-            label: "About",
-            title: "Resume / CV",
-            description:
-              "Production credits, teaching, training, and linked portfolio references.",
-            path: "/resume",
-            image: NAV_FEATURE_IMAGES.resume,
-            imageFit: "contain",
-          },
-        },
-        {
-          name: "Creative",
-          path: "/creative-statement",
-          description:
-            "The artistic values shaping scenic work, collaboration, and storytelling.",
-          feature: {
-            label: "About",
-            title: "Creative",
-            description:
-              "The artistic values shaping scenic work, collaboration, and storytelling.",
-            path: "/creative-statement",
-            image: NAV_FEATURE_IMAGES.creative,
-            imageFit: "contain",
-          },
-        },
-        {
-          name: "Teaching",
-          path: "/about/teaching",
-          description:
-            "How design instruction, studio process, and student learning connect.",
-          feature: {
-            label: "About",
-            title: "Teaching",
-            description:
-              "How design instruction, studio process, and student learning connect.",
-            path: "/about/teaching",
-            image: NAV_FEATURE_IMAGES.teaching,
-            imageFit: "contain",
-          },
-        },
-        {
-          name: "Collaborators",
-          path: "/about/collaborators",
-          description:
-            "Directors, designers, companies, and long-running creative collaborators.",
-          feature: {
-            label: "About",
-            title: "Collaborators",
-            description:
-              "Directors, designers, companies, and long-running creative collaborators.",
-            path: "/about/collaborators",
-            image: NAV_FEATURE_IMAGES.collaborators,
-            imageFit: "contain",
           },
         },
       ],
@@ -875,12 +774,12 @@ export default function Header() {
     {
       label: "About",
       path: "/about",
-      groups: aboutGroups,
+      groups: [],
       feature: {
         label: "Profile",
         title: "About Brandon",
         description:
-          "Biography, teaching, collaborators, and the wider practice behind the work.",
+          "Biography, teaching, and the wider practice behind the work.",
         path: "/about",
         image: NAV_FEATURE_IMAGES.about,
       },
@@ -965,6 +864,7 @@ export default function Header() {
 
             <div className="hidden items-center justify-center gap-2 lg:flex">
               {desktopCategories.map(category => {
+                const hasDropdown = category.groups.length > 0;
                 const isActive =
                   activeDesktopCategory?.label === category.label ||
                   isCategoryRouteActive(category);
@@ -982,9 +882,11 @@ export default function Header() {
                       event.preventDefault();
                       router.push(category.path);
                     }}
-                    aria-haspopup="true"
+                    aria-haspopup={hasDropdown ? "true" : undefined}
                     aria-expanded={
-                      activeDesktopCategory?.label === category.label
+                      hasDropdown
+                        ? activeDesktopCategory?.label === category.label
+                        : undefined
                     }
                     className={getHeaderPillClass({
                       lightChrome: useLightChrome,

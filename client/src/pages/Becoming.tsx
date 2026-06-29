@@ -73,7 +73,7 @@ export default function Becoming() {
   }, [selectedPhoto]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title="Photography Portfolio | Brandon PT Davis"
         description="A chronological photography portfolio and visual reference archive shaped by observation, attention, and scenic design practice."
@@ -85,15 +85,14 @@ export default function Becoming() {
       <PortfolioTopBar />
 
       <main>
-        <section className="border-b border-white/12 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
+        <section className="border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
           <AnimatedSection className="mx-auto max-w-[92rem]">
             <div>
-              <p className="section-kicker text-white/42">Photo journal</p>
-              <h1 className="mt-5 font-sans text-[clamp(3.8rem,9.2vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-white">
+              <h1 className="font-sans text-[clamp(3.8rem,9.2vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-[#111111]">
                 Photography
               </h1>
               <div className="mt-8 grid gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-start">
-                <p className="max-w-3xl text-[clamp(1.08rem,1.55vw,1.34rem)] font-medium leading-8 tracking-[-0.024em] text-white/72">
+                <p className="max-w-3xl text-[clamp(1.08rem,1.55vw,1.34rem)] font-medium leading-8 tracking-[-0.024em] text-black/62">
                   Observations gathered before they become drawings, rooms, or
                   designs.
                 </p>
@@ -110,7 +109,7 @@ export default function Becoming() {
                   <button
                     type="button"
                     aria-label={`Open ${photo.title}`}
-                    className="relative block aspect-square w-full overflow-hidden rounded-none border border-black bg-black text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-white/70"
+                    className="relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
                     onClick={() => setSelectedPhoto(photo)}
                   >
                     <Image
@@ -133,14 +132,14 @@ export default function Becoming() {
           </div>
         </section>
 
-        <section className="border-t border-white/12 px-[clamp(1.5rem,5vw,6rem)] py-[clamp(4rem,10vw,9rem)]">
+        <section className="border-t border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-[clamp(4rem,10vw,9rem)]">
           <AnimatedSection className="mx-auto max-w-[72rem] text-center">
             <figure>
-              <blockquote className="mx-auto font-sans text-[clamp(2.25rem,5.8vw,7rem)] font-medium leading-[0.92] tracking-[-0.07em] text-white">
+              <blockquote className="mx-auto font-sans text-[clamp(2.25rem,5.8vw,7rem)] font-medium leading-[0.92] tracking-[-0.07em] text-[#111111]">
                 &ldquo;I am a camera with its shutter open, quite passive,
                 recording, not thinking.&rdquo;
               </blockquote>
-              <figcaption className="mx-auto mt-8 max-w-[28rem] text-[0.78rem] font-semibold uppercase leading-6 tracking-[0.16em] text-white/38">
+              <figcaption className="mx-auto mt-8 max-w-[28rem] text-[0.78rem] font-semibold uppercase leading-6 tracking-[0.16em] text-black/38">
                 Christopher Isherwood, <cite>The Berlin Stories</cite>
               </figcaption>
             </figure>
@@ -148,7 +147,7 @@ export default function Becoming() {
         </section>
       </main>
 
-      <Footer tone="dark" />
+      <Footer tone="light" />
 
       {selectedPhoto ? (
         <div

@@ -1,8 +1,6 @@
-import RenderingProjectDetailPage from "../../../../client/src/pages/RenderingProjectDetail";
-import { NextPathProvider } from "../../../../components/routing/NextPathProvider";
-import { buildPageMetadata } from "../../../../lib/metadata";
-import { notFound } from "next/navigation";
-import { getLocalRenderingProjectBySlug, getLocalRenderingProjects } from "../../../../shared/localPortfolios";
+import { permanentRedirect } from "next/navigation";
+
+import { getLocalRenderingProjects } from "../../../../shared/localPortfolios";
 
 type RenderingProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -15,32 +13,7 @@ export async function generateStaticParams() {
   return getLocalRenderingProjects().map((project) => ({ slug: project.slug }));
 }
 
-export async function generateMetadata({ params }: RenderingProjectPageProps) {
-  const { slug } = await params;
-  const project = getLocalRenderingProjectBySlug(slug);
-  if (!project) return {};
-
-  return buildPageMetadata({
-    title: project.seoTitle || `${project.title} | Rendering`,
-    description: project.seoDescription || project.excerpt,
-    pathname: `/projects/rendering/${project.slug}`,
-    image: project.coverImageUrl,
-    keywords: project.seoKeywords || undefined,
-    type: "article",
-  });
-}
-
 export default async function Page({ params }: RenderingProjectPageProps) {
-  const { slug } = await params;
-  const project = getLocalRenderingProjectBySlug(slug);
-
-  if (!project) {
-    notFound();
-  }
-
-  return (
-    <NextPathProvider currentPath={`/projects/rendering/${slug}`}>
-      <RenderingProjectDetailPage slug={slug} currentPath={`/projects/rendering/${slug}`} />
-    </NextPathProvider>
-  );
+  await params;
+  permanentRedirect("/projects/rendering");
 }

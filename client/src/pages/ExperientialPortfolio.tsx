@@ -30,12 +30,6 @@ const EXPERIENTIAL_PORTFOLIO_KEYWORDS = [
   "Brandon PT Davis",
 ].join(", ");
 
-const MEDIA_LABELS: Record<LocalExperientialProject["mediaTypes"][number], string> = {
-  rendering: "Rendering",
-  "technical-drawing": "Technical Drawing",
-  "live-events": "Finished Work",
-};
-
 const experientialPortfolioLandingCopy = {
   title: "Experiential Design",
   subtitle: "Scenic design methods beyond the theatre.",
@@ -75,7 +69,7 @@ function getProjectCardAspect(project: LocalExperientialProject) {
 function getProjectImageTreatment(project: LocalExperientialProject) {
   void project;
   return {
-    frame: "bg-[#181818]",
+    frame: "bg-neutral-100",
     image: "object-cover",
   };
 }
@@ -172,7 +166,7 @@ export default function ExperientialPortfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title={EXPERIENTIAL_PORTFOLIO_TITLE}
         description={EXPERIENTIAL_PORTFOLIO_DESCRIPTION}
@@ -247,37 +241,24 @@ export default function ExperientialPortfolio() {
       <PortfolioTopBar />
 
       <main>
-        <section className="flex min-h-[min(72svh,46rem)] items-center justify-center bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center text-white md:py-16">
-          <header className="mx-auto max-w-[66rem]">
+        <section className="bg-white px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-12 text-[#111111] md:pt-16">
+          <header className="w-full">
             <MotionReveal>
-              <p className="text-[0.82rem] font-medium tracking-[-0.01em] text-[#c9ff3d]">
-                {projects.length} projects / Selected work
-              </p>
-            </MotionReveal>
-            <MotionReveal delay={120}>
-              <h1 className="mx-auto mt-4 max-w-[12ch] font-sans text-[clamp(3rem,6.2vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+              <h1 className="max-w-[13ch] font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-[#111111]">
                 {experientialPortfolioLandingCopy.title}
               </h1>
             </MotionReveal>
-            <MotionReveal delay={220}>
-              <p className="mx-auto mt-5 max-w-[39rem] text-[clamp(1rem,1.2vw,1.18rem)] leading-[1.58] tracking-[-0.02em] text-white/78">
+            <MotionReveal delay={120}>
+              <p className="mt-6 max-w-2xl text-[1rem] leading-6 text-black/58 md:text-[1.08rem]">
                 {experientialPortfolioLandingCopy.intro}
               </p>
-            </MotionReveal>
-            <MotionReveal
-              className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.92rem] tracking-[-0.018em] text-white/52"
-              delay={310}
-            >
-              <span>Renderings</span>
-              <span>Technical drawing</span>
-              <span>Finished work</span>
             </MotionReveal>
           </header>
         </section>
 
         {projects.length > 0 ? (
-          <section className="border-t border-white/12 bg-[#111111]">
-            <div className="portfolio-focus-grid grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+          <section className="border-t border-black/10 bg-white">
+            <div className="portfolio-focus-grid grid grid-cols-1 border-l border-black/10 md:grid-cols-4">
               {projects.map((project, index) => {
                 const href = getLocalExperientialProjectHref(project);
                 const isFeatureCard = index % 6 < 2;
@@ -292,9 +273,9 @@ export default function ExperientialPortfolio() {
                     <a
                       href={href}
                       onClick={(event) => navigateWithTransition(event, href)}
-                      className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+                      className="portfolio-focus-card group block h-full border-b border-r border-black/10"
                     >
-                      <article className="h-full bg-[#111111]">
+                      <article className="h-full bg-white">
                         <div
                           className={`portfolio-focus-media transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
                           style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
@@ -326,24 +307,19 @@ export default function ExperientialPortfolio() {
                               fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center text-white/42">
+                            <div className="flex h-full w-full items-center justify-center text-black/42">
                               Image unavailable
                             </div>
                           )}
                         </div>
-                        <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
+                        <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-black/10 p-[clamp(0.9rem,1.5vw,1.2rem)] text-[#111111] md:grid-cols-[minmax(0,1fr)_auto]">
                           <div>
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] font-medium uppercase leading-none tracking-[0.12em] text-[#c9ff3d]">
-                              {project.mediaTypes.slice(0, 2).map((type) => (
-                                <span key={type}>{MEDIA_LABELS[type]}</span>
-                              ))}
-                            </div>
-                            <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
+                            <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#111111] transition-opacity group-hover:opacity-70">
                               {project.title}
                             </h2>
                           </div>
                           {project.year ? (
-                            <p className="font-sans text-[clamp(1.3rem,2vw,2.1rem)] font-normal leading-none tracking-[-0.055em] text-[#c9ff3d]/82">
+                            <p className="font-sans text-[clamp(1.3rem,2vw,2.1rem)] font-normal leading-none tracking-[-0.055em] text-black/52">
                               {project.year}
                             </p>
                           ) : null}
@@ -357,7 +333,7 @@ export default function ExperientialPortfolio() {
           </section>
         ) : null}
 
-        <Footer />
+        <Footer tone="light" />
       </main>
     </div>
   );

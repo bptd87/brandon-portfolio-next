@@ -11,20 +11,17 @@ const sections = [
     title: "Portfolio",
     links: [
       { name: "Scenic Design", href: "/projects" },
-      { name: "Rendering", href: "/projects/rendering" },
       { name: "Experiential Design", href: "/projects/experiential" },
-      { name: "Assistant Scenic Design", href: "/assistant-scenic-design" },
+      { name: "Rendering", href: "/projects/rendering" },
     ],
   },
   {
     title: "Profile",
     links: [
       { name: "Profile", href: "/about" },
-      { name: "Upcoming Productions", href: "/upcoming-productions" },
       { name: "Resume", href: "/resume" },
       { name: "Creative Statement", href: "/creative-statement" },
       { name: "Teaching Philosophy", href: "/about/teaching" },
-      { name: "Collaborators", href: "/about/collaborators" },
     ],
   },
   {

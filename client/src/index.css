@@ -224,6 +224,11 @@
     text-rendering: optimizeLegibility;
     min-height: 100vh;
   }
+
+  body,
+  body * {
+    text-transform: none !important;
+  }
   
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),

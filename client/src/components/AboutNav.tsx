@@ -13,11 +13,9 @@ export default function AboutNav({ tone = "light" }: AboutNavProps) {
 
   const navItems = [
     { path: "/about", label: "Profile" },
-    { path: "/upcoming-productions", label: "Upcoming", matchPrefix: true },
     { path: "/resume", label: "Resume" },
     { path: "/creative-statement", label: "Creative" },
     { path: "/about/teaching", label: "Teaching", aliases: ["/teaching-philosophy", "/about/philosophy"] },
-    { path: "/about/collaborators", label: "Collaborators" },
   ];
 
   const linkClass = (isActive: boolean) =>
@@ -53,8 +51,7 @@ export default function AboutNav({ tone = "light" }: AboutNavProps) {
             {navItems.map((item) => {
               const isActive =
                 pathname === item.path ||
-                item.aliases?.includes(pathname) ||
-                (item.matchPrefix && pathname.startsWith(`${item.path}/`));
+                item.aliases?.includes(pathname);
               return (
                 <Link
                   key={item.path}

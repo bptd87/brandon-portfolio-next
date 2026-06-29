@@ -14,12 +14,11 @@ const INSTAGRAM_PORTFOLIO_URL =
 
 const MENU_LINKS = [
   { label: "Scenic Design", href: "/projects" },
-  { label: "Rendering", href: "/projects/rendering" },
   { label: "Experiential", href: "/projects/experiential" },
+  { label: "Rendering", href: "/projects/rendering" },
   { label: "Profile", href: "/about" },
   { label: "Statement", href: "/creative-statement" },
   { label: "Resume", href: "/resume" },
-  { label: "Upcoming", href: "/upcoming-productions" },
   { label: "Apps", href: "/studio/apps" },
   {
     label: "Instagram",

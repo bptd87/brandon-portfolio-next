@@ -1,623 +1,349 @@
 "use client";
 
-import { ArrowRight, ChevronLeft, ChevronRight, GraduationCap, Mail } from "lucide-react";
-import Image from "next/image";
-import { Link } from "wouter";
-import { useEffect, useRef, useState } from "react";
-
-import AboutNav from "@/components/AboutNav";
-import { AnimatedSection } from "@/components/AnimatedSection";
-import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  FileText,
+  GraduationCap,
+  Mail,
+  PenLine,
+} from "lucide-react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import MotionReveal from "@/components/MotionReveal";
-import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { SEO } from "@/components/SEO";
-import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 
-const galleryImages = [
+const ABOUT_PORTRAIT_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
+
+const aboutImages = [
   {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp",
-    alt: "Brandon PT Davis and Gretchen at Apple Park during UC Irvine graduate school years",
-    caption: "Brandon and Gretchen at Apple Park in 2022.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teaching-8566b656.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teaching-8566b656.webp",
-    alt: "Brandon PT Davis teaching scenic design to Stephens College students during a production strike",
-    caption: "Brandon with Stephens College students during the strike.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teams-ee0e5092.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teams-ee0e5092.webp",
-    alt: "Brandon PT Davis with Gretchen and lighting designer Lonnie Alcaraz in Costa Mesa",
-    caption: "Brandon, Gretchen, and Lonnie Alcaraz [Lighting Designer] in Costa Mesa in 2023.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-mentors-de7b3237.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-mentors-de7b3237.webp",
-    alt: "Brandon PT Davis with Gretchen and scenic and production designer Alan Muraoka at South Coast Rep",
-    caption: "Brandon, Gretchen, and Alan Muraoka [Scenic and Production Designer] at South Coast Rep in 2024.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-collaborations-3a11416a.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-collaborations-3a11416a.webp",
-    alt: "Brandon PT Davis with Gretchen, Michael and Ruth Anne Burek, and Katie Cohen at the Okoboji Association Party",
-    caption: "Brandon, Gretchen, Michael and Ruth Anne Burek, and Katie Cohen at the Association Party in Okoboji, Iowa, in 2023.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-family-305c20d0.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-family-305c20d0.webp",
-    alt: "Brandon PT Davis with the Ugalde Burks family at Thanksgiving in 2023",
-    caption: "Brandon with the Ugalde Burks family at Thanksgiving in 2023.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-partnerships-081c8f6b.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-partnerships-081c8f6b.webp",
-    alt: "Brandon PT Davis with Gretchen and scenic designer Tom Buderwitz in Santa Monica",
-    caption: "Brandon, Gretchen, and Tom Buderwitz [Scenic Designer] in Santa Monica, California.",
-  },
-  {
-    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-behind-scenes-56903846.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-behind-scenes-56903846.webp",
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-behind-scenes-56903846.webp",
     alt: "Brandon PT Davis working in the scene shop at The Great American Melodrama",
-    caption: "Brandon in the scene shop at The Great American Melodrama.",
+    caption: "Scene shop work at The Great American Melodrama.",
   },
-];
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teaching-8566b656.webp",
+    alt: "Brandon PT Davis teaching scenic design to Stephens College students during a production strike",
+    caption: "Teaching scenic design through the work of production.",
+  },
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp",
+    alt: "Brandon PT Davis and Gretchen at Apple Park during UC Irvine graduate school years",
+    caption: "Graduate school years in California.",
+  },
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-mentors-de7b3237.webp",
+    alt: "Brandon PT Davis with Gretchen and scenic and production designer Alan Muraoka at South Coast Rep",
+    caption: "With Gretchen and Alan Muraoka at South Coast Rep.",
+  },
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teams-ee0e5092.webp",
+    alt: "Brandon PT Davis with Gretchen and lighting designer Lonnie Alcaraz in Costa Mesa",
+    caption: "With Gretchen and Lonnie Alcaraz in Costa Mesa.",
+  },
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-collaborations-3a11416a.webp",
+    alt: "Brandon PT Davis with Gretchen, Michael and Ruth Anne Burek, and Katie Cohen at the Okoboji Association Party",
+    caption: "Okoboji Summer Theatre community and collaborators.",
+  },
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-family-305c20d0.webp",
+    alt: "Brandon PT Davis with the Ugalde Burks family at Thanksgiving in 2023",
+    caption: "Family, place, and the life around the work.",
+  },
+  {
+    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-partnerships-081c8f6b.webp",
+    alt: "Brandon PT Davis with Gretchen and scenic designer Tom Buderwitz in Santa Monica",
+    caption: "With Gretchen and Tom Buderwitz in Santa Monica.",
+  },
+] as const;
 
-const ABOUT_HEADSHOT_URL =
-  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/brandon-pt-davis-about-home.jpg";
+const afterArticleImages = [
+  aboutImages[0],
+  aboutImages[2],
+  aboutImages[3],
+  aboutImages[4],
+  aboutImages[5],
+  aboutImages[6],
+  aboutImages[7],
+] as const;
 
-const navigationCards = [
+const introParagraphs = [
   {
-    title: "Upcoming Productions",
-    description: "Current scenic design calendar, event pages, and selected production archive.",
-    href: "/upcoming-productions",
-    label: "Calendar",
-    image: "/images/about/icons/upcoming-icon.png",
+    text: "Brandon PT Davis is a scenic designer interested in how spaces tell stories.",
   },
   {
-    title: "Resume & Credits",
-    description: "Production history, union background, and the broader body of work.",
-    href: "/resume",
-    label: "Resume",
-    image: "/images/about/icons/resume-icon.png",
+    text: "His work is grounded in research, dramaturgy, collaboration, and a practical understanding of how scenery supports the people who use it: actors, directors, technicians, and audiences. Rather than treating a set as a backdrop, Brandon approaches each design as a working environment—something that shapes movement, frames attention, and helps clarify the emotional life of a production.",
+  },
+] as const;
+
+const aboutStoryBlocks = [
+  {
+    kind: "paragraph",
+    text: "I try not to arrive. The useful work usually starts somewhere past certainty, a little further out than feels comfortable.",
   },
   {
-    title: "Creative Statement",
-    description:
-      "Process, design philosophy, and the principles that shape the work.",
-    href: "/creative-statement",
-    label: "Process",
-    image: "/images/about/icons/creative-statement-icon.png",
-    imageTitle: "Creative Statement",
+    kind: "paragraph",
+    text: "That balance between clarity and uncertainty has shaped a career that has rarely moved in a straight line. Brandon grew up in Columbia, Missouri, a college town where the arts were part of the surrounding culture. His mother was involved in community theatre, and he was around rehearsals and performances early enough that theatre felt like a natural part of everyday life.",
   },
   {
-    title: "Teaching Philosophy",
-    description: "Thoughts on scenic design education, mentorship, and professional growth.",
-    href: "/about/teaching",
-    label: "Teaching",
-    image: "/images/about/icons/teaching-icon.png",
-    imageTitle: "Teaching Philosophy",
+    kind: "paragraph",
+    text: "At Stephens College, where he attended on an apprenticeship scholarship, Brandon immersed himself in hands-on production work while studying the fundamentals of scenic design. After graduating, he spent several years moving between Kansas City, Chicago, and New York, building experience and trying to find his footing professionally. In 2016, he moved to California to work at The Great American Melodrama on the Central Coast, an experience that became a turning point and eventually led him to pursue his Master of Fine Arts in scenic design at the University of California, Irvine.",
   },
   {
-    title: "Collaborators & Directors",
-    description:
-      "Creative partners, theatre companies, and long-running director relationships.",
-    href: "/about/collaborators",
-    label: "Collaboration",
-    image: "/images/about/icons/collaboration-icon.png",
+    kind: "paragraph",
+    text: "Graduate school gave Brandon the space to clarify his design voice while exploring both traditional scenic practice and emerging digital workflows. After completing his degree, he returned to the Midwest during the pandemic years and later joined the faculty at Stephens College, where he taught scenic design, rendering, drafting, and visual communication. Teaching became an extension of his professional practice: a way of helping emerging designers develop clearer process, stronger taste, and practical tools for collaboration.",
   },
-];
+  {
+    kind: "imageFull",
+    imageIndex: 1,
+  },
+  {
+    kind: "paragraph",
+    text: "Today, Brandon is based in Southern California and works across theatre, live events, and experiential design. He is a member of United Scenic Artists Local 829 and serves as a Senior Experiential Designer at Adaptive Design Services. His work has been seen at South Coast Repertory, Maples Repertory Theatre, Okoboji Summer Theatre, New Swan Shakespeare Festival, Utah Shakespeare Festival, Stephens College, the University of Missouri, and other regional, festival, and academic theatres across the United States.",
+  },
+  {
+    kind: "paragraph",
+    text: "His portfolio includes intimate dramas, musicals, Shakespeare, comedies, new work, and productions that move between realism, memory, and theatrical abstraction. Recent projects include co-designing Million Dollar Quartet at South Coast Repertory with Efren Delgadillo Jr., designing The Glass Menagerie at Maples Repertory Theatre, and creating the scenic environment for Romero at the University of Missouri. He has also continued work with New Swan Shakespeare Festival in Irvine, designing outdoor productions that require adaptability, clarity, and a strong relationship between performer, audience, and environment.",
+  },
+  {
+    kind: "paragraph",
+    text: "One of the clearest examples of Brandon’s evolving process is his relationship with The Glass Menagerie, a play he has designed three separate times. Each version was shaped by different tools, resources, and production realities. An early design used green scenic tones, pink rose imagery, and scrim walls that could dissolve to reveal the streets of St. Louis. A later production required a more restrained approach, using subtle rose patterns to suggest Laura’s inner world. Most recently, at Maples Repertory Theatre, Brandon explored Tennessee Williams’ original projection ideas through large-scale printed fabric “memory walls,” creating collaged fragments of Tom and Laura’s past.",
+  },
+  {
+    kind: "statement",
+    text: "The play stayed the same. The designer did not.",
+  },
+  {
+    kind: "paragraph",
+    text: "That willingness to revisit, revise, and keep learning is central to Brandon’s work. He is drawn to scenic design because it makes room for many kinds of thinking at once: art, history, engineering, architecture, technology, performance, and human behavior. A “jack-of-all-trades” curiosity becomes useful in a field where every project asks a different set of questions.",
+  },
+  {
+    kind: "paragraph",
+    text: "That interdisciplinary approach also informs his work in experiential design, where narrative, audience movement, spatial logic, and technical execution come together in physical environments. For Brandon, theatre and experiential design are connected by the same core question: how do people understand a story by moving through space?",
+  },
+  {
+    kind: "paragraph",
+    text: "Technology has become an important part of his practice, but not the center of it. Brandon uses 3D modeling, rendering, real-time visualization, and digital workflows as communication tools, helping directors, collaborators, and production teams understand spatial ideas earlier and more clearly. He is also interested in how artificial intelligence, automation, and new visualization platforms can support creative practice without replacing the fundamentals of design.",
+  },
+  {
+    kind: "statement",
+    text: "The goal is not to make the process more complicated. The goal is to make the storytelling clearer.",
+  },
+  {
+    kind: "paragraph",
+    text: "For Brandon, the strongest scenic designs are not always the loudest ones. They are the designs that help performers move with confidence, give directors useful choices, support the technical team, and allow the audience to enter the world of the production without resistance. Sometimes that means a bold visual gesture. Sometimes it means restraint. Often, it means knowing the difference.",
+  },
+  {
+    kind: "paragraph",
+    text: "Scenic design, at its best, builds trust. Brandon’s work aims for that kind of cohesion: environments that feel purposeful, evocative, and alive, while remaining grounded in the real needs of the production and the people making it.",
+  },
+] as const;
 
 export default function About() {
-  const isDesktopViewport = useIsDesktopViewport();
-  const exploreRailRef = useRef<HTMLDivElement | null>(null);
-  const gallerySectionRef = useRef<HTMLElement | null>(null);
-  const galleryStageRef = useRef<HTMLDivElement | null>(null);
-  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
-  const [galleryWheelProgress, setGalleryWheelProgress] = useState(0);
-  const [galleryWheelOpacity, setGalleryWheelOpacity] = useState(1);
-  const [galleryWheelSpacing, setGalleryWheelSpacing] = useState(190);
-  const [galleryWheelPin, setGalleryWheelPin] = useState<"before" | "fixed" | "after">("before");
-
-  const scrollExploreBy = (direction: "prev" | "next") => {
-    const rail = exploreRailRef.current;
-    if (!rail) return;
-
-    rail.scrollBy({
-      left: direction === "next" ? rail.clientWidth * 0.82 : -rail.clientWidth * 0.82,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    if (!isDesktopViewport) return;
-
-    const updateGalleryWheel = () => {
-      const section = gallerySectionRef.current;
-      const stage = galleryStageRef.current;
-      if (!section || !stage) return;
-
-      const rect = section.getBoundingClientRect();
-      const scrollableDistance = Math.max(1, section.offsetHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
-      const imageProgress = progress;
-      const exactIndex = imageProgress * Math.max(1, galleryImages.length - 1);
-
-      setGalleryWheelProgress(exactIndex);
-      setGalleryWheelOpacity(1);
-      setActiveGalleryIndex(Math.min(galleryImages.length - 1, Math.max(0, Math.round(exactIndex))));
-      setGalleryWheelSpacing(Math.min(260, Math.max(150, stage.clientHeight * 0.24)));
-      setGalleryWheelPin(
-        rect.top > 0
-          ? "before"
-          : rect.bottom < window.innerHeight
-            ? "after"
-            : "fixed"
-      );
-    };
-
-    updateGalleryWheel();
-    window.addEventListener("scroll", updateGalleryWheel, { passive: true });
-    window.addEventListener("resize", updateGalleryWheel);
-
-    return () => {
-      window.removeEventListener("scroll", updateGalleryWheel);
-      window.removeEventListener("resize", updateGalleryWheel);
-    };
-  }, [isDesktopViewport]);
-
   return (
-    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
+    <div className="about-profile-light min-h-screen bg-white text-[#111111] [--background:#ffffff] [--foreground:#111111]">
       <SEO
-        title="Profile | Brandon PT Davis Scenic Designer & Educator"
-        description="San Diego-based scenic designer with 130+ production credits across regional theatre, summer stock, and education. USA 829 member working across Southern California and beyond."
+        title="About Brandon PT Davis"
+        description="About Brandon PT Davis, a Southern California scenic designer and United Scenic Artists Local 829 member working across theatre, rendering, live events, and experiential design."
         url="https://www.brandonptdavis.com/about"
-        keywords="Brandon PT Davis scenic designer, USA 829 scenic designer, San Diego scenic designer, scenic designer California, Southern California scenic designer, scenic design educator, UC Irvine, regional theatre scenic design"
+        keywords="Brandon PT Davis scenic designer, United Scenic Artists Local 829 scenic designer, Southern California scenic designer, scenic design, theatre design, experiential design"
       />
 
       <Header />
-      <AboutNav />
 
-      <main>
-        <section className="relative min-h-[68svh] overflow-hidden bg-[#c66f46] md:min-h-[82svh]">
-          <Image
-            src={ABOUT_HEADSHOT_URL}
-            alt="Brandon PT Davis against an orange wall"
-            fill
-            priority
-            fetchPriority="high"
-            quality={86}
-            sizes="100vw"
-            className="site-media-square object-cover object-[76%_center] md:object-center"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.16)_0%,rgba(0,0,0,0.45)_42%,rgba(0,0,0,0.82)_100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.70)_0%,rgba(0,0,0,0.38)_34%,rgba(0,0,0,0.04)_68%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/34 to-transparent" />
+      <main className="px-[clamp(1rem,5vw,6rem)] pb-20 pt-24 md:pb-28 md:pt-28">
+        <header className="mx-auto max-w-[62rem] text-center">
+          <h1 className="font-sans text-[clamp(3rem,7.4vw,6.8rem)] font-medium leading-[0.92] tracking-[-0.075em] text-black">
+            About Brandon PT Davis
+          </h1>
+          <p className="mx-auto mt-8 max-w-[40rem] text-[1.28rem] font-medium italic leading-8 tracking-[-0.02em] text-black/48 md:text-[1.55rem] md:leading-9">
+            What does it mean to build spaces that tell stories?
+          </p>
+        </header>
 
-          <div className="relative flex min-h-[68svh] items-end px-[clamp(1rem,5vw,6rem)] pb-12 pt-20 md:min-h-[82svh] md:items-center md:px-[clamp(1.5rem,5vw,6rem)] md:py-28">
-            <AnimatedSection className="max-w-[54rem]">
-              <p className="section-kicker text-white/58">
-                Profile
-              </p>
-              <h1 className="mt-5 w-[min(88vw,28rem)] md:w-[clamp(30rem,48vw,50rem)]">
-                <span className="sr-only">Brandon PT Davis</span>
-                <img
-                  src="/images/site-assets/brand/brandon-pt-davis-white.png"
-                  alt=""
-                  aria-hidden="true"
-                  className="h-auto w-full select-none object-contain"
-                  draggable={false}
-                />
-                <span className="mt-3 block text-center font-sans text-[0.58rem] font-semibold uppercase leading-none tracking-[0.36em] text-white md:text-[0.66rem]">
-                  Scenic Design
-                </span>
-              </h1>
-              <p className="mt-7 max-w-2xl text-[1.04rem] font-medium leading-8 tracking-[-0.015em] text-white/76 md:text-[1.14rem]">
-                Scenic designer for theatre, memory, architecture, and live
-                performance. Based in San Diego, working across regional
-                theatre, summer stock, and academic production.
-              </p>
-            </AnimatedSection>
-          </div>
-        </section>
-
-        <section className="py-16 md:py-24">
-          <div className="container max-w-[88rem]">
-            <AnimatedSection delay={120} className="mx-auto max-w-[78rem]">
-              <article>
-                <div className="mx-auto max-w-[62rem] space-y-8 text-[1.18rem] font-medium leading-9 tracking-[-0.026em] text-foreground/84 md:text-[1.34rem] md:leading-10">
-                  <MotionReveal className="about-body-reveal">
-                    <p>
-                      Brandon PT Davis is a scenic designer whose work begins with
-                      the pressure of a room: how a space holds memory, how
-                      architecture shapes behavior, and how scenery can give a
-                      production its physical rhythm. His designs are built from
-                      research, dramaturgy, collaboration, and a belief that the
-                      stage picture should clarify the emotional life of a play.
-                    </p>
-                  </MotionReveal>
-                  <MotionReveal className="about-body-reveal" delay={70}>
-                    <p>
-                      Based in San Diego, California, Brandon designs for regional
-                      theatres, summer stock companies, festivals, and academic
-                      institutions across the United States. His portfolio spans
-                      intimate dramas, musicals, Shakespeare, comedies, new work,
-                      and productions that move between realism, memory, and
-                      theatrical abstraction.
-                    </p>
-                  </MotionReveal>
-
-                  <MotionReveal className="about-body-reveal" delay={90}>
-                    <blockquote className="py-8 md:py-10">
-                      <p className="font-sans text-[clamp(2rem,4.4vw,4.9rem)] font-medium leading-[0.95] tracking-[-0.075em]">
-                        <span className="bg-gradient-to-r from-[#2458ff] via-[#6f2dff] to-[#7c3cff] bg-clip-text text-transparent">
-                          I try not to arrive. The useful work usually starts
-                          somewhere past certainty, a little further out than
-                          feels comfortable.
-                        </span>
-                      </p>
-                    </blockquote>
-                  </MotionReveal>
-
-                  <MotionReveal className="about-body-reveal" delay={70}>
-                    <p>
-                      His recent work includes productions for South Coast
-                      Repertory, Maples Repertory Theatre, Okoboji Summer Theatre,
-                      New Swan Theatre Festival, Utah Shakespeare Festival,
-                      Stephens College, and the University of Missouri. Across
-                      those rooms, the goal remains consistent: create scenic
-                      environments that support actors, directors, technicians,
-                      and audiences in the same act of storytelling.
-                    </p>
-                  </MotionReveal>
-                  <MotionReveal className="about-body-reveal" delay={80}>
-                    <p>
-                      Alongside professional design practice, Brandon teaches
-                      scenic design, rendering, drafting, and visual
-                      communication. His classroom work is connected to his
-                      professional work: helping emerging designers build clear
-                      process, stronger taste, and practical tools for
-                      collaboration.
-                    </p>
-                  </MotionReveal>
-                </div>
-
-                <div className="mx-auto mt-12 grid max-w-[62rem] gap-5 md:grid-cols-2">
-                  <MotionReveal delay={90}>
-                  <div className="h-full overflow-hidden rounded-[1.5rem] bg-[#101010] p-6 text-white shadow-[0_18px_54px_rgba(17,17,17,0.12)]">
-                    <p className="inline-flex items-center gap-2 text-[0.95rem] font-medium tracking-[-0.02em] text-white/58">
-                      <GraduationCap className="h-5 w-5" strokeWidth={2.2} aria-hidden="true" />
-                      Education
-                    </p>
-                    <p className="mt-9 text-[1.28rem] font-medium leading-tight tracking-[-0.045em] text-white">
-                      MFA Scenic Design
-                    </p>
-                    <p className="mt-2 text-[0.96rem] leading-6 text-white/58">
-                      University of California, Irvine
-                    </p>
-                    <p className="mt-6 text-[1.28rem] font-medium leading-tight tracking-[-0.045em] text-white">
-                      BFA Theatre
-                    </p>
-                    <p className="mt-2 text-[0.96rem] leading-6 text-white/58">
-                      Stephens College
-                    </p>
-                  </div>
-                  </MotionReveal>
-
-                  <MotionReveal delay={150}>
-                  <div className="h-full rounded-[1.5rem] bg-white p-6 shadow-[0_18px_54px_rgba(17,17,17,0.07)]">
-                    <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/48">
-                      Practice
-                    </p>
-                    <div className="mt-8 grid gap-3 text-[1.08rem] leading-6 tracking-[-0.03em] text-foreground/76">
-                      <p>Scenic Design</p>
-                      <p>Digital Rendering</p>
-                      <p>Model Building</p>
-                      <p>Drafting and Visualization</p>
-                    </div>
-                  </div>
-                  </MotionReveal>
-                </div>
-
-                <div className="mx-auto mt-5 grid max-w-[62rem] gap-4">
-                  {PROFILE_ARTICLE_LINKS.map((profileLink, index) => (
-                    <MotionReveal key={profileLink.href} delay={index * 80}>
-                    <ExternalLinkPreview
-                      href={profileLink.href}
-                      className="group grid gap-6 rounded-[1.5rem] bg-white/78 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.08)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
-                      previewLabel={profileLink.previewLabel}
-                    >
-                      <div>
-                        <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/46">
-                          Profile article
-                        </p>
-                        <h3 className="mt-2 font-sans text-[1.65rem] font-medium leading-[1] tracking-[-0.055em] text-foreground md:text-[2rem]">
-                          {profileLink.title}
-                        </h3>
-                        <p className="mt-3 max-w-2xl text-[0.98rem] leading-6 tracking-[-0.02em] text-foreground/58">
-                          {profileLink.description}
-                        </p>
-                      </div>
-                      <span className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/18 px-5 py-3 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground/70 transition-colors group-hover:border-foreground/40 group-hover:text-foreground">
-                        Read profile
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                    </ExternalLinkPreview>
-                    </MotionReveal>
-                  ))}
-                </div>
-              </article>
-            </AnimatedSection>
-
-          </div>
-        </section>
-
-        <section className="overflow-hidden bg-[#f1f0ec] py-16 md:py-24">
-          <div className="px-[clamp(1.5rem,5vw,6rem)]">
-            <AnimatedSection>
-              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <div className="max-w-3xl">
-                  <p className="mb-4 text-[1.15rem] font-medium tracking-[-0.035em] text-foreground/54">
-                    Explore Brandon
-                  </p>
-                  <h2 className="font-sans text-[clamp(2.25rem,4.8vw,5.4rem)] font-medium leading-[0.92] tracking-[-0.078em] text-foreground">
-                    Calendar, resume, teaching, and collaboration.
-                  </h2>
-                </div>
-                <Link
-                  href="/resume"
-                  className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/24 px-5 py-3 text-[0.98rem] font-medium tracking-[-0.02em] text-foreground/76 transition-colors hover:border-foreground hover:text-foreground"
-                >
-                  View resume
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </AnimatedSection>
-          </div>
-
-          <AnimatedSection delay={120}>
-            <div
-              ref={exploreRailRef}
-              className="mt-10 overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              <div className="flex min-w-max snap-x snap-mandatory gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-                {navigationCards.map((card, index) => (
-                  <MotionReveal
-                    key={card.href}
-                    className="h-[26rem] w-[min(19rem,82vw)] shrink-0 snap-start md:h-[30rem] md:w-[22rem]"
-                    delay={index * 70}
-                  >
-                  <Link
-                    href={card.href}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] bg-[#f7f6f2] p-5 shadow-[0_18px_50px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.025] transition duration-500 hover:-translate-y-1 hover:bg-white hover:shadow-[0_26px_70px_rgba(17,17,17,0.12)] md:rounded-[2rem] md:p-6"
-                  >
-                    <div className="relative z-10">
-                      <p className="text-[0.95rem] font-semibold tracking-[-0.02em] text-foreground/58">
-                        {card.label}
-                      </p>
-                      <h3 className="mt-3 max-w-[16rem] font-sans text-[1.9rem] font-medium leading-[0.98] tracking-[-0.065em] text-foreground">
-                        {card.title}
-                      </h3>
-                      <p className="mt-4 max-w-[17rem] text-[0.98rem] leading-6 tracking-[-0.02em] text-foreground/62">
-                        {card.description}
-                      </p>
-                    </div>
-                    <div className="relative mt-auto h-[11rem] w-full">
-                      <Image
-                        src={card.image}
-                        alt={card.title}
-                        fill
-                        unoptimized
-                        quality={86}
-                        loading="lazy"
-                        sizes="(max-width: 768px) 78vw, 22rem"
-                        className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.04]"
-                      />
-                    </div>
-                    <div className="absolute bottom-5 right-5 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#1d1d1f] text-white transition-transform group-hover:scale-105">
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </div>
-                  </Link>
-                  </MotionReveal>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-
-          <div className="-mt-5 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-            <button
-              type="button"
-              onClick={() => scrollExploreBy("prev")}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
-              aria-label="Scroll Explore Brandon left"
-            >
-              <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollExploreBy("next")}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
-              aria-label="Scroll Explore Brandon right"
-            >
-              <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-            </button>
-          </div>
-        </section>
-
-        <section
-          ref={gallerySectionRef}
-          aria-label="Personal archive"
-          className="relative border-y border-black/10 bg-[#f1f0ec] text-black md:min-h-[240svh]"
-        >
-          {!isDesktopViewport ? (
-            <div className="px-[clamp(1rem,5vw,6rem)] py-14">
-              <p className="mb-4 text-[1.02rem] font-medium tracking-[-0.035em] text-black/42">
-                Personal archive
-              </p>
-              <h2 className="max-w-[12ch] font-sans text-[clamp(2.35rem,12vw,3.8rem)] font-medium leading-[0.9] tracking-[-0.075em] text-black">
-                People, classrooms, shops, and collaborations.
-              </h2>
-              <div className="mt-9 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <div className="flex snap-x snap-mandatory gap-4 pr-[clamp(1rem,5vw,6rem)]">
-                  {galleryImages.map((image, index) => (
-                    <MotionReveal
-                      key={image.url}
-                      className="w-[min(20rem,82vw)] shrink-0 snap-start"
-                      delay={index * 60}
-                    >
-                    <figure
-                      className="site-media-square overflow-hidden border border-black/10 bg-black"
-                    >
-                      <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-black">
-                        <img
-                          src={image.url}
-                          alt={image.alt}
-                          loading="lazy"
-                          decoding="async"
-                          className="site-media-square h-full w-full object-cover"
-                        />
-                      </div>
-                      <figcaption className="border-t border-white/14 bg-black px-4 py-3 text-[0.92rem] font-medium leading-6 tracking-[-0.02em] text-white/84">
-                        {image.caption}
-                      </figcaption>
-                    </figure>
-                    </MotionReveal>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : null}
-          {isDesktopViewport ? (
-            <div
-              className="flex h-screen flex-col overflow-hidden bg-[#f1f0ec]"
-              style={{
-                position: galleryWheelPin === "fixed" ? "fixed" : "absolute",
-                top: galleryWheelPin === "after" ? "auto" : 0,
-                bottom: galleryWheelPin === "after" ? 0 : "auto",
-                left: 0,
-                right: 0,
-                opacity: galleryWheelOpacity,
-                transition: "opacity 180ms ease",
-              }}
-            >
-            <div className="pointer-events-none absolute left-0 right-0 top-0 z-20 px-[clamp(1.5rem,5vw,6rem)] pt-10 md:pt-14">
-              <p className="mb-4 text-[1.02rem] font-medium tracking-[-0.035em] text-black/42">
-                Personal archive
-              </p>
-              <h2 className="max-w-[12ch] font-sans text-[clamp(3rem,7vw,7.5rem)] font-medium leading-[0.84] tracking-[-0.085em] text-black">
-                People, classrooms, shops, and collaborations.
-              </h2>
-            </div>
-
-            <div
-              ref={galleryStageRef}
-              className="relative min-h-0 flex-1 overflow-hidden pt-[14rem] md:pt-[12rem]"
-            >
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-[#f1f0ec] via-[#f1f0ec]/92 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-[#f1f0ec] via-[#f1f0ec]/92 to-transparent" />
-
-              <div
-                className="absolute inset-0"
-                style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
+        <article className="mx-auto mt-12 max-w-[76rem] md:mt-16">
+          <div className="grid gap-10 md:grid-cols-[minmax(0,11rem)_minmax(0,1fr)] md:gap-12">
+            <aside className="space-y-8 md:sticky md:top-28 md:self-start md:pt-1">
+              <nav
+                aria-label="About related links"
+                className="space-y-2 text-[0.96rem] font-semibold leading-6 tracking-[-0.015em] text-black"
               >
-                {galleryImages.map((image, index) => {
-                  const distance = index - galleryWheelProgress;
-                  const absDistance = Math.abs(distance);
-                  const isActive = activeGalleryIndex === index;
-                  const isVisible = absDistance < 2.45;
-                  const scale = Math.max(0.76, 1 - absDistance * 0.09);
-                  const opacity = isActive ? 1 : Math.max(0.14, 0.44 - absDistance * 0.08);
-                  const rotateX = distance * -18;
-                  const translateY = distance * galleryWheelSpacing;
-                  const translateZ = -Math.abs(distance) * 140;
+                <a className="block underline-offset-4 hover:underline" href="/resume">
+                  Resume
+                </a>
+                <a className="block underline-offset-4 hover:underline" href="/creative-statement">
+                  Creative statement
+                </a>
+                <a className="block underline-offset-4 hover:underline" href="/about/teaching">
+                  Teaching philosophy
+                </a>
+              </nav>
+            </aside>
+
+            <div className="space-y-7 text-[1.12rem] font-medium leading-8 tracking-[-0.015em] text-black/78 md:text-[1.22rem] md:leading-9">
+              <figure className="my-8 md:float-right md:mb-6 md:ml-10 md:mt-1 md:w-[min(42%,24rem)]">
+                <img
+                  src={ABOUT_PORTRAIT_URL}
+                  alt="Brandon PT Davis"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full bg-black/[0.04]"
+                />
+                <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
+                  Brandon PT Davis.
+                </figcaption>
+              </figure>
+
+              {introParagraphs.map((paragraph, index) => (
+                <p
+                  key={paragraph.text}
+                  className={
+                    index === 0
+                      ? "first-letter:float-left first-letter:mr-3 first-letter:font-sans first-letter:text-[4.75rem] first-letter:font-medium first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-black"
+                      : undefined
+                  }
+                >
+                  {paragraph.text}
+                </p>
+              ))}
+
+              {aboutStoryBlocks.map((block, index) => {
+                if (block.kind === "statement") {
+                  return (
+                    <p
+                      key={`${block.kind}-${index}`}
+                      className="my-9 max-w-[34rem] border-l border-black/16 pl-5 font-sans text-[clamp(1.6rem,2.6vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.055em] text-black"
+                    >
+                      {block.text}
+                    </p>
+                  );
+                }
+
+                if (block.kind === "imageFull") {
+                  const image = aboutImages[block.imageIndex];
 
                   return (
                     <figure
-                      key={image.url}
-                      className="site-media-square absolute left-1/2 top-[61%] w-[min(86vw,42rem)] overflow-hidden border border-black/10 bg-black md:left-[68%]"
-                      style={{
-                        opacity: isVisible ? opacity : 0,
-                        pointerEvents: isActive ? "auto" : "none",
-                        transform: `translate(-50%, -50%) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) scale(${scale})`,
-                        transformStyle: "preserve-3d",
-                        transition: "opacity 160ms ease",
-                      }}
+                      key={`${block.kind}-${index}`}
+                      className="clear-both my-11"
                     >
-                      <div className="site-media-square relative aspect-[16/9] overflow-hidden bg-black">
-                        <img
-                          src={image.url}
-                          alt={image.alt}
-                          loading={index < 2 ? "eager" : "lazy"}
-                          decoding="async"
-                          className="site-media-square h-full w-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/16 to-transparent" />
-                      </div>
-                      <figcaption className="border-t border-white/14 bg-black px-5 py-4 text-[0.98rem] font-medium leading-7 tracking-[-0.02em] text-white/84 md:px-6">
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-auto w-full bg-black/[0.04]"
+                      />
+                      <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
                         {image.caption}
                       </figcaption>
                     </figure>
                   );
-                })}
-              </div>
-            </div>
+                }
 
-            <div className="pointer-events-none absolute bottom-8 right-[clamp(1.5rem,5vw,6rem)] z-20 text-right">
-              <p className="font-sans text-[0.78rem] font-semibold uppercase tracking-[0.24em] text-black/34">
-                {String(activeGalleryIndex + 1).padStart(2, "0")} /{" "}
-                {String(galleryImages.length).padStart(2, "0")}
-              </p>
-	            </div>
-	          </div>
-          ) : null}
-	        </section>
-
-        <section className="relative min-h-[62svh] overflow-hidden bg-[#f1f0ec] px-[clamp(1rem,5vw,6rem)] py-14 text-black md:min-h-[78svh] md:px-[clamp(1.5rem,5vw,6rem)] md:py-28">
-          <div
-            className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#f1f0ec] to-transparent"
-            aria-hidden="true"
-          />
-          <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f1f0ec] to-transparent"
-            aria-hidden="true"
-          />
-
-          <div className="relative flex min-h-[calc(62svh-7rem)] items-center justify-center md:min-h-[calc(78svh-10rem)]">
-            <MotionReveal className="w-full max-w-[76rem]">
-            <div className="rounded-[1.25rem] bg-black p-[clamp(1.25rem,5vw,4rem)] text-white shadow-[0_34px_120px_rgba(17,17,17,0.18)] md:rounded-[1.75rem]">
-              <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] md:items-end">
-                <div>
-                  <p className="section-kicker text-white/42">
-                    Contact
+                return (
+                  <p
+                    key={`${block.kind}-${index}`}
+                  >
+                    {block.text}
                   </p>
-                  <h2 className="mt-5 max-w-[13ch] font-sans text-[clamp(2.25rem,12vw,3.8rem)] font-medium leading-[0.9] tracking-[-0.075em] text-white md:mt-6 md:text-[clamp(3rem,7vw,7.2rem)] md:leading-[0.84] md:tracking-[-0.085em]">
-                    Start a scenic design conversation.
+                );
+              })}
+
+              <section
+                aria-label="Profiles and related pages"
+                className="grid gap-7 border-t border-black/12 pt-8 text-[0.98rem] leading-6 tracking-[-0.01em] md:grid-cols-2"
+              >
+                <div>
+                  <h2 className="font-sans text-[0.95rem] font-semibold leading-none tracking-[-0.01em] text-black/48">
+                    Profiles
                   </h2>
+                  <div className="mt-4 space-y-3">
+                    {PROFILE_ARTICLE_LINKS.map((profileLink) => (
+                      <a
+                        key={profileLink.href}
+                        href={profileLink.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group block font-semibold text-black underline-offset-4 hover:underline"
+                      >
+                        {profileLink.title}
+                        <ArrowUpRight
+                          className="ml-1 inline h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    ))}
+                  </div>
                 </div>
 
                 <div>
-                  <p className="max-w-2xl text-[1rem] leading-7 tracking-[-0.015em] text-white/62 md:text-[1.08rem]">
-                    Scenic design, rendering, teaching, and collaboration inquiries are welcome.
-                    Share the production, venue, timeline, and design goals, and I&apos;ll respond
-                    with a clear next step.
-                  </p>
-
-                  <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  <h2 className="font-sans text-[0.95rem] font-semibold leading-none tracking-[-0.01em] text-black/48">
+                    More
+                  </h2>
+                  <div className="mt-4 space-y-3 font-semibold text-black">
                     <a
-                      href="/contact"
-                      className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-86"
+                      className="flex items-center gap-2 underline-offset-4 hover:underline"
+                      href="/resume"
                     >
-                      Contact form
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <FileText className="h-4 w-4" aria-hidden="true" />
+                      Resume
                     </a>
                     <a
-                      href="mailto:info@brandonptdavis.com"
-                      className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/16 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white/30 hover:text-white"
+                      className="flex items-center gap-2 underline-offset-4 hover:underline"
+                      href="/creative-statement"
                     >
-                      <Mail className="h-4 w-4" />
-                      Email directly
+                      <PenLine className="h-4 w-4" aria-hidden="true" />
+                      Creative statement
+                    </a>
+                    <a
+                      className="flex items-center gap-2 underline-offset-4 hover:underline"
+                      href="/about/teaching"
+                    >
+                      <GraduationCap className="h-4 w-4" aria-hidden="true" />
+                      Teaching philosophy
+                    </a>
+                    <a
+                      className="flex items-center gap-2 underline-offset-4 hover:underline"
+                      href="/projects"
+                    >
+                      <BriefcaseBusiness className="h-4 w-4" aria-hidden="true" />
+                      Portfolio
+                    </a>
+                    <a
+                      className="flex items-center gap-2 underline-offset-4 hover:underline"
+                      href="mailto:info@brandonptdavis.com"
+                    >
+                      <Mail className="h-4 w-4" aria-hidden="true" />
+                      Email
                     </a>
                   </div>
                 </div>
-              </div>
+              </section>
             </div>
-            </MotionReveal>
           </div>
+        </article>
+
+        <section
+          aria-label="About image archive"
+          className="mx-auto mt-16 max-w-[68rem] space-y-12 md:mt-20 md:space-y-14"
+        >
+          {afterArticleImages.map((image) => (
+            <figure key={image.src}>
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading="lazy"
+                decoding="async"
+                className="h-auto w-full bg-black/[0.04]"
+              />
+              <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
+                {image.caption}
+              </figcaption>
+            </figure>
+          ))}
         </section>
       </main>
 

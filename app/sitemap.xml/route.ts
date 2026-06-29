@@ -12,7 +12,6 @@ import {
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
 import { getLocalTutorials } from "../../shared/localStudio";
-import { productionEvents } from "../../shared/upcomingProductions";
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
 
@@ -23,8 +22,6 @@ const STATIC_ROUTES: Array<{
 }> = [
   { pathname: "/", priority: 1, changeFrequency: "weekly" },
   { pathname: "/about", priority: 0.8, changeFrequency: "monthly" },
-  { pathname: "/upcoming-productions", priority: 0.7, changeFrequency: "monthly" },
-  { pathname: "/about/collaborators", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/about/teaching", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/resume", priority: 0.7, changeFrequency: "monthly" },
   { pathname: "/creative-statement", priority: 0.6, changeFrequency: "monthly" },
@@ -86,13 +83,6 @@ function getSitemapEntries(): MetadataRoute.Sitemap {
     priority: project.featured ? 0.8 : 0.7,
   }));
 
-  const productionEventEntries: MetadataRoute.Sitemap = productionEvents.map((production) => ({
-    url: absoluteUrl(`/upcoming-productions/${production.id}`),
-    lastModified: toLastModified(production.endDate, production.startDate),
-    changeFrequency: production.status === "archived" ? "yearly" : "monthly",
-    priority: production.status === "archived" ? 0.55 : 0.65,
-  }));
-
   const renderingEntries: MetadataRoute.Sitemap = getLocalRenderingProjects().map((project) => ({
     url: absoluteUrl(`/projects/rendering/${project.slug}`),
     lastModified: toLastModified(project.updatedAt, project.publishedAt, project.createdAt),
@@ -137,7 +127,6 @@ function getSitemapEntries(): MetadataRoute.Sitemap {
 
   return [
     ...staticEntries,
-    ...productionEventEntries,
     ...scenicEntries,
     ...renderingEntries,
     ...experientialProjectEntries,

@@ -15,7 +15,6 @@ import {
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import { getLocalTutorials } from "@shared/localStudio";
-import { upcomingProductions } from "@shared/upcomingProductions";
 
 const ABOUT_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
@@ -207,11 +206,6 @@ export default function Links() {
         timestamp: timestampForPortfolioItem(project),
       }));
 
-    const latestScenicImage = scenicProjects[0]?.image || ABOUT_HEADSHOT_URL;
-    const nextUpcomingProduction = [...upcomingProductions]
-      .filter((production) => production.imageUrl)
-      .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())[0];
-
     const articles = getLocalArticles();
     const articleTiles = articles
       .filter(
@@ -275,17 +269,6 @@ export default function Links() {
         }),
       }));
 
-    const upcomingTile: FeedTile[] = nextUpcomingProduction
-      ? [{
-        id: "upcoming",
-        title: nextUpcomingProduction?.title || "Upcoming Scenic Design",
-        label: "Upcoming",
-        href: nextUpcomingProduction ? `/upcoming-productions/${nextUpcomingProduction.id}` : "/upcoming-productions",
-        image: nextUpcomingProduction?.imageUrl || latestScenicImage,
-        timestamp: 0,
-      }]
-      : [];
-
     const datedTiles = [
       ...scenicProjects,
       ...articleTiles,
@@ -293,7 +276,7 @@ export default function Links() {
       ...tutorialTiles,
     ].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-    return [...datedTiles, ...upcomingTile, ...STUDIO_APP_TILES];
+    return [...datedTiles, ...STUDIO_APP_TILES];
   }, []);
 
   return (

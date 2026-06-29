@@ -1,11 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import {
-  CalendarDays,
-  ChevronRight,
   Drama,
   Heart,
   Laugh,
@@ -15,9 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { getProjectPath } from "@/lib/projectRoutes";
@@ -34,7 +30,6 @@ import {
 } from "@shared/localPortfolios";
 import { getLocalTutorials } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
-import { upcomingProductions } from "@shared/upcomingProductions";
 
 const HOME_HERO_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp";
@@ -581,6 +576,266 @@ const getExperientialProjectPanelClass = (index: number) => {
   return index < 2 ? "md:col-span-2" : "";
 };
 
+const HOME_GALLERY_FRAMES = [
+  { aspect: "aspect-[4/3]", spacing: "mb-[clamp(1.7rem,3.2vw,3.9rem)]" },
+  {
+    aspect: "aspect-[6/5]",
+    spacing: "mb-[clamp(2rem,4vw,5rem)] lg:mt-[clamp(0.7rem,1.8vw,2.4rem)]",
+  },
+  { aspect: "aspect-[16/10]", spacing: "mb-[clamp(1.9rem,3.6vw,4.4rem)]" },
+  { aspect: "aspect-[5/4]", spacing: "mb-[clamp(1.45rem,2.8vw,3.4rem)]" },
+  {
+    aspect: "aspect-[3/2]",
+    spacing: "mb-[clamp(2.2rem,4.6vw,5.4rem)] lg:mt-[clamp(1.2rem,2.8vw,3.6rem)]",
+  },
+  { aspect: "aspect-[1/1]", spacing: "mb-[clamp(1.65rem,3.1vw,3.8rem)]" },
+  { aspect: "aspect-[3/2]", spacing: "mb-[clamp(2.25rem,4.8vw,5.8rem)]" },
+  {
+    aspect: "aspect-[5/4]",
+    spacing: "mb-[clamp(1.5rem,3vw,3.7rem)] md:mt-[clamp(0.45rem,1.4vw,1.8rem)]",
+  },
+  { aspect: "aspect-[4/3]", spacing: "mb-[clamp(2rem,4.2vw,5rem)]" },
+  {
+    aspect: "aspect-[1/1]",
+    spacing: "mb-[clamp(1.7rem,3.5vw,4.1rem)] lg:mt-[clamp(1rem,2.4vw,3rem)]",
+  },
+  { aspect: "aspect-[16/11]", spacing: "mb-[clamp(2.15rem,4.5vw,5.2rem)]" },
+  { aspect: "aspect-[6/5]", spacing: "mb-[clamp(1.55rem,3vw,3.5rem)]" },
+  { aspect: "aspect-[6/5]", spacing: "mb-[clamp(2rem,4vw,4.8rem)]" },
+  {
+    aspect: "aspect-[5/4]",
+    spacing: "mb-[clamp(1.8rem,3.8vw,4.6rem)] md:mt-[clamp(0.8rem,2vw,2.6rem)]",
+  },
+  { aspect: "aspect-[3/2]", spacing: "mb-[clamp(2.35rem,5vw,6rem)]" },
+  { aspect: "aspect-[1/1]", spacing: "mb-[clamp(1.6rem,3.2vw,3.8rem)]" },
+  {
+    aspect: "aspect-[13/8]",
+    spacing: "mb-[clamp(2.1rem,4.4vw,5.2rem)] lg:mt-[clamp(0.55rem,1.5vw,2rem)]",
+  },
+  { aspect: "aspect-[5/4]", spacing: "mb-[clamp(1.7rem,3.4vw,4.2rem)]" },
+];
+
+const HOME_FEATURED_DESIGN_SLUGS = [
+  "the-penelopiad",
+  "million-dollar-quartet",
+  "the-glass-menagerie",
+  "romero",
+];
+
+type HomeFeatureCard = {
+  kind: "brand" | "image";
+  title: string;
+  href?: string;
+  image?: string;
+  meta?: string;
+};
+
+function HomeIdentityCard({
+  projects,
+}: {
+  projects: ScenicProjectSummary[];
+}) {
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const featuredDesignCards: HomeFeatureCard[] = HOME_FEATURED_DESIGN_SLUGS
+    .map(slug => projects.find(project => project.slug === slug))
+    .filter(
+      (project): project is ScenicProjectSummary =>
+        Boolean(project?.coverImageUrl)
+    )
+    .map(project => ({
+      kind: "image" as const,
+      title: project.title,
+      href: getProjectPath(project),
+      image: project.coverImageUrl || "",
+      meta: project.client || "",
+    }));
+
+  const identityCards: HomeFeatureCard[] = [
+    { kind: "brand" as const, title: "Brandon PT Davis Scenic Design" },
+    ...featuredDesignCards,
+  ].slice(0, 5);
+  const activeCard = identityCards[activeCardIndex] || identityCards[0];
+
+  return (
+    <section className="bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(1.6rem,4vw,3.5rem)] pt-[clamp(6rem,9vw,7.5rem)] text-black">
+      <div
+        className="group relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-black text-center text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white md:aspect-auto md:min-h-[min(78svh,48rem)]"
+      >
+        {activeCard.kind === "image" && activeCard.image ? (
+          <>
+            <img
+              src={activeCard.image}
+              alt=""
+              aria-hidden="true"
+              className="site-media-square absolute inset-0 h-full w-full object-cover opacity-82 transition-[opacity,transform] duration-700 group-hover:scale-[1.018] group-hover:opacity-90"
+              draggable={false}
+            />
+            {activeCard.href ? (
+              <a
+                href={activeCard.href}
+                aria-label={`View ${activeCard.title}`}
+                className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              />
+            ) : null}
+          </>
+        ) : null}
+        <div
+          className={`absolute inset-0 ${
+            activeCard.kind === "brand" ? "bg-black" : "bg-black/26"
+          }`}
+        />
+        {activeCard.kind === "brand" ? (
+          <div className="relative flex w-full max-w-[54rem] flex-col items-center px-6">
+            <img
+              src={HOME_LOGO_SRC}
+              alt=""
+              aria-hidden="true"
+              className="h-auto w-[min(42rem,78vw)] select-none object-contain opacity-95 drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-transform duration-700 group-hover:scale-[1.015]"
+              draggable={false}
+            />
+            <h1 className="sr-only">Brandon PT Davis Scenic Design</h1>
+            <p className="mt-[clamp(1.35rem,3vw,2.4rem)] max-w-[44rem] font-sans text-[clamp(0.95rem,1.55vw,1.35rem)] font-semibold uppercase leading-[1.25] tracking-[0.18em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)]">
+              Scenic Design
+            </p>
+          </div>
+        ) : (
+          <>
+            <h1 className="sr-only">Brandon PT Davis Scenic Design</h1>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/82 via-black/40 to-transparent px-[clamp(1rem,4vw,3rem)] pb-[clamp(4.25rem,7vw,5.6rem)] pt-28 text-left">
+              <p className="font-sans text-[0.74rem] font-semibold uppercase leading-none tracking-[0.18em] text-white/52">
+                Featured Design
+              </p>
+              <p className="mt-3 max-w-[20ch] font-sans text-[clamp(2rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
+                {activeCard.title}
+              </p>
+              {activeCard.meta ? (
+                <p className="mt-3 max-w-[28rem] font-sans text-[clamp(0.9rem,1.35vw,1.12rem)] font-medium leading-tight tracking-[-0.02em] text-white/68">
+                  {activeCard.meta}
+                </p>
+              ) : null}
+            </div>
+          </>
+        )}
+        <div
+          className="absolute bottom-[clamp(1.5rem,3vw,2.3rem)] left-1/2 z-20 flex -translate-x-1/2 gap-4"
+        >
+          {identityCards.map((card, index) => (
+            <button
+              key={`${card.kind}-${card.title}`}
+              type="button"
+              aria-label={`Show ${card.title}`}
+              aria-pressed={activeCardIndex === index}
+              onClick={() => setActiveCardIndex(index)}
+              className={`h-2 w-2 border-2 border-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black ${
+                activeCardIndex === index ? "bg-white" : "bg-transparent"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HomeMinimalGallery({
+  projects,
+}: {
+  projects: ScenicProjectSummary[];
+}) {
+  const galleryProjects = projects
+    .filter(project => project.coverImageUrl)
+    .slice(0, 30);
+
+  if (!galleryProjects.length) return null;
+
+  return (
+    <section
+      id="recent-designs"
+      className="min-h-screen bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(3rem,7vw,6rem)] pt-[clamp(1rem,2.4vw,1.8rem)] text-black"
+      aria-labelledby="home-gallery-title"
+    >
+      <h2 id="home-gallery-title" className="sr-only">
+        Recent scenic design work.
+      </h2>
+
+      <div className="columns-2 gap-[clamp(0.8rem,2.6vw,3rem)] md:columns-2 lg:columns-3">
+        {galleryProjects.map((project, index) => {
+          const frame =
+            HOME_GALLERY_FRAMES[index % HOME_GALLERY_FRAMES.length];
+          const meta = [project.client, project.year].filter(Boolean).join(" / ");
+
+          return (
+            <a
+              key={project.slug}
+              href={getProjectPath(project)}
+              className={`group block break-inside-avoid text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white ${frame.spacing}`}
+              aria-label={`${project.title} scenic design by Brandon PT Davis`}
+            >
+              <article>
+                <div
+                  className={`relative overflow-hidden bg-neutral-100 ${frame.aspect}`}
+                >
+                  <Image
+                    src={project.coverImageUrl || ""}
+                    alt={`${project.title} scenic design by Brandon PT Davis`}
+                    fill
+                    quality={index < 4 ? 86 : 78}
+                    priority={index < 4}
+                    loading={index < 4 ? "eager" : "lazy"}
+                    fetchPriority={index < 4 ? "high" : "auto"}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    className="site-media-square object-cover object-center transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-hover:brightness-[0.72]"
+                    style={{
+                      objectPosition: project.coverImagePosition || "center",
+                    }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 hidden items-end bg-black/0 p-5 opacity-0 transition-[background-color,opacity] duration-500 group-hover:bg-black/28 group-hover:opacity-100 md:flex">
+                    <div className="translate-y-3 opacity-0 transition-[opacity,transform] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                      <h2 className="font-sans text-[clamp(1.45rem,2.3vw,2.55rem)] font-medium leading-[0.92] tracking-[-0.065em] text-white">
+                        {project.title}
+                      </h2>
+                      {meta ? (
+                        <p className="mt-2 max-w-[20rem] font-sans text-[0.86rem] font-medium leading-tight tracking-[-0.018em] text-white/72">
+                          {meta}
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+                <div className="sr-only">
+                  <h2 className="font-sans text-[1.1rem] font-medium leading-tight tracking-[-0.035em] text-black">
+                    {project.title}
+                  </h2>
+                  {meta ? (
+                    <p className="mt-1 text-[0.82rem] leading-tight tracking-[-0.015em] text-black/50">
+                      {meta}
+                    </p>
+                  ) : null}
+                </div>
+              </article>
+            </a>
+          );
+        })}
+      </div>
+
+      <div className="mx-auto mt-[clamp(3rem,7vw,6rem)] max-w-[58rem] pb-[clamp(1rem,3vw,2.5rem)] text-center">
+        <p className="font-sans text-[clamp(1.28rem,2.25vw,2.05rem)] font-medium leading-[1.18] tracking-[-0.055em] text-black">
+          Brandon PT Davis is a San Diego-based scenic designer creating
+          theatrical environments, renderings, and story-driven spaces for
+          plays, musicals, Shakespeare, theatre for young audiences, and
+          collaborative live performance.
+        </p>
+        <a
+          href="/projects"
+          className="mt-8 inline-flex text-[0.78rem] font-semibold uppercase tracking-[0.2em] text-black/48 transition-colors hover:text-black"
+        >
+          View full portfolio
+        </a>
+      </div>
+    </section>
+  );
+}
+
 function HomeFeaturedScenicGrid({
   projects,
 }: {
@@ -1117,196 +1372,6 @@ function BrandonSection({
   );
 }
 
-function UpcomingSection() {
-  const nextProductions = upcomingProductions;
-  const isDesktopViewport = useIsDesktopViewport();
-  const [activeProductionIndex, setActiveProductionIndex] = useState(0);
-  const [productionWheelProgress, setProductionWheelProgress] = useState(0);
-  const [productionWheelOpacity, setProductionWheelOpacity] = useState(1);
-  const [productionWheelSpacing, setProductionWheelSpacing] = useState(148);
-  const [productionWheelPin, setProductionWheelPin] = useState<
-    "before" | "fixed" | "after"
-  >("before");
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const wheelStageRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!isDesktopViewport) return;
-
-    const updateWheel = () => {
-      const section = sectionRef.current;
-      const stage = wheelStageRef.current;
-      if (!section || !stage) return;
-
-      const rect = section.getBoundingClientRect();
-      const scrollableDistance = Math.max(
-        1,
-        section.offsetHeight - window.innerHeight
-      );
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
-      const exactIndex = progress * nextProductions.length;
-      const loopedIndex =
-        ((exactIndex % nextProductions.length) + nextProductions.length) %
-        nextProductions.length;
-      const exitFade = progress > 0.82 ? Math.max(0, (1 - progress) / 0.18) : 1;
-
-      setProductionWheelProgress(loopedIndex);
-      setProductionWheelOpacity(exitFade);
-      setActiveProductionIndex(
-        Math.round(loopedIndex) % nextProductions.length
-      );
-      setProductionWheelSpacing(
-        Math.min(200, Math.max(118, stage.clientHeight * 0.21))
-      );
-      setProductionWheelPin(
-        rect.top > 0
-          ? "before"
-          : rect.bottom < window.innerHeight
-            ? "after"
-            : "fixed"
-      );
-    };
-
-    updateWheel();
-    window.addEventListener("scroll", updateWheel, { passive: true });
-    window.addEventListener("resize", updateWheel);
-    return () => {
-      window.removeEventListener("scroll", updateWheel);
-      window.removeEventListener("resize", updateWheel);
-    };
-  }, [isDesktopViewport, nextProductions.length]);
-
-  return (
-    <section
-      ref={sectionRef}
-      aria-label="Upcoming productions"
-      className="relative bg-black text-white md:min-h-[520vh]"
-    >
-      {!isDesktopViewport ? (
-      <div className="px-[clamp(1rem,5vw,6rem)] py-14">
-        <p className="section-kicker mb-4 text-white">Upcoming / In Process</p>
-        <h2 className="flex max-w-[11ch] items-center gap-3 font-sans text-[clamp(2.25rem,12vw,3.7rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-          <CalendarDays
-            className="h-[0.82em] w-[0.82em] shrink-0"
-            strokeWidth={1.65}
-            aria-hidden="true"
-          />
-          <span>On the drafting table.</span>
-        </h2>
-        <div className="mt-9 grid gap-3">
-          {nextProductions.map((production) => (
-            <a
-              key={production.id}
-              href={`/upcoming-productions/${production.id}`}
-              className="group flex min-h-20 items-center justify-between gap-4 border-t border-white/14 py-4"
-              aria-label={`View ${production.title}`}
-            >
-              <span className="min-w-0 font-sans text-[1.45rem] font-medium uppercase leading-[0.94] tracking-[-0.055em] text-white transition-colors group-hover:text-[#a78bff]">
-                {production.title}
-              </span>
-              <ChevronRight
-                className="h-5 w-5 shrink-0 text-white/42 transition-transform group-hover:translate-x-1 group-hover:text-white"
-                strokeWidth={2}
-                aria-hidden="true"
-              />
-            </a>
-          ))}
-        </div>
-      </div>
-      ) : null}
-      {isDesktopViewport ? (
-      <div
-        className="flex h-screen flex-col overflow-hidden bg-black"
-        style={{
-          position: productionWheelPin === "fixed" ? "fixed" : "absolute",
-          top: productionWheelPin === "after" ? "auto" : 0,
-          bottom: productionWheelPin === "after" ? 0 : "auto",
-          left: 0,
-          right: 0,
-          opacity: productionWheelOpacity,
-          transition: "opacity 180ms ease",
-        }}
-      >
-        <div className="pointer-events-none absolute left-1/2 top-0 z-20 w-[min(92vw,48rem)] -translate-x-1/2 px-[clamp(1.5rem,5vw,6rem)] pt-10 text-center md:pt-14">
-          <p className="section-kicker mb-4 text-white">Upcoming / In Process</p>
-          <h2 className="mx-auto flex items-center justify-center gap-3 font-sans text-[clamp(2.25rem,4.4vw,4.65rem)] font-medium leading-[1] tracking-[-0.055em] text-white">
-            <CalendarDays
-              className="h-[0.82em] w-[0.82em] shrink-0"
-              strokeWidth={1.65}
-              aria-hidden="true"
-            />
-            <span>On the drafting table.</span>
-          </h2>
-        </div>
-
-        <div
-          ref={wheelStageRef}
-          className="relative min-h-0 flex-1 overflow-hidden pt-16"
-        >
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-black via-black/92 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-black via-black/92 to-transparent" />
-
-          <div
-            className="absolute inset-0"
-            style={{ perspective: "1250px", transformStyle: "preserve-3d" }}
-          >
-            {nextProductions.map((production, index) => {
-              const wheelLength = nextProductions.length;
-              let distance = index - productionWheelProgress;
-              if (distance > wheelLength / 2) distance -= wheelLength;
-              if (distance < -wheelLength / 2) distance += wheelLength;
-
-              const absDistance = Math.abs(distance);
-              const isActive = activeProductionIndex === index;
-              const isVisible = absDistance < 2.86;
-              const scale = Math.max(0.76, 1 - absDistance * 0.075);
-              const scaleY = Math.max(0.42, 1 - absDistance * 0.18);
-              const opacity = isActive
-                ? 1
-                : Math.max(0.1, 0.31 - absDistance * 0.045);
-              const arc = distance * 0.62;
-              const rotateX = distance * -23;
-              const skewX = distance * -5;
-              const translateY = Math.sin(arc) * productionWheelSpacing * 1.26;
-              const translateZ = (Math.cos(arc) - 1) * 320;
-              const isLongTitle = production.title.length > 22;
-              const isMediumTitle = production.title.length > 14;
-
-              return (
-                <a
-                  key={production.id}
-                  href={`/upcoming-productions/${production.id}`}
-                  aria-label={`View ${production.title}`}
-                  className="group absolute left-1/2 top-1/2 flex w-[min(88vw,76rem)] items-center justify-center text-center"
-                  style={{
-                    opacity: isVisible ? opacity : 0,
-                    pointerEvents: isVisible ? "auto" : "none",
-                    transform: `translate(-50%, -50%) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) skewX(${skewX}deg) scale(${scale}) scaleY(${scaleY})`,
-                    transformStyle: "preserve-3d",
-                    transition: "opacity 160ms ease",
-                  }}
-                >
-                  <span
-                    className={`max-w-full text-balance whitespace-normal font-sans font-medium uppercase leading-[0.82] tracking-[-0.078em] transition-colors duration-300 group-hover:text-white ${
-                      isLongTitle
-                        ? "text-[2.5rem] sm:text-[3.5rem] md:text-[4.4rem] lg:text-[5.25rem] xl:text-[5.9rem]"
-                        : isMediumTitle
-                          ? "text-[3rem] sm:text-[4.1rem] md:text-[5rem] lg:text-[6.1rem] xl:text-[6.9rem]"
-                          : "text-[3.45rem] sm:text-[4.9rem] md:text-[5.9rem] lg:text-[7.1rem] xl:text-[8rem]"
-                    } ${isActive ? "text-white" : "text-white/16"}`}
-                  >
-                    {production.title}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      ) : null}
-    </section>
-  );
-}
 function HomeExperientialAndRenderingSection() {
   const experientialProjects = getLocalExperientialProjects()
     .filter(project => project.coverImageUrl)
@@ -1637,15 +1702,41 @@ function HomeCta() {
   );
 }
 
+function HomeMinimalFooter() {
+  return (
+    <footer className="border-t border-black/10 bg-white px-[clamp(1rem,3vw,2.8rem)] py-7 text-black">
+      <div className="flex flex-col gap-4 text-[0.82rem] tracking-[-0.01em] text-black/48 md:flex-row md:items-center md:justify-between">
+        <p>© 2026 Brandon PT Davis. Scenic Design.</p>
+        <nav
+          aria-label="Footer"
+          className="flex flex-wrap gap-x-5 gap-y-2"
+        >
+          {[
+            ["Portfolio", "/projects"],
+            ["About", "/about"],
+            ["Contact", "/contact"],
+            ["Privacy", "/privacy"],
+            ["Sitemap", "/sitemap"],
+          ].map(([label, href]) => (
+            <a
+              key={href}
+              href={href}
+              className="transition-colors hover:text-black"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </footer>
+  );
+}
+
 export default function Home({
   initialProjects,
 }: {
   initialProjects: ScenicProjectSummary[];
 }) {
-  const [introReady, setIntroReady] = useState(false);
-  const handleLoaderComplete = useCallback(() => {
-    setIntroReady(true);
-  }, []);
   const projects = sortScenicProjectsChronologically(initialProjects);
   const projectsLoading = false;
   const featuredProject =
@@ -1666,26 +1757,15 @@ export default function Home({
       />
 
       <Header />
-      <HomeLogoLoader onComplete={handleLoaderComplete} />
 
       <main>
         {projectsLoading ? (
           <ProjectGridSkeleton />
         ) : featuredProject ? (
           <>
-            <HomeIntro introReady={introReady} />
-            <HomeThesisSection />
-            <HomeFeaturedScenicGrid projects={projects} />
-            <HomePortfolioExploreStrip />
-            <BrandonSection />
-            <ProcessSection />
-            <UpcomingSection />
-            <HomeExperientialAndRenderingSection />
-            <PublishSection />
-            <HomeCta />
-            <div className="bg-black">
-              <Footer />
-            </div>
+            <HomeIdentityCard projects={projects} />
+            <HomeMinimalGallery projects={projects} />
+            <HomeMinimalFooter />
           </>
         ) : null}
       </main>

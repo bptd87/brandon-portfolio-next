@@ -15,11 +15,9 @@ import {
 } from "./localPortfolios";
 import { getLocalScenicProjects } from "./localScenicProjects";
 import {
-  getLocalCollaborators,
   getLocalStudioDirectory,
   getLocalTutorials,
 } from "./localStudio";
-import { productionEvents, upcomingProductions } from "./upcomingProductions";
 import { voiceProfile } from "./voiceProfile";
 
 export type SiteSearchSection = "Portfolio" | "Writing" | "Studio" | "People";
@@ -352,44 +350,6 @@ function createProfileEntries() {
       ],
     }),
     createEntry({
-      id: "profile:upcoming-productions",
-      title: "Upcoming Productions",
-      href: "/upcoming-productions",
-      section: "People",
-      kind: "Calendar",
-      description:
-        "Public production windows and upcoming scenic design commitments by Brandon PT Davis.",
-      meta: "Upcoming • 2026",
-      bodyText: upcomingProductions
-        .map((production) =>
-          [
-            production.title,
-            production.company,
-            production.venue,
-            production.director,
-            production.location.city,
-            production.location.region,
-          ].join(" ")
-        )
-        .join(" "),
-      keywords: [
-        "upcoming productions",
-        "calendar",
-        "2026",
-        "season",
-        "theatre calendar",
-        "Okoboji Summer Theatre",
-        "Maples Repertory Theatre",
-        "New Swan Shakespeare Festival",
-        "9 to 5",
-        "Never Can Say Goodbye",
-        "You're a Good Man Charlie Brown",
-        "Almost Heaven",
-        "Merry Wives of Windsor Cove",
-        "Romeo and Juliet",
-      ],
-    }),
-    createEntry({
       id: "profile:teaching",
       title: "Teaching Philosophy",
       href: "/about/teaching",
@@ -540,25 +500,6 @@ function createStaticPageEntries() {
       ],
     }),
     createEntry({
-      id: "page:collaborators",
-      title: "Collaborators & Directors",
-      href: "/about/collaborators",
-      section: "People",
-      kind: "People Directory",
-      description:
-        "Directors, designers, theatre companies, and recurring creative partners across Brandon PT Davis's work.",
-      meta: "People • Designers • Directors",
-      keywords: [
-        "collaborators",
-        "directors",
-        "designers",
-        "creative partners",
-        "creative team",
-        "theatre companies",
-        "design team",
-      ],
-    }),
-    createEntry({
       id: "page:learning-portal",
       title: "Scenic Design Learning Portal",
       href: "/studio/tutorials",
@@ -634,61 +575,6 @@ function createStaticPageEntries() {
   ];
 }
 
-const collaboratorRoleLabels: Record<string, string> = {
-  director: "Director",
-  scenic_designer: "Scenic Designer",
-  costume_designer: "Costume Designer",
-  lighting_designer: "Lighting Designer",
-  sound_designer: "Sound Designer",
-  projection_designer: "Projection Designer",
-  theatre_company: "Theatre Company",
-  partner_company: "Partner Company",
-};
-
-const slugifySearchAnchor = (value: string) =>
-  normalizeSearchValue(value).replace(/\s+/g, "-");
-
-function createCollaboratorEntries() {
-  return getLocalCollaborators().map((collaborator) => {
-    const roleLabel =
-      collaboratorRoleLabels[String(collaborator.role || "")] ||
-      String(collaborator.role || "Collaborator").replace(/_/g, " ");
-    const href = `/about/collaborators#${slugifySearchAnchor(collaborator.name)}`;
-    const socialHandle = collaborator.instagramHandle
-      ? collaborator.instagramHandle.replace(/^@/, "")
-      : "";
-
-    return createEntry({
-      id: `collaborator:${collaborator.slug}`,
-      title: collaborator.name,
-      href,
-      section: "People",
-      kind: roleLabel,
-      description:
-        collaborator.bio ||
-        `${collaborator.name} is listed in the collaborator directory as a ${roleLabel.toLowerCase()}.`,
-      imageUrl: collaborator.coverImage || undefined,
-      featured: collaborator.featured,
-      bodyText: collaborator.bio || "",
-      keywords: [
-        collaborator.name,
-        collaborator.slug,
-        collaborator.role,
-        roleLabel,
-        collaborator.bio,
-        collaborator.website,
-        collaborator.portfolioUrl,
-        collaborator.instagramUrl,
-        socialHandle,
-        "collaborator",
-        "creative partner",
-        "designer",
-        "director",
-      ],
-    });
-  });
-}
-
 function buildSnippet(source: string | undefined, fallback: string, terms: string[]) {
   const body = collapseWhitespace(source || "");
   if (!body) return fallback;
@@ -758,7 +644,6 @@ function hasStudioIntent(normalizedQuery: string) {
 export function buildSiteSearchEntries(): SiteSearchEntry[] {
   const profileEntries = createProfileEntries();
   const staticPageEntries = createStaticPageEntries();
-  const collaboratorEntries = createCollaboratorEntries();
   const scenicEntries = getLocalScenicProjects().map((project) =>
     createEntry({
       id: `scenic:${project.slug}`,
@@ -841,32 +726,6 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       meta: "Experiential Design",
       imageUrl: brand.logoUrl,
       keywords: [brand.name, brand.websiteUrl],
-    })
-  );
-
-  const productionEventEntries = productionEvents.map((production) =>
-    createEntry({
-      id: `production-event:${production.id}`,
-      title: production.title,
-      href: `/upcoming-productions/${production.id}`,
-      section: "People",
-      kind: production.status === "archived" ? "Production Archive" : "Upcoming Production",
-      description: production.description,
-      meta: [production.company, production.venue, production.director].filter(Boolean).join(" • "),
-      imageUrl: production.imageUrl,
-      bodyText: [production.subtitle, ...production.body].join(" "),
-      keywords: [
-        production.title,
-        production.id,
-        production.subtitle,
-        production.company,
-        production.venue,
-        production.director,
-        production.location.city,
-        production.location.region,
-        production.sourceLabel,
-        production.portfolioLabel,
-      ],
     })
   );
 
@@ -972,12 +831,10 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
   return [
     ...profileEntries,
     ...staticPageEntries,
-    ...collaboratorEntries,
     ...scenicEntries,
     ...renderingEntries,
     ...experientialEntries,
     ...brandEntries,
-    ...productionEventEntries,
     ...articleEntries,
     ...tutorialEntries,
     ...assistantEntries,

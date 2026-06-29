@@ -121,11 +121,11 @@ function ProjectCard({
       <a
         href={href}
         onClick={(event) => onNavigate(event, href)}
-        className="portfolio-focus-card group block h-full border-b border-r border-white/12"
+        className="portfolio-focus-card group block h-full border-b border-r border-black/10"
       >
-        <article className="h-full bg-[#111111]">
+        <article className="h-full bg-white">
           <div
-            className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]"
+            className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#f1f0ec]"
             style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
           >
             {project.coverImageUrl ? (
@@ -147,13 +147,13 @@ function ProjectCard({
               <div className="aspect-[4/3] w-full bg-muted" />
             )}
           </div>
-          <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+          <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-black/10 p-[clamp(0.9rem,1.5vw,1.2rem)] text-[#111111]">
             <div>
-              <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors duration-500 group-hover:text-[#a78bff]">
+              <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#111111] transition-opacity duration-500 group-hover:opacity-70">
                 {project.title}
               </h2>
               {getVenueLabel(project) ? (
-                <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
+                <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-black/55">
                   {getVenueLabel(project)}
                 </p>
               ) : null}
@@ -276,10 +276,8 @@ export default function Projects({
     : undefined;
 
   const pageTitle = scenicPortfolioLandingCopy.title;
-  const pageSubtitle = scenicPortfolioLandingCopy.subtitle;
   const pageDescription =
     "Scenic design productions by Brandon PT Davis, spanning plays, musicals, Shakespeare, new work, and regional theatre environments.";
-  const pageIntro = scenicPortfolioLandingCopy.intro;
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
   const selectedCategoryLabel =
     subcategories.find((item) => item.key === selectedSubcategory)?.label || null;
@@ -362,7 +360,7 @@ export default function Projects({
   };
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title={scenicArchiveTitle}
         description={scenicArchiveDescription}
@@ -452,23 +450,11 @@ export default function Projects({
       <PortfolioTopBar />
 
       <main>
-        <section className="bg-[#111111] pt-12 md:pt-16">
+        <section className="bg-white pt-12 md:pt-16">
           <div className="w-full">
             <div className="px-[clamp(1.5rem,5vw,6rem)]">
-              <MotionReveal className="mb-5 pb-4">
-                <div>
-                  <p className="max-w-2xl text-[0.95rem] leading-6 tracking-[-0.015em] text-white/54">
-                    {currentHeading === pageTitle ? pageSubtitle : pageTitle}
-                  </p>
-                  {currentHeading === pageTitle ? (
-                    <p className="mt-3 max-w-2xl text-[1rem] leading-6 text-white/58 md:text-[1.08rem]">
-                      {pageIntro}
-                    </p>
-                  ) : null}
-                </div>
-              </MotionReveal>
               <MotionReveal delay={120}>
-                <h1 className="font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-white">
+                <h1 className="font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-[#111111]">
                   {heroDisplayTitle}
                 </h1>
               </MotionReveal>
@@ -487,7 +473,7 @@ export default function Projects({
                       className={`inline-flex h-10 items-center rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
                         selectedSubcategory === "all"
                           ? "border-foreground/20 bg-foreground text-background"
-                          : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
+                          : "border-border/50 bg-background/70 text-black/68 hover:border-border hover:text-black"
                       }`}
                     >
                       <Rows3 className="mr-2 h-4 w-4" />
@@ -504,7 +490,7 @@ export default function Projects({
                           className={`inline-flex h-10 items-center whitespace-nowrap rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
                             selectedSubcategory === category.key
                               ? "border-foreground/20 bg-foreground text-background"
-                              : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
+                              : "border-border/50 bg-background/70 text-black/68 hover:border-border hover:text-black"
                           }`}
                         >
                           <CategoryIcon className="mr-2 h-4 w-4" />
@@ -523,8 +509,8 @@ export default function Projects({
                     onClick={() => setSelectedSubcategory("all")}
                     className={`inline-flex items-center gap-2 text-[1.05rem] transition-colors ${
                       selectedSubcategory === "all"
-                        ? "text-white"
-                        : "text-white/52 hover:text-white/80"
+                        ? "text-black"
+                        : "text-black/52 hover:text-black/80"
                     }`}
                   >
                     <Rows3 className="h-4 w-4" />
@@ -540,8 +526,8 @@ export default function Projects({
                         onClick={() => setSelectedSubcategory(category.key)}
                         className={`inline-flex items-center gap-2 text-[1.05rem] transition-colors ${
                           selectedSubcategory === category.key
-                            ? "text-white"
-                            : "text-white/52 hover:text-white/80"
+                            ? "text-black"
+                            : "text-black/52 hover:text-black/80"
                         }`}
                       >
                         <CategoryIcon className="h-4 w-4" />
@@ -557,7 +543,7 @@ export default function Projects({
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-black/72 transition-colors hover:border-border hover:text-black"
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Filter
@@ -575,8 +561,8 @@ export default function Projects({
                     <div className="space-y-5">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-medium text-white">Filter productions</p>
-                          <p className="text-xs text-white/52">Refine by venue or date.</p>
+                          <p className="text-sm font-medium text-[#111111]">Filter productions</p>
+                          <p className="text-xs text-black/52">Refine by venue or date.</p>
                         </div>
                         {(selectedVenue !== "all" || selectedYear !== "all") && (
                           <button
@@ -585,7 +571,7 @@ export default function Projects({
                               setSelectedVenue("all");
                               setSelectedYear("all");
                             }}
-                            className="text-xs text-white/55 transition-colors hover:text-white"
+                            className="text-xs text-black/55 transition-colors hover:text-black"
                           >
                             Clear
                           </button>
@@ -593,7 +579,7 @@ export default function Projects({
                       </div>
 
                       <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/45">
                           Venue
                         </p>
                         <div className="flex max-h-40 flex-wrap gap-2 overflow-y-auto pr-1">
@@ -602,8 +588,8 @@ export default function Projects({
                             onClick={() => setSelectedVenue("all")}
                             className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                               selectedVenue === "all"
-                                ? "border-white/30 bg-white/10 text-white"
-                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
+                                ? "border-black bg-black text-white"
+                                : "border-border/50 text-black/62 hover:border-border hover:text-black"
                             }`}
                           >
                             All venues
@@ -615,8 +601,8 @@ export default function Projects({
                               onClick={() => setSelectedVenue(venue)}
                               className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                                 selectedVenue === venue
-                                  ? "border-white/30 bg-white/10 text-white"
-                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
+                                  ? "border-black bg-black text-white"
+                                  : "border-border/50 text-black/62 hover:border-border hover:text-black"
                               }`}
                             >
                               {venue}
@@ -626,7 +612,7 @@ export default function Projects({
                       </div>
 
                       <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/45">
                           Date
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -635,8 +621,8 @@ export default function Projects({
                             onClick={() => setSelectedYear("all")}
                             className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                               selectedYear === "all"
-                                ? "border-white/30 bg-white/10 text-white"
-                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
+                                ? "border-black bg-black text-white"
+                                : "border-border/50 text-black/62 hover:border-border hover:text-black"
                             }`}
                           >
                             All dates
@@ -648,8 +634,8 @@ export default function Projects({
                               onClick={() => setSelectedYear(year)}
                               className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                                 selectedYear === year
-                                  ? "border-white/30 bg-white/10 text-white"
-                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
+                                  ? "border-black bg-black text-white"
+                                  : "border-border/50 text-black/62 hover:border-border hover:text-black"
                               }`}
                             >
                               {year}
@@ -665,7 +651,7 @@ export default function Projects({
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-black/72 transition-colors hover:border-border hover:text-black"
                     >
                       <ArrowUpDown className="h-4 w-4" />
                       Sort
@@ -686,7 +672,7 @@ export default function Projects({
                           className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm"
                         >
                           <span className="inline-flex items-center gap-2">
-                            <SortIcon className="h-4 w-4 text-white/54" />
+                            <SortIcon className="h-4 w-4 text-black/54" />
                             {option.label}
                           </span>
                           {sortKey === option.key ? <Check className="h-4 w-4" /> : null}
@@ -703,7 +689,7 @@ export default function Projects({
                     className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                       viewMode === "grid"
                         ? "bg-foreground text-background"
-                        : "text-white/55 hover:text-white"
+                        : "text-black/55 hover:text-black"
                     }`}
                     aria-label="Grid view"
                   >
@@ -715,7 +701,7 @@ export default function Projects({
                     className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                       viewMode === "list"
                         ? "bg-foreground text-background"
-                        : "text-white/55 hover:text-white"
+                        : "text-black/55 hover:text-black"
                     }`}
                     aria-label="List view"
                   >
@@ -726,7 +712,7 @@ export default function Projects({
             </MotionReveal>
 
             {(selectedVenue !== "all" || selectedYear !== "all" || sortKey !== "newest") && (
-              <div className="flex flex-wrap items-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-sm text-white/52">
+              <div className="flex flex-wrap items-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-sm text-black/52">
                 <span>{sortedProjects.length} productions</span>
                 {selectedVenue !== "all" ? <span>Venue: {selectedVenue}</span> : null}
                 {selectedYear !== "all" ? <span>Date: {selectedYear}</span> : null}
@@ -741,9 +727,9 @@ export default function Projects({
         {isLoading ? (
           <PortfolioGridSkeleton />
         ) : sortedProjects.length > 0 ? (
-          <section className="border-t border-white/12 bg-[#111111]">
+          <section className="border-t border-black/10 bg-white">
             {visibleViewMode === "grid" ? (
-              <div className="portfolio-focus-grid grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+              <div className="portfolio-focus-grid grid grid-cols-1 border-l border-black/10 md:grid-cols-4">
                 {sortedProjects.map((project, index) => {
                   const href = getProjectPath(project);
 
@@ -763,7 +749,7 @@ export default function Projects({
                 })}
               </div>
             ) : (
-              <div className="mx-auto max-w-[88rem] border-t border-white/12">
+              <div className="mx-auto max-w-[88rem] border-t border-black/10">
                 {sortedProjects.map((project, index) => {
                   const href = getProjectPath(project);
                   const directorLabel = getDirectorLabel(project);
@@ -773,22 +759,22 @@ export default function Projects({
                       key={`${project.slug}-${index}`}
                       href={href}
                       onClick={(event) => navigateWithTransition(event, href)}
-                      className="group grid gap-4 border-b border-white/12 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                      className="group grid gap-4 border-b border-black/10 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
                     >
-                      <div className="space-y-2 text-sm text-white/48">
-                        <p className="text-white/82">{getVenueLabel(project)}</p>
+                      <div className="space-y-2 text-sm text-black/48">
+                        <p className="text-black/82">{getVenueLabel(project)}</p>
                         <p>{formatProjectDate(project) || "Date unavailable"}</p>
                       </div>
 
                       <div className="min-w-0">
-                        <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
+                        <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-black/88">
                           {project.title}
                         </p>
                         {directorLabel ? (
-                          <p className="mt-2 text-sm leading-6 text-white/52">{directorLabel}</p>
+                          <p className="mt-2 text-sm leading-6 text-black/52">{directorLabel}</p>
                         ) : null}
                         {project.subcategory ? (
-                          <p className="mt-1 text-sm leading-6 text-white/38">{project.subcategory}</p>
+                          <p className="mt-1 text-sm leading-6 text-black/38">{project.subcategory}</p>
                         ) : null}
                       </div>
                     </a>
@@ -798,9 +784,9 @@ export default function Projects({
             )}
           </section>
         ) : (
-          <section className="bg-[#111111] pb-24 pt-16">
+          <section className="bg-white pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-white/55">
+              <p className="text-black/55">
                 No scenic design productions match the current filters.
               </p>
             </div>
@@ -809,7 +795,7 @@ export default function Projects({
 
       </main>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }
