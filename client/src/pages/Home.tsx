@@ -752,7 +752,7 @@ function HomeMinimalGallery({
   return (
     <section
       id="recent-designs"
-      className="min-h-screen bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(3rem,7vw,6rem)] pt-[clamp(1rem,2.4vw,1.8rem)] text-black"
+      className="bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(3rem,7vw,6rem)] pt-[clamp(1rem,2.4vw,1.8rem)] text-black"
       aria-labelledby="home-gallery-title"
     >
       <h2 id="home-gallery-title" className="sr-only">
@@ -1771,7 +1771,7 @@ export default function Home({
 
       <Header />
 
-      <main className="min-h-screen bg-white">
+      <main className="bg-white">
         {projectsLoading ? (
           <ProjectGridSkeleton />
         ) : featuredProject ? (
