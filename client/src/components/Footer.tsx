@@ -26,29 +26,19 @@ const FOOTER_LINKS = [
 const COPYRIGHT_YEAR = 2026;
 
 export default function Footer({
-  tone = "dark",
   className = "",
 }: {
   tone?: "dark" | "light";
   className?: string;
 }) {
-  const isLight = tone === "light";
-  const linkClassName = `text-[0.92rem] font-semibold tracking-[-0.012em] transition-colors ${
-    isLight ? "text-black/56 hover:text-black" : "text-white/58 hover:text-white"
-  }`;
-  const socialClassName = `inline-flex h-10 w-10 items-center justify-center border transition-colors ${
-    isLight
-      ? "border-black/12 text-black/52 hover:border-black/24 hover:bg-black/[0.05] hover:text-black"
-      : "border-white/14 text-white/54 hover:border-white/30 hover:bg-white/[0.08] hover:text-white"
-  }`;
+  const linkClassName =
+    "text-[0.92rem] font-semibold tracking-[-0.012em] text-black/56 transition-colors hover:text-black";
+  const socialClassName =
+    "inline-flex h-10 w-10 items-center justify-center border border-black/12 text-black/52 transition-colors hover:border-black/24 hover:bg-black/[0.05] hover:text-black";
 
   return (
     <footer
-      className={`mt-0 border-t ${
-        isLight
-          ? "border-black/10 bg-[#f1f0ec] text-[#111111]"
-          : "border-white/10 bg-[#070707] text-white"
-      } ${className}`}
+      className={`mt-auto border-t border-black/10 bg-white text-[#111111] ${className}`}
     >
       <div className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-12">
         <div className="mx-auto flex max-w-[76rem] flex-col gap-8 md:flex-row md:items-center md:justify-between">
@@ -81,9 +71,7 @@ export default function Footer({
         </div>
 
         <div
-          className={`mx-auto mt-8 flex max-w-[76rem] flex-col gap-3 border-t pt-5 text-[0.84rem] tracking-[-0.006em] md:flex-row md:items-center md:justify-between ${
-            isLight ? "border-black/10 text-black/46" : "border-white/10 text-white/42"
-          }`}
+          className="mx-auto mt-8 flex max-w-[76rem] flex-col gap-3 border-t border-black/10 pt-5 text-[0.84rem] tracking-[-0.006em] text-black/46 md:flex-row md:items-center md:justify-between"
         >
           <p>© {COPYRIGHT_YEAR} Brandon PT Davis.</p>
           <div className="flex flex-wrap gap-4">

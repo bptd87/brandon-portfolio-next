@@ -439,13 +439,7 @@
     }
 
     .portfolio-focus-media {
-      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
-    }
-
-    .portfolio-focus-card:hover .portfolio-focus-media,
-    .portfolio-focus-card:focus-visible .portfolio-focus-media {
-      transform: scale(1.008);
+      overflow: hidden;
     }
 
     .portfolio-focus-card:hover .portfolio-focus-media img,
@@ -535,52 +529,6 @@
       transform: translateY(0);
     }
 
-    .portfolio-focus-grid > *:not(.motion-reveal) {
-      opacity: 0;
-      transform: translateY(1.6rem);
-      animation: portfolio-grid-item-in 760ms cubic-bezier(0.16, 1, 0.3, 1)
-        forwards;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 1):not(.motion-reveal) {
-      animation-delay: 0ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 2):not(.motion-reveal) {
-      animation-delay: 70ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 3):not(.motion-reveal) {
-      animation-delay: 140ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 4):not(.motion-reveal) {
-      animation-delay: 210ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 5):not(.motion-reveal) {
-      animation-delay: 280ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 6):not(.motion-reveal) {
-      animation-delay: 350ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 7):not(.motion-reveal) {
-      animation-delay: 420ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 8):not(.motion-reveal) {
-      animation-delay: 490ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n + 9):not(.motion-reveal) {
-      animation-delay: 560ms;
-    }
-
-    .portfolio-focus-grid > :nth-child(10n):not(.motion-reveal) {
-      animation-delay: 630ms;
-    }
   }
 
   @media (prefers-reduced-motion: no-preference) and (min-width: 768px) and (hover: hover) {

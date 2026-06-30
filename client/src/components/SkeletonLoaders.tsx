@@ -289,13 +289,6 @@ export function PortfolioGridSkeleton() {
             <div key={i} className="group cursor-pointer">
               {/* Image skeleton */}
               <div className="relative aspect-[4/3] bg-muted/20 rounded-lg overflow-hidden mb-4">
-                <div 
-                  className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
-                    animationDelay: `${i * 0.1}s`,
-                  }}
-                />
               </div>
               
               {/* Content skeleton */}

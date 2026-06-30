@@ -112,7 +112,7 @@ export default function RootLayout({
           ]}
         />
       </head>
-      <body className="min-h-screen bg-gradient-premium">
+      <body className="min-h-screen bg-white">
         <StudioFrameMode />
         <LegacyClientCleanup />
         {isProduction ? <PostHogAnalytics /> : null}

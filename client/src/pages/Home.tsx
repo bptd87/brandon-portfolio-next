@@ -1726,7 +1726,7 @@ export default function Home({
   const featuredProject =
     projects.find(project => project.coverImageUrl) || projects[0];
   return (
-    <div data-page-shell="home" className="min-h-screen bg-white text-black">
+    <div data-page-shell="home" data-home-scroll-root className="flex min-h-screen flex-col bg-white text-black">
       <SEO
         title="Brandon PT Davis | Scenic Designer"
         description="San Diego-based union scenic designer giving form to how stories reflect our world through theatre environments, renderings, and production design."
@@ -1742,7 +1742,7 @@ export default function Home({
 
       <Header />
 
-      <main className="bg-white">
+      <main className="flex-1 bg-white">
         {projectsLoading ? (
           <ProjectGridSkeleton />
         ) : featuredProject ? (

@@ -77,6 +77,11 @@ function BrandLink({ tone }: { tone: "dark" | "light" }) {
   );
 }
 
+function getHomeScrollRoot() {
+  if (typeof document === "undefined") return null;
+  return document.querySelector<HTMLElement>("[data-home-scroll-root]");
+}
+
 export default function Header() {
   const pathname = usePathname() || "/";
   const router = useRouter();
@@ -135,7 +140,8 @@ export default function Header() {
     setSearchOpen(false);
     setMobileMenuOpen(false);
     setHeaderHidden(false);
-    lastScrollYRef.current = window.scrollY;
+    const homeScrollRoot = pathname === "/" ? getHomeScrollRoot() : null;
+    lastScrollYRef.current = homeScrollRoot ? homeScrollRoot.scrollTop : window.scrollY;
   }, [pathname]);
 
   useEffect(() => {
@@ -146,8 +152,12 @@ export default function Header() {
 
     let ticking = false;
 
+    const homeScrollRoot = pathname === "/" ? getHomeScrollRoot() : null;
+    const scrollTarget: HTMLElement | Window = homeScrollRoot || window;
+    const getCurrentScrollY = () => (homeScrollRoot ? homeScrollRoot.scrollTop : window.scrollY);
+
     const updateHeaderVisibility = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = getCurrentScrollY();
       const previousScrollY = lastScrollYRef.current;
       const delta = currentScrollY - previousScrollY;
 
@@ -169,9 +179,9 @@ export default function Header() {
       window.requestAnimationFrame(updateHeaderVisibility);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [mobileMenuOpen, searchOpen]);
+    scrollTarget.addEventListener("scroll", handleScroll, { passive: true });
+    return () => scrollTarget.removeEventListener("scroll", handleScroll);
+  }, [mobileMenuOpen, pathname, searchOpen]);
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -273,18 +283,18 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(true)}
               className={`${navLinkClass({
                 lightChrome: useLightChrome,
-              })} w-fit lg:hidden`}
+              })} col-start-3 row-start-1 w-fit justify-self-end lg:hidden`}
               aria-label="Open menu"
               aria-expanded={mobileMenuOpen}
             >
               Menu
             </button>
 
-            <div className="justify-self-center">
+            <div className="col-start-2 row-start-1 justify-self-center">
               <BrandLink tone={headerTone} />
             </div>
 
-            <div className="flex items-center justify-end gap-5">
+            <div className="col-start-3 row-start-1 hidden items-center justify-end gap-5 lg:flex">
               <form
                 onSubmit={submitSearch}
                 className={`hidden overflow-hidden transition-[grid-template-columns,opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:grid ${

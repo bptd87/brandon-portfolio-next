@@ -166,7 +166,7 @@ export default function ExperientialPortfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div className="flex min-h-screen flex-col bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title={EXPERIENTIAL_PORTFOLIO_TITLE}
         description={EXPERIENTIAL_PORTFOLIO_DESCRIPTION}
@@ -240,7 +240,7 @@ export default function ExperientialPortfolio() {
       <Header />
       <PortfolioTopBar />
 
-      <main>
+      <main className="flex-1">
         <section className="bg-white px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-12 text-[#111111] md:pt-16">
           <header className="w-full">
             <MotionReveal>
@@ -265,10 +265,9 @@ export default function ExperientialPortfolio() {
                 const imageTreatment = getProjectImageTreatment(project);
 
                 return (
-                  <MotionReveal
+                  <div
                     key={project.slug}
                     className={`${isFeatureCard ? "md:col-span-2" : ""} h-full`}
-                    delay={(index % 10) * 70}
                   >
                     <a
                       href={href}
@@ -326,7 +325,7 @@ export default function ExperientialPortfolio() {
                         </div>
                       </article>
                     </a>
-                  </MotionReveal>
+                  </div>
                 );
               })}
             </div>

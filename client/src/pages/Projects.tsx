@@ -116,8 +116,10 @@ function ProjectCard({
   sizes: string;
   revealDelay?: number;
 }) {
+  void revealDelay;
+
   return (
-    <MotionReveal className={`${layoutClass || ""} h-full`} delay={revealDelay}>
+    <div className={`${layoutClass || ""} h-full`}>
       <a
         href={href}
         onClick={(event) => onNavigate(event, href)}
@@ -161,7 +163,7 @@ function ProjectCard({
           </div>
         </article>
       </a>
-    </MotionReveal>
+    </div>
   );
 }
 
@@ -360,7 +362,7 @@ export default function Projects({
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div className="flex min-h-screen flex-col bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title={scenicArchiveTitle}
         description={scenicArchiveDescription}
@@ -449,7 +451,7 @@ export default function Projects({
       <Header />
       <PortfolioTopBar />
 
-      <main>
+      <main className="flex-1">
         <section className="bg-white pt-12 md:pt-16">
           <div className="w-full">
             <div className="px-[clamp(1.5rem,5vw,6rem)]">
