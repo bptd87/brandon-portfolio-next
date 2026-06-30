@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
@@ -1697,36 +1698,6 @@ function HomeCta() {
   );
 }
 
-function HomeMinimalFooter() {
-  return (
-    <footer className="border-t border-black/10 bg-white px-[clamp(1rem,3vw,2.8rem)] py-7 text-black">
-      <div className="flex flex-col gap-4 text-[0.82rem] tracking-[-0.01em] text-black/48 md:flex-row md:items-center md:justify-between">
-        <p>© 2026 Brandon PT Davis. Scenic Design.</p>
-        <nav
-          aria-label="Footer"
-          className="flex flex-wrap gap-x-5 gap-y-2"
-        >
-          {[
-            ["Portfolio", "/projects"],
-            ["About", "/about"],
-            ["Contact", "/contact"],
-            ["Privacy", "/privacy"],
-            ["Sitemap", "/sitemap"],
-          ].map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="transition-colors hover:text-black"
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </footer>
-  );
-}
-
 export default function Home({
   initialProjects,
 }: {
@@ -1778,7 +1749,7 @@ export default function Home({
           <>
             <HomeIdentityCard projects={projects} />
             <HomeMinimalGallery projects={projects} />
-            <HomeMinimalFooter />
+            <Footer tone="light" />
           </>
         ) : null}
       </main>
