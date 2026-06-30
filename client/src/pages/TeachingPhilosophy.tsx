@@ -90,12 +90,12 @@ const teachingChapters = [
 
 const lectureResources = [
   {
-    type: "Tutorial",
-    focus: "Portal",
-    title: "Vectorworks + Scenic Design Tutorials",
+    type: "Article",
+    focus: "Tools",
+    title: "Vectorworks + Scenic Design Articles",
     description:
-      "A public teaching archive for drafting, modeling, rendering, file setup, documentation, and scenic workflow lessons.",
-    href: "/studio/tutorials",
+      "Writing on drafting, modeling, rendering, file setup, documentation, and scenic workflow.",
+    href: "/articles",
   },
   {
     type: "Lecture",
@@ -103,7 +103,7 @@ const lectureResources = [
     title: "Rendering as Visual Communication",
     description:
       "Rendering lectures and articles on atmosphere, scale, lighting, camera choices, focal points, and presentation workflow.",
-    href: "/studio/tutorials",
+    href: "/articles",
   },
   {
     type: "Article",
@@ -264,6 +264,7 @@ export default function TeachingPhilosophy() {
           description="A teaching practice and CV record centered on process, rigor, visual communication, and the habits students need for professional collaboration."
           imageAlt="Graduation cap icon for teaching philosophy"
           imageSrc="/images/about/icons/teaching-icon.png"
+          showImage={false}
           title="Teaching Philosophy"
           updatedAt="May 22, 2026"
         />
@@ -494,19 +495,19 @@ export default function TeachingPhilosophy() {
           <section className="px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
             <div className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-start lg:gap-14">
               <AnimatedSection>
-                <p className="section-kicker text-black/42">Lectures + Tutorials</p>
+                <p className="section-kicker text-black/42">Lectures + Articles</p>
                 <h2 className="mt-4 max-w-[11ch] font-sans text-4xl font-semibold leading-[1] tracking-[0] text-black sm:text-5xl">
                   Teaching as public practice.
                 </h2>
                 <p className="mt-5 max-w-[18rem] text-[0.98rem] leading-7 tracking-[0] text-black/58">
-                  Some lectures become articles. Some demos become tutorials. Together, they extend
+                  Some lectures become articles. Some demos become articles. Together, they extend
                   the classroom into a shared record of methods, references, and working habits.
                 </p>
                 <Link
-                  href="/studio/tutorials"
+                  href="/articles"
                   className="mt-7 inline-flex items-center gap-2 text-[0.95rem] font-medium tracking-[0] text-black/62 transition-colors hover:text-black"
                 >
-                  Learning portal
+                  Articles
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </AnimatedSection>

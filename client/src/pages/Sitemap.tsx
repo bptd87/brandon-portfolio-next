@@ -29,7 +29,6 @@ const sections = [
     links: [
       { name: "Studio", href: "/studio" },
       { name: "Articles", href: "/articles" },
-      { name: "Tutorials", href: "/studio/tutorials" },
       { name: "Scenic Directory", href: "/studio/directory" },
       { name: "Studio Apps", href: "/studio/apps" },
     ],
@@ -64,7 +63,6 @@ const sections = [
       { name: "XML Sitemap", href: "/sitemap.xml" },
       { name: "Projects RSS", href: "/projects/rss.xml" },
       { name: "Articles RSS", href: "/articles/rss.xml" },
-      { name: "Tutorials RSS", href: "/studio/tutorials/rss.xml" },
       { name: "Image Sitemap", href: "/image-sitemap.xml" },
       { name: "Video Sitemap", href: "/video-sitemap.xml" },
     ],

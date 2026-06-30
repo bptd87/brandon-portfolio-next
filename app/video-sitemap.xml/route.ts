@@ -1,7 +1,5 @@
 import { buildVideoSitemap, xmlResponse } from "../../lib/seo/xml";
 import { getLocalArticles, type LocalArticle } from "../../shared/localArticles";
-import { getLocalTutorials } from "../../shared/localStudio";
-import { LEARNING_PORTAL_ARTICLE_SLUG_SET } from "../../shared/learningPortal";
 
 export const dynamic = "force-static";
 
@@ -47,22 +45,10 @@ function collectArticleVideos(article: LocalArticle) {
 }
 
 export function GET() {
-  const tutorialEntries = getLocalTutorials()
-    .filter((tutorial) => tutorial.video_url && tutorial.cover_image)
-    .map((tutorial) => ({
-      pathname: `/studio/tutorials/${tutorial.slug}`,
-      title: tutorial.title,
-      description: tutorial.description || tutorial.overview || tutorial.seo_description || tutorial.title,
-      thumbnailUrl: String(tutorial.cover_image),
-      playerUrl: toYouTubeEmbedUrl(String(tutorial.video_url)),
-      publishedAt: tutorial.published_at || tutorial.created_at || tutorial.updated_at,
-    }));
   const articleEntries = getLocalArticles()
     .filter((article) => article.coverImageUrl)
     .flatMap((article) => {
-      const pathname = LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
-        ? `/studio/tutorials/${article.slug}`
-        : `/articles/${article.slug}`;
+      const pathname = `/articles/${article.slug}`;
 
       return collectArticleVideos(article).slice(0, 6).map((videoUrl, index) => ({
         pathname,
@@ -74,5 +60,5 @@ export function GET() {
       }));
     });
 
-  return xmlResponse(buildVideoSitemap([...tutorialEntries, ...articleEntries]));
+  return xmlResponse(buildVideoSitemap(articleEntries));
 }

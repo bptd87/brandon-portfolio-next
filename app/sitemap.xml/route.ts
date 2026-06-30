@@ -2,16 +2,12 @@ import type { MetadataRoute } from "next";
 
 import { absoluteUrl } from "../../lib/metadata";
 import { getLocalArticles } from "../../shared/localArticles";
-import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "../../shared/learningPortal";
+import { RETIRED_LEARNING_ARTICLE_SLUG_SET } from "../../shared/learningPortal";
 import {
   getLocalExperientialProjects,
   getLocalRenderingProjects,
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
-import { getLocalTutorials } from "../../shared/localStudio";
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
 
@@ -31,8 +27,6 @@ const STATIC_ROUTES: Array<{
   { pathname: "/projects/experiential", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/articles", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/studio", priority: 0.8, changeFrequency: "weekly" },
-  { pathname: "/studio/tutorials", priority: 0.7, changeFrequency: "weekly" },
-  { pathname: "/studio/tutorials/archive", priority: 0.6, changeFrequency: "weekly" },
   { pathname: "/studio/directory", priority: 0.6, changeFrequency: "weekly" },
   { pathname: "/studio/apps", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/studio/apps/scale-calculator", priority: 0.5, changeFrequency: "monthly" },
@@ -100,7 +94,6 @@ function getSitemapEntries(): MetadataRoute.Sitemap {
   );
 
   const articleEntries: MetadataRoute.Sitemap = getLocalArticles()
-    .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
     .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
     .map((article) => ({
       url: absoluteUrl(`/articles/${article.slug}`),
@@ -109,30 +102,12 @@ function getSitemapEntries(): MetadataRoute.Sitemap {
       priority: article.featured ? 0.7 : 0.6,
     }));
 
-  const learningArticleEntries: MetadataRoute.Sitemap = getLocalArticles()
-    .filter((article) => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
-    .map((article) => ({
-      url: absoluteUrl(`/studio/tutorials/${article.slug}`),
-      lastModified: toLastModified(article.updatedAt, article.publishedAt, article.createdAt),
-      changeFrequency: "monthly",
-      priority: article.featured ? 0.7 : 0.6,
-    }));
-
-  const tutorialEntries: MetadataRoute.Sitemap = getLocalTutorials().map((tutorial) => ({
-    url: absoluteUrl(`/studio/tutorials/${tutorial.slug}`),
-    lastModified: toLastModified(tutorial.updated_at, tutorial.published_at, tutorial.created_at),
-    changeFrequency: "monthly",
-    priority: tutorial.featured ? 0.6 : 0.5,
-  }));
-
   return [
     ...staticEntries,
     ...scenicEntries,
     ...renderingEntries,
     ...experientialProjectEntries,
     ...articleEntries,
-    ...learningArticleEntries,
-    ...tutorialEntries,
   ];
 }
 

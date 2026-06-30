@@ -36,7 +36,7 @@ export const RETIRED_LEARNING_ARTICLE_REDIRECTS: Record<string, string> = {
   "becoming-a-scenic-designer-a-comprehensive-guide":
     "/articles/becoming-a-scenic-designer-a-comprehensive-guide",
   "how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool":
-    "/studio/tutorials/creating-trim-profiles-polyline",
+    "/articles",
   "video-game-environments-lessons-for-scenic-design":
     "/articles/video-game-environments-lessons-for-scenic-design",
 };

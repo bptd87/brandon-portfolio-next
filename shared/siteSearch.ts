@@ -1,8 +1,5 @@
 import { getLocalArticles } from "./localArticles";
-import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "./learningPortal";
+import { RETIRED_LEARNING_ARTICLE_SLUG_SET } from "./learningPortal";
 import { resolveBlobMediaUrl } from "./mediaBlob";
 import {
   assistantScenicDesignEntries,
@@ -16,7 +13,6 @@ import {
 import { getLocalScenicProjects } from "./localScenicProjects";
 import {
   getLocalStudioDirectory,
-  getLocalTutorials,
 } from "./localStudio";
 import { voiceProfile } from "./voiceProfile";
 
@@ -219,22 +215,6 @@ function extractArticleBodyText(content: unknown): string {
   }
 
   return collapseWhitespace(parts.join(" "));
-}
-
-function extractTutorialBodyText(tutorial: ReturnType<typeof getLocalTutorials>[number]) {
-  return collapseWhitespace(
-    [
-      tutorial.description,
-      tutorial.overview,
-      ...(tutorial.learning_objectives || []),
-      ...(tutorial.pro_tips || []),
-      ...(tutorial.common_pitfalls || []),
-      ...(tutorial.key_concepts || []).flatMap((concept) => [concept.title, concept.content]),
-      ...(tutorial.transcript || []).map((item) => item.text),
-    ]
-      .filter(Boolean)
-      .join(" ")
-  );
 }
 
 function extractScenicBodyText(project: ReturnType<typeof getLocalScenicProjects>[number]) {
@@ -500,26 +480,6 @@ function createStaticPageEntries() {
       ],
     }),
     createEntry({
-      id: "page:learning-portal",
-      title: "Scenic Design Learning Portal",
-      href: "/studio/tutorials",
-      section: "Studio",
-      kind: "Learning Archive",
-      description:
-        "Tutorials, article guides, Vectorworks lessons, drafting references, rendering workflows, and scenic design learning resources.",
-      meta: "Tutorials • Vectorworks • Articles",
-      keywords: [
-        "tutorials",
-        "learning portal",
-        "Vectorworks",
-        "drafting",
-        "rendering",
-        "scenic design tutorials",
-        "article tutorials",
-        "students",
-      ],
-    }),
-    createEntry({
       id: "page:studio-apps",
       title: "Studio Apps",
       href: "/studio/apps",
@@ -735,11 +695,9 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       createEntry({
         id: `article:${article.slug}`,
         title: article.title,
-        href: LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
-          ? `/studio/tutorials/${article.slug}`
-          : `/articles/${article.slug}`,
+        href: `/articles/${article.slug}`,
         section: "Writing",
-        kind: LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug) ? "Learning Article" : "Article",
+        kind: "Article",
         description: article.excerpt,
         meta: [article.categoryName, article.sourcePublication].filter(Boolean).join(" • "),
         imageUrl: article.coverImageUrl,
@@ -757,32 +715,6 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
         ],
       })
     );
-
-  const tutorialEntries = getLocalTutorials().map((tutorial) =>
-    createEntry({
-      id: `tutorial:${tutorial.slug}`,
-      title: tutorial.title,
-      href: `/studio/tutorials/${tutorial.slug}`,
-      section: "Studio",
-      kind: "Tutorial",
-      description: tutorial.description || tutorial.overview || "Scenic workflow tutorial.",
-      meta: [tutorial.category, tutorial.difficulty].filter(Boolean).join(" • "),
-      bodyText: extractTutorialBodyText(tutorial),
-      keywords: [
-        tutorial.title,
-        tutorial.slug,
-        tutorial.description,
-        tutorial.overview,
-        tutorial.category,
-        tutorial.difficulty,
-        ...(tutorial.learning_objectives || []),
-        ...(tutorial.key_concepts || []).flatMap((concept) => [concept.title, concept.content]),
-        ...(tutorial.pro_tips || []),
-        ...(tutorial.related_resources || []).flatMap((resource) => [resource.title, resource.type]),
-        ...(tutorial.tags || []).flatMap((tag) => [tag.name, tag.slug]),
-      ],
-    })
-  );
 
   const assistantEntries = assistantScenicDesignEntries.map((entry) =>
     createEntry({
@@ -836,7 +768,6 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
     ...experientialEntries,
     ...brandEntries,
     ...articleEntries,
-    ...tutorialEntries,
     ...assistantEntries,
     ...directoryEntries,
   ];

@@ -8,8 +8,6 @@ import {
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
 import { getLocalArticles, type LocalArticle } from "../../shared/localArticles";
-import { getLocalTutorials } from "../../shared/localStudio";
-import { LEARNING_PORTAL_ARTICLE_SLUG_SET } from "../../shared/learningPortal";
 
 export const dynamic = "force-static";
 
@@ -123,9 +121,7 @@ export function GET() {
       caption: `${project.title} experiential design by Brandon PT Davis.`,
     }));
   const articleImages = getLocalArticles().flatMap((article) => {
-    const pathname = LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
-      ? `/studio/tutorials/${article.slug}`
-      : `/articles/${article.slug}`;
+    const pathname = `/articles/${article.slug}`;
 
     return collectArticleImageUrls(article).slice(0, 12).map((imageUrl, index) => ({
       pathname,
@@ -134,15 +130,6 @@ export function GET() {
       caption: index === 0 ? article.coverImageAlt || article.excerpt : article.excerpt,
     }));
   });
-  const tutorialImages = getLocalTutorials()
-    .filter((tutorial) => tutorial.cover_image)
-    .map((tutorial) => ({
-      pathname: `/studio/tutorials/${tutorial.slug}`,
-      imageUrl: toAbsoluteImageUrl(String(tutorial.cover_image)),
-      title: tutorial.title,
-      caption: tutorial.seo_description || tutorial.description || tutorial.overview || tutorial.title,
-    }));
-
   const entries = uniqueEntries([
     {
       pathname: "/",
@@ -238,7 +225,6 @@ export function GET() {
       ),
     ]),
     ...articleImages,
-    ...tutorialImages,
   ]);
 
   return xmlResponse(buildImageSitemap(entries));

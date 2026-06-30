@@ -8,8 +8,10 @@ import {
   Mail,
   PenLine,
 } from "lucide-react";
+import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 
@@ -143,7 +145,7 @@ const aboutStoryBlocks = [
 
 export default function About() {
   return (
-    <div className="about-profile-light min-h-screen bg-white text-[#111111] [--background:#ffffff] [--foreground:#111111]">
+    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--foreground:#111111]">
       <SEO
         title="About Brandon PT Davis"
         description="About Brandon PT Davis, a Southern California scenic designer and United Scenic Artists Local 829 member working across theatre, rendering, live events, and experiential design."
@@ -152,32 +154,68 @@ export default function About() {
       />
 
       <Header />
+      <AboutNav />
 
-      <main className="px-[clamp(1rem,5vw,6rem)] pb-20 pt-24 md:pb-28 md:pt-28">
-        <header className="mx-auto max-w-[62rem] text-center">
-          <h1 className="font-sans text-[clamp(3rem,7.4vw,6.8rem)] font-medium leading-[0.92] tracking-[-0.075em] text-black">
-            About Brandon PT Davis
-          </h1>
-          <p className="mx-auto mt-8 max-w-[40rem] text-[1.28rem] font-medium italic leading-8 tracking-[-0.02em] text-black/48 md:text-[1.55rem] md:leading-9">
-            What does it mean to build spaces that tell stories?
-          </p>
-        </header>
+      <ProfileSectionHero
+        canonicalPath="/about"
+        description="What does it mean to build spaces that tell stories?"
+        imageAlt=""
+        imageSrc={ABOUT_PORTRAIT_URL}
+        showImage={false}
+        title="About Brandon PT Davis"
+        titleClassName="!max-w-[16ch] !text-[clamp(3rem,5.4vw,5.65rem)] !leading-[0.94] !tracking-[-0.068em]"
+        titleContent={
+          <>
+            About
+            <br />
+            Brandon PT Davis
+          </>
+        }
+        updatedAt="May 22, 2026"
+      />
 
-        <article className="mx-auto mt-12 max-w-[76rem] md:mt-16">
+      <main className="bg-[#f1f0ec] px-[clamp(1rem,5vw,6rem)] pb-20 pt-12 md:pb-28 md:pt-16">
+        <article className="mx-auto max-w-[76rem]">
           <div className="grid gap-10 md:grid-cols-[minmax(0,11rem)_minmax(0,1fr)] md:gap-12">
             <aside className="space-y-8 md:sticky md:top-28 md:self-start md:pt-1">
               <nav
                 aria-label="About related links"
-                className="space-y-2 text-[0.96rem] font-semibold leading-6 tracking-[-0.015em] text-black"
+                className="space-y-3.5 text-[0.98rem] font-semibold leading-6 tracking-[-0.015em] text-black"
               >
-                <a className="block underline-offset-4 hover:underline" href="/resume">
+                <a
+                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
+                  href="/resume"
+                >
+                  <FileText className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
                   Resume
                 </a>
-                <a className="block underline-offset-4 hover:underline" href="/creative-statement">
+                <a
+                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
+                  href="/creative-statement"
+                >
+                  <PenLine className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
                   Creative statement
                 </a>
-                <a className="block underline-offset-4 hover:underline" href="/about/teaching">
+                <a
+                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
+                  href="/about/teaching"
+                >
+                  <GraduationCap className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
                   Teaching philosophy
+                </a>
+                <a
+                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
+                  href="/projects"
+                >
+                  <BriefcaseBusiness className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  Portfolio
+                </a>
+                <a
+                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
+                  href="mailto:info@brandonptdavis.com"
+                >
+                  <Mail className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  Email
                 </a>
               </nav>
             </aside>
@@ -254,7 +292,7 @@ export default function About() {
 
               <section
                 aria-label="Profiles and related pages"
-                className="grid gap-7 border-t border-black/12 pt-8 text-[0.98rem] leading-6 tracking-[-0.01em] md:grid-cols-2"
+                className="border-t border-black/12 pt-8 text-[0.98rem] leading-6 tracking-[-0.01em]"
               >
                 <div>
                   <h2 className="font-sans text-[0.95rem] font-semibold leading-none tracking-[-0.01em] text-black/48">
@@ -278,49 +316,6 @@ export default function About() {
                     ))}
                   </div>
                 </div>
-
-                <div>
-                  <h2 className="font-sans text-[0.95rem] font-semibold leading-none tracking-[-0.01em] text-black/48">
-                    More
-                  </h2>
-                  <div className="mt-4 space-y-3 font-semibold text-black">
-                    <a
-                      className="flex items-center gap-2 underline-offset-4 hover:underline"
-                      href="/resume"
-                    >
-                      <FileText className="h-4 w-4" aria-hidden="true" />
-                      Resume
-                    </a>
-                    <a
-                      className="flex items-center gap-2 underline-offset-4 hover:underline"
-                      href="/creative-statement"
-                    >
-                      <PenLine className="h-4 w-4" aria-hidden="true" />
-                      Creative statement
-                    </a>
-                    <a
-                      className="flex items-center gap-2 underline-offset-4 hover:underline"
-                      href="/about/teaching"
-                    >
-                      <GraduationCap className="h-4 w-4" aria-hidden="true" />
-                      Teaching philosophy
-                    </a>
-                    <a
-                      className="flex items-center gap-2 underline-offset-4 hover:underline"
-                      href="/projects"
-                    >
-                      <BriefcaseBusiness className="h-4 w-4" aria-hidden="true" />
-                      Portfolio
-                    </a>
-                    <a
-                      className="flex items-center gap-2 underline-offset-4 hover:underline"
-                      href="mailto:info@brandonptdavis.com"
-                    >
-                      <Mail className="h-4 w-4" aria-hidden="true" />
-                      Email
-                    </a>
-                  </div>
-                </div>
               </section>
             </div>
           </div>
@@ -328,7 +323,7 @@ export default function About() {
 
         <section
           aria-label="About image archive"
-          className="mx-auto mt-16 max-w-[68rem] space-y-12 md:mt-20 md:space-y-14"
+          className="mx-auto mt-16 max-w-[53rem] space-y-12 md:mt-20 md:space-y-14"
         >
           {afterArticleImages.map((image) => (
             <figure key={image.src}>

@@ -14,7 +14,6 @@ import {
 } from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
-import { getLocalTutorials } from "@shared/localStudio";
 
 const ABOUT_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
@@ -43,24 +42,6 @@ const STUDIO_APP_TILES: FeedTile[] = [
   },
 ];
 
-const TUTORIAL_COVER_VARIANTS = {
-  "getting-started": [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-3.png",
-  ],
-  "2d-drafting": [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-3.png",
-  ],
-  "3d-modeling": [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-3.png",
-  ],
-} as const;
-
 type FeedTile = {
   id: string;
   title: string;
@@ -79,32 +60,9 @@ function PinterestIcon({ className }: { className?: string }) {
   );
 }
 
-const normalizeToken = (value: string | null | undefined) =>
-  String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-const getStableVariantIndex = (value: string, total: number) => {
-  const hash = value.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return hash % total;
-};
-
 const isRenderingContent = (value: { title?: string | null; slug?: string | null; category?: string | null; categoryName?: string | null }) => {
   const text = `${value.title || ""} ${value.slug || ""} ${value.category || ""} ${value.categoryName || ""}`;
   return /\brender(ing|ings)?\b/i.test(text);
-};
-
-const getTutorialCoverImage = (tutorial: { id: number | string; slug?: string | null; category?: string | null }) => {
-  const category = normalizeToken(tutorial.category);
-  const variants =
-    TUTORIAL_COVER_VARIANTS[category as keyof typeof TUTORIAL_COVER_VARIANTS] ||
-    TUTORIAL_COVER_VARIANTS["getting-started"];
-  const variantIndex = getStableVariantIndex(String(tutorial.slug || tutorial.id), variants.length);
-
-  return variants[variantIndex];
 };
 
 const timestampForPortfolioItem = (input: {
@@ -235,45 +193,16 @@ export default function Links() {
       .map<FeedTile>((article) => ({
         id: `learning-${article.slug}`,
         title: article.title,
-        label: LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG[article.slug] || "Tutorial",
-        href: `/studio/tutorials/${article.slug}`,
+        label: LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG[article.slug] || "Article",
+        href: `/articles/${article.slug}`,
         image: article.coverImageUrl,
         timestamp: timestampForPortfolioItem(article),
-      }));
-
-    const tutorialTiles = getLocalTutorials()
-      .filter((tutorial) => !isRenderingContent(tutorial))
-      .sort((a, b) =>
-        timestampForPortfolioItem({
-          publishedAt: b.published_at,
-          updatedAt: b.updated_at,
-          createdAt: b.created_at,
-        }) -
-        timestampForPortfolioItem({
-          publishedAt: a.published_at,
-          updatedAt: a.updated_at,
-          createdAt: a.created_at,
-        })
-      )
-      .slice(0, 2)
-      .map<FeedTile>((tutorial) => ({
-        id: `tutorial-${tutorial.slug}`,
-        title: tutorial.title,
-        label: tutorial.category || "Tutorial",
-        href: `/studio/tutorials/${tutorial.slug}`,
-        image: tutorial.cover_image || getTutorialCoverImage(tutorial),
-        timestamp: timestampForPortfolioItem({
-          publishedAt: tutorial.published_at,
-          updatedAt: tutorial.updated_at,
-          createdAt: tutorial.created_at,
-        }),
       }));
 
     const datedTiles = [
       ...scenicProjects,
       ...articleTiles,
       ...learningArticleTiles,
-      ...tutorialTiles,
     ].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
     return [...datedTiles, ...STUDIO_APP_TILES];
@@ -283,7 +212,7 @@ export default function Links() {
     <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
       <SEO
         title="Links | Brandon PT Davis"
-        description="Social links, portfolio, articles, tutorials, and current work from scenic designer Brandon PT Davis."
+        description="Social links, portfolio, articles, and current work from scenic designer Brandon PT Davis."
       />
 
       <main className="w-full pb-16 pt-5 sm:pt-8">

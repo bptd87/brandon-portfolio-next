@@ -13,13 +13,9 @@ const INSTAGRAM_PORTFOLIO_URL =
   "https://www.instagram.com/brandonptdavisdesign/";
 
 const MENU_LINKS = [
-  { label: "Scenic Design", href: "/projects" },
-  { label: "Experiential", href: "/projects/experiential" },
-  { label: "Rendering", href: "/projects/rendering" },
-  { label: "Profile", href: "/about" },
-  { label: "Statement", href: "/creative-statement" },
-  { label: "Resume", href: "/resume" },
-  { label: "Apps", href: "/studio/apps" },
+  { label: "Portfolio", href: "/projects" },
+  { label: "About", href: "/about" },
+  { label: "Studio", href: "/studio" },
   {
     label: "Instagram",
     href: INSTAGRAM_PORTFOLIO_URL,
@@ -50,7 +46,7 @@ function MenuLink({
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClose}
-        className="block py-[0.34rem] font-sans leading-[1.12] tracking-[-0.055em] text-white/82 transition-colors hover:text-white"
+        className="block border-b border-white/10 py-4 font-sans leading-[1.08] tracking-[-0.028em] text-white/82 transition-colors hover:text-white"
       >
         {item.label}
       </a>
@@ -62,7 +58,7 @@ function MenuLink({
       href={item.href}
       onClick={onClose}
       aria-current={active ? "page" : undefined}
-      className={`block py-[0.34rem] font-sans leading-[1.12] tracking-[-0.055em] transition-colors ${
+      className={`block border-b border-white/10 py-4 font-sans leading-[1.08] tracking-[-0.028em] transition-colors ${
         active ? "text-white" : "text-white/82 hover:text-white"
       }`}
     >
@@ -96,7 +92,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         <button
           type="button"
           onClick={onClose}
-          className="fixed right-5 top-[max(1.15rem,env(safe-area-inset-top))] z-10 inline-flex h-11 w-11 items-center justify-center text-white/64 transition-colors hover:text-white"
+          className="fixed right-5 top-[max(1.15rem,env(safe-area-inset-top))] z-10 inline-flex h-11 w-11 items-center justify-center border border-white/16 text-white/64 transition-colors hover:border-white/32 hover:text-white"
           aria-label="Close menu"
         >
           <span className="relative h-5 w-5" aria-hidden="true">
@@ -107,7 +103,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         <div className="min-h-full px-8 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(4.8rem,calc(env(safe-area-inset-top)+4.8rem))]">
           <nav aria-label="Mobile navigation">
-            <div className="text-[clamp(2.45rem,11.8vw,3.3rem)] font-semibold">
+            <div className="text-[clamp(2.2rem,10.5vw,3rem)] font-semibold">
               {MENU_LINKS.map(item => (
                 <MenuLink
                   key={item.href}

@@ -134,6 +134,69 @@ const MIN_TUTORIAL_UPDATED_DATE = new Date(
   "2025-05-01T00:00:00.000Z"
 ).getTime();
 
+type ArticleSwatch = {
+  background: string;
+  text: string;
+  muted: string;
+};
+
+const ARTICLE_CATEGORY_SWATCHES: Record<string, ArticleSwatch> = {
+  "Design Process": {
+    background: "#a65f3a",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.72)",
+  },
+  "Scenic Design": {
+    background: "#496784",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.74)",
+  },
+  "Tools & Technology": {
+    background: "#c4932f",
+    text: "#15110b",
+    muted: "rgba(21,17,11,0.68)",
+  },
+  "Performance History & Culture": {
+    background: "#7f906f",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.74)",
+  },
+  "Profiles & Interviews": {
+    background: "#bd8b8d",
+    text: "#1f1515",
+    muted: "rgba(31,21,21,0.68)",
+  },
+  Rendering: {
+    background: "#3f6686",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.72)",
+  },
+  "Art Direction": {
+    background: "#c57050",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.74)",
+  },
+  "Themed Entertainment": {
+    background: "#5e704d",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.72)",
+  },
+  "Personal Essay": {
+    background: "#7a3f1b",
+    text: "#ffffff",
+    muted: "rgba(255,255,255,0.72)",
+  },
+};
+
+const DEFAULT_ARTICLE_SWATCH: ArticleSwatch = {
+  background: "#a33f24",
+  text: "#ffffff",
+  muted: "rgba(255,255,255,0.72)",
+};
+
+const getArticleSwatch = (category: string | null | undefined) =>
+  ARTICLE_CATEGORY_SWATCHES[category || ""] || DEFAULT_ARTICLE_SWATCH;
+
 const getDisplayUpdatedDate = (
   dateString: string | Date | null | undefined
 ) => {
@@ -891,7 +954,7 @@ function ArticleDetailContent({
 
   const scrollRelatedArticles = (direction: "previous" | "next") => {
     relatedArticleRailRef.current?.scrollBy({
-      left: direction === "next" ? 460 : -460,
+      left: direction === "next" ? 330 : -330,
       behavior: "smooth",
     });
   };
@@ -1251,15 +1314,11 @@ function ArticleDetailContent({
   const articleDescription =
     article.excerpt ||
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
-  const isLearningPortalArticle =
-    variant === "tutorial" ||
-    LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
-  const isNarrativeArticle = !isLearningPortalArticle;
+  const isLearningPortalArticle = variant === "tutorial" && false;
+  const isNarrativeArticle = true;
   const hasOpeningDropCap =
     isNarrativeArticle && article.slug !== "what-does-a-scenic-designer-do";
-  const articleBasePath = isLearningPortalArticle
-    ? "/studio/tutorials"
-    : "/articles";
+  const articleBasePath = "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
   const articleDisplayUpdatedAt = getDisplayUpdatedDate(
     article.updatedAt || article.publishedAt || article.createdAt
@@ -1371,7 +1430,7 @@ function ArticleDetailContent({
       />
       <Header />
       <PublishingTopBar
-        active={isLearningPortalArticle ? "tutorials" : "articles"}
+        active="articles"
         tone={isNarrativeArticle ? "dark" : "light"}
       />
       <article
@@ -2213,6 +2272,11 @@ function ArticleDetailContent({
                                             section.caption || "Article video"
                                           }
                                           className="bg-transparent"
+                                          playbackMode={
+                                            section.playbackMode === "dialog"
+                                              ? "dialog"
+                                              : "inline"
+                                          }
                                         />
                                       </div>
                                       {section.caption && (
@@ -2640,21 +2704,21 @@ function ArticleDetailContent({
         <section
           className={`${isNarrativeArticle ? "article-editorial bg-[#030303] text-white" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}
         >
-          <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-10">
+          <div className="mx-auto w-full max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
             <div
-              className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+              className={`border-t pt-12 md:pt-14 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
             >
-              <MotionReveal className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+              <MotionReveal className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <div className="max-w-3xl">
                   <p
-                    className={`mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}
+                    className={`mb-4 text-[clamp(1rem,1.25vw,1.12rem)] font-medium leading-[1.08] tracking-[-0.012em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}
                   >
                     {isLearningPortalArticle
-                      ? "Scenic design tutorials"
+                      ? "Scenic design archive"
                       : "Scenic design writing"}
                   </p>
                   <h2
-                    className={`${isNarrativeArticle ? "text-white" : "bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text text-transparent"} max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em]`}
+                    className={`${isNarrativeArticle ? "text-white" : "text-[#111111]"} max-w-[12ch] font-sans text-[clamp(2.25rem,4.2vw,4.2rem)] font-semibold leading-[0.98] tracking-[-0.036em]`}
                   >
                     {isLearningPortalArticle
                       ? "Keep learning."
@@ -2664,20 +2728,16 @@ function ArticleDetailContent({
                   </h2>
                 </div>
                 <Link
-                  href={
-                    isLearningPortalArticle
-                      ? "/studio/tutorials/archive"
-                      : articleBasePath
-                  }
-                  className={`${isNarrativeArticle ? "border-white/18 text-white/70 hover:border-white/36 hover:text-white" : "border-[#6f2dff]/72 text-[#4f2fd8] hover:border-[#4f2fd8] hover:text-black"} inline-flex h-10 w-fit items-center justify-center rounded-full border px-5 font-sans text-sm font-medium tracking-[-0.02em] transition-colors md:justify-self-end`}
+                  href={articleBasePath}
+                  className={`${isNarrativeArticle ? "border-white/18 bg-white/[0.04] text-white/72 hover:border-white/36 hover:bg-white hover:text-black" : "border-black/[0.12] bg-[#fbfaf7] text-[#111111] hover:bg-white"} inline-flex h-11 w-fit items-center justify-center border px-5 font-sans text-[0.95rem] font-semibold tracking-[-0.018em] shadow-[0_8px_26px_rgba(0,0,0,0.14)] transition-colors md:justify-self-end`}
                 >
-                  {isLearningPortalArticle ? "View tutorials" : "View articles"}
+                  View articles
                 </Link>
               </MotionReveal>
 
               <div
                 ref={relatedArticleRailRef}
-                className="-mx-1 overflow-x-auto px-1 pb-10 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                className="overflow-x-auto pb-7 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               >
                 <div className="flex min-w-max snap-x snap-mandatory gap-4 pr-5">
                   {related.map((relatedArticle, index) => {
@@ -2689,9 +2749,10 @@ function ArticleDetailContent({
                             .trim()
                         : relatedArticle.title
                     );
+                    const dateLabel = formatUtcDate(relatedArticle.publishedAt, "short");
+                    const swatch = getArticleSwatch(relatedArticle.categoryName);
                     const metadata = [
-                      relatedArticle.categoryName,
-                      formatUtcDate(relatedArticle.publishedAt, "short"),
+                      dateLabel,
                       relatedArticle.readTime
                         ? `${relatedArticle.readTime} min read`
                         : null,
@@ -2702,41 +2763,53 @@ function ArticleDetailContent({
                     return (
                       <MotionReveal
                         key={relatedArticle.id}
-                        className="w-[min(22rem,78vw)] flex-none snap-start md:w-[25rem]"
+                        className="w-[min(16.75rem,72vw)] flex-none snap-start sm:w-[18rem] lg:w-[19.25rem]"
                         delay={(index % 6) * 80}
                       >
                         <Link
                           href={`${articleBasePath}/${relatedArticle.slug}`}
-                          className={`${isNarrativeArticle ? "border-white/10 bg-[#0b0b0b] shadow-[0_8px_24px_rgba(0,0,0,0.24)]" : "border-black/10 bg-[#fbfaf7] shadow-[0_8px_24px_rgba(29,29,31,0.035)]"} publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border no-underline transition-transform duration-300 hover:-translate-y-0.5`}
+                          className={`${isNarrativeArticle ? "shadow-[0_12px_32px_rgba(0,0,0,0.28)] ring-white/[0.08]" : "shadow-[0_10px_24px_rgba(17,17,17,0.055)] ring-black/[0.055]"} publish-motion-card group flex h-full flex-col overflow-hidden bg-white no-underline ring-1 transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.22)]`}
                         >
-                          {relatedArticle.coverImageUrl && (
-                            <div
-                              className={`publish-card-media site-media-square relative aspect-video overflow-hidden rounded-none ${isNarrativeArticle ? "bg-white/[0.04]" : "bg-[#e5e3dc]"}`}
-                            >
+                          <div
+                            className={`publish-card-media article-card-media relative aspect-square overflow-hidden ${isNarrativeArticle ? "bg-white/[0.04]" : "bg-black/[0.04]"}`}
+                          >
+                            {relatedArticle.coverImageUrl ? (
                               <img
                                 src={relatedArticle.coverImageUrl}
                                 alt={
                                   relatedArticle.coverImageAlt ||
                                   decodeHTMLEntities(relatedArticle.title)
                                 }
-                                className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
                                 loading="lazy"
                               />
-                            </div>
-                          )}
+                            ) : null}
+                          </div>
 
-                          <div className="publish-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                            <h3
-                              className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#6f2dff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}
+                          <div
+                            className="publish-card-copy flex h-[9.75rem] flex-col px-4 py-4 sm:px-5"
+                            style={{
+                              backgroundColor: swatch.background,
+                              color: swatch.text,
+                            }}
+                          >
+                            <p
+                              className="text-[0.78rem] font-semibold tracking-[-0.006em]"
+                              style={{ color: swatch.muted }}
                             >
+                              {relatedArticle.categoryName || "Article"}
+                            </p>
+                            <h3 className="mt-3 line-clamp-2 max-w-[17rem] font-sans text-[clamp(1.02rem,1.12vw,1.18rem)] font-semibold leading-[1.08] tracking-[-0.018em] transition-opacity duration-500 group-hover:opacity-85">
                               {relatedTitle}
                             </h3>
-
-                            <p
-                              className={`${isNarrativeArticle ? "text-white/50" : "text-[#6e6e73]"} mt-5 text-[0.88rem] font-semibold tracking-[-0.02em]`}
-                            >
-                              {metadata}
-                            </p>
+                            {metadata ? (
+                              <p
+                                className="mt-auto pt-4 text-[0.78rem] font-semibold tracking-[-0.006em]"
+                                style={{ color: swatch.muted }}
+                              >
+                                {metadata}
+                              </p>
+                            ) : null}
                           </div>
                         </Link>
                       </MotionReveal>
@@ -2745,7 +2818,7 @@ function ArticleDetailContent({
                 </div>
               </div>
 
-              <div className="-mt-5 flex justify-end gap-3">
+              <div className="-mt-3 flex justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => scrollRelatedArticles("previous")}

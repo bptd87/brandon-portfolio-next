@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { Check, Facebook, Link2, Linkedin, Mail } from "lucide-react";
 
 import { copyTextToClipboard } from "@/lib/clipboard";
@@ -13,9 +14,13 @@ type ProfileSectionHeroProps = {
   imageAlt: string;
   imageSrc: string;
   title: string;
+  titleContent?: ReactNode;
+  titleClassName?: string;
   updatedAt: string;
   label?: string;
+  showImage?: boolean;
   tone?: "light" | "dark";
+  lightBackgroundClassName?: string;
 };
 
 const SITE_URL = "https://www.brandonptdavis.com";
@@ -27,9 +32,13 @@ export default function ProfileSectionHero({
   imageAlt,
   imageSrc,
   title,
+  titleContent,
+  titleClassName = "",
   updatedAt,
   label = "Update",
+  showImage = true,
   tone = "light",
+  lightBackgroundClassName = "bg-[#f1f0ec]",
 }: ProfileSectionHeroProps) {
   const [linkCopied, setLinkCopied] = useState(false);
   const isDark = tone === "dark";
@@ -55,7 +64,7 @@ export default function ProfileSectionHero({
   return (
     <section
       className={`relative overflow-hidden px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-10 md:pb-14 md:pt-14 ${
-        isDark ? "bg-black text-white" : "bg-[#f1f0ec] text-[#111111]"
+        isDark ? "bg-black text-white" : `${lightBackgroundClassName} text-[#111111]`
       }`}
     >
       <div className="mx-auto flex w-full max-w-[74rem] flex-col items-center text-center">
@@ -65,8 +74,8 @@ export default function ProfileSectionHero({
           <time>{updatedAt}</time>
         </p>
 
-        <h1 className={`mt-5 max-w-[10.5ch] text-balance font-sans text-[clamp(2.75rem,6.4vw,6.25rem)] font-medium leading-[0.9] tracking-[-0.078em] ${isDark ? "text-white" : "text-[#111111]"}`}>
-          {title}
+        <h1 className={`mt-5 max-w-[10.5ch] text-balance font-sans text-[clamp(2.75rem,6.4vw,6.25rem)] font-medium leading-[0.9] tracking-[-0.078em] ${isDark ? "text-white" : "text-[#111111]"} ${titleClassName}`}>
+          {titleContent || title}
         </h1>
 
         <p
@@ -121,28 +130,30 @@ export default function ProfileSectionHero({
           </a>
         </div>
 
-        <div className="site-media-square relative isolate mt-8 h-[min(45vw,27rem)] min-h-[14rem] w-[min(76vw,40rem)]">
-          <div
-            className={`pointer-events-none absolute inset-[18%] -z-10 rounded-full blur-3xl ${
-              isDark
-                ? "bg-[radial-gradient(circle,color-mix(in_oklch,var(--accent-articles)_42%,transparent)_0%,color-mix(in_oklch,var(--accent-articles)_16%,transparent)_36%,rgba(255,255,255,0)_72%)]"
-                : "bg-[radial-gradient(circle,rgba(17,17,17,0.12)_0%,rgba(17,17,17,0.06)_34%,rgba(17,17,17,0)_70%)]"
-            }`}
-            aria-hidden="true"
-          />
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="(min-width: 1024px) 40rem, 76vw"
-            className={`site-media-square object-contain ${
-              isDark
-                ? "drop-shadow-[0_28px_80px_color-mix(in_oklch,var(--accent-articles)_34%,transparent)]"
-                : "mix-blend-multiply"
-            }`}
-          />
-        </div>
+        {showImage ? (
+          <div className="site-media-square relative isolate mt-8 h-[min(45vw,27rem)] min-h-[14rem] w-[min(76vw,40rem)]">
+            <div
+              className={`pointer-events-none absolute inset-[18%] -z-10 rounded-full blur-3xl ${
+                isDark
+                  ? "bg-[radial-gradient(circle,color-mix(in_oklch,var(--accent-articles)_42%,transparent)_0%,color-mix(in_oklch,var(--accent-articles)_16%,transparent)_36%,rgba(255,255,255,0)_72%)]"
+                  : "bg-[radial-gradient(circle,rgba(17,17,17,0.12)_0%,rgba(17,17,17,0.06)_34%,rgba(17,17,17,0)_70%)]"
+              }`}
+              aria-hidden="true"
+            />
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 40rem, 76vw"
+              className={`site-media-square object-contain ${
+                isDark
+                  ? "drop-shadow-[0_28px_80px_color-mix(in_oklch,var(--accent-articles)_34%,transparent)]"
+                  : "mix-blend-multiply"
+              }`}
+            />
+          </div>
+        ) : null}
       </div>
     </section>
   );

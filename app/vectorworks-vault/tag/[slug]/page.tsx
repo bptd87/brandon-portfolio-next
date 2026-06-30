@@ -6,5 +6,5 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   await params;
-  permanentRedirect("/studio/tutorials");
+  permanentRedirect("/articles");
 }

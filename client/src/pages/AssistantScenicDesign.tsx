@@ -3,16 +3,19 @@
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import PortfolioTopBar from "@/components/PortfolioTopBar";
+import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
+import { useState } from "react";
 import {
   ASSISTANT_SCENIC_DESIGN_PATH,
   ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
   ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
   assistantScenicDesignEntries,
 } from "@shared/localAssistantScenic";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 
 const HIGHLIGHT_SLUGS = [
   "assisting-the-play-that-goes-wrong",
@@ -43,147 +46,6 @@ const ASSISTANT_SCENIC_KEYWORDS = [
   "Brandon PT Davis",
 ].join(", ");
 
-const ASSISTANT_CV_CREDITS = [
-  {
-    year: "2025",
-    title: "The Play That Goes Wrong",
-    designer: "Tom Buderwitz",
-    venue: "Seattle Rep",
-  },
-  {
-    year: "2025",
-    title: "The Importance of Being Earnest",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2025",
-    title: "A Gentleman's Guide to Love and Murder",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2025",
-    title: "Steel Magnolias",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2025",
-    title: "The Book Club Play",
-    designer: "Jo Winiarski",
-    venue: "Cincinnati Playhouse in the Park",
-  },
-  {
-    year: "2024",
-    title: "Souvenir",
-    designer: "Jo Winiarski",
-    venue: "Pioneer Theatre Company",
-  },
-  {
-    year: "2024",
-    title: "Ragtime",
-    designer: "Jo Winiarski",
-    venue: "The Ruth, Hale Orem",
-  },
-  {
-    year: "2024",
-    title: "Natasha, Pierre, and the Great Comet of 1812",
-    designer: "Jo Winiarski",
-    venue: "Pioneer Theatre Company",
-  },
-  {
-    year: "2024",
-    title: "Jersey Boys",
-    designer: "Jo Winiarski",
-    venue: "Pioneer Theatre Company",
-  },
-  {
-    year: "2024",
-    title: "Silent Sky",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2023",
-    title: "The Mountaintop",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2023",
-    title: "Native Gardens",
-    designer: "Jo Winiarski",
-    venue: "Pioneer Theatre Company",
-  },
-  {
-    year: "2023",
-    title: "Bottle Shock",
-    designer: "Jo Winiarski",
-    venue: "California Center for the Arts, Escondido",
-  },
-  {
-    year: "2023",
-    title: "Romeo and Juliet",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2023",
-    title: "A Midsummer Night's Dream",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2023",
-    title: "The Fears",
-    designer: "Jo Winiarski",
-    venue: "Off-Broadway: Signature Theatre",
-  },
-  {
-    year: "2022",
-    title: "A Distinct Society",
-    designer: "Jo Winiarski",
-    venue: "Pioneer Theatre Company / TheatreWorks Silicon Valley",
-  },
-  {
-    year: "2022",
-    title: "Clue: On Stage",
-    designer: "Jo Winiarski",
-    venue: "Dallas Theater Center",
-  },
-  {
-    year: "2022",
-    title: "Clue: On Stage",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2022",
-    title: "The Sound of Music",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2021",
-    title: "Trouble in Mind",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2021",
-    title: "Ragtime",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-  {
-    year: "2019",
-    title: "The Pirates of Penzance",
-    designer: "Jo Winiarski",
-    venue: "Utah Shakespeare Festival",
-  },
-] as const;
-
 function formatDate(value: string) {
   return formatUtcDate(value, "year");
 }
@@ -198,23 +60,17 @@ function buildEntryMap() {
   return map;
 }
 
-const isFullWidthCredit = (index: number) => index % 7 === 4;
-
-const getCreditMediaClass = (index: number) => {
-  if (isFullWidthCredit(index)) return "w-screen";
-  if (index % 3 === 0) return "mr-auto w-full md:w-[54vw]";
-  if (index % 3 === 1) return "ml-auto w-full md:w-[50vw]";
-  return "mx-auto w-full md:w-[62vw]";
-};
-
-const getCreditCaptionClass = (index: number) => {
-  if (isFullWidthCredit(index)) return "";
-  if (index % 3 === 1) return "ml-auto md:w-[50vw]";
-  if (index % 3 === 2) return "mx-auto md:w-[62vw]";
-  return "md:w-[54vw]";
-};
+const GALLERY_FRAMES = [
+  { aspect: "aspect-[4/3]", spacing: "mb-[clamp(1.75rem,4vw,4rem)]" },
+  { aspect: "aspect-[16/10]", spacing: "mb-[clamp(1.75rem,3vw,3rem)]" },
+  { aspect: "aspect-[3/4]", spacing: "mb-[clamp(2rem,5vw,5rem)]" },
+  { aspect: "aspect-[1/1]", spacing: "mb-[clamp(1.75rem,3.5vw,3.8rem)]" },
+  { aspect: "aspect-[5/7]", spacing: "mb-[clamp(2rem,4.5vw,4.5rem)]" },
+  { aspect: "aspect-[16/9]", spacing: "mb-[clamp(1.75rem,3vw,3rem)]" },
+] as const;
 
 export default function AssistantScenicDesign() {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const entryBySlug = buildEntryMap();
 
   const highlightEntries = HIGHLIGHT_SLUGS.map(slug =>
@@ -239,6 +95,11 @@ export default function AssistantScenicDesign() {
     ...utahEntries,
     ...additionalEntries,
   ];
+  const lightboxImages = portfolioEntries.map(entry => ({
+    imageUrl: entry.coverImageUrl,
+    altText: entry.coverImageAlt,
+    caption: `${entry.title} at ${entry.organization}. Scenic Design by ${entry.collaborator}. ${formatDate(entry.date)}.`,
+  }));
   const assistantScenicUpdatedDate = assistantScenicDesignEntries.reduce(
     (latest, entry) => {
       return entry.date > latest ? entry.date : latest;
@@ -259,7 +120,7 @@ export default function AssistantScenicDesign() {
     )
   );
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div className="min-h-screen bg-white text-[#111111]">
       <SEO
         title={ASSISTANT_SCENIC_DESIGN_SEO_TITLE}
         description={ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION}
@@ -329,105 +190,103 @@ export default function AssistantScenicDesign() {
         }}
       />
       <Header />
-      <PortfolioTopBar />
 
       <main>
         <section
           id="assistant-credits"
-          className="scroll-mt-24 border-t border-white/12 bg-[#111111]"
+          className="scroll-mt-24 bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(3rem,7vw,6rem)] pt-[clamp(1rem,2.4vw,1.8rem)] text-black"
         >
-          <div className="relative overflow-hidden border-b border-white/10 bg-[#111111]">
-            <header className="relative flex min-h-[48svh] w-full items-center justify-center px-[clamp(1.5rem,5vw,5.5rem)] py-16 text-center md:min-h-[58svh] md:py-24">
-              <div className="mx-auto max-w-[60rem]">
-                <div className="text-[0.82rem] font-semibold tracking-[-0.01em] text-white/72">
-                  Assistant Scenic Design
+          <div className="mx-auto w-full max-w-[1500px]">
+            <AnimatedSection className="mb-[clamp(1.8rem,4vw,4.5rem)]">
+              <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                <div className="max-w-[42rem]">
+                  <h1 className="font-sans text-[clamp(2.1rem,4.4vw,4.9rem)] font-medium leading-[0.9] tracking-[-0.078em] text-[#111111]">
+                    Assistant Scenic Design
+                  </h1>
+                  <p className="mt-4 max-w-[34rem] text-[0.98rem] leading-6 tracking-[-0.018em] text-black/52">
+                    Production images from assistant scenic design collaborations.
+                    Select an image for the production title, venue, designer, and year.
+                  </p>
                 </div>
-                <h1 className="mx-auto mt-5 max-w-[13ch] font-sans text-[clamp(3.2rem,7vw,7.2rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
-                  Assistant Scenic Design
-                </h1>
-                <p className="mx-auto mt-7 max-w-[43rem] text-[clamp(1.02rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/82">
-                  Selected assistant scenic design credits supporting scenic
-                  designers through drafting, model communication, and
-                  production coordination.
-                </p>
+                <div>
+                  <Link
+                    href="/resume"
+                    className="inline-flex h-10 w-fit items-center gap-2 border border-black/14 px-4 text-[0.9rem] font-medium tracking-[-0.02em] text-black/72 transition-colors hover:border-black/28 hover:bg-black/[0.035] hover:text-black"
+                  >
+                    <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                    Back to resume
+                  </Link>
+                </div>
               </div>
-            </header>
-          </div>
-          <div className="relative left-1/2 w-screen -translate-x-1/2 py-10 md:py-14">
-            <div className="mx-auto mb-10 max-w-[92rem] px-[clamp(1.5rem,5vw,6rem)]">
-              <p className="font-mono text-[0.72rem] uppercase leading-none tracking-[0.16em] text-white/38">
-                Selected production views
-              </p>
-            </div>
-            <div className="space-y-16 md:space-y-24">
-              {highlightEntries.map((entry, index) => {
-                const mediaClass = getCreditMediaClass(index);
-                const captionClass = getCreditCaptionClass(index);
+            </AnimatedSection>
 
-                return (
-                  <AnimatedSection key={entry.anchorId}>
-                    <figure className="space-y-4">
-                      <img
-                        src={entry.coverImageUrl}
-                        alt={entry.coverImageAlt}
-                        className={`block h-auto bg-[#111111] ${mediaClass}`}
-                        loading={index < 2 ? "eager" : "lazy"}
-                        decoding={index < 2 ? "sync" : "async"}
-                      />
-                      <figcaption
-                        className={`px-[clamp(1.5rem,5vw,5.5rem)] ${captionClass}`}
+            <AnimatedSection>
+              <div className="columns-2 gap-[clamp(0.8rem,2.6vw,3rem)] md:columns-2 lg:columns-3">
+                {portfolioEntries.map((entry, index) => {
+                  const frame = GALLERY_FRAMES[index % GALLERY_FRAMES.length];
+
+                  return (
+                    <figure
+                      key={entry.anchorId}
+                      id={entry.anchorId}
+                      className={`break-inside-avoid scroll-mt-28 ${frame.spacing}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setLightboxIndex(index)}
+                        className={`group relative block w-full overflow-hidden bg-white text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white ${frame.aspect}`}
+                        aria-label={`Open ${entry.title} image`}
                       >
-                        <div className="max-w-[48rem]">
-                          <p className="max-w-[38rem] text-[0.98rem] leading-6 tracking-[-0.016em] text-white/56">
-                            <strong className="font-medium text-white">
+                        <img
+                          src={entry.coverImageUrl}
+                          alt={entry.coverImageAlt}
+                          className="h-full w-full object-cover transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-hover:brightness-[0.72]"
+                          loading={index < 3 ? "eager" : "lazy"}
+                          decoding={index < 3 ? "sync" : "async"}
+                        />
+                        <div className="pointer-events-none absolute inset-0 hidden items-end bg-black/0 p-5 opacity-0 transition-[background-color,opacity] duration-500 group-hover:bg-black/24 group-hover:opacity-100 md:flex">
+                          <div className="translate-y-3 opacity-0 transition-[opacity,transform] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                            <p className="font-sans text-[clamp(1.25rem,1.7vw,1.9rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white">
                               {entry.title}
-                            </strong>{" "}
-                            at {entry.organization} with Scenic Design by{" "}
-                            {entry.collaborator}. {formatDate(entry.date)}.
-                          </p>
+                            </p>
+                            <p className="mt-2 max-w-[18rem] text-[0.82rem] font-medium leading-tight tracking-[-0.018em] text-white/74">
+                              {entry.organization} / {formatDate(entry.date)}
+                            </p>
+                          </div>
                         </div>
+                      </button>
+                      <figcaption className="sr-only">
+                        {entry.title} at {entry.organization}. Scenic Design by{" "}
+                        {entry.collaborator}. {formatDate(entry.date)}.
                       </figcaption>
                     </figure>
-                  </AnimatedSection>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="px-[clamp(1.5rem,5vw,6rem)] pb-20 pt-6 md:pb-28 md:pt-12">
-            <div className="mx-auto max-w-[92rem]">
-              <div className="divide-y divide-white/10 border-y border-white/12">
-                {ASSISTANT_CV_CREDITS.map((entry, index) => (
-                  <article
-                    key={`${entry.year}-${entry.title}-${entry.venue}-${index}`}
-                    className="grid gap-4 py-5 md:grid-cols-[5rem_minmax(16rem,1.1fr)_minmax(13rem,0.75fr)_minmax(15rem,0.9fr)] md:items-start"
-                  >
-                    <p className="font-mono text-[0.68rem] uppercase leading-6 tracking-[0.16em] text-white/34">
-                      {entry.year}
-                    </p>
-                    <div>
-                      <h3 className="font-sans text-[1.18rem] font-medium leading-tight tracking-[-0.04em] text-white">
-                        {entry.title}
-                      </h3>
-                      <p className="mt-1 text-[0.94rem] leading-tight tracking-[-0.018em] text-white/45">
-                        Assistant Scenic Designer
-                      </p>
-                    </div>
-                    <p className="text-[0.98rem] leading-6 tracking-[-0.018em] text-white/56">
-                      {entry.designer}
-                    </p>
-                    <p className="text-[0.98rem] leading-6 tracking-[-0.018em] text-white/45">
-                      {entry.venue}
-                    </p>
-                  </article>
-                ))}
+                  );
+                })}
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
       </main>
 
-      <Footer tone="dark" />
+      {lightboxIndex !== null ? (
+        <Lightbox
+          images={lightboxImages}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onNext={() =>
+            setLightboxIndex(current =>
+              current === null ? 0 : Math.min(current + 1, lightboxImages.length - 1)
+            )
+          }
+          onPrev={() =>
+            setLightboxIndex(current =>
+              current === null ? 0 : Math.max(current - 1, 0)
+            )
+          }
+        />
+      ) : null}
+
+      <Footer tone="light" />
     </div>
   );
 }

@@ -37,10 +37,6 @@ export const metadata: Metadata = {
           title: "Brandon PT Davis Articles",
         },
         {
-          url: absoluteUrl("/studio/tutorials/rss.xml"),
-          title: "Brandon PT Davis Studio Tutorials",
-        },
-        {
           url: absoluteUrl("/projects/rss.xml"),
           title: "Brandon PT Davis Projects",
         },

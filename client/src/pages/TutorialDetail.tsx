@@ -33,10 +33,10 @@ const difficulties = [
 ];
 
 const articlePillTabsListClass =
-  "mx-auto inline-flex h-auto w-fit max-w-full flex-wrap items-center justify-center gap-1 rounded-full border border-black/14 bg-transparent p-1";
+  "mx-auto inline-flex h-auto w-fit max-w-full flex-wrap items-center justify-center gap-1 rounded-full border border-white/14 bg-transparent p-1";
 
 const articlePillTabsTriggerClass =
-  "h-auto flex-none rounded-full border-0 bg-transparent px-5 py-2.5 text-[0.95rem] font-normal tracking-[-0.018em] text-black/62 shadow-none transition-colors hover:text-black data-[state=active]:bg-black/[0.08] data-[state=active]:text-black data-[state=active]:shadow-none";
+  "h-auto flex-none rounded-full border-0 bg-transparent px-5 py-2.5 text-[0.95rem] font-normal tracking-[-0.018em] text-white/66 shadow-none transition-colors hover:text-white data-[state=active]:bg-white/[0.1] data-[state=active]:text-white data-[state=active]:shadow-none";
 
 const TUTORIAL_COVER_VARIANTS = {
   "getting-started": [
@@ -87,6 +87,18 @@ const getDifficultyLabel = (value: string | null | undefined) => {
     "General"
   );
 };
+
+const formatHelperLabel = (value: string | null | undefined) =>
+  String(value || "")
+    .split(" ")
+    .map((word) => {
+      if (/^[23]d$/i.test(word)) {
+        return word.toUpperCase();
+      }
+
+      return word ? `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}` : word;
+    })
+    .join(" ");
 
 const getTutorialSummary = (tutorial: any) => {
   if (tutorial.slug === "understanding-symbols") {
@@ -1332,19 +1344,19 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
   if (error || !tutorial) {
     return (
-      <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
+      <div className="publish-editorial publish-editorial-dark min-h-screen bg-[#030303] text-white">
         <Header />
         <div className="flex min-h-[70vh] items-center justify-center px-6">
           <div className="text-center">
             <h1 className="font-sans text-[2.5rem] font-medium tracking-[-0.05em] text-foreground">
-              Tutorial not found
+              Article not found
             </h1>
             <Link
-              href="/studio/tutorials"
+              href="/articles"
               className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/68 transition-colors hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Tutorials
+              Back to Articles
             </Link>
           </div>
         </div>
@@ -1367,7 +1379,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   );
   const structuredUploadDate =
     tutorialPublishedAt || "1970-01-01T00:00:00.000Z";
-  const pageUrl = `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}`;
+  const pageUrl = `https://www.brandonptdavis.com/articles/${tutorial.slug}`;
   const encodedPageUrl = encodeURIComponent(pageUrl);
   const encodedTutorialTitle = encodeURIComponent(tutorialDisplayTitle);
   const emailShareUrl = `mailto:?subject=${encodedTutorialTitle}&body=${encodedTutorialTitle}%0A%0A${encodedPageUrl}`;
@@ -1405,7 +1417,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
     const toRelatedCard = (related: any, fallback?: any) => {
       const tutorialCard = fallback || related;
       return {
-        href: `/studio/tutorials/${tutorialCard.slug || related.slug}`,
+        href: `/articles/${tutorialCard.slug || related.slug}`,
         title: String(tutorialCard.title || related.title || "")
           .replace(/^Vectorworks Tutorial:\s*/i, "")
           .replace(/^Vectorworks Quick Tip:\s*/i, "")
@@ -1457,7 +1469,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   };
 
   return (
-    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
+    <div className="publish-editorial publish-editorial-dark min-h-screen bg-[#030303] text-white">
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
         description={tutorialSummary}
@@ -1507,47 +1519,47 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
           { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
-          { name: "Tutorials", url: "https://www.brandonptdavis.com/studio/tutorials" },
+          { name: "Articles", url: "https://www.brandonptdavis.com/articles" },
           { name: tutorial.title, url: pageUrl },
         ]}
       />
 
       <Header />
-      <PublishingTopBar active="tutorials" tone="white" />
+      <PublishingTopBar active="articles" tone="dark" />
 
-      <article className="overflow-hidden bg-[#f1f0ec] pb-16 md:pb-24">
+      <article className="overflow-hidden bg-[#030303] pb-16 text-white md:pb-24">
         <div className="mx-auto w-full max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-24 lg:px-10">
           <AnimatedSection>
             <header className="mx-auto max-w-[48rem] text-left">
-              <div className="text-[1rem] font-semibold leading-6 tracking-[-0.02em] text-[#6e6e73]">
-                <p className="text-[0.78rem] uppercase tracking-[0.06em]">Updated</p>
+              <div className="text-[1rem] font-semibold leading-6 tracking-[-0.02em] text-white/64">
+                <p className="text-[0.78rem] tracking-[0.01em]">Updated</p>
                 <time className="mt-1 block" dateTime={tutorialUpdatedAt}>
                   {formatDate(tutorialUpdatedAt)}
                 </time>
               </div>
 
-              <h1 className="mt-8 max-w-[13ch] font-sans text-[clamp(2.9rem,5.8vw,5.7rem)] font-semibold leading-[0.96] tracking-[-0.072em] text-[#1d1d1f]">
+              <h1 className="mt-8 max-w-[13ch] font-sans text-[clamp(2.9rem,5.8vw,5.7rem)] font-semibold leading-[0.96] tracking-[-0.072em] text-white">
                 {tutorialDisplayTitle}
               </h1>
 
-              <p className="mt-7 max-w-[43rem] text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.16] tracking-[-0.046em] text-[#1d1d1f]">
+              <p className="mt-7 max-w-[43rem] text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.16] tracking-[-0.046em] text-white/82">
                 {tutorialSummary}
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.96rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.96rem] font-semibold tracking-[-0.02em] text-white/66">
                 <span>{getCategoryLabel(tutorial.category)}</span>
                 <span>{formatDuration(tutorial.duration)}</span>
                 <span>{getDifficultyLabel(tutorial.difficulty)}</span>
               </div>
 
-              <div className="mt-10 flex flex-wrap items-center gap-3 text-[#6e6e73]">
+              <div className="mt-10 flex flex-wrap items-center gap-3 text-white/66">
                 {tutorial.video_url ? (
                   <a
                     href={tutorial.video_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Open tutorial on YouTube"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white/[0.08] hover:text-white"
                   >
                     <ExternalLink className="h-4 w-4" />
                   </a>
@@ -1555,15 +1567,15 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                 <button
                   type="button"
                   onClick={handleShare}
-                  aria-label={linkCopied ? "Tutorial link copied" : "Copy tutorial link"}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                  aria-label={linkCopied ? "Article link copied" : "Copy article link"}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
                 </button>
                 <a
                   href={emailShareUrl}
-                  aria-label="Share tutorial by email"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                  aria-label="Share article by email"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   <Mail className="h-4 w-4" />
                 </a>
@@ -1571,8 +1583,8 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   href={linkedInShareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Share tutorial on LinkedIn"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                  aria-label="Share article on LinkedIn"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   <Linkedin className="h-4 w-4" />
                 </a>
@@ -1580,8 +1592,8 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   href={facebookShareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Share tutorial on Facebook"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                  aria-label="Share article on Facebook"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   f
                 </a>
@@ -1591,7 +1603,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
           <AnimatedSection
             delay={140}
-            className="mx-auto mt-16 max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-[#e5e3dc] shadow-[0_24px_70px_rgba(29,29,31,0.08)]"
+            className="mx-auto mt-16 max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-black shadow-[0_24px_70px_rgba(0,0,0,0.34)]"
           >
             {videoId ? (
               <DeferredYouTubeEmbed
@@ -1607,10 +1619,10 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
           <AnimatedSection
             delay={260}
-            className="mx-auto mt-10 max-w-[50rem] rounded-[1.2rem] border border-black/10 bg-[#fbfaf7] px-5 py-4 md:px-6"
+            className="mx-auto mt-10 max-w-[50rem] rounded-[1.2rem] border border-white/14 bg-white/[0.045] px-5 py-4 md:px-6"
           >
-            <p className="text-[0.78rem] uppercase tracking-[0.18em] text-[#6e6e73]">What to notice</p>
-            <p className="mt-2 text-[0.97rem] leading-7 tracking-[-0.01em] text-[#424245]">
+            <p className="text-[0.78rem] font-medium tracking-[0.01em] text-white/62">What to notice</p>
+            <p className="mt-2 text-[0.97rem] leading-7 tracking-[-0.01em] text-white/80">
               {whatToNotice}
             </p>
           </AnimatedSection>
@@ -1630,14 +1642,14 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   </p>
                 ))
               ) : (
-                <p className="text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-white/62">
+                <p className="text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-white/74">
                   No extended overview was added for this tutorial yet.
                 </p>
               )}
             </section>
 
             <MotionReveal className="tutorial-body-reveal" delay={60}>
-              <section className="mt-16 border-t border-white/12 pt-12">
+              <section className="mt-16 border-t border-white/16 pt-12">
                 <Tabs defaultValue={featureMoments[1]?.value || featureMoments[0]?.value} className="mx-auto max-w-[50rem]">
                   <TabsList className={articlePillTabsListClass}>
                     {featureMoments.map((moment) => (
@@ -1657,10 +1669,10 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                         <h2 className="font-sans text-[clamp(1.8rem,2.35vw,2.45rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
                           {moment.title}
                         </h2>
-                        <p className="mx-auto mt-5 max-w-[39rem] text-[1.02rem] leading-8 tracking-[-0.01em] text-white/68">
+                        <p className="mx-auto mt-5 max-w-[39rem] text-[1.02rem] leading-8 tracking-[-0.01em] text-white/80">
                           {moment.body}
                         </p>
-                        <p className="mx-auto mt-5 max-w-[35rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/52">
+                        <p className="mx-auto mt-5 max-w-[35rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/70">
                           {moment.detail}
                         </p>
                       </div>
@@ -1682,7 +1694,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
             {whyItMatters ? (
               <MotionReveal className="tutorial-body-reveal" delay={80}>
-                <section className="mt-20 border-t border-white/12 pt-10">
+                <section className="mt-20 border-t border-white/16 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     {whyItMatters.title}
@@ -1691,7 +1703,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     {whyItMatters.paragraphs.map((paragraph) => (
                       <p
                         key={paragraph}
-                        className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/72 md:text-[1.07rem]"
+                        className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/82 md:text-[1.07rem]"
                       >
                         {paragraph}
                       </p>
@@ -1705,7 +1717,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
             <MotionReveal className="tutorial-body-reveal" delay={90}>
               <section className="mt-20">
                 <div className="mx-auto max-w-[46rem] text-center">
-                  <p className="text-[0.82rem] font-medium uppercase tracking-[0.18em] text-white/38">
+                  <p className="text-[0.82rem] font-medium tracking-[0.01em] text-white/62">
                     One guiding idea
                   </p>
                   <blockquote className="mt-6 font-sans text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.08] tracking-[-0.055em] text-white">
@@ -1728,7 +1740,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                         id={`step-${index + 1}`}
                         className="mx-auto max-w-[50rem] border-t border-white/10 pt-12 first:border-t-0 first:pt-0"
                       >
-                        <p className="font-sans text-[clamp(1.45rem,1.9vw,1.85rem)] font-medium leading-none tracking-[-0.055em] text-white/26">
+                        <p className="font-sans text-[clamp(1.45rem,1.9vw,1.85rem)] font-medium leading-none tracking-[-0.055em] text-white/48">
                           {section.number}
                         </p>
                         <h2 className="mt-4 max-w-[17ch] font-sans text-[clamp(2.1rem,3vw,3.35rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
@@ -1738,7 +1750,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                           {section.paragraphs.map((paragraph) => (
                             <p
                               key={paragraph}
-                              className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/72 md:text-[1.07rem]"
+                              className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/82 md:text-[1.07rem]"
                             >
                               {paragraph}
                             </p>
@@ -1753,12 +1765,12 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
             {comparisonRows.length > 0 ? (
               <MotionReveal className="tutorial-body-reveal" delay={80}>
-                <section className="mt-20 border-t border-white/12 pt-10">
+                <section className="mt-20 border-t border-white/16 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Symbol behavior
                   </h2>
-                  <p className="mt-4 max-w-[38rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/62">
+                  <p className="mt-4 max-w-[38rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/74">
                     These terms are close enough to blur together, so it helps to separate what each one is actually doing in the drawing.
                   </p>
                 </div>
@@ -1767,18 +1779,18 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   {comparisonRows.map((row) => (
                     <div
                       key={row.term}
-                      className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-5"
+                      className="rounded-[1.2rem] border border-white/14 bg-white/[0.045] p-5"
                     >
-                      <p className="text-[0.76rem] uppercase tracking-[0.18em] text-white/38">
-                        {row.accent}
+                      <p className="text-[0.76rem] font-medium tracking-[0.01em] text-white/60">
+                        {formatHelperLabel(row.accent)}
                       </p>
                       <h3 className="mt-3 font-sans text-[1.05rem] font-medium tracking-[-0.02em] text-white">
                         {row.term}
                       </h3>
-                      <p className="mt-3 text-[0.95rem] leading-7 text-white/64">
+                      <p className="mt-3 text-[0.95rem] leading-7 text-white/78">
                         {row.meaning}
                       </p>
-                      <p className="mt-3 text-[0.92rem] leading-7 text-white/52">
+                      <p className="mt-3 text-[0.92rem] leading-7 text-white/68">
                         {row.use}
                       </p>
                     </div>
@@ -1790,7 +1802,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
             {decisionGuide.length > 0 ? (
               <MotionReveal className="tutorial-body-reveal" delay={80}>
-                <section className="mt-20 border-t border-white/12 pt-10">
+                <section className="mt-20 border-t border-white/16 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Decision guide
@@ -1799,11 +1811,11 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
                 <div className="mt-8 grid gap-5 md:grid-cols-3">
                   {decisionGuide.map((item) => (
-                    <div key={item.title} className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-5">
+                    <div key={item.title} className="rounded-[1.2rem] border border-white/14 bg-white/[0.045] p-5">
                       <h3 className="font-sans text-[1.05rem] font-medium tracking-[-0.02em] text-white">
                         {item.title}
                       </h3>
-                      <p className="mt-3 text-[0.95rem] leading-7 text-white/60">
+                      <p className="mt-3 text-[0.95rem] leading-7 text-white/76">
                         {item.body}
                       </p>
                     </div>
@@ -1815,21 +1827,21 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
             {instanceDefinitionExample ? (
               <MotionReveal className="tutorial-body-reveal" delay={80}>
-                <section className="mt-20 border-t border-white/12 pt-10">
+                <section className="mt-20 border-t border-white/16 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     {instanceDefinitionExample.title}
                   </h2>
                 </div>
 
-                <div className="mt-8 rounded-[1.35rem] border border-white/10 bg-white/[0.03] p-5 md:p-6">
+                <div className="mt-8 rounded-[1.35rem] border border-white/14 bg-white/[0.045] p-5 md:p-6">
                   <div className="space-y-4">
                     {instanceDefinitionExample.steps.map((step, index) => (
                       <div key={step} className="grid gap-3 border-t border-white/10 pt-4 first:border-t-0 first:pt-0 md:grid-cols-[2.5rem_minmax(0,1fr)]">
-                        <span className="font-sans text-[1.1rem] font-medium tracking-[-0.04em] text-white/32">
+                        <span className="font-sans text-[1.1rem] font-medium tracking-[-0.04em] text-white/54">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <p className="text-[0.97rem] leading-7 text-white/64">{step}</p>
+                        <p className="text-[0.97rem] leading-7 text-white/78">{step}</p>
                       </div>
                     ))}
                   </div>
@@ -1840,7 +1852,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
             {scenicUseParagraphs.length > 0 ? (
               <MotionReveal className="tutorial-body-reveal" delay={80}>
-                <section className="mt-20 border-t border-white/12 pt-10">
+                <section className="mt-20 border-t border-white/16 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Why scenic designers rely on symbols
@@ -1849,7 +1861,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                     {scenicUseParagraphs.map((paragraph) => (
                       <p
                         key={paragraph}
-                        className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/72 md:text-[1.07rem]"
+                        className="max-w-[42rem] text-[1.03rem] leading-[1.88] tracking-[-0.01em] text-white/82 md:text-[1.07rem]"
                       >
                         {paragraph}
                       </p>
@@ -1861,13 +1873,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
             ) : null}
 
             <MotionReveal className="tutorial-body-reveal" delay={80}>
-              <section className="mt-20 border-t border-white/12 pt-12">
+              <section className="mt-20 border-t border-white/16 pt-12">
                 <Tabs defaultValue="resources" className="mx-auto max-w-[50rem] text-center">
                 <div className="mx-auto max-w-[38rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Supporting material
                   </h2>
-                  <p className="mt-4 text-[0.98rem] leading-8 tracking-[-0.01em] text-white/62">
+                  <p className="mt-4 text-[0.98rem] leading-8 tracking-[-0.01em] text-white/74">
                     Related resources and quick references stay close to the article so the writing can keep moving without hiding the practical details.
                   </p>
                 </div>
@@ -1889,7 +1901,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
                 <TabsContent value="resources" className="mt-8">
                   <div className="text-left">
-                    <p className="mx-auto max-w-[35rem] text-center text-[0.98rem] leading-8 tracking-[-0.01em] text-white/60">
+                    <p className="mx-auto max-w-[35rem] text-center text-[0.98rem] leading-8 tracking-[-0.01em] text-white/74">
                       Open these when the topic needs more context: software documentation, adjacent lessons, or reference material that supports the workflow.
                     </p>
                     <div className="mt-8 space-y-3">
@@ -1902,14 +1914,14 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                           className="flex items-start justify-between gap-4 rounded-[1rem] px-1 py-3 transition-colors hover:text-white"
                         >
                           <div>
-                            <p className="text-[0.78rem] uppercase tracking-[0.18em] text-white/38">
+                            <p className="text-[0.78rem] font-medium tracking-[0.01em] text-white/60">
                               {resource.type || "Resource"}
                             </p>
                             <p className="mt-2 font-sans text-[1rem] font-medium tracking-[-0.02em] text-white">
                               {resource.title}
                             </p>
                           </div>
-                          <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-white/42" />
+                          <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-white/62" />
                         </a>
                       ))}
                     </div>
@@ -1918,7 +1930,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
                 <TabsContent value="quick-reference" className="mt-8">
                   <div className="text-left">
-                    <p className="mx-auto max-w-[35rem] text-center text-[0.98rem] leading-8 tracking-[-0.01em] text-white/60">
+                    <p className="mx-auto max-w-[35rem] text-center text-[0.98rem] leading-8 tracking-[-0.01em] text-white/74">
                       A short desk reference for the commands and reminders that are easiest to forget while drafting.
                     </p>
                     <div className="mt-8 space-y-3">
@@ -1927,11 +1939,11 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                           <p className="font-sans text-[1rem] font-medium tracking-[-0.02em] text-white">
                             {shortcut.action}
                           </p>
-                          <p className="mt-2 text-[0.9rem] leading-7 text-white/64">
+                          <p className="mt-2 text-[0.9rem] leading-7 text-white/76">
                             {Array.isArray(shortcut.keys) ? shortcut.keys.join(" + ") : shortcut.keys}
                           </p>
                           {shortcut.description ? (
-                            <p className="mt-1 text-[0.9rem] leading-7 text-white/52">
+                            <p className="mt-1 text-[0.9rem] leading-7 text-white/68">
                               {shortcut.description}
                             </p>
                           ) : null}
@@ -1946,19 +1958,19 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
             {examQuestions.length > 0 ? (
               <MotionReveal className="tutorial-body-reveal" delay={80}>
-                <section className="mt-20 border-t border-white/12 pt-10">
+                <section className="mt-20 border-t border-white/16 pt-10">
                 <div className="max-w-[42rem]">
                   <h2 className="font-sans text-[clamp(1.85rem,2.3vw,2.35rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
                     Potential exam questions
                   </h2>
-                  <p className="mt-4 max-w-[38rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/62">
+                  <p className="mt-4 max-w-[38rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/74">
                     These prompts are written for study or LMS use. They are intentionally presented without answers so they can support learning, review, or Canvas integration without giving the result away on the page.
                   </p>
                 </div>
 
-                <div className="mt-8 rounded-[1.35rem] border border-white/10 bg-white/[0.03] p-5 md:p-6">
+                <div className="mt-8 rounded-[1.35rem] border border-white/14 bg-white/[0.045] p-5 md:p-6">
                   <div className="flex items-center justify-between gap-4">
-                    <p className="text-[0.78rem] uppercase tracking-[0.18em] text-white/38">
+                    <p className="text-[0.78rem] font-medium tracking-[0.01em] text-white/60">
                       Question {String(activeExamQuestion + 1).padStart(2, "0")} of {String(examQuestions.length).padStart(2, "0")}
                     </p>
                     <div className="flex items-center gap-2">
@@ -1969,7 +1981,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                             current === 0 ? examQuestions.length - 1 : current - 1
                           )
                         }
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/56 transition-colors hover:border-white/18 hover:bg-white/[0.05] hover:text-white"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-transparent text-white/72 transition-colors hover:border-white/28 hover:bg-white/[0.06] hover:text-white"
                         aria-label="Previous question"
                       >
                         <ChevronLeft className="h-4 w-4" />
@@ -1981,7 +1993,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                             current === examQuestions.length - 1 ? 0 : current + 1
                           )
                         }
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-transparent text-white/56 transition-colors hover:border-white/18 hover:bg-white/[0.05] hover:text-white"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-transparent text-white/72 transition-colors hover:border-white/28 hover:bg-white/[0.06] hover:text-white"
                         aria-label="Next question"
                       >
                         <ChevronRight className="h-4 w-4" />
@@ -1997,9 +2009,9 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                       {examQuestions[activeExamQuestion]?.choices.map((choice: string, choiceIndex: number) => (
                         <div
                           key={choice}
-                          className="rounded-[0.95rem] border border-white/8 bg-black/20 px-4 py-3 text-[0.95rem] leading-7 text-white/62"
+                          className="rounded-[0.95rem] border border-white/12 bg-white/[0.035] px-4 py-3 text-[0.95rem] leading-7 text-white/76"
                         >
-                          <span className="mr-3 text-white/34">
+                          <span className="mr-3 text-white/58">
                             {String.fromCharCode(65 + choiceIndex)}.
                           </span>
                           {choice}
@@ -2012,22 +2024,22 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
               </MotionReveal>
             ) : null}
 
-            <section className="mt-20 border-t border-black/10 pt-12">
+            <section className="mt-20 border-t border-white/16 pt-12">
               <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-5 sm:px-8 lg:px-10">
                 <MotionReveal className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
                   <div className="max-w-3xl">
-                    <p className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
-                      Scenic design tutorials
+                    <p className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] text-white/62">
+                      Scenic design articles
                     </p>
-                    <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+                    <h2 className="max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em] text-white">
                       Keep learning.
                     </h2>
                   </div>
                   <Link
-                    href="/studio/tutorials/archive"
-                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#6f2dff]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#4f2fd8] transition-colors hover:border-[#4f2fd8] hover:text-black md:justify-self-end"
+                    href="/articles"
+                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-white/18 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/76 transition-colors hover:border-white/36 hover:text-white md:justify-self-end"
                   >
-                    View tutorials
+                    View articles
                   </Link>
                 </MotionReveal>
 
@@ -2053,9 +2065,9 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                       >
                         <Link
                           href={card.href}
-                          className="publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border border-black/10 bg-[#fbfaf7] no-underline shadow-[0_8px_24px_rgba(29,29,31,0.035)] transition-transform duration-300 hover:-translate-y-0.5"
+                          className="publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border border-white/10 bg-[#0b0b0b] no-underline shadow-[0_18px_42px_rgba(0,0,0,0.28)] transition-transform duration-300 hover:-translate-y-0.5 hover:border-white/20"
                         >
-                          <div className="learning-card-media relative aspect-video overflow-hidden bg-[#e5e3dc]">
+                          <div className="learning-card-media relative aspect-video overflow-hidden bg-white/[0.04]">
                             <Image
                               src={card.cover.src}
                               alt={card.cover.alt}
@@ -2068,10 +2080,10 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                           </div>
 
                           <div className="learning-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                            <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1d1d1f] transition-colors group-hover:text-[#6f2dff]">
+                            <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white transition-colors group-hover:text-white/82">
                               {card.title}
                             </p>
-                            <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">{metadata}</p>
+                            <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-white/54">{metadata}</p>
                           </div>
                         </Link>
                       </MotionReveal>
@@ -2084,7 +2096,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   <button
                     type="button"
                     onClick={() => scrollRelatedTutorials("previous")}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/72 transition-colors hover:border-white/24 hover:bg-white/[0.12] hover:text-white"
                     aria-label="Previous tutorial cards"
                   >
                     <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
@@ -2092,7 +2104,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   <button
                     type="button"
                     onClick={() => scrollRelatedTutorials("next")}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-white/82 transition-colors hover:border-white/24 hover:bg-white/[0.14] hover:text-white"
                     aria-label="Next tutorial cards"
                   >
                     <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
@@ -2104,7 +2116,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         </div>
       </article>
 
-      <Footer tone="light" />
+      <Footer tone="dark" />
     </div>
   );
 }
@@ -2123,13 +2135,13 @@ function LessonEnhancementSection({ enhancement }: { enhancement: LessonEnhancem
   return (
     <section className="mt-20 border-t border-white/12 pt-12">
       <div className="mx-auto max-w-[44rem] text-center">
-        <p className="text-[0.82rem] font-medium uppercase tracking-[0.18em] text-white/38">
+        <p className="text-[0.82rem] font-medium tracking-[0.01em] text-white/62">
           {enhancement.eyebrow}
         </p>
         <h2 className="mt-4 font-sans text-[clamp(2rem,3.15vw,3.25rem)] font-medium leading-[0.96] tracking-[-0.064em] text-white">
           {enhancement.title}
         </h2>
-        <p className="mx-auto mt-5 max-w-[38rem] text-[1rem] leading-8 tracking-[-0.01em] text-white/66">
+        <p className="mx-auto mt-5 max-w-[38rem] text-[1rem] leading-8 tracking-[-0.01em] text-white/78">
           {enhancement.body}
         </p>
       </div>
@@ -2137,13 +2149,13 @@ function LessonEnhancementSection({ enhancement }: { enhancement: LessonEnhancem
       <div className="mx-auto mt-10 grid max-w-[52rem] gap-6 md:grid-cols-3">
         {enhancement.items.map((item) => (
           <article key={item.label} className="border-t border-white/14 pt-5">
-            <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.14em] text-white/42">
-              {item.label}
+            <p className="font-mono text-[0.7rem] font-medium tracking-[0.02em] text-white/62">
+              {formatHelperLabel(item.label)}
             </p>
             <h3 className="mt-5 font-sans text-[1.1rem] font-medium leading-[1.08] tracking-[-0.035em] text-white">
               {item.title}
             </h3>
-            <p className="mt-4 text-[0.92rem] leading-7 tracking-[-0.01em] text-white/58">
+            <p className="mt-4 text-[0.92rem] leading-7 tracking-[-0.01em] text-white/74">
               {item.body}
             </p>
           </article>
@@ -2157,25 +2169,25 @@ function TrimProfileEnhancement() {
   const steps = [
     {
       marker: "[1]",
-      label: "SOURCE",
+      label: "Source",
       title: "Start with a measured profile",
       body: "Use a manufacturer image that includes the molding silhouette and dimensions, so the drawing begins from evidence rather than a guess.",
     },
     {
       marker: "[2]",
-      label: "TRACE",
+      label: "Trace",
       title: "Build the curve before the scale",
       body: "Trace the crown profile with the Polyline tool, using vertex modes to separate corners, arcs, and adjusted points.",
     },
     {
       marker: "[3]",
-      label: "SCALE",
+      label: "Scale",
       title: "Apply real dimensions after the shape reads",
       body: "Once the profile is clean, scale the traced geometry in X and Y from the Object Info palette to match the product dimensions.",
     },
     {
       marker: "[4]",
-      label: "REUSE",
+      label: "Reuse",
       title: "Save it as a 2D symbol",
       body: "Convert the final profile into a reusable Resource Manager asset, with Convert to Group enabled when placement should become editable drafting geometry.",
     },
@@ -2184,7 +2196,7 @@ function TrimProfileEnhancement() {
   return (
     <section className="mt-20 border-t border-white/12 pt-12">
       <div className="mx-auto max-w-[44rem] text-center">
-        <p className="text-[0.82rem] font-medium uppercase tracking-[0.18em] text-white/38">
+        <p className="text-[0.82rem] font-medium tracking-[0.01em] text-white/62">
           Source to symbol
         </p>
         <h2 className="mt-4 font-sans text-[clamp(2rem,3.15vw,3.25rem)] font-medium leading-[0.96] tracking-[-0.064em] text-white">
@@ -2201,20 +2213,20 @@ function TrimProfileEnhancement() {
             <p className="font-mono text-[0.72rem] leading-none tracking-[0.08em] text-white/70">
               {step.marker}
             </p>
-            <p className="mx-auto mt-2 max-w-[8.5rem] font-mono text-[0.68rem] font-medium uppercase leading-[1.15] tracking-[0.12em] text-white">
-              {step.label}
+            <p className="mx-auto mt-2 max-w-[8.5rem] font-mono text-[0.68rem] font-medium leading-[1.15] tracking-[0.02em] text-white">
+              {formatHelperLabel(step.label)}
             </p>
             <h3 className="mx-auto mt-5 max-w-[11rem] font-sans text-[1.02rem] font-medium leading-[1.06] tracking-[-0.032em] text-white">
               {step.title}
             </h3>
-            <p className="mx-auto mt-4 max-w-[12rem] text-[0.78rem] leading-5 tracking-[-0.005em] text-white/62">
+            <p className="mx-auto mt-4 max-w-[12rem] text-[0.78rem] leading-5 tracking-[-0.005em] text-white/76">
               {step.body}
             </p>
           </article>
         ))}
       </div>
 
-      <p className="mx-auto mt-10 max-w-[38rem] text-center text-[1rem] leading-8 tracking-[-0.01em] text-white/68">
+      <p className="mx-auto mt-10 max-w-[38rem] text-center text-[1rem] leading-8 tracking-[-0.01em] text-white/80">
         The strongest version of the workflow is quiet: source the profile, trace the curve deliberately, scale the finished linework, and save the detail where the next drawing can find it.
       </p>
     </section>
@@ -2260,13 +2272,13 @@ function TwoDEditCommandMap() {
   return (
     <section className="mt-20 border-t border-white/12 pt-12">
       <div className="mx-auto max-w-[44rem] text-center">
-        <p className="text-[0.82rem] font-medium uppercase tracking-[0.18em] text-white/38">
+        <p className="text-[0.82rem] font-medium tracking-[0.01em] text-white/62">
           Command map
         </p>
         <h2 className="mt-4 font-sans text-[clamp(2rem,3.1vw,3.2rem)] font-medium leading-[0.96] tracking-[-0.064em] text-white">
           Choose the edit by what the geometry needs next.
         </h2>
-        <p className="mx-auto mt-5 max-w-[38rem] text-[1rem] leading-8 tracking-[-0.01em] text-white/66">
+        <p className="mx-auto mt-5 max-w-[38rem] text-[1rem] leading-8 tracking-[-0.01em] text-white/78">
           This is the practical center of the page: the same drawing may need to be transformed, reworked, cut apart, joined back together, or repeated with spacing. The tool is chosen by that need.
         </p>
       </div>
@@ -2278,21 +2290,21 @@ function TwoDEditCommandMap() {
             className="grid gap-6 border-t border-white/10 py-8 first:border-t-0 first:pt-0 md:grid-cols-[5rem_minmax(0,1fr)_13rem]"
           >
             <div>
-              <p className="font-sans text-[1.35rem] font-medium leading-none tracking-[-0.05em] text-white/28">
+              <p className="font-sans text-[1.35rem] font-medium leading-none tracking-[-0.05em] text-white/50">
                 {move.number}
               </p>
-              <p className="mt-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-white/38">
-                {move.label}
+              <p className="mt-3 text-[0.72rem] font-medium tracking-[0.01em] text-white/60">
+                {formatHelperLabel(move.label)}
               </p>
             </div>
             <div>
               <h3 className="max-w-[18rem] font-sans text-[clamp(1.45rem,2vw,2rem)] font-medium leading-[1] tracking-[-0.05em] text-white">
                 {move.title}
               </h3>
-              <p className="mt-4 max-w-[38rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/64">
+              <p className="mt-4 max-w-[38rem] text-[0.98rem] leading-8 tracking-[-0.01em] text-white/78">
                 {move.body}
               </p>
-              <p className="mt-4 text-[0.76rem] font-medium uppercase tracking-[0.16em] text-cyan-200/62">
+              <p className="mt-4 text-[0.76rem] font-medium tracking-[0.01em] text-white/60">
                 {move.cue}
               </p>
             </div>

@@ -188,6 +188,7 @@ export default function CreativeStatement() {
           description="A statement on scenic design as spatial storytelling, collaboration, architecture, history, and theatrical memory."
           imageAlt="Notebook icon for creative statement"
           imageSrc="/images/about/icons/creative-statement-icon.png"
+          showImage={false}
           title="Creative Statement"
           updatedAt="May 22, 2026"
           tone="dark"

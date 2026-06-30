@@ -18,17 +18,13 @@ import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { sortScenicProjectsChronologically } from "@/lib/scenicShowcase";
-import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "@shared/learningPortal";
+import { RETIRED_LEARNING_ARTICLE_SLUG_SET } from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
 import {
   getLocalExperientialProjectHref,
   getLocalExperientialProjects,
   getLocalRenderingGallery,
 } from "@shared/localPortfolios";
-import { getLocalTutorials } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 
 const HOME_HERO_IMAGE_URL =
@@ -44,6 +40,7 @@ const HOME_RENDERING_FLIP_WORDS = [
   "environments",
 ];
 const HOME_LOGO_SRC = "/images/site-assets/brand/brandon-pt-davis-white.png";
+const HOME_SCENIC_DESIGN_BLUE = "#496784";
 const HOME_LOADER_EXIT_START_MS = 1280;
 const HOME_LOADER_DONE_MS = 1860;
 const HOME_FEATURED_SCENIC_SLUGS = [
@@ -58,7 +55,7 @@ const HOME_FEATURED_SCENIC_SLUGS = [
 ];
 
 type PublishCard = {
-  kind: "Article" | "Tutorial";
+  kind: "Article";
   title: string;
   description: string;
   href: string;
@@ -289,7 +286,6 @@ const getHomePublishCards = (): PublishCard[] => {
   const localArticles = getLocalArticles();
 
   const articleCards = localArticles
-    .filter(article => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
     .filter(article => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
     .map(article => ({
       kind: "Article" as const,
@@ -302,37 +298,7 @@ const getHomePublishCards = (): PublishCard[] => {
     }))
     .filter(card => card.image);
 
-  const tutorialArticleCards = localArticles
-    .filter(article => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
-    .map(article => ({
-      kind: "Tutorial" as const,
-      title: cleanPublishTitle(article.title),
-      description: cleanPublishDescription(article.excerpt || article.seoDescription),
-      href: `/studio/tutorials/${article.slug}`,
-      image: article.coverImageUrl,
-      imageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
-      timestamp: getPublishTimestamp(article.publishedAt, article.updatedAt, article.createdAt),
-    }));
-
-  const tutorialCards = getLocalTutorials()
-    .filter(tutorial => (tutorial.status || "published") === "published")
-    .map(tutorial => ({
-      kind: "Tutorial" as const,
-      title: cleanPublishTitle(tutorial.title),
-      description: cleanPublishDescription(tutorial.description || tutorial.overview),
-      href: `/studio/tutorials/${tutorial.slug}`,
-      image:
-        tutorial.cover_image ||
-        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
-      imageAlt: `Tutorial cover for ${cleanPublishTitle(tutorial.title)}`,
-      timestamp: getPublishTimestamp(
-        tutorial.published_at,
-        tutorial.updated_at,
-        tutorial.created_at
-      ),
-    }));
-
-  return [...articleCards, ...tutorialArticleCards, ...tutorialCards]
+  return articleCards
     .filter(card => card.image)
     .sort((a, b) => b.timestamp - a.timestamp)
     .slice(0, 4);
@@ -655,19 +621,43 @@ function HomeIdentityCard({
     ...featuredDesignCards,
   ].slice(0, 5);
   const activeCard = identityCards[activeCardIndex] || identityCards[0];
+  const activeCardKey = `${activeCard.kind}-${activeCard.title}`;
+
+  useEffect(() => {
+    if (identityCards.length <= 1) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveCardIndex(index => (index + 1) % identityCards.length);
+    }, 5200);
+
+    return () => window.clearInterval(timer);
+  }, [identityCards.length]);
 
   return (
     <section className="bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(1.6rem,4vw,3.5rem)] pt-[clamp(6rem,9vw,7.5rem)] text-black">
+      <style>{`
+        @keyframes home-identity-card-in {
+          0% { opacity: 0; transform: translateY(0.65rem); filter: blur(8px); }
+          100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes home-identity-media-in {
+          0% { opacity: 0; transform: scale(1.025); }
+          100% { opacity: 0.82; transform: scale(1); }
+        }
+      `}</style>
       <div
-        className="group relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-black text-center text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white md:aspect-auto md:min-h-[min(78svh,48rem)]"
+        className="group relative flex aspect-[16/10] items-center justify-center overflow-hidden text-center text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white md:aspect-auto md:min-h-[min(78svh,48rem)]"
+        style={{ backgroundColor: HOME_SCENIC_DESIGN_BLUE }}
       >
         {activeCard.kind === "image" && activeCard.image ? (
           <>
             <img
+              key={activeCardKey}
               src={activeCard.image}
               alt=""
               aria-hidden="true"
-              className="site-media-square absolute inset-0 h-full w-full object-cover opacity-82 transition-[opacity,transform] duration-700 group-hover:scale-[1.018] group-hover:opacity-90"
+              className="site-media-square absolute inset-0 h-full w-full object-cover opacity-82 transition-[opacity,transform] duration-700 motion-safe:animate-[home-identity-media-in_760ms_cubic-bezier(0.22,1,0.36,1)_forwards] group-hover:scale-[1.018] group-hover:opacity-90"
               draggable={false}
             />
             {activeCard.href ? (
@@ -680,12 +670,20 @@ function HomeIdentityCard({
           </>
         ) : null}
         <div
-          className={`absolute inset-0 ${
-            activeCard.kind === "brand" ? "bg-black" : "bg-black/26"
+          className={`absolute inset-0 transition-colors duration-700 ${
+            activeCard.kind === "brand" ? "" : "bg-black/26"
           }`}
+          style={
+            activeCard.kind === "brand"
+              ? { backgroundColor: HOME_SCENIC_DESIGN_BLUE }
+              : undefined
+          }
         />
         {activeCard.kind === "brand" ? (
-          <div className="relative flex w-full max-w-[54rem] flex-col items-center px-6">
+          <div
+            key={activeCardKey}
+            className="relative flex w-full max-w-[54rem] flex-col items-center px-6 motion-safe:animate-[home-identity-card-in_760ms_cubic-bezier(0.22,1,0.36,1)_forwards]"
+          >
             <img
               src={HOME_LOGO_SRC}
               alt=""
@@ -694,15 +692,18 @@ function HomeIdentityCard({
               draggable={false}
             />
             <h1 className="sr-only">Brandon PT Davis Scenic Design</h1>
-            <p className="mt-[clamp(1.35rem,3vw,2.4rem)] max-w-[44rem] font-sans text-[clamp(0.95rem,1.55vw,1.35rem)] font-semibold uppercase leading-[1.25] tracking-[0.18em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)]">
-              Scenic Design
+            <p className="mt-[clamp(1.35rem,3vw,2.4rem)] max-w-[44rem] font-sans text-[clamp(0.82rem,1.2vw,1.05rem)] font-semibold uppercase leading-[1.25] tracking-[0.42em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.45)]">
+              SCENIC DESIGN
             </p>
           </div>
         ) : (
           <>
             <h1 className="sr-only">Brandon PT Davis Scenic Design</h1>
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/82 via-black/40 to-transparent px-[clamp(1rem,4vw,3rem)] pb-[clamp(4.25rem,7vw,5.6rem)] pt-28 text-left">
-              <p className="font-sans text-[0.74rem] font-semibold uppercase leading-none tracking-[0.18em] text-white/52">
+            <div
+              key={activeCardKey}
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/82 via-black/40 to-transparent px-[clamp(1rem,4vw,3rem)] pb-[clamp(4.25rem,7vw,5.6rem)] pt-28 text-left motion-safe:animate-[home-identity-card-in_760ms_cubic-bezier(0.22,1,0.36,1)_forwards]"
+            >
+              <p className="font-sans text-[0.82rem] font-semibold leading-none text-white/58">
                 Featured Design
               </p>
               <p className="mt-3 max-w-[20ch] font-sans text-[clamp(2rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
@@ -1562,7 +1563,7 @@ function PublishSection() {
         <div className="mb-10 grid gap-8 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-end">
           <FadeUpReveal>
             <p className="mb-4 section-kicker text-white">
-              Articles + Tutorials
+              Articles
             </p>
             <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#4f2fd8] to-[#7c3cff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
               Notes from the studio.
@@ -1576,10 +1577,10 @@ function PublishSection() {
                 can move beyond the stage.
               </p>
               <p>
-                These articles and tutorials open the studio process: how
-                designs develop, how renderings communicate, how tools like
-                Vectorworks support the work, and how theatrical space can teach
-                us to look more carefully at the built world.
+                These articles open the studio process: how designs develop,
+                how renderings communicate, how tools support the work, and how
+                theatrical space can teach us to look more carefully at the
+                built world.
               </p>
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -1588,12 +1589,6 @@ function PublishSection() {
               className="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 font-sans text-sm font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/86"
             >
               Articles
-            </a>
-            <a
-              href="/studio/tutorials"
-              className="inline-flex h-10 items-center justify-center rounded-full border border-white/24 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white hover:text-white"
-            >
-              Tutorials
             </a>
             </div>
           </FadeUpReveal>

@@ -52,15 +52,6 @@ export const recentArticlePreview = {
   imageUrl: "/images/articles/year-39/cover.jpeg",
 } as const;
 
-export const recentTutorialPreview = {
-  title: "Publishing Vectorworks Renderings",
-  href: "/studio/tutorials/publishing-vectorworks-renderings-for-presentation",
-  meta: "Tutorial · Mar 17, 2026",
-  imageAlt: "Vectorworks rendering publishing tutorial cover",
-  imageUrl:
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/convert-bitmap-poster.jpg",
-} as const;
-
 export const studioAppPreview = {
   title: "Scale Calculator",
   href: "/studio/apps/scale-calculator",

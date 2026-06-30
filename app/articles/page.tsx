@@ -5,9 +5,9 @@ import { NextPathProvider } from "../../components/routing/NextPathProvider";
 import { JsonLdScript } from "../../components/seo/JsonLdScript";
 import { absoluteUrl, buildPageMetadata, stripHtml } from "../../lib/metadata";
 import { BRANDON_PERSON_ID, getBreadcrumbJsonLd } from "../../lib/seo/entities";
+import { getTutorialArticles } from "../../shared/articleTutorials";
 import { getLocalArticles } from "../../shared/localArticles";
 import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
 } from "../../shared/learningPortal";
 
@@ -16,14 +16,13 @@ export const dynamic = "force-static";
 export const metadata: Metadata = buildPageMetadata({
   title: "Scenic Design Articles",
   description:
-    "Articles on scenic design, rendering, theatre history, production thinking, and visual storytelling by Brandon PT Davis.",
+    "Articles on scenic design, rendering, theatre history, production thinking, tools, and visual storytelling by Brandon PT Davis.",
   pathname: "/articles",
   type: "article",
 });
 
 export default function Page() {
-  const articles = getLocalArticles()
-    .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+  const articles = [...getLocalArticles(), ...getTutorialArticles()]
     .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
     .sort((a, b) => {
       const dateA = new Date(a.publishedAt || a.createdAt || 0).getTime();
@@ -38,7 +37,7 @@ export default function Page() {
     name: "Scenic Design Articles",
     url: absoluteUrl("/articles"),
     description:
-      "Articles on scenic design, rendering, theatre history, production thinking, and visual storytelling by Brandon PT Davis.",
+      "Articles on scenic design, rendering, theatre history, production thinking, tools, and visual storytelling by Brandon PT Davis.",
     inLanguage: "en-US",
     author: {
       "@id": BRANDON_PERSON_ID,

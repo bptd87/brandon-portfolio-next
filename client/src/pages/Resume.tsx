@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { useMemo, useState } from "react";
 import { Link } from "wouter";
 
 import Header from "@/components/Header";
@@ -14,9 +13,11 @@ import SectionIntro from "@/components/SectionIntro";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
-import { Download, Award, Users } from "lucide-react";
-import { getLocalRenderingProjects } from "@shared/localPortfolios";
-import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import { ArrowRight, Download, Award, Users } from "lucide-react";
+import {
+  ASSISTANT_SCENIC_DESIGN_PATH,
+  assistantScenicDesignEntries,
+} from "@shared/localAssistantScenic";
 
 type ResumeCredit = {
   title: string;
@@ -29,26 +30,16 @@ type ResumeYearSection = {
   credits: ResumeCredit[];
 };
 
-type PortfolioLink = {
-  href: string;
-  previewImage: string;
-};
-
-type HoverPreview = {
-  title: string;
-  previewImage: string;
-  x: number;
-  y: number;
-} | null;
-
 const LINE_CLASS =
   "grid gap-1 border-b border-black/10 py-3.5 text-[1.02rem] leading-7 last:border-b-0 md:grid-cols-[minmax(13rem,1.1fr)_minmax(10rem,0.75fr)_minmax(12rem,0.95fr)] md:items-baseline md:gap-x-8 lg:gap-x-14";
+const RESUME_SECTION_CLASS =
+  "mb-16 border-t border-black/10 pt-7 md:pt-8";
 
 const USA_829_LOGO_SRC = "/images/about/icons/usa-829-logo.png";
 const UCI_LOGO_SRC =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/uci-logo-real.png";
 const RESUME_METRIC_CARD_CLASS =
-  "group relative isolate flex min-h-[11.25rem] flex-col overflow-hidden rounded-[1.65rem] bg-black p-6 text-white shadow-[0_18px_46px_rgba(0,0,0,0.14)] ring-1 ring-white/10 transition-transform duration-300 hover:-translate-y-1 md:min-h-[11.75rem] md:p-7";
+  "group relative isolate flex min-h-[11.25rem] flex-col overflow-hidden rounded-lg p-6 text-white shadow-[0_18px_46px_rgba(0,0,0,0.12)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 md:min-h-[11.75rem] md:p-7";
 const RESUME_METRIC_GLOW_CLASS =
   "pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_16%_0%,rgba(255,255,255,0.06),transparent_32%),radial-gradient(circle_at_88%_4%,rgba(139,92,246,0.12),transparent_44%)]";
 const RESUME_METRIC_MARK_CLASS = "flex h-[3.35rem] items-start md:h-[3.5rem]";
@@ -65,6 +56,7 @@ type ResumeMetricCardProps = {
   body: string;
   children: ReactNode;
   glow?: string;
+  surfaceClassName?: string;
 };
 
 function ResumeMetricCard({
@@ -73,9 +65,10 @@ function ResumeMetricCard({
   body,
   children,
   glow = "",
+  surfaceClassName = "bg-black",
 }: ResumeMetricCardProps) {
   return (
-    <article className={RESUME_METRIC_CARD_CLASS}>
+    <article className={`${RESUME_METRIC_CARD_CLASS} ${surfaceClassName}`}>
       <div className={`${RESUME_METRIC_GLOW_CLASS} ${glow}`} aria-hidden="true" />
       <div className={RESUME_METRIC_MARK_CLASS}>{children}</div>
       <div className="mt-auto pt-5">
@@ -86,116 +79,6 @@ function ResumeMetricCard({
     </article>
   );
 }
-
-const getProjectTimestamp = (project: any) => {
-  if (project.year) {
-    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
-    return new Date(project.year, monthIndex, 1).getTime();
-  }
-
-  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
-  return fallback ? new Date(fallback).getTime() : 0;
-};
-
-type PortfolioLookupMaps = {
-  byTitle: Map<string, PortfolioLink[]>;
-  byTitleAndCompany: Map<string, PortfolioLink[]>;
-};
-
-const CREDIT_TITLE_ALIASES: Record<string, string[]> = {
-  "spelling bee": ["The 25th Annual Putnam County Spelling Bee"],
-  "merry wives of windsor": ["The Merry Wives of Windsor"],
-  "man of la mancha": ["The Man of La Mancha"],
-  "a funny thing happened": ["A Funny Thing Happened on the Way to the Forum"],
-  "tomas and the library lady": ["Tomás and the Library Lady"],
-  "loteria": ["¡LOTERIA: GAME ON!"],
-  'dial "m" for murder': ["Dial “M” for Murder"],
-};
-
-function normalizePortfolioValue(value: string) {
-  return String(value || "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’‘]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/&/g, " and ")
-    .replace(/…/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
-}
-
-function getTitleLookupKeys(title: string) {
-  const normalized = normalizePortfolioValue(title);
-  if (!normalized) return [];
-
-  const keys = new Set<string>([
-    normalized,
-    normalized.replace(/^(a|an|the)\s+/, ""),
-  ]);
-
-  for (const alias of CREDIT_TITLE_ALIASES[normalized] || []) {
-    const aliasNormalized = normalizePortfolioValue(alias);
-    if (aliasNormalized) {
-      keys.add(aliasNormalized);
-      keys.add(aliasNormalized.replace(/^(a|an|the)\s+/, ""));
-    }
-  }
-
-  return Array.from(keys).filter(Boolean);
-}
-
-function pushLookupValue(map: Map<string, PortfolioLink[]>, key: string, value: PortfolioLink) {
-  if (!key) return;
-  const existing = map.get(key);
-  if (existing) {
-    existing.push(value);
-    return;
-  }
-  map.set(key, [value]);
-}
-
-function buildPortfolioLookup(): PortfolioLookupMaps {
-  const byTitle = new Map<string, PortfolioLink[]>();
-  const byTitleAndCompany = new Map<string, PortfolioLink[]>();
-
-  const scenicProjects = getLocalScenicProjects().map((project) => ({
-    title: project.title,
-    company: project.client || "",
-    link: {
-      href: `/project/${project.slug}`,
-      previewImage: project.coverImageUrl || "",
-    },
-  }));
-
-  const renderingProjects = getLocalRenderingProjects()
-    .filter((project) => !project.galleryOnly)
-    .map((project) => ({
-      title: project.title,
-      company: project.client || "",
-      link: {
-        href: `/projects/rendering/${project.slug}`,
-        previewImage: project.coverImageUrl,
-      },
-    }));
-
-  for (const project of [...scenicProjects, ...renderingProjects]) {
-    if (!project.link.previewImage) continue;
-
-    const companyKey = normalizePortfolioValue(project.company);
-    for (const titleKey of getTitleLookupKeys(project.title)) {
-      pushLookupValue(byTitle, titleKey, project.link);
-      if (companyKey) {
-        pushLookupValue(byTitleAndCompany, `${titleKey}|${companyKey}`, project.link);
-      }
-    }
-  }
-
-  return { byTitle, byTitleAndCompany };
-}
-
-const PORTFOLIO_LOOKUP = buildPortfolioLookup();
 
 const SCENIC_CREDITS: ResumeYearSection[] = [
   {
@@ -355,68 +238,15 @@ const EARLIER_CREDITS: ResumeCredit[] = [
   { title: "The Verge", director: "Dir. Cheryl Black", company: "University of Missouri" },
 ];
 
-function dedupePortfolioLinks(items: PortfolioLink[]) {
-  return items.filter((item, index, array) => array.findIndex((candidate) => candidate.href === item.href) === index);
-}
-
-function findLinkedPortfolio(credit: ResumeCredit) {
-  const companyKey = normalizePortfolioValue(credit.company);
-
-  for (const titleKey of getTitleLookupKeys(credit.title)) {
-    const directMatch = PORTFOLIO_LOOKUP.byTitleAndCompany.get(`${titleKey}|${companyKey}`);
-    if (directMatch?.length) return directMatch[0];
-  }
-
-  const titleMatches = dedupePortfolioLinks(
-    getTitleLookupKeys(credit.title).flatMap((titleKey) => PORTFOLIO_LOOKUP.byTitle.get(titleKey) || [])
-  );
-
-  if (titleMatches.length === 1) {
-    return titleMatches[0];
-  }
-
-  return null;
-}
-
-function ScenicCreditRow({
-  credit,
-  onPreview,
-  onPreviewMove,
-  onPreviewLeave,
-}: {
-  credit: ResumeCredit;
-  onPreview: (credit: ResumeCredit, x: number, y: number) => void;
-  onPreviewMove: (credit: ResumeCredit, x: number, y: number) => void;
-  onPreviewLeave: () => void;
-}) {
-  const linkedProject = findLinkedPortfolio(credit);
-
-  const inner = (
-    <>
-      <span className="font-medium italic tracking-[-0.02em] text-foreground/94 transition-colors duration-200 group-hover:text-foreground group-focus-visible:text-foreground">
+function ScenicCreditRow({ credit }: { credit: ResumeCredit }) {
+  return (
+    <p className={LINE_CLASS}>
+      <span className="font-medium italic tracking-[-0.02em] text-foreground/94">
         {credit.title}
       </span>
       <span className="text-foreground/46">{credit.director}</span>
       <span className="text-foreground/52">{credit.company}</span>
-    </>
-  );
-
-  if (!linkedProject) {
-    return <p className={LINE_CLASS}>{inner}</p>;
-  }
-
-  return (
-    <Link
-      href={linkedProject.href}
-      className={`${LINE_CLASS} group -mx-2 cursor-pointer px-2 transition-colors duration-200 hover:bg-black/[0.025] hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/20`}
-      onMouseEnter={(event) => onPreview(credit, event.clientX, event.clientY)}
-      onMouseMove={(event) => onPreviewMove(credit, event.clientX, event.clientY)}
-      onMouseLeave={onPreviewLeave}
-      onFocus={() => onPreview(credit, window.innerWidth * 0.72, 220)}
-      onBlur={onPreviewLeave}
-    >
-      {inner}
-    </Link>
+    </p>
   );
 }
 
@@ -427,49 +257,6 @@ export default function Resume() {
     "2020 MFA Scenic Design | University of California Irvine",
     "2010 BFA Theatre Design | Stephens College",
   ];
-
-  const [hoverPreview, setHoverPreview] = useState<HoverPreview>(null);
-
-  const previewStyle = useMemo(() => {
-    if (!hoverPreview) return null;
-
-    const previewWidth = 420;
-    const previewHeight = 236;
-    const gutter = 26;
-    const maxX = Math.max(gutter, window.innerWidth - previewWidth - gutter);
-    const maxY = Math.max(gutter, window.innerHeight - previewHeight - gutter);
-
-    return {
-      left: Math.min(Math.max(hoverPreview.x + 22, gutter), maxX),
-      top: Math.min(Math.max(hoverPreview.y - 34, gutter), maxY),
-    };
-  }, [hoverPreview]);
-
-  function showPreview(credit: ResumeCredit, x: number, y: number) {
-    const linkedProject = findLinkedPortfolio(credit);
-    if (!linkedProject) return;
-    setHoverPreview({
-      title: credit.title,
-      previewImage: linkedProject.previewImage,
-      x,
-      y,
-    });
-  }
-
-  function movePreview(credit: ResumeCredit, x: number, y: number) {
-    const linkedProject = findLinkedPortfolio(credit);
-    if (!linkedProject) return;
-    setHoverPreview((current) =>
-      current
-        ? { ...current, x, y, title: credit.title, previewImage: linkedProject.previewImage }
-        : {
-            title: credit.title,
-            previewImage: linkedProject.previewImage,
-            x,
-            y,
-          }
-    );
-  }
 
   return (
     <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
@@ -531,6 +318,7 @@ export default function Resume() {
         description="A production record across scenic design, assistant scenic design, rendering, teaching, and related creative practice."
         imageAlt="File archive icon for resume and production credits"
         imageSrc="/images/about/icons/resume-icon.png"
+        showImage={false}
         title="Resume & Credits"
         updatedAt="May 22, 2026"
       />
@@ -574,7 +362,8 @@ export default function Resume() {
                   label="Education"
                   title="MFA Scenic Design"
                   body="University of California, Irvine."
-                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,214,72,0.12),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(255,255,255,0.045),transparent_40%)]"
+                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(73,103,132,0.34),transparent_40%)]"
+                  surfaceClassName="bg-[#496784]"
                 >
                   <div className="relative h-12 w-12 opacity-95 transition-transform duration-500 group-hover:scale-[1.05] md:h-14 md:w-14">
                     <Image
@@ -591,7 +380,8 @@ export default function Resume() {
                   label="Union"
                   title="United Scenic Artists Local USA 829"
                   body="Professional scenic design membership since 2023."
-                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(150,80,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(255,255,255,0.04),transparent_40%)]"
+                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(168,72,44,0.34),transparent_40%)]"
+                  surfaceClassName="bg-[#a8482c]"
                 >
                   <div className="relative h-12 w-[6.5rem] opacity-95 transition-transform duration-500 group-hover:scale-[1.05] md:h-14 md:w-28">
                     <Image
@@ -608,7 +398,8 @@ export default function Resume() {
                   label="Production Count"
                   title="Realized scenic designs"
                   body="Across regional theatre, summer stock, and academic production."
-                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(82,63,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(255,255,255,0.04),transparent_40%)]"
+                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(93,116,77,0.34),transparent_40%)]"
+                  surfaceClassName="bg-[#5d744d]"
                 >
                   <div className="flex items-start gap-2 text-white">
                     <span className="text-[clamp(2.55rem,3.1vw,3rem)] font-semibold leading-[0.9] tracking-[-0.08em]">
@@ -621,11 +412,11 @@ export default function Resume() {
             </div>
           </AnimatedSection>
 
-          <AnimatedSection delay={140} className="mb-16">
+          <AnimatedSection delay={140} className={RESUME_SECTION_CLASS}>
             <div className="flex items-end justify-between gap-6">
               <SectionIntro
                 title="Selected Scenic Design"
-                description="Selected credits by year. Hover linked productions to preview the matching portfolio entry, then click through to the project page."
+                description="Selected production credits by year, organized as a working record of scenic design, collaboration, and venue."
                 tone="profile"
                 size="compact"
               />
@@ -647,9 +438,6 @@ export default function Resume() {
                         <ScenicCreditRow
                           key={`${section.year}-${credit.title}-${credit.company}`}
                           credit={credit}
-                          onPreview={showPreview}
-                          onPreviewMove={movePreview}
-                          onPreviewLeave={() => setHoverPreview(null)}
                         />
                       ))}
                     </div>
@@ -659,18 +447,48 @@ export default function Resume() {
             </div>
           </AnimatedSection>
 
-          <AnimatedSection className="mb-16">
+          <AnimatedSection className={RESUME_SECTION_CLASS}>
             <SectionIntro title="Earlier" tone="profile" size="compact" />
 
-            <div className="mt-6 border-t border-black/10 pt-6 text-foreground/85 md:pt-7">
+            <div className="mt-6 text-foreground/85">
               {EARLIER_CREDITS.map((credit) => (
                 <ScenicCreditRow
                   key={`${credit.title}-${credit.company}`}
                   credit={credit}
-                  onPreview={showPreview}
-                  onPreviewMove={movePreview}
-                  onPreviewLeave={() => setHoverPreview(null)}
                 />
+              ))}
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection className={RESUME_SECTION_CLASS}>
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <SectionIntro
+                title="Assistant Scenic Design"
+                description="Selected assistant scenic design credits supporting scenic designers through drafting, model coordination, and production communication."
+                tone="profile"
+                size="compact"
+              />
+              <Link
+                href={ASSISTANT_SCENIC_DESIGN_PATH}
+                className="inline-flex w-fit items-center gap-2 text-[0.98rem] font-semibold tracking-[-0.02em] text-[#496784] underline decoration-[#496784]/24 underline-offset-4 transition-colors hover:text-[#2f4c66] hover:decoration-[#496784]/60"
+              >
+                View assistant scenic design gallery
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="mt-6 text-foreground/85">
+              {assistantScenicDesignEntries.map((credit) => (
+                <p
+                  key={credit.anchorId}
+                  className={LINE_CLASS}
+                >
+                  <span className="font-medium italic tracking-[-0.02em] text-foreground/94">
+                    {credit.title}
+                  </span>
+                  <span className="text-foreground/46">Design: {credit.collaborator}</span>
+                  <span className="text-foreground/52">{credit.organization}</span>
+                </p>
               ))}
             </div>
           </AnimatedSection>
@@ -700,23 +518,6 @@ export default function Resume() {
           </AnimatedSection>
         </div>
 
-        {hoverPreview && previewStyle ? (
-          <div
-            className="pointer-events-none fixed z-50 hidden w-[26rem] overflow-hidden rounded-[1rem] border border-black/10 bg-black shadow-[0_24px_60px_rgba(0,0,0,0.28)] lg:block"
-            style={previewStyle}
-          >
-            <div className="relative aspect-[16/9] w-full overflow-hidden">
-              <Image
-                src={hoverPreview.previewImage}
-                alt={`${hoverPreview.title} scenic preview`}
-                fill
-                quality={78}
-                sizes="26rem"
-                className="object-cover object-center"
-              />
-            </div>
-          </div>
-        ) : null}
       </section>
 
       <Footer tone="light" />

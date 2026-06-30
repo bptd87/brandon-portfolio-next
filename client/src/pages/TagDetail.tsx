@@ -6,10 +6,7 @@ import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { getLocalArticles } from "@shared/localArticles";
-import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "@shared/learningPortal";
+import { RETIRED_LEARNING_ARTICLE_SLUG_SET } from "@shared/learningPortal";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import {
   Drama,
@@ -330,11 +327,7 @@ export default function TagDetail({
                   {articles.map(article => (
                     <Link
                       key={article.id}
-                      href={
-                        LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
-                          ? `/studio/tutorials/${article.slug}`
-                          : `/articles/${article.slug}`
-                      }
+                      href={`/articles/${article.slug}`}
                       className="group block border-t border-white/10 pt-4"
                     >
                       <div className="space-y-3">

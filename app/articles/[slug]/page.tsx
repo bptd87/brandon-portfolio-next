@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import ArticleDetailPage from "../../../client/src/pages/ArticleDetail";
+import TutorialDetailPage from "../../../client/src/pages/TutorialDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
 import { buildPageMetadata, stripHtml } from "../../../lib/metadata";
 import { BRANDON_ORGANIZATION_ID, BRANDON_PERSON_ID } from "../../../lib/seo/entities";
+import {
+  getTutorialArticleBySlug,
+  getTutorialArticles,
+} from "../../../shared/articleTutorials";
+import { getLocalTutorialBySlug } from "../../../shared/localStudio";
 import {
   getLocalArticleBySlug,
   getLocalArticleRecordBySlug,
@@ -12,7 +18,6 @@ import {
 } from "../../../shared/localArticles";
 import { resolveLegacyArticlePath } from "../../../shared/legacyRedirects";
 import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
   RETIRED_LEARNING_ARTICLE_REDIRECTS,
 } from "../../../shared/learningPortal";
 import {
@@ -33,6 +38,7 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   return [
     ...getLocalArticles().map((article) => ({ slug: article.slug })),
+    ...getTutorialArticles().map((article) => ({ slug: article.slug })),
     { slug: VOYAGELA_ARTICLE_SLUG },
   ];
 }
@@ -51,7 +57,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     });
   }
 
-  const article = getLocalArticleBySlug(slug);
+  const article = getLocalArticleBySlug(slug) || getTutorialArticleBySlug(slug);
 
   if (!article) {
     return buildPageMetadata({
@@ -88,8 +94,12 @@ export default async function Page({ params }: ArticlePageProps) {
     permanentRedirect(retiredRedirect);
   }
 
-  if (LEARNING_PORTAL_ARTICLE_SLUG_SET.has(slug)) {
-    permanentRedirect(`/studio/tutorials/${slug}`);
+  if (getLocalTutorialBySlug(slug)) {
+    return (
+      <NextPathProvider currentPath={`/articles/${slug}`}>
+        <TutorialDetailPage slug={slug} />
+      </NextPathProvider>
+    );
   }
 
   const article = getLocalArticleRecordBySlug(slug);
@@ -99,6 +109,7 @@ export default async function Page({ params }: ArticlePageProps) {
     if (destination) {
       permanentRedirect(destination);
     }
+    notFound();
   }
 
   const articleDescription = article?.excerpt

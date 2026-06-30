@@ -120,16 +120,16 @@ export function resolveLegacyTutorialPath(rawSlug?: string | null) {
   if (!normalized) return null;
 
   const alias = LEGACY_TUTORIAL_ALIASES[normalized];
-  if (alias === "") return "/studio/tutorials";
-  if (alias) return `/studio/tutorials/${alias}`;
+  if (alias === "") return "/articles";
+  if (alias) return "/articles";
 
   const withoutPrefix = normalized.replace(/^vectorworks-tutorial-/, "");
   if (getLocalTutorialBySlug(withoutPrefix)) {
-    return `/studio/tutorials/${withoutPrefix}`;
+    return "/articles";
   }
 
   if (getLocalTutorialBySlug(normalized)) {
-    return `/studio/tutorials/${normalized}`;
+    return "/articles";
   }
 
   return null;

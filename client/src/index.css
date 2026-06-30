@@ -4,7 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Avenir Next", Avenir, "Gill Sans", "Trebuchet MS", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Avenir Next", Avenir, "Gill Sans", "Trebuchet MS", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
@@ -64,8 +66,8 @@
 
 :root {
   /* ============================================
-     BRANDON PT DAVIS — NOTHING-INSPIRED SYSTEM
-     Modern • Bold • Image-First
+     BRANDON PT DAVIS — STUDIO PORTFOLIO SYSTEM
+     Image-first, editorial, and quietly handmade.
      ============================================ */
   
   /* Primary: Pure Black */
@@ -293,31 +295,31 @@
   
   /* Typography Hierarchy */
   h1 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(2.5rem, 8vw, 6rem);
     font-weight: 500;
-    line-height: 0.95;
-    letter-spacing: -0.065em;
+    line-height: 1;
+    letter-spacing: -0.032em;
   }
 
   h2 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.055em;
+    line-height: 1.04;
+    letter-spacing: -0.028em;
   }
 
   h3 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    line-height: 1.12;
+    letter-spacing: -0.018em;
   }
 
   h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(1.25rem, 2vw, 1.75rem);
     font-weight: 600;
     line-height: 1.2;
@@ -325,7 +327,7 @@
 
   p {
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.68;
     font-weight: 400;
   }
   
@@ -363,6 +365,12 @@
   .publish-card-media:has(> img),
   .publish-card-media:has(> picture) {
     border-radius: 1.75rem 1.75rem 0 0 !important;
+  }
+
+  .article-card-media,
+  .article-card-media:has(> img),
+  .article-card-media:has(> picture) {
+    border-radius: 0 !important;
   }
 
   .publish-card-media img,
@@ -411,11 +419,11 @@
 
 @layer components {
   .section-kicker {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(1rem, 1.45vw, 1.22rem);
     font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.035em;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
     text-transform: none;
   }
 }
@@ -687,6 +695,88 @@
 
   .publish-editorial [class*="decoration-white"] {
     text-decoration-color: rgba(17, 17, 17, 0.32) !important;
+  }
+
+  .publish-editorial.publish-editorial-dark {
+    --background: #030303;
+    --card: #0b0b0b;
+    --popover: #0b0b0b;
+    --muted: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    background: #030303 !important;
+    background-image: none !important;
+  }
+
+  .publish-editorial.publish-editorial-dark h1,
+  .publish-editorial.publish-editorial-dark h2,
+  .publish-editorial.publish-editorial-dark h3,
+  .publish-editorial.publish-editorial-dark h4,
+  .publish-editorial.publish-editorial-dark h5,
+  .publish-editorial.publish-editorial-dark h6,
+  .publish-editorial.publish-editorial-dark strong,
+  .publish-editorial.publish-editorial-dark [class*="text-white"] {
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  .publish-editorial.publish-editorial-dark h1,
+  .publish-editorial.publish-editorial-dark h2,
+  .publish-editorial.publish-editorial-dark h3,
+  .publish-editorial.publish-editorial-dark strong {
+    color: #ffffff !important;
+  }
+
+  .publish-editorial.publish-editorial-dark p,
+  .publish-editorial.publish-editorial-dark li,
+  .publish-editorial.publish-editorial-dark dd {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .publish-editorial.publish-editorial-dark [class*="text-white/48"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/50"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/54"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/58"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/60"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/62"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/64"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/66"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/68"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/70"] {
+    color: rgba(255, 255, 255, 0.68) !important;
+  }
+
+  .publish-editorial.publish-editorial-dark [class*="text-white/72"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/74"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/76"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/78"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/80"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/82"],
+  .publish-editorial.publish-editorial-dark [class*="text-white/84"] {
+    color: rgba(255, 255, 255, 0.82) !important;
+  }
+
+  .publish-editorial.publish-editorial-dark a:hover,
+  .publish-editorial.publish-editorial-dark button:hover {
+    color: #ffffff !important;
+  }
+
+  .publish-editorial.publish-editorial-dark [class*="border-white"],
+  .publish-editorial.publish-editorial-dark [class*="border-border"] {
+    border-color: rgba(255, 255, 255, 0.16) !important;
+  }
+
+  .publish-editorial.publish-editorial-dark [class*="bg-white"] {
+    background-color: rgba(255, 255, 255, 0.045) !important;
+    background-image: none !important;
+  }
+
+  .publish-editorial.publish-editorial-dark [class*="bg-background"] {
+    background-color: #030303 !important;
+    background-image: none !important;
+  }
+
+  .publish-editorial.publish-editorial-dark [class*="bg-muted"] {
+    background-color: rgba(255, 255, 255, 0.08) !important;
   }
 
   .publish-editorial input,

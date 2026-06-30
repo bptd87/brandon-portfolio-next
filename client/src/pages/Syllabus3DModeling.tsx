@@ -129,10 +129,10 @@ export default function Syllabus3DModeling() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="/studio/tutorials"
+                href="/articles"
                 className="inline-flex min-h-11 items-center gap-2 rounded-full bg-black px-5 text-[0.95rem] font-medium tracking-[0] text-white transition-colors hover:bg-[color-mix(in_oklch,var(--accent-articles)_58%,black)]"
               >
-                <span>Vectorworks Tutorials</span>
+                <span>Articles</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
               <Link
@@ -300,7 +300,7 @@ export default function Syllabus3DModeling() {
         <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <p className="section-kicker text-foreground/45">
-              Related Tutorials
+              Related Articles
             </p>
             <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.6vw,2.8rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
               Tutorial videos used alongside this class.
@@ -312,12 +312,12 @@ export default function Syllabus3DModeling() {
 
           <div className="mt-8 max-w-5xl">
             <Link
-              href="/studio/tutorials"
+              href="/articles"
               className="group grid gap-6 rounded-lg bg-white/58 px-6 py-8 transition-colors hover:bg-white/78 md:grid-cols-[minmax(0,1fr)_2rem] md:px-10 md:py-10"
             >
               <div>
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-black/50">
-                  <span>Studio Tutorials</span>
+                  <span>Articles</span>
                   <span>3D Modeling</span>
                   <span>Rendering</span>
                 </div>
