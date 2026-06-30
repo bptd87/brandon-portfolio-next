@@ -104,14 +104,14 @@ export default function Becoming() {
         <section className="py-0">
           <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {orderedPhotos.map((photo, index) => (
-              <AnimatedSection key={photo.id} delay={Math.min(index * 18, 220)}>
-                <figure className="group">
-                  <button
-                    type="button"
-                    aria-label={`Open ${photo.title}`}
-                    className="relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
-                    onClick={() => setSelectedPhoto(photo)}
-                  >
+              <figure key={photo.id} className="group">
+                <button
+                  type="button"
+                  aria-label={`Open ${photo.title}`}
+                  className="portfolio-focus-card relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
+                  onClick={() => setSelectedPhoto(photo)}
+                >
+                  <span className="portfolio-focus-media block h-full w-full overflow-hidden">
                     <Image
                       src={photo.src}
                       alt={photo.alt}
@@ -123,11 +123,11 @@ export default function Becoming() {
                       style={{
                         objectPosition: cropPositions[photo.id] ?? "50% 50%",
                       }}
-                      className="h-full w-full rounded-none object-cover transition duration-700 group-hover:brightness-110"
+                      className="h-full w-full rounded-none object-cover"
                     />
-                  </button>
-                </figure>
-              </AnimatedSection>
+                  </span>
+                </button>
+              </figure>
             ))}
           </div>
         </section>

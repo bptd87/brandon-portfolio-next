@@ -83,31 +83,6 @@ function getYoutubeId(url: string) {
   }
 }
 
-function getYoutubeEmbedUrl(url: string) {
-  const videoId = getYoutubeId(url);
-  if (!videoId) return "";
-
-  try {
-    const params = new URLSearchParams({
-      autoplay: "1",
-      controls: "0",
-      disablekb: "1",
-      fs: "0",
-      iv_load_policy: "3",
-      loop: "1",
-      modestbranding: "1",
-      mute: "1",
-      playsinline: "1",
-      playlist: videoId,
-      rel: "0",
-    });
-
-    return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
-  } catch {
-    return "";
-  }
-}
-
 function getYoutubePosterUrl(url: string) {
   const videoId = getYoutubeId(url);
   return videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : "";
@@ -280,28 +255,18 @@ export default function ExperientialPortfolio() {
                           style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
                         >
                           {project.coverVideoUrl ? (
-                            <>
-                              <img
-                                src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
-                                alt={`${project.title} video preview poster`}
-                                className="site-media-square h-full w-full object-cover object-center transition-opacity duration-500 group-hover:opacity-90"
-                                loading={index < eagerProjectCount ? "eager" : "lazy"}
-                                fetchPriority={index < eagerProjectCount ? "high" : "auto"}
-                              />
-                              <iframe
-                                src={getYoutubeEmbedUrl(project.coverVideoUrl)}
-                                title={`${project.title} video preview`}
-                                aria-label={`${project.title} video preview`}
-                                className="site-media-square pointer-events-none absolute left-1/2 top-1/2 h-full w-[120%] -translate-x-1/2 -translate-y-1/2 border-0"
-                                allow="autoplay; encrypted-media; picture-in-picture"
-                                loading={index < eagerProjectCount ? "eager" : "lazy"}
-                              />
-                            </>
+                            <img
+                              src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
+                              alt={`${project.title} video preview poster`}
+                              className="site-media-square h-full w-full object-cover object-center"
+                              loading={index < eagerProjectCount ? "eager" : "lazy"}
+                              fetchPriority={index < eagerProjectCount ? "high" : "auto"}
+                            />
                           ) : project.coverImageUrl ? (
                             <img
                               src={project.coverImageUrl}
                               alt={experientialAlt(project.title)}
-                              className={`site-media-square h-full w-full object-center transition-opacity duration-500 group-hover:opacity-90 ${imageTreatment.image}`}
+                              className={`site-media-square h-full w-full object-center ${imageTreatment.image}`}
                               loading={index < eagerProjectCount ? "eager" : "lazy"}
                               fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                             />

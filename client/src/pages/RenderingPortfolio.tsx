@@ -273,36 +273,33 @@ export default function RenderingPortfolio() {
           <section id="rendering" className="scroll-mt-24 py-0">
             <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {allRenderingItems.map((item, index) => (
-                <MotionReveal
+                <button
                   key={item.id}
-                  delay={Math.min(index * 18, 220)}
+                  type="button"
+                  id={item.slug}
+                  aria-label={`Open ${item.title} rendering gallery`}
+                  onClick={() => openRenderingLightbox(index)}
+                  className="portfolio-focus-card group relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
                 >
-                  <button
-                    type="button"
-                    id={item.slug}
-                    aria-label={`Open ${item.title} rendering gallery`}
-                    onClick={() => openRenderingLightbox(index)}
-                    className="group relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
-                  >
-                    {item.imageUrl ? (
-                      <ProgressiveImage
-                        src={item.imageUrl}
-                        alt={item.altText}
-                        aspectRatio="1 / 1"
-                        objectFit="cover"
-                        containerClassName="h-full w-full"
-                        className="h-full w-full object-cover transition duration-700 group-hover:brightness-110"
-                        loading={index < eagerRenderingCount ? "eager" : "lazy"}
-                        fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
-                        sizes="(max-width: 768px) 92vw, 44vw"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-black/42">
-                        Image unavailable
-                      </div>
-                    )}
-                  </button>
-                </MotionReveal>
+                  {item.imageUrl ? (
+                    <ProgressiveImage
+                      src={item.imageUrl}
+                      alt={item.altText}
+                      aspectRatio="1 / 1"
+                      objectFit="cover"
+                      containerClassName="portfolio-focus-media h-full w-full"
+                      className="h-full w-full object-cover"
+                      loading={index < eagerRenderingCount ? "eager" : "lazy"}
+                      fetchPriority={index < eagerRenderingCount ? "high" : "auto"}
+                      sizes="(max-width: 768px) 92vw, 44vw"
+                      enableScrollAnimation={false}
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-black/42">
+                      Image unavailable
+                    </div>
+                  )}
+                </button>
               ))}
             </div>
           </section>
