@@ -1732,12 +1732,30 @@ export default function Home({
 }: {
   initialProjects: ScenicProjectSummary[];
 }) {
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlBackground = html.style.backgroundColor;
+    const previousBodyBackground = body.style.backgroundColor;
+    const previousColorScheme = html.style.colorScheme;
+
+    html.style.backgroundColor = "#ffffff";
+    body.style.backgroundColor = "#ffffff";
+    html.style.colorScheme = "light";
+
+    return () => {
+      html.style.backgroundColor = previousHtmlBackground;
+      body.style.backgroundColor = previousBodyBackground;
+      html.style.colorScheme = previousColorScheme;
+    };
+  }, []);
+
   const projects = sortScenicProjectsChronologically(initialProjects);
   const projectsLoading = false;
   const featuredProject =
     projects.find(project => project.coverImageUrl) || projects[0];
   return (
-    <>
+    <div className="min-h-screen bg-white text-black">
       <SEO
         title="Brandon PT Davis | Scenic Designer"
         description="San Diego-based union scenic designer giving form to how stories reflect our world through theatre environments, renderings, and production design."
@@ -1753,7 +1771,7 @@ export default function Home({
 
       <Header />
 
-      <main>
+      <main className="min-h-screen bg-white">
         {projectsLoading ? (
           <ProjectGridSkeleton />
         ) : featuredProject ? (
@@ -1764,6 +1782,6 @@ export default function Home({
           </>
         ) : null}
       </main>
-    </>
+    </div>
   );
 }
