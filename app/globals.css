@@ -1,1 +1,9 @@
 @import "../client/src/index.css";
+
+html:has([data-page-shell="home"]),
+body:has([data-page-shell="home"]) {
+  background: #ffffff;
+  background-color: #ffffff;
+  color-scheme: light;
+  overscroll-behavior-y: none;
+}

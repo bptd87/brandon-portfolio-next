@@ -1755,7 +1755,7 @@ export default function Home({
   const featuredProject =
     projects.find(project => project.coverImageUrl) || projects[0];
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div data-page-shell="home" className="min-h-screen bg-white text-black">
       <SEO
         title="Brandon PT Davis | Scenic Designer"
         description="San Diego-based union scenic designer giving form to how stories reflect our world through theatre environments, renderings, and production design."
