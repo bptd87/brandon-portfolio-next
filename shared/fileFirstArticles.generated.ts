@@ -62,7 +62,7 @@ export const fileFirstArticleFieldsBySlug = {
   "atmosphere-as-attraction-orange-county-restaurant-environments": {
     title:
       "Atmosphere as Attraction: Five Orange County Restaurant Environments I Kept Coming Back To",
-    status: "scheduled",
+    status: "published",
     featured: false,
     excerpt:
       "A scenic designer reflects on five accessible Orange County restaurant environments that use atmosphere, set dressing, lighting, layout, and mood to create small-scale themed experiences beyond the theme park.",
@@ -75,8 +75,8 @@ export const fileFirstArticleFieldsBySlug = {
     seoKeywords:
       "restaurant design, environmental storytelling, scenic design, orange county restaurant design, themed environments, themed entertainment",
     readTime: 13,
-    publishedAt: "2026-07-15T09:00:00-07:00",
-    updatedAt: "2026-07-15T09:00:00-07:00",
+    publishedAt: "2026-07-01T09:00:00-07:00",
+    updatedAt: "2026-07-01T09:00:00-07:00",
     linkedScenicProjectSlugs: [],
     series: {
       name: "Themed Experience",
