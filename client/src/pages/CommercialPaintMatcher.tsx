@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeft, Check, Copy, Palette, Search, SlidersHorizontal } from "lucide-react";
+import { ArrowLeft, Check, Copy, Info, Palette, Search, SlidersHorizontal } from "lucide-react";
 import { Link } from "wouter";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
@@ -341,6 +341,18 @@ export default function CommercialPaintMatcher() {
                 {filterLabel} / tap filter to choose paint companies
               </p>
             )}
+
+            <div className="mt-3 border border-black/10 bg-[#f3eee4] p-3">
+              <div className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-black/50">
+                <Info className="h-3.5 w-3.5" />
+                About this app
+              </div>
+              <p className="mt-2 text-[0.78rem] font-medium leading-5 tracking-[-0.015em] text-black/54">
+                Photo-based paint matching is an estimate. Camera lighting, shadows, screen
+                calibration, and glossy surfaces can shift color, so use even natural light and
+                verify with a physical paint sample before committing.
+              </p>
+            </div>
           </section>
 
           <section className="flex min-h-0 flex-1 flex-col border border-black/10 bg-[#fbf7ef] shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
