@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeft, Check, Copy, Info, Palette, Search, SlidersHorizontal } from "lucide-react";
+import { ArrowLeft, Check, Copy, Info, Palette, Search, SlidersHorizontal, X } from "lucide-react";
 import { Link } from "wouter";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
@@ -111,6 +111,7 @@ export default function CommercialPaintMatcher() {
   const [searchTerm, setSearchTerm] = useState("");
   const [copied, setCopied] = useState<"match" | null>(null);
   const [copiedPaintId, setCopiedPaintId] = useState<string | null>(null);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   const displayTargetColor = normalizeHex(targetColor) ?? "#000000";
 
@@ -341,18 +342,6 @@ export default function CommercialPaintMatcher() {
                 {filterLabel} / tap filter to choose paint companies
               </p>
             )}
-
-            <div className="mt-3 border border-black/10 bg-[#f3eee4] p-3">
-              <div className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-black/50">
-                <Info className="h-3.5 w-3.5" />
-                About this app
-              </div>
-              <p className="mt-2 text-[0.78rem] font-medium leading-5 tracking-[-0.015em] text-black/54">
-                Photo-based paint matching is an estimate. Camera lighting, shadows, screen
-                calibration, and glossy surfaces can shift color, so use even natural light and
-                verify with a physical paint sample before committing.
-              </p>
-            </div>
           </section>
 
           <section className="flex min-h-0 flex-1 flex-col border border-black/10 bg-[#fbf7ef] shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
@@ -430,10 +419,45 @@ export default function CommercialPaintMatcher() {
                       </button>
                     </div>
                   );
-                })}
+              })}
             </div>
           </section>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setAboutOpen(true)}
+            className="absolute bottom-3 right-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[#f3eee4] text-black/58 shadow-[0_12px_30px_rgba(0,0,0,0.16)] ring-1 ring-black/10 transition-colors hover:text-black"
+            aria-label="About this app"
+          >
+            <Info className="h-4 w-4" />
+          </button>
+
+          {aboutOpen ? (
+            <div className="absolute inset-0 z-30 bg-black/18 backdrop-blur-[2px]">
+              <div className="absolute inset-x-3 bottom-3 border border-black/10 bg-[#fbf7ef] p-4 text-black shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/52">
+                    <Info className="h-3.5 w-3.5" />
+                    About this app
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setAboutOpen(false)}
+                    className="flex h-8 w-8 items-center justify-center bg-black text-white transition-opacity hover:opacity-88"
+                    aria-label="Close about this app"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <p className="mt-3 text-[0.86rem] font-medium leading-6 tracking-[-0.018em] text-black/62">
+                  Photo-based paint matching is an estimate. Camera lighting, shadows, screen
+                  calibration, and glossy surfaces can shift color, so use even natural light and
+                  verify with a physical paint sample before committing.
+                </p>
+              </div>
+            </div>
+          ) : null}
         </section>
       </main>
     </div>
