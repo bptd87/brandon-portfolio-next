@@ -363,7 +363,7 @@ export default function RoscoPaintCalculator() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f1bd84] text-[#55301b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(77,49,36,0.22)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -402,7 +402,7 @@ export default function RoscoPaintCalculator() {
                   <button
                     type="button"
                     onClick={() => setPanelOpen("directions")}
-                    className="h-8 border border-[#d75f13] bg-[#e86f1c] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-black shadow-none"
+                    className="h-8 border border-[#31484d] bg-[#3f5d62] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-white shadow-none"
                   >
                     Directions
                   </button>
@@ -501,7 +501,7 @@ export default function RoscoPaintCalculator() {
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck={false}
-                  className="h-12 rounded-[0.18rem] border border-black/10 bg-[#ece5d7] px-4 text-center font-mono text-[1.25rem] font-semibold uppercase tracking-normal text-black placeholder:text-black/22 focus:outline-none focus:ring-2 focus:ring-[#e86f1c]/70"
+                  className="h-12 rounded-[0.18rem] border border-black/10 bg-[#ece5d7] px-4 text-center font-mono text-[1.25rem] font-semibold uppercase tracking-normal text-black placeholder:text-black/22 focus:outline-none focus:ring-2 focus:ring-[#3f5d62]/70"
                   placeholder="#000000"
                   aria-label="Target color hex"
                 />
@@ -591,7 +591,7 @@ export default function RoscoPaintCalculator() {
               <section className="flex max-h-[86%] w-full flex-col border border-black/12 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.22)]">
                 <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-3">
                   <div>
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#e86f1c]">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#3f5d62]">
                       {panelOpen === "directions"
                         ? "Directions"
                         : panelOpen === "library"
@@ -676,7 +676,7 @@ export default function RoscoPaintCalculator() {
                             aria-pressed={selected}
                             className={`grid grid-cols-[1.35rem_minmax(0,1fr)] items-center gap-2 border p-2 text-left ${
                               selected
-                                ? "border-[#e86f1c] bg-[#e86f1c] text-black"
+                                ? "border-[#3f5d62] bg-[#3f5d62] text-white"
                                 : "border-black/10 bg-[#ece5d7] text-black"
                             }`}
                           >

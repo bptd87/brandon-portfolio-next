@@ -540,7 +540,7 @@ export default function DesignHistoryTimeline() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#efd0a0] text-[#4f2d18] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(72,42,22,0.22)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -571,7 +571,7 @@ export default function DesignHistoryTimeline() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#f26a1b]">
+                      <div className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#8a5432]">
                         {yearRange}
                       </div>
                       <h1 className="mt-2 font-sans text-[clamp(1.8rem,7vw,3.15rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-black">
@@ -636,7 +636,7 @@ export default function DesignHistoryTimeline() {
                 <button
                   type="button"
                   onClick={openRandomPeriod}
-                  className="flex h-11 items-center gap-2 bg-[#f26a1b] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
+                  className="flex h-11 items-center gap-2 bg-[#8a5432] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-88"
                 >
                   <Shuffle className="h-4 w-4" />
                   Pick
@@ -711,7 +711,7 @@ export default function DesignHistoryTimeline() {
                         />
                       </div>
                       <span className="min-w-0">
-                        <span className="block truncate text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[#f26a1b]">
+                        <span className="block truncate text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[#8a5432]">
                           {range}
                         </span>
                         <span className="mt-1 block truncate text-[1.02rem] font-semibold leading-none tracking-[-0.04em] text-black">

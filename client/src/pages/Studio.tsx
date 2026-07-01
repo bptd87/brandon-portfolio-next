@@ -27,72 +27,84 @@ const apps = [
     shortTitle: "3D Convert",
     description:
       "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
-    image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
+    image: "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
     href: "/studio/apps/scenic-3d-converter",
     category: "Mac Tool",
     tone: "Download",
     cta: "View Mac download",
     launchMode: "page",
+    accentColor: "#5f88a8",
+    accentTextColor: "#ffffff",
   },
   {
     title: "Scale Calculator",
     shortTitle: "Scale",
     description:
       "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
-    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+    image: "/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     tone: "Mobile tool",
     cta: "Launch app",
     launchMode: "app",
+    accentColor: "#d06934",
+    accentTextColor: "#17120b",
   },
   {
     title: "Dimension Reference",
     shortTitle: "Dims",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "/assets/studio-apps/icons/dimension-reference.jpg",
+    image: "/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
     tone: "Shop reference",
     cta: "Open reference",
     launchMode: "app",
+    accentColor: "#c9891d",
+    accentTextColor: "#17120b",
   },
   {
     title: "Rosco Paint Calculator",
     shortTitle: "Rosco",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
+    image: "/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
     tone: "Paint shop",
     cta: "Launch app",
     launchMode: "app",
+    accentColor: "#3f5d62",
+    accentTextColor: "#ffffff",
   },
   {
     title: "Commercial Paint Matcher",
     shortTitle: "Paint Match",
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
-    image: "/assets/studio-apps/icons/commercial-paint-matcher.jpg",
+    image: "/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
     href: "/studio/apps/commercial-paint-matcher",
     category: "Matcher",
     tone: "Paint library",
     cta: "Launch app",
     launchMode: "app",
+    accentColor: "#758967",
+    accentTextColor: "#ffffff",
   },
   {
     title: "Design History Timeline",
     shortTitle: "History",
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "/assets/studio-apps/icons/design-history-timeline.jpg",
+    image: "/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
     tone: "Research",
     cta: "Open timeline",
     launchMode: "app",
+    accentColor: "#8a5432",
+    accentTextColor: "#ffffff",
   },
 ] as const;
 
@@ -129,12 +141,12 @@ const articleSwatches = [
 ] as const;
 
 const appSwatches = [
-  { background: "#496784", text: "#ffffff", muted: "rgba(255,255,255,0.72)" },
-  { background: "#a65f3a", text: "#ffffff", muted: "rgba(255,255,255,0.72)" },
-  { background: "#c4932f", text: "#17120b", muted: "rgba(23,18,11,0.68)" },
-  { background: "#7f906f", text: "#ffffff", muted: "rgba(255,255,255,0.72)" },
-  { background: "#c57050", text: "#ffffff", muted: "rgba(255,255,255,0.72)" },
-  { background: "#7a3f1b", text: "#ffffff", muted: "rgba(255,255,255,0.72)" },
+  { background: "#5f88a8", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
+  { background: "#b7653f", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
+  { background: "#c98f24", text: "#17120b", muted: "rgba(23,18,11,0.68)" },
+  { background: "#be6241", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
+  { background: "#758967", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
+  { background: "#8a5432", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
 ] as const;
 
 function getArticleTimestamp(value?: string | Date | null) {
@@ -469,7 +481,7 @@ function StudioToolCardContent({
 
   return (
     <>
-      <div className="site-media-square aspect-square w-full overflow-hidden rounded-none border-b border-black/10 bg-black [border-radius:0]">
+      <div className="site-media-square aspect-square w-full overflow-hidden rounded-none bg-black [border-radius:0]">
         <img
           src={app.image}
           alt={app.title}
@@ -536,7 +548,8 @@ function StudioAppScreen({
           <button
             type="button"
             onClick={onBack}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff5f57] text-[#6f1512] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            className="flex h-7 w-7 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            style={{ backgroundColor: app.accentColor, color: app.accentTextColor }}
             aria-label="Back to Studio"
           >
             <X className="h-3.5 w-3.5 opacity-0 transition-opacity hover:opacity-70" />

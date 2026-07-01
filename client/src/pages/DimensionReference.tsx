@@ -546,7 +546,7 @@ export default function DimensionReference() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f2bf66] text-[#56360b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(128,79,16,0.22)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -577,7 +577,7 @@ export default function DimensionReference() {
                     Dimension Reference
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <p className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[#f26a1b]">
+                    <p className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[#c9891d]">
                       {selectedDimension
                         ? getCategoryLabel(selectedDimension.category as CategoryKey)
                         : "No result"}
@@ -640,7 +640,7 @@ export default function DimensionReference() {
                 <button
                   type="button"
                   onClick={() => setFiltersOpen((isOpen) => !isOpen)}
-                  className="flex h-11 items-center gap-2 bg-[#f26a1b] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
+                  className="flex h-11 items-center gap-2 bg-[#c9891d] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
                 >
                   <SlidersHorizontal className="h-4 w-4" />
                   Filter
@@ -713,7 +713,7 @@ export default function DimensionReference() {
                           <span
                             className={`flex h-5 w-5 items-center justify-center border ${
                               checked
-                                ? "border-[#f26a1b] bg-[#f26a1b]"
+                                ? "border-[#c9891d] bg-[#c9891d]"
                                 : "border-black/24 bg-transparent"
                             }`}
                             aria-hidden="true"
@@ -773,7 +773,7 @@ export default function DimensionReference() {
                         <div className="flex items-start gap-3">
                           <span
                             className={`mt-1 h-3 w-3 shrink-0 ${
-                              isSelected ? "bg-[#f26a1b]" : "bg-black"
+                              isSelected ? "bg-[#c9891d]" : "bg-black"
                             }`}
                             aria-hidden="true"
                           />
@@ -797,7 +797,7 @@ export default function DimensionReference() {
                         aria-label={`Copy ${item.name} dimensions`}
                       >
                         {copiedItem === itemKey ? (
-                          <Check className="h-4 w-4 text-[#f26a1b]" />
+                          <Check className="h-4 w-4 text-[#c9891d]" />
                         ) : (
                           <Copy className="h-4 w-4 text-black/44" />
                         )}

@@ -206,7 +206,7 @@ export default function CommercialPaintMatcher() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
           <Link
             href="/studio/apps"
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#dfe6d4] text-[#26311f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(39,52,31,0.2)]"
             aria-label="Back to Studio Apps"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -296,7 +296,7 @@ export default function CommercialPaintMatcher() {
               <button
                 type="button"
                 onClick={() => setFiltersOpen((isOpen) => !isOpen)}
-                className="flex h-11 items-center gap-2 bg-[#f26a1b] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
+                className="flex h-11 items-center gap-2 bg-[#758967] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-88"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 Filter
@@ -320,7 +320,7 @@ export default function CommercialPaintMatcher() {
                       />
                       <span
                         className={`flex h-5 w-5 items-center justify-center border ${
-                          checked ? "border-[#f26a1b] bg-[#f26a1b]" : "border-black/24 bg-transparent"
+                          checked ? "border-[#758967] bg-[#758967]" : "border-black/24 bg-transparent"
                         }`}
                         aria-hidden="true"
                       >
@@ -385,7 +385,7 @@ export default function CommercialPaintMatcher() {
                       >
                         <span
                           className={`block min-h-[4.6rem] border-r border-black/10 ${
-                            isSelected ? "shadow-[inset_0_0_0_3px_#f26a1b]" : ""
+                            isSelected ? "shadow-[inset_0_0_0_3px_#758967]" : ""
                           }`}
                           style={{ backgroundColor: paint.hex }}
                           aria-hidden="true"
@@ -410,7 +410,7 @@ export default function CommercialPaintMatcher() {
                             {score}
                           </span>
                           {copiedPaintId === paint.id ? (
-                            <Check className="h-4 w-4 text-[#f26a1b]" />
+                            <Check className="h-4 w-4 text-[#758967]" />
                           ) : (
                             <Copy className="h-4 w-4 text-black/44" />
                           )}

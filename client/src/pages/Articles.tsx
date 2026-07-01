@@ -206,19 +206,19 @@ const COVER_OBJECT_POSITION_BY_SLUG: Record<string, string> = {
 
 const READING_PATHS = [
   {
-    title: "Process",
-    category: "Design Process",
-    description: "Research, drafting, models, and rehearsal choices becoming a built production.",
+    title: "Scenic Design",
+    category: "Scenic Design",
+    description: "Project writing, design thinking, and production context from the scenic archive.",
   },
   {
-    title: "Context",
-    category: "Performance History & Culture",
-    description: "Theatre, performance culture, and the artistic questions behind the work.",
+    title: "Tools & Technology",
+    category: "Tools & Technology",
+    description: "Studio tools, tutorials, and technical notes for drafting, paint, scale, and workflows.",
   },
   {
-    title: "Profiles",
-    category: "Profiles & Interviews",
-    description: "Interviews, press, and editorial pieces that frame the wider practice.",
+    title: "Themed Entertainment",
+    category: "Themed Entertainment",
+    description: "Experiential design, location-based storytelling, and themed environment references.",
   },
 ];
 
@@ -688,25 +688,47 @@ export default function Articles() {
                   Reading Paths
                 </p>
                 <p className="max-w-[26rem] text-[0.95rem] leading-6 tracking-[-0.015em] text-[#6f6b64] md:text-right">
-                  Follow a thread through the archive, from process notes to cultural context and profile pieces.
+                  Move through the archive by practice area, from project work to tools and experiential design.
                 </p>
               </div>
               <div className="mt-7 grid gap-3 md:grid-cols-3">
-                {READING_PATHS.map((path) => (
-                  <button
-                    key={path.title}
-                    type="button"
-                    onClick={() => navigateToCategory(path.category)}
-                    className="group min-h-[11rem] rounded-none bg-[#fbfaf7] p-6 text-left shadow-[0_10px_30px_rgba(17,17,17,0.045)] ring-1 ring-black/[0.06] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_42px_rgba(17,17,17,0.08)]"
-                  >
-                    <span className="text-[1.35rem] font-semibold leading-[1.08] tracking-[-0.022em] text-[#111111] transition-colors group-hover:text-[#6f2dff]">
-                      {path.title}
-                    </span>
-                    <span className="mt-4 block max-w-[22rem] text-[0.98rem] leading-7 tracking-[-0.015em] text-[#5d5851]">
-                      {path.description}
-                    </span>
-                  </button>
-                ))}
+                {READING_PATHS.map((path) => {
+                  const pathStyle = getCategoryStyle(path.category);
+                  const PathIcon = pathStyle.icon;
+
+                  return (
+                    <button
+                      key={path.title}
+                      type="button"
+                      onClick={() => navigateToCategory(path.category)}
+                      className="group min-h-[11rem] rounded-none p-6 text-left shadow-[0_10px_30px_rgba(17,17,17,0.075)] ring-1 ring-black/[0.06] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_18px_46px_rgba(17,17,17,0.12)]"
+                      style={
+                        {
+                          backgroundColor: pathStyle.swatchColor,
+                          color: pathStyle.swatchTextColor,
+                        } as CSSProperties
+                      }
+                    >
+                      <span className="flex items-start justify-between gap-5">
+                        <span className="text-[1.35rem] font-semibold leading-[1.08] tracking-[-0.022em]">
+                          {path.title}
+                        </span>
+                        <span
+                          className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+                          style={{ backgroundColor: pathStyle.swatchChipBg }}
+                        >
+                          <PathIcon className="h-4 w-4" strokeWidth={2.5} />
+                        </span>
+                      </span>
+                      <span
+                        className="mt-4 block max-w-[22rem] text-[0.98rem] leading-7 tracking-[-0.015em]"
+                        style={{ color: pathStyle.swatchMutedColor }}
+                      >
+                        {path.description}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>

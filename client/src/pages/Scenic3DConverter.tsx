@@ -22,7 +22,7 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
 const PAGE_URL = "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter";
-const PAGE_IMAGE = "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-card.webp";
+const PAGE_IMAGE = "https://www.brandonptdavis.com/assets/studio-apps/icons/scenic-3d-converter.jpg";
 const PAGE_HERO_IMAGE = "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-hero.webp";
 const DOWNLOAD_URL_ABS = "https://www.brandonptdavis.com/api/downloads/scenic-3d-converter";
 const PAGE_TITLE = "Scenic 3D Converter for Vectorworks (Mac) | Local Finder Quick Action";
@@ -246,7 +246,7 @@ export default function Scenic3DConverter() {
                     href={DOWNLOAD_URL}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-white/90"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#5f88a8] px-5 py-3 text-[0.95rem] font-medium text-white transition-colors hover:bg-[#6f98b7]"
                   >
                     <Download className="h-4 w-4" />
                     Download stable ZIP
@@ -292,7 +292,7 @@ export default function Scenic3DConverter() {
               return (
                 <AnimatedSection key={mode.name} delay={index * 70}>
                   <div className="border-t border-border/16 pt-6">
-                    <div className="flex items-center gap-3 text-foreground/66">
+                    <div className="flex items-center gap-3 text-[#9dd6ff]">
                       <Icon className="h-4 w-4" />
                       <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/36">
                         Mode

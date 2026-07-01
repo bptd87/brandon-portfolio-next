@@ -164,7 +164,7 @@ export default function ScaleCalculator() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f0bd77] text-[#54240f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(128,54,23,0.2)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -190,7 +190,7 @@ export default function ScaleCalculator() {
                   <button
                     type="button"
                     onClick={() => setDirectionsOpen(true)}
-                    className="h-8 border border-[#d75f13] bg-[#e86f1c] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-black shadow-none"
+                    className="h-8 border border-[#a94b23] bg-[#d06934] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-black shadow-none"
                   >
                     Directions
                   </button>
@@ -276,7 +276,7 @@ export default function ScaleCalculator() {
                       autoCorrect="off"
                       spellCheck={false}
                       aria-label="Full-size feet"
-                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#e86f1c]/70"
+                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#d06934]/70"
                       placeholder="0"
                     />
                   </div>
@@ -297,7 +297,7 @@ export default function ScaleCalculator() {
                       autoCorrect="off"
                       spellCheck={false}
                       aria-label="Full-size inches"
-                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#e86f1c]/70"
+                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#d06934]/70"
                       placeholder="0"
                     />
                   </div>
@@ -320,7 +320,7 @@ export default function ScaleCalculator() {
                     autoCorrect="off"
                     spellCheck={false}
                     aria-label="Model millimeters"
-                    className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#e86f1c]/70"
+                    className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#d06934]/70"
                     placeholder="0"
                   />
                 </div>
@@ -343,7 +343,7 @@ export default function ScaleCalculator() {
                     aria-pressed={selectedScale === scale.ratio}
                     className={`h-9 rounded-[0.12rem] border px-1 text-[0.66rem] font-semibold tracking-normal transition-colors ${
                       selectedScale === scale.ratio
-                        ? "border-[#e86f1c] bg-[#e86f1c] text-black shadow-[0_10px_18px_rgba(82,48,18,0.16)]"
+                        ? "border-[#d06934] bg-[#d06934] text-black shadow-[0_10px_18px_rgba(82,48,18,0.16)]"
                         : "border-black bg-black text-[#f8f1e6]"
                     }`}
                   >
@@ -392,7 +392,7 @@ export default function ScaleCalculator() {
               <section className="w-full border border-black/12 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.22)]">
                 <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-3">
                   <div>
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#e86f1c]">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#d06934]">
                       Directions
                     </p>
                     <h2 className="mt-1 text-[1.25rem] font-semibold leading-none tracking-[-0.04em] text-black">

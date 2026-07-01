@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { type MouseEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type MouseEvent, useEffect, useMemo, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
@@ -25,7 +25,11 @@ type StudioApp = {
   href: string;
   category: string;
   tone: string;
-  accent: string;
+  accentColor: string;
+  accentTextColor: string;
+  cardColor: string;
+  cardTextColor: string;
+  cardMutedColor: string;
 };
 
 const converterTool: StudioApp = {
@@ -33,11 +37,15 @@ const converterTool: StudioApp = {
   shortTitle: "3D Convert",
   description:
     "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
-  image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
+  image: "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
   href: "/studio/apps/scenic-3d-converter",
   category: "Mac Tool",
   tone: "Download",
-  accent: "from-[#5f7cff] to-[#9dd6ff]",
+  accentColor: "#5f88a8",
+  accentTextColor: "#ffffff",
+  cardColor: "#5f88a8",
+  cardTextColor: "#ffffff",
+  cardMutedColor: "rgba(255,255,255,0.74)",
 };
 
 const allApps: StudioApp[] = [
@@ -46,56 +54,76 @@ const allApps: StudioApp[] = [
     shortTitle: "Scale",
     description:
       "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
-    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+    image: "/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
     screenImage: "/assets/studio-apps/scale-app-iphone.png",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     tone: "Mobile tool",
-    accent: "from-[#ffffff] to-[#8f8f8f]",
+    accentColor: "#d06934",
+    accentTextColor: "#17120b",
+    cardColor: "#b7653f",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Dimension Reference",
     shortTitle: "Dims",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "/assets/studio-apps/icons/dimension-reference.jpg",
+    image: "/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
     tone: "Shop reference",
-    accent: "from-[#c9ff3d] to-[#58d68d]",
+    accentColor: "#c9891d",
+    accentTextColor: "#17120b",
+    cardColor: "#c98f24",
+    cardTextColor: "#17120b",
+    cardMutedColor: "rgba(23,18,11,0.68)",
   },
   {
     title: "Rosco Paint Calculator",
     shortTitle: "Rosco",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
+    image: "/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
     tone: "Paint shop",
-    accent: "from-[#ff5f57] to-[#ffd166]",
+    accentColor: "#3f5d62",
+    accentTextColor: "#ffffff",
+    cardColor: "#be6241",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Commercial Paint Matcher",
     shortTitle: "Paint Match",
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
-    image: "/assets/studio-apps/icons/commercial-paint-matcher.jpg",
+    image: "/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
     href: "/studio/apps/commercial-paint-matcher",
     category: "Matcher",
     tone: "Paint library",
-    accent: "from-[#f3eee4] to-[#7a8076]",
+    accentColor: "#758967",
+    accentTextColor: "#ffffff",
+    cardColor: "#758967",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Design History Timeline",
     shortTitle: "History",
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "/assets/studio-apps/icons/design-history-timeline.jpg",
+    image: "/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
     tone: "Research",
-    accent: "from-[#7c3cff] to-[#ff9bd2]",
+    accentColor: "#8a5432",
+    accentTextColor: "#ffffff",
+    cardColor: "#8a5432",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
 ];
 
@@ -271,7 +299,11 @@ export default function StudioApps() {
                 <Link
                   href={featuredApp.href}
                   onClick={(event) => handleStudioAppLink(event, featuredApp)}
-                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
+                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
+                  style={{
+                    backgroundColor: featuredApp.accentColor,
+                    color: featuredApp.accentTextColor,
+                  }}
                 >
                   Launch {featuredApp.shortTitle}
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -311,9 +343,16 @@ export default function StudioApps() {
                 <Link
                   href={app.href}
                   onClick={(event) => handleStudioAppLink(event, app)}
-                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-none border-b border-r border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors hover:bg-white md:min-h-[27rem] md:border-t"
+                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-none border-b border-r border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors md:min-h-[27rem] md:border-t"
+                  style={
+                    {
+                      "--studio-app-card": app.cardColor,
+                      "--studio-app-card-text": app.cardTextColor,
+                      "--studio-app-card-muted": app.cardMutedColor,
+                    } as CSSProperties
+                  }
                 >
-                  <div className="site-media-square relative aspect-square w-full overflow-hidden rounded-none border-b border-black/8 bg-black [border-radius:0]">
+                  <div className="site-media-square relative aspect-square w-full overflow-hidden rounded-none bg-black [border-radius:0]">
                     <Image
                       src={app.image}
                       alt=""
@@ -324,18 +363,18 @@ export default function StudioApps() {
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col p-3.5 pt-4 md:p-6 md:pt-7">
-                    <p className="text-[0.58rem] font-medium uppercase leading-4 tracking-[0.16em] text-black/38 md:text-[0.72rem] md:tracking-[0.18em] md:text-black/42">
+                  <div className="flex flex-1 flex-col bg-[var(--studio-app-card)] p-3.5 pt-4 text-[var(--studio-app-card-text)] md:p-6 md:pt-7">
+                    <p className="text-[0.58rem] font-medium uppercase leading-4 tracking-[0.16em] text-[var(--studio-app-card-muted)] md:text-[0.72rem] md:tracking-[0.18em]">
                       {app.category} / {app.tone}
                     </p>
-                    <h3 className="mt-2 font-sans text-[clamp(1.38rem,6vw,1.85rem)] font-medium leading-[0.9] tracking-[-0.07em] text-[#111111] md:mt-3 md:max-w-[10ch] md:text-[clamp(2rem,4vw,3.5rem)] md:tracking-[-0.075em]">
+                    <h3 className="mt-2 font-sans text-[clamp(1.38rem,6vw,1.85rem)] font-medium leading-[0.9] tracking-[-0.07em] md:mt-3 md:max-w-[10ch] md:text-[clamp(2rem,4vw,3.5rem)] md:tracking-[-0.075em]">
                       <span className="md:hidden">{app.shortTitle}</span>
                       <span className="hidden md:inline">{app.title}</span>
                     </h3>
-                    <p className="mt-4 hidden max-w-[28rem] text-[0.96rem] leading-6 tracking-[-0.015em] text-black/54 md:block">
+                    <p className="mt-4 hidden max-w-[28rem] text-[0.96rem] leading-6 tracking-[-0.015em] text-[var(--studio-app-card-muted)] md:block">
                       {app.description}
                     </p>
-                    <div className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.82rem] font-medium tracking-[-0.02em] text-black/58 transition-colors group-hover:text-black md:gap-2 md:pt-6 md:text-[0.95rem] md:text-black/62">
+                    <div className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.82rem] font-medium tracking-[-0.02em] md:gap-2 md:pt-6 md:text-[0.95rem]">
                       Open tool
                       <ArrowRight className="h-4 w-4" />
                     </div>
@@ -457,7 +496,8 @@ function StudioAppScreen({
           <button
             type="button"
             onClick={onBack}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff5f57] text-[#6f1512] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            className="flex h-7 w-7 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            style={{ backgroundColor: app.accentColor, color: app.accentTextColor }}
             aria-label="Back to Studio Apps"
           >
             <X className="h-3.5 w-3.5 opacity-0 transition-opacity hover:opacity-70" />
