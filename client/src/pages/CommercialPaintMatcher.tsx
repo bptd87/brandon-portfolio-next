@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { ArrowLeft, Check, Copy, Info, Palette, Search, SlidersHorizontal, X } from "lucide-react";
+import { useMemo, useRef, useState, type ChangeEvent, type MouseEvent } from "react";
+import { ArrowLeft, Camera, Check, Copy, Info, Palette, Search, SlidersHorizontal, X } from "lucide-react";
 import { Link } from "wouter";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
@@ -20,6 +20,12 @@ function hexToRgb(hex: string): [number, number, number] {
   return result
     ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
     : [0, 0, 0];
+}
+
+function rgbToHex([r, g, b]: [number, number, number]) {
+  return `#${[r, g, b]
+    .map((channel) => Math.max(0, Math.min(255, Math.round(channel))).toString(16).padStart(2, "0"))
+    .join("")}`.toUpperCase();
 }
 
 function rgbToLab(rgb: [number, number, number]): [number, number, number] {
@@ -104,6 +110,7 @@ function formatPaintInfo(
 }
 
 export default function CommercialPaintMatcher() {
+  const photoInputRef = useRef<HTMLInputElement | null>(null);
   const [targetColor, setTargetColor] = useState("#988234");
   const [selectedBrands, setSelectedBrands] = useState<PaintBrand[]>(BRAND_FILTERS);
   const [selectedPaintId, setSelectedPaintId] = useState<string | null>(null);
@@ -112,6 +119,9 @@ export default function CommercialPaintMatcher() {
   const [copied, setCopied] = useState<"match" | null>(null);
   const [copiedPaintId, setCopiedPaintId] = useState<string | null>(null);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [photoOpen, setPhotoOpen] = useState(false);
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+  const [sampledPhotoColor, setSampledPhotoColor] = useState<string | null>(null);
 
   const displayTargetColor = normalizeHex(targetColor) ?? "#000000";
 
@@ -163,6 +173,65 @@ export default function CommercialPaintMatcher() {
   function updateTargetColor(value: string) {
     setTargetColor(value);
     setSelectedPaintId(null);
+  }
+
+  function openPhotoPicker() {
+    photoInputRef.current?.click();
+  }
+
+  function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== "string") return;
+      setPhotoPreviewUrl(reader.result);
+      setSampledPhotoColor(null);
+      setPhotoOpen(true);
+    };
+    reader.readAsDataURL(file);
+    event.target.value = "";
+  }
+
+  function samplePhotoColor(event: MouseEvent<HTMLImageElement>) {
+    const image = event.currentTarget;
+    const rect = image.getBoundingClientRect();
+    const naturalX = ((event.clientX - rect.left) / rect.width) * image.naturalWidth;
+    const naturalY = ((event.clientY - rect.top) / rect.height) * image.naturalHeight;
+    const radius = Math.max(3, Math.round(Math.min(image.naturalWidth, image.naturalHeight) * 0.006));
+    const sampleX = Math.max(0, Math.round(naturalX) - radius);
+    const sampleY = Math.max(0, Math.round(naturalY) - radius);
+    const sampleWidth = Math.min(radius * 2 + 1, image.naturalWidth - sampleX);
+    const sampleHeight = Math.min(radius * 2 + 1, image.naturalHeight - sampleY);
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    if (!context || sampleWidth <= 0 || sampleHeight <= 0) return;
+
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    context.drawImage(image, 0, 0);
+
+    const pixels = context.getImageData(sampleX, sampleY, sampleWidth, sampleHeight).data;
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let count = 0;
+
+    for (let index = 0; index < pixels.length; index += 4) {
+      if (pixels[index + 3] < 128) continue;
+      r += pixels[index];
+      g += pixels[index + 1];
+      b += pixels[index + 2];
+      count += 1;
+    }
+
+    if (!count) return;
+
+    const sampledHex = rgbToHex([r / count, g / count, b / count]);
+    setSampledPhotoColor(sampledHex);
+    updateTargetColor(sampledHex);
   }
 
   function toggleBrand(brand: PaintBrand) {
@@ -280,7 +349,7 @@ export default function CommercialPaintMatcher() {
           </section>
 
           <section className="shrink-0 border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
-            <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
               <input
                 value={targetColor}
                 onChange={(event) => updateTargetColor(event.target.value)}
@@ -294,6 +363,23 @@ export default function CommercialPaintMatcher() {
                 className="h-11 min-w-0 border border-black/10 bg-[#f3eee4] px-3 font-mono text-[1rem] font-semibold uppercase tracking-[-0.02em] text-black outline-none focus:border-black/34"
                 aria-label="Target hex color"
               />
+              <input
+                ref={photoInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handlePhotoChange}
+                className="hidden"
+                aria-label="Take or upload a color photo"
+              />
+              <button
+                type="button"
+                onClick={openPhotoPicker}
+                className="flex h-11 w-11 items-center justify-center bg-[#dfe6d4] text-[#26311f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)] transition-opacity hover:opacity-88"
+                aria-label="Take or upload a color photo"
+              >
+                <Camera className="h-4 w-4" />
+              </button>
               <button
                 type="button"
                 onClick={() => setFiltersOpen((isOpen) => !isOpen)}
@@ -421,7 +507,7 @@ export default function CommercialPaintMatcher() {
                   );
               })}
             </div>
-          </section>
+            </section>
           </div>
 
           <button
@@ -455,6 +541,55 @@ export default function CommercialPaintMatcher() {
                   calibration, and glossy surfaces can shift color, so use even natural light and
                   verify with a physical paint sample before committing.
                 </p>
+              </div>
+            </div>
+          ) : null}
+
+          {photoOpen && photoPreviewUrl ? (
+            <div className="absolute inset-0 z-40 bg-black/24 backdrop-blur-[2px]">
+              <div className="absolute inset-x-3 bottom-3 max-h-[calc(100%-1.5rem)] border border-black/10 bg-[#fbf7ef] p-3 text-black shadow-[0_20px_60px_rgba(0,0,0,0.24)]">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/52">
+                    <Camera className="h-3.5 w-3.5" />
+                    Tap photo to sample
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPhotoOpen(false)}
+                    className="flex h-8 w-8 items-center justify-center bg-black text-white transition-opacity hover:opacity-88"
+                    aria-label="Close photo sampler"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="mt-3 w-full overflow-hidden border border-black/10 bg-black">
+                  <img
+                    src={photoPreviewUrl}
+                    alt="Uploaded paint color sample"
+                    onClick={samplePhotoColor}
+                    className="max-h-[48vh] w-full cursor-crosshair object-contain"
+                    draggable={false}
+                  />
+                </div>
+
+                <div className="mt-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+                  <span
+                    className="h-9 w-9 border border-black/10"
+                    style={{ backgroundColor: sampledPhotoColor ?? displayTargetColor }}
+                    aria-hidden="true"
+                  />
+                  <p className="min-w-0 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-black/44">
+                    {sampledPhotoColor ? `${sampledPhotoColor} applied` : "Tap the image area to match"}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={openPhotoPicker}
+                    className="h-9 bg-[#758967] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white"
+                  >
+                    Retake
+                  </button>
+                </div>
               </div>
             </div>
           ) : null}
