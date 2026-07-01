@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Copy, Palette, Sliders, X } from "lucide-react";
+import { useEffect, useRef, useState, type ChangeEvent, type MouseEvent } from "react";
+import { ArrowLeft, Camera, Check, Copy, Palette, Sliders, X } from "lucide-react";
 import { Link } from "wouter";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
@@ -281,6 +281,7 @@ function calculateRecipe(targetHex: string, paintSet: RoscoPaint[] = ROSCO_PAINT
 }
 
 export default function RoscoPaintCalculator() {
+  const photoInputRef = useRef<HTMLInputElement | null>(null);
   const [targetColor, setTargetColor] = useState("#8B4789");
   const [result, setResult] = useState<RecipeResult | null>(null);
   const [copied, setCopied] = useState(false);
@@ -288,6 +289,9 @@ export default function RoscoPaintCalculator() {
   const [inventory, setInventory] = useState<string[]>([]);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [panelOpen, setPanelOpen] = useState<"directions" | "library" | "inventory" | null>(null);
+  const [photoOpen, setPhotoOpen] = useState(false);
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+  const [sampledPhotoColor, setSampledPhotoColor] = useState<string | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("rosco_inventory_v1");
@@ -342,6 +346,66 @@ export default function RoscoPaintCalculator() {
   const updateTargetHex = (value: string) => {
     const hex = value.replace(/#/g, "").replace(/[^0-9a-fA-F]/g, "").slice(0, 6);
     setTargetColor(`#${hex}`.toUpperCase());
+  };
+
+  const openPhotoPicker = () => {
+    photoInputRef.current?.click();
+  };
+
+  const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== "string") return;
+      setPhotoPreviewUrl(reader.result);
+      setSampledPhotoColor(null);
+      setPhotoOpen(true);
+      setPanelOpen(null);
+    };
+    reader.readAsDataURL(file);
+    event.target.value = "";
+  };
+
+  const samplePhotoColor = (event: MouseEvent<HTMLImageElement>) => {
+    const image = event.currentTarget;
+    const rect = image.getBoundingClientRect();
+    const naturalX = ((event.clientX - rect.left) / rect.width) * image.naturalWidth;
+    const naturalY = ((event.clientY - rect.top) / rect.height) * image.naturalHeight;
+    const radius = Math.max(3, Math.round(Math.min(image.naturalWidth, image.naturalHeight) * 0.006));
+    const sampleX = Math.max(0, Math.round(naturalX) - radius);
+    const sampleY = Math.max(0, Math.round(naturalY) - radius);
+    const sampleWidth = Math.min(radius * 2 + 1, image.naturalWidth - sampleX);
+    const sampleHeight = Math.min(radius * 2 + 1, image.naturalHeight - sampleY);
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    if (!context || sampleWidth <= 0 || sampleHeight <= 0) return;
+
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    context.drawImage(image, 0, 0);
+
+    const pixels = context.getImageData(sampleX, sampleY, sampleWidth, sampleHeight).data;
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let count = 0;
+
+    for (let index = 0; index < pixels.length; index += 4) {
+      if (pixels[index + 3] < 128) continue;
+      r += pixels[index];
+      g += pixels[index + 1];
+      b += pixels[index + 2];
+      count += 1;
+    }
+
+    if (!count) return;
+
+    const sampledHex = rgbToHex([r / count, g / count, b / count]).toUpperCase();
+    setSampledPhotoColor(sampledHex);
+    setTargetColor(sampledHex);
   };
 
   const validTargetColor = /^#[0-9A-F]{6}$/i.test(targetColor);
@@ -491,7 +555,7 @@ export default function RoscoPaintCalculator() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-[minmax(0,1fr)_4.2rem] gap-3">
+              <div className="grid grid-cols-[minmax(0,1fr)_3rem_4.2rem] gap-3">
                 <input
                   type="text"
                   value={targetColor}
@@ -505,6 +569,23 @@ export default function RoscoPaintCalculator() {
                   placeholder="#000000"
                   aria-label="Target color hex"
                 />
+                <input
+                  ref={photoInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={handlePhotoChange}
+                  className="hidden"
+                  aria-label="Take or upload a color photo"
+                />
+                <button
+                  type="button"
+                  onClick={openPhotoPicker}
+                  className="flex h-12 items-center justify-center rounded-[0.18rem] bg-[#f1bd84] text-[#55301b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)] transition-opacity hover:opacity-88"
+                  aria-label="Take or upload a color photo"
+                >
+                  <Camera className="h-4 w-4" />
+                </button>
                 <label className="relative block h-12 cursor-pointer border border-black/10 bg-[#ece5d7] p-1.5">
                   <input
                     type="color"
@@ -698,6 +779,59 @@ export default function RoscoPaintCalculator() {
                     </div>
                   </div>
                 ) : null}
+              </section>
+            </div>
+          ) : null}
+
+          {photoOpen && photoPreviewUrl ? (
+            <div className="absolute inset-0 z-30 flex items-end bg-black/24 p-3 backdrop-blur-[2px]">
+              <section className="max-h-[calc(100%-1.5rem)] w-full border border-black/10 bg-[#fbf7ef] p-3 text-black shadow-[0_20px_60px_rgba(58,45,31,0.24)]">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/52">
+                    <Camera className="h-3.5 w-3.5" />
+                    Tap photo to sample
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPhotoOpen(false)}
+                    className="flex h-8 w-8 items-center justify-center border border-black/12 bg-[#ece5d7] text-black"
+                    aria-label="Close photo sampler"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="mt-3 w-full overflow-hidden border border-black/10 bg-black">
+                  <img
+                    src={photoPreviewUrl}
+                    alt="Uploaded Rosco paint color sample"
+                    onClick={samplePhotoColor}
+                    className="max-h-[46vh] w-full cursor-crosshair object-contain"
+                    draggable={false}
+                  />
+                </div>
+
+                <div className="mt-3 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+                  <span
+                    className="h-9 w-9 border border-black/10"
+                    style={{ backgroundColor: sampledPhotoColor ?? displayTargetColor }}
+                    aria-hidden="true"
+                  />
+                  <p className="min-w-0 text-[0.72rem] font-semibold uppercase leading-4 tracking-[0.12em] text-black/44">
+                    {sampledPhotoColor ? `${sampledPhotoColor} applied` : "Tap photo to set target"}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={openPhotoPicker}
+                    className="h-9 bg-[#3f5d62] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white"
+                  >
+                    Retake
+                  </button>
+                </div>
+
+                <p className="mt-3 text-[0.76rem] font-medium leading-5 text-black/48">
+                  Photo color is an estimate. Use even natural light and test the recipe with real paint.
+                </p>
               </section>
             </div>
           ) : null}
