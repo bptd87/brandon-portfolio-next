@@ -9,6 +9,7 @@ import {
   PenLine,
 } from "lucide-react";
 import AboutNav from "@/components/AboutNav";
+import AboutModelViewer from "@/components/AboutModelViewer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ProfileSectionHero from "@/components/ProfileSectionHero";
@@ -17,6 +18,7 @@ import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 
 const ABOUT_PORTRAIT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
+const ABOUT_MODEL_URL = "/assets/about/3d/brandon-pt-davis-3d-model.glb";
 
 const aboutImages = [
   {
@@ -171,7 +173,7 @@ export default function About() {
             Brandon PT Davis
           </>
         }
-        updatedAt="May 22, 2026"
+        updatedAt="July 2, 2026"
       />
 
       <main className="bg-[#f1f0ec] px-[clamp(1rem,5vw,6rem)] pb-20 pt-12 md:pb-28 md:pt-16">
@@ -186,38 +188,60 @@ export default function About() {
                   className="flex items-center gap-2.5 underline-offset-4 hover:underline"
                   href="/resume"
                 >
-                  <FileText className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  <FileText
+                    className="h-4 w-4 flex-none stroke-[2.1]"
+                    aria-hidden="true"
+                  />
                   Resume
                 </a>
                 <a
                   className="flex items-center gap-2.5 underline-offset-4 hover:underline"
                   href="/creative-statement"
                 >
-                  <PenLine className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  <PenLine
+                    className="h-4 w-4 flex-none stroke-[2.1]"
+                    aria-hidden="true"
+                  />
                   Creative statement
                 </a>
                 <a
                   className="flex items-center gap-2.5 underline-offset-4 hover:underline"
                   href="/about/teaching"
                 >
-                  <GraduationCap className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  <GraduationCap
+                    className="h-4 w-4 flex-none stroke-[2.1]"
+                    aria-hidden="true"
+                  />
                   Teaching philosophy
                 </a>
                 <a
                   className="flex items-center gap-2.5 underline-offset-4 hover:underline"
                   href="/projects"
                 >
-                  <BriefcaseBusiness className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  <BriefcaseBusiness
+                    className="h-4 w-4 flex-none stroke-[2.1]"
+                    aria-hidden="true"
+                  />
                   Portfolio
                 </a>
                 <a
                   className="flex items-center gap-2.5 underline-offset-4 hover:underline"
                   href="mailto:info@brandonptdavis.com"
                 >
-                  <Mail className="h-4 w-4 flex-none stroke-[2.1]" aria-hidden="true" />
+                  <Mail
+                    className="h-4 w-4 flex-none stroke-[2.1]"
+                    aria-hidden="true"
+                  />
                   Email
                 </a>
               </nav>
+
+              <div className="pt-64">
+                <AboutModelViewer
+                  src={ABOUT_MODEL_URL}
+                  downloadName="brandon-pt-davis-3d-model.glb"
+                />
+              </div>
             </aside>
 
             <div className="space-y-7 text-[1.12rem] font-medium leading-8 tracking-[-0.015em] text-black/78 md:text-[1.22rem] md:leading-9">
@@ -263,31 +287,24 @@ export default function About() {
                   const image = aboutImages[block.imageIndex];
 
                   return (
-                    <figure
-                      key={`${block.kind}-${index}`}
-                      className="clear-both my-11"
-                    >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-auto w-full bg-black/[0.04]"
-                      />
-                      <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
-                        {image.caption}
-                      </figcaption>
-                    </figure>
+                    <div key={`${block.kind}-${index}`} className="clear-both">
+                      <figure className="my-11">
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-auto w-full bg-black/[0.04]"
+                        />
+                        <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
+                          {image.caption}
+                        </figcaption>
+                      </figure>
+                    </div>
                   );
                 }
 
-                return (
-                  <p
-                    key={`${block.kind}-${index}`}
-                  >
-                    {block.text}
-                  </p>
-                );
+                return <p key={`${block.kind}-${index}`}>{block.text}</p>;
               })}
 
               <section
@@ -299,7 +316,7 @@ export default function About() {
                     Profiles
                   </h2>
                   <div className="mt-4 space-y-3">
-                    {PROFILE_ARTICLE_LINKS.map((profileLink) => (
+                    {PROFILE_ARTICLE_LINKS.map(profileLink => (
                       <a
                         key={profileLink.href}
                         href={profileLink.href}
@@ -325,7 +342,7 @@ export default function About() {
           aria-label="About image archive"
           className="mx-auto mt-16 max-w-[53rem] space-y-12 md:mt-20 md:space-y-14"
         >
-          {afterArticleImages.map((image) => (
+          {afterArticleImages.map(image => (
             <figure key={image.src}>
               <img
                 src={image.src}

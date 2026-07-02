@@ -6,9 +6,9 @@ export const dynamic = "force-static";
 
 export const metadata = {
   ...buildPageMetadata({
-    title: "Scenic 3D Converter for Vectorworks on Mac",
+    title: "Scenic 3D Converter for Vectorworks",
     description:
-      "Download a Mac utility that converts 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM formats for scenic design workflow.",
+      "Download a Mac or Windows utility that keeps Vectorworks files lighter by converting 3D handoffs locally into USD, USDZ, and 3DM formats.",
     pathname: "/studio/apps/scenic-3d-converter",
     image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
   }),

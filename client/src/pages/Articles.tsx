@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+} from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -26,10 +32,13 @@ import MotionReveal from "@/components/MotionReveal";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
-import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
-  RETIRED_LEARNING_ARTICLE_REDIRECTS,
-} from "@shared/learningPortal";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { RETIRED_LEARNING_ARTICLE_REDIRECTS } from "@shared/learningPortal";
 import { getTutorialArticles } from "@shared/articleTutorials";
 import { getLocalArticles } from "@shared/localArticles";
 
@@ -208,17 +217,20 @@ const READING_PATHS = [
   {
     title: "Scenic Design",
     category: "Scenic Design",
-    description: "Project writing, design thinking, and production context from the scenic archive.",
+    description:
+      "Project writing, design thinking, and production context from the scenic archive.",
   },
   {
     title: "Tools & Technology",
     category: "Tools & Technology",
-    description: "Studio tools, tutorials, and technical notes for drafting, paint, scale, and workflows.",
+    description:
+      "Studio tools, tutorials, and technical notes for drafting, paint, scale, and workflows.",
   },
   {
     title: "Themed Entertainment",
     category: "Themed Entertainment",
-    description: "Experiential design, location-based storytelling, and themed environment references.",
+    description:
+      "Experiential design, location-based storytelling, and themed environment references.",
   },
 ];
 
@@ -258,33 +270,47 @@ function ArticleGridCard({
     : "publish-card-media article-card-media transition-card relative aspect-square overflow-hidden bg-black/[0.04]";
   const copyClassName = featured
     ? "publish-card-copy flex min-h-[18rem] flex-col px-6 pb-6 pt-6 sm:px-8 sm:pb-8 sm:pt-8 lg:min-h-0"
-    : "publish-card-copy flex h-[11.25rem] flex-col px-5 pb-5 pt-5 sm:px-6 sm:pb-6";
+    : "publish-card-copy flex min-h-[12.75rem] flex-col px-5 pb-6 pt-5 sm:px-6 sm:pb-7";
   const titleClassName = featured
     ? "block max-w-[34rem] text-[clamp(1.9rem,3.7vw,4.35rem)] font-semibold leading-[0.96] tracking-[-0.038em] transition-opacity duration-500 group-hover:opacity-85"
-    : "line-clamp-3 block max-w-[20rem] text-[clamp(1.06rem,1.25vw,1.34rem)] font-semibold leading-[1.1] tracking-[-0.026em] transition-opacity duration-500 group-hover:opacity-85";
+    : "block max-w-[21rem] text-[clamp(1.02rem,1.12vw,1.22rem)] font-semibold leading-[1.13] tracking-[-0.022em] transition-opacity duration-500 group-hover:opacity-85";
 
   return (
     <MotionReveal delay={revealDelay} className={featured ? "" : "h-full"}>
       <a
         href={href}
-        onClick={(event) => onNavigate(event, href)}
+        onClick={event => onNavigate(event, href)}
         className={cardClassName}
       >
         <div className={featured ? "contents" : "flex h-full flex-col"}>
           <div
             className={mediaClassName}
-            style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
+            style={
+              {
+                viewTransitionName: `article-card-${article.slug}`,
+              } as CSSProperties
+            }
           >
             {article.coverImageUrl ? (
               <Image
                 src={article.coverImageUrl}
-                alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
+                alt={
+                  article.coverImageAlt ||
+                  `Cover image for article: ${decodeHTMLEntities(article.title)}`
+                }
                 fill
                 quality={82}
                 className="publish-card-image object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
-                style={{ objectPosition: COVER_OBJECT_POSITION_BY_SLUG[article.slug] || "center" }}
+                style={{
+                  objectPosition:
+                    COVER_OBJECT_POSITION_BY_SLUG[article.slug] || "center",
+                }}
                 loading={eager ? "eager" : "lazy"}
-                sizes={featured ? "(min-width: 1280px) 35vw, (min-width: 1024px) 42vw, 94vw" : "(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"}
+                sizes={
+                  featured
+                    ? "(min-width: 1280px) 35vw, (min-width: 1024px) 42vw, 94vw"
+                    : "(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
+                }
               />
             ) : (
               <div className="h-full w-full bg-muted" />
@@ -296,12 +322,12 @@ function ArticleGridCard({
               <span
                 role="link"
                 tabIndex={0}
-                onClick={(event) => {
+                onClick={event => {
                   event.preventDefault();
                   event.stopPropagation();
                   onCategoryNavigate(article.categoryName);
                 }}
-                onKeyDown={(event) => {
+                onKeyDown={event => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
                     event.stopPropagation();
@@ -319,7 +345,10 @@ function ArticleGridCard({
               {decodeHTMLEntities(article.title)}
             </span>
             {dateLabel ? (
-              <span className="mt-auto pt-6 text-[0.9rem] font-semibold tracking-[-0.02em]" style={{ color: categoryStyle.swatchMutedColor }}>
+              <span
+                className="mt-auto pt-6 text-[0.9rem] font-semibold tracking-[-0.02em]"
+                style={{ color: categoryStyle.swatchMutedColor }}
+              >
                 {dateLabel}
               </span>
             ) : null}
@@ -334,7 +363,9 @@ export default function Articles() {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
-    return normalizeCategoryParam(new URLSearchParams(window.location.search).get("category"));
+    return normalizeCategoryParam(
+      new URLSearchParams(window.location.search).get("category")
+    );
   });
   const [filterOpen, setFilterOpen] = useState(false);
   const [draftCategory, setDraftCategory] = useState(selectedCategory);
@@ -343,11 +374,14 @@ export default function Articles() {
   const allArticles = useMemo<ArticleCardItem[]>(
     () =>
       [...getLocalArticles(), ...getTutorialArticles()]
-        .filter((article) => {
-          const retiredRedirect = RETIRED_LEARNING_ARTICLE_REDIRECTS[article.slug];
-          return !retiredRedirect || retiredRedirect === `/articles/${article.slug}`;
+        .filter(article => {
+          const retiredRedirect =
+            RETIRED_LEARNING_ARTICLE_REDIRECTS[article.slug];
+          return (
+            !retiredRedirect || retiredRedirect === `/articles/${article.slug}`
+          );
         })
-        .map((article) => ({
+        .map(article => ({
           id: article.id,
           slug: article.slug,
           title: decodeHTMLEntities(article.title),
@@ -364,13 +398,20 @@ export default function Articles() {
 
   const categories = useMemo(() => {
     return Array.from(
-      new Set(allArticles.map((article) => article.categoryName).filter((value): value is string => Boolean(value)))
+      new Set(
+        allArticles
+          .map(article => article.categoryName)
+          .filter((value): value is string => Boolean(value))
+      )
     ).sort((a, b) => a.localeCompare(b));
   }, [allArticles]);
 
   const filteredArticles = useMemo(() => {
-    return allArticles.filter((article) => {
-      if (selectedCategory !== "all" && article.categoryName !== selectedCategory) {
+    return allArticles.filter(article => {
+      if (
+        selectedCategory !== "all" &&
+        article.categoryName !== selectedCategory
+      ) {
         return false;
       }
 
@@ -397,13 +438,16 @@ export default function Articles() {
 
   const featuredArticle = sortedArticles[0] || null;
   const archiveArticles = sortedArticles.slice(1);
-  const totalPages = Math.max(1, Math.ceil(archiveArticles.length / ITEMS_PER_PAGE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(archiveArticles.length / ITEMS_PER_PAGE)
+  );
   const pagedArticles = archiveArticles.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
   useEffect(() => {
-    setCurrentPage((page) => Math.min(page, totalPages));
+    setCurrentPage(page => Math.min(page, totalPages));
   }, [totalPages]);
   const activeFilterCount = selectedCategory !== "all" ? 1 : 0;
   const articleArchiveTitle =
@@ -430,7 +474,11 @@ export default function Articles() {
         { transform: "scale(1)", filter: "brightness(1)" },
         { transform: "scale(0.975)", filter: "brightness(1.08)" },
       ],
-      { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+      {
+        duration: 150,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "forwards",
+      }
     );
     try {
       await animation.finished;
@@ -439,7 +487,10 @@ export default function Articles() {
     }
   };
 
-  const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+  const navigateWithTransition = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     if (
       event.defaultPrevented ||
       event.button !== 0 ||
@@ -458,7 +509,9 @@ export default function Articles() {
       await animateCardDeparture(anchor);
       navigate();
     };
-    const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => void;
+    };
     if (doc.startViewTransition) {
       doc.startViewTransition(() => {
         void performNavigation();
@@ -484,7 +537,10 @@ export default function Articles() {
     const nextCategory = category || "all";
     setSelectedCategory(nextCategory);
     if (typeof window !== "undefined") {
-      const query = nextCategory === "all" ? "" : `?category=${encodeURIComponent(nextCategory)}`;
+      const query =
+        nextCategory === "all"
+          ? ""
+          : `?category=${encodeURIComponent(nextCategory)}`;
       window.history.pushState(null, "", `/articles${query}`);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -503,7 +559,11 @@ export default function Articles() {
         title={articleArchiveTitle}
         description={articleArchiveDescription}
         image={allArticles[0]?.coverImageUrl || undefined}
-        imageAlt={allArticles[0]?.coverImageAlt || allArticles[0]?.title || "Article archive cover image"}
+        imageAlt={
+          allArticles[0]?.coverImageAlt ||
+          allArticles[0]?.title ||
+          "Article archive cover image"
+        }
         keywords={articleArchiveKeywords}
         url="https://www.brandonptdavis.com/articles"
       />
@@ -529,7 +589,9 @@ export default function Articles() {
 
             <div className="mt-10 space-y-9">
               <div>
-                <p className="mb-4 text-[0.92rem] font-semibold tracking-[-0.02em] text-[#6f6b64]">Category</p>
+                <p className="mb-4 text-[0.92rem] font-semibold tracking-[-0.02em] text-[#6f6b64]">
+                  Category
+                </p>
                 <div className="flex flex-wrap gap-3">
                   <button
                     type="button"
@@ -543,7 +605,7 @@ export default function Articles() {
                     <Sparkles className="h-4 w-4" strokeWidth={2.8} />
                     All
                   </button>
-                  {categories.map((category) => {
+                  {categories.map(category => {
                     const categoryStyle = getCategoryStyle(category);
                     const CategoryIcon = categoryStyle.icon;
                     return (
@@ -589,7 +651,10 @@ export default function Articles() {
 
         {sortedArticles.length > 0 ? (
           <>
-            <section id="article-archive" className="scroll-mt-32 pb-12 pt-10 md:pb-16 md:pt-14">
+            <section
+              id="article-archive"
+              className="scroll-mt-32 pb-12 pt-10 md:pb-16 md:pt-14"
+            >
               <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
                 <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                   <h1 className="font-sans text-[clamp(3.2rem,6.6vw,6.3rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#111111]">
@@ -653,7 +718,10 @@ export default function Articles() {
 
                 {totalPages > 1 ? (
                   <div className="mt-12 flex items-center justify-center gap-2">
-                    {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                    {Array.from(
+                      { length: totalPages },
+                      (_, index) => index + 1
+                    ).map(page => (
                       <button
                         key={page}
                         type="button"
@@ -675,7 +743,9 @@ export default function Articles() {
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-[#5d5851]">No articles match the current filters.</p>
+              <p className="text-[#5d5851]">
+                No articles match the current filters.
+              </p>
             </div>
           </section>
         )}
@@ -688,11 +758,12 @@ export default function Articles() {
                   Reading Paths
                 </p>
                 <p className="max-w-[26rem] text-[0.95rem] leading-6 tracking-[-0.015em] text-[#6f6b64] md:text-right">
-                  Move through the archive by practice area, from project work to tools and experiential design.
+                  Move through the archive by practice area, from project work
+                  to tools and experiential design.
                 </p>
               </div>
               <div className="mt-7 grid gap-3 md:grid-cols-3">
-                {READING_PATHS.map((path) => {
+                {READING_PATHS.map(path => {
                   const pathStyle = getCategoryStyle(path.category);
                   const PathIcon = pathStyle.icon;
 
