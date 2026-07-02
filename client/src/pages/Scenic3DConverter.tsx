@@ -108,7 +108,7 @@ const supportedInputs = {
 
 const workflowSteps = [
   "Download the ZIP for Mac or Windows.",
-  "Open the folder and double-click Start Here.",
+  "On Mac, Control-click Start Here and choose Open.",
   "Choose the files you need to hand off.",
   "Pick the output that makes sense for the next step.",
   "Keep the converted files beside the originals.",
@@ -117,12 +117,14 @@ const workflowSteps = [
 const installSteps = [
   "Download the Mac or Windows ZIP.",
   "Unzip the package.",
-  "Open the folder and double-click Start Here.",
+  "Mac: Control-click Start Here, choose Open, then confirm.",
+  "Windows: double-click Start Here and follow the prompt.",
   "Let the included setup guide you through anything extra it needs.",
   "Use it when a model needs to become a cleaner handoff file.",
 ];
 
 const troubleshooting = [
+  "If macOS says Apple cannot verify the installer, Control-click Start Here and choose Open instead of double-clicking.",
   "If the right-click menu is hidden, use the included guided fallback converter.",
   "If GLB, FBX, or SKP conversion fails, install or repair Blender LTS and retry.",
   "Conversion logs are saved to quick-actions.log.",
@@ -314,7 +316,7 @@ export default function Scenic3DConverter() {
             { name: "Unzip package", text: "Unzip the downloaded archive." },
             {
               name: "Start the installer",
-              text: "Open the folder and double-click Start Here.",
+              text: "On Mac, Control-click Start Here and choose Open. On Windows, double-click Start Here.",
             },
             {
               name: "Approve dependencies",
