@@ -135,6 +135,10 @@ const studioLinks = [
   },
 ] as const;
 
+const STUDIO_HEADER_TOP_GRAPHIC =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/publish/article-top.png";
+const STUDIO_HEADER_BOTTOM_GRAPHIC = "/images/publish/article-bottom.png";
+
 const articleSwatches = [
   { background: "#a33f24", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
   { background: "#496784", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
@@ -184,6 +188,7 @@ export default function Studio() {
     fontStretch: "condensed",
   } as CSSProperties;
   const mutedStyle = { color: homeTheme.muted } as CSSProperties;
+  const headerGraphicStyle = { opacity: 1 } as CSSProperties;
   const softPanelStyle = {
     backgroundColor: homeTheme.accentSoft,
     color: homeTheme.ink,
@@ -331,19 +336,31 @@ export default function Studio() {
       >
         <section className="px-[clamp(1.5rem,5vw,6rem)] pb-12 pt-28 md:pb-18 md:pt-32">
           <AnimatedSection>
-            <div className="mx-auto flex max-w-[76rem] flex-col items-center text-center">
+            <div className="mx-auto flex max-w-[76rem] flex-col items-center gap-7 text-center md:gap-10">
+              <Image
+                src={STUDIO_HEADER_TOP_GRAPHIC}
+                alt=""
+                width={1960}
+                height={484}
+                priority
+                className="site-media-square pointer-events-none h-auto w-full max-w-[62rem] select-none object-contain"
+                style={headerGraphicStyle}
+              />
               <h1
                 className="max-w-[10ch] text-[clamp(4.6rem,13vw,12rem)] font-black uppercase leading-[0.78] tracking-[0]"
                 style={displayStyle}
               >
                 STUDIO
               </h1>
-              <p
-                className="mt-7 max-w-[42rem] text-[clamp(1.05rem,1.6vw,1.45rem)] font-medium leading-[1.35] tracking-[0]"
-                style={mutedStyle}
-              >
-                Articles, apps, and reference material for scenic design workflows that need to stay useful in the room.
-              </p>
+              <Image
+                src={STUDIO_HEADER_BOTTOM_GRAPHIC}
+                alt=""
+                width={1960}
+                height={484}
+                priority
+                className="site-media-square pointer-events-none h-auto w-full max-w-[62rem] select-none object-contain"
+                style={headerGraphicStyle}
+              />
             </div>
           </AnimatedSection>
         </section>

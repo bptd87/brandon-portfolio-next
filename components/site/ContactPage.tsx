@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Instagram, Linkedin, Mail, Send } from "lucide-react";
+import { type CSSProperties, useState } from "react";
+import { Instagram, Linkedin, Mail, Send, X } from "lucide-react";
 
 import { capturePostHogEvent, isPostHogConfigured } from "../../lib/analytics/posthog-browser";
 import { Button } from "../../client/src/components/ui/button";
@@ -10,6 +10,12 @@ import { Label } from "../../client/src/components/ui/label";
 import { Textarea } from "../../client/src/components/ui/textarea";
 import Header from "../../client/src/components/Header";
 import Footer from "../../client/src/components/Footer";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "../../client/src/lib/homeTheme";
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -20,6 +26,9 @@ function PinterestIcon({ className }: { className?: string }) {
 }
 
 export function ContactPage() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -85,158 +94,91 @@ export function ContactPage() {
   )}&body=${encodeURIComponent(
     `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
   )}`;
+  const fieldStyle = {
+    "--contact-field-bg": `color-mix(in srgb, ${homeTheme.bg} 92%, ${homeTheme.ink} 8%)`,
+    "--contact-field-border": homeTheme.ghost,
+    "--contact-placeholder": homeTheme.muted,
+  } as CSSProperties;
 
   return (
-    <div className="about-profile-light min-h-screen bg-white text-[#111111]">
+    <div
+      className="min-h-screen transition-colors duration-500"
+      style={{
+        backgroundColor: homeTheme.bg,
+        color: homeTheme.ink,
+        fontFamily: HOME_BODY_FONT,
+      }}
+    >
       <Header />
 
-      <main className="container max-w-[88rem] pb-20 pt-24 md:pb-28 md:pt-28">
-        <section className="border-b border-black/10 pb-10 md:pb-12">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-black/42">
-              Contact
-            </div>
-            <h1 className="font-sans text-[clamp(2.7rem,6vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#111111]">
-              Start a scenic design conversation.
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-7 text-black/62 md:text-[1.08rem]">
-              Scenic design, rendering, teaching, and collaboration inquiries are welcome. Share
-              the production, venue, timeline, and design goals, and I&apos;ll respond with a clear
-              next step.
-            </p>
-            <a
-              href="mailto:info@brandonptdavis.com"
-              className="mt-7 inline-flex h-11 items-center justify-center rounded-full border border-black/14 bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-[#111111] transition-colors hover:bg-black/[0.04]"
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              info@brandonptdavis.com
-            </a>
-          </div>
-        </section>
+      <style>
+        {`
+          .contact-field::placeholder {
+            color: var(--contact-placeholder);
+            opacity: 1;
+          }
+        `}
+      </style>
 
-        <section className="pt-10 md:pt-12">
-          <div className="mx-auto max-w-3xl">
-            {status === "success" ? (
-              <div className="mb-6 rounded-2xl border border-emerald-700/20 bg-emerald-100/70 p-4 text-sm font-medium text-emerald-900">
-                Message sent. Thanks for reaching out.
-              </div>
-            ) : null}
-            {status === "error" ? (
-              <div className="mb-6 rounded-2xl border border-rose-700/20 bg-rose-100/70 p-4 text-sm font-medium text-rose-950">
-                <p>{errorMessage || "Failed to send message. Please try again."}</p>
-                <a
-                  href={mailtoHref}
-                  className="mt-3 inline-flex text-rose-950 underline decoration-rose-950/25 underline-offset-4 transition-colors hover:decoration-rose-950"
+      <main className="px-[clamp(0.75rem,2vw,1.5rem)] pb-[clamp(1.5rem,4vw,3rem)] pt-[clamp(5rem,9vw,7rem)]">
+        <section
+          className="relative mx-auto flex min-h-[calc(100svh-7rem)] w-full max-w-[92rem] flex-col overflow-hidden rounded-[clamp(1.5rem,3vw,2.75rem)] border px-[clamp(1.35rem,4vw,4rem)] py-[clamp(1.35rem,4vw,4rem)]"
+          style={{
+            backgroundColor: `color-mix(in srgb, ${homeTheme.bg} 92%, ${homeTheme.ink} 8%)`,
+            borderColor: homeTheme.ghost,
+            boxShadow: "0 1.6rem 5rem rgba(0,0,0,0.14)",
+          }}
+        >
+          <a
+            href="/"
+            aria-label="Close contact page"
+            className="absolute right-[clamp(1rem,2.2vw,2rem)] top-[clamp(1rem,2.2vw,2rem)] z-10 inline-flex h-11 w-11 items-center justify-center rounded-full transition-transform hover:scale-105"
+            style={{
+              backgroundColor: homeTheme.controlBg,
+              color: homeTheme.controlInk,
+            }}
+          >
+            <X className="h-5 w-5" aria-hidden="true" />
+          </a>
+
+          <div className="grid flex-1 gap-[clamp(2rem,6vw,6rem)] pt-14 lg:grid-cols-[minmax(0,0.82fr)_minmax(28rem,0.72fr)] lg:items-end lg:pt-4">
+            <div className="flex min-h-[34rem] flex-col justify-between gap-12">
+              <div>
+                <h1
+                  className="max-w-[9ch] text-[clamp(4.2rem,10vw,10rem)] font-black uppercase leading-[0.82] tracking-[0]"
+                  style={{ fontFamily: HOME_DISPLAY_FONT }}
                 >
-                  Send this message by email instead.
-                </a>
-              </div>
-            ) : null}
-
-            <div className="mb-8 border-b border-black/10 pb-5">
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/42">
-                Inquiry Form
-              </p>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-black/56">
-                Include the production, venue, schedule, and scope if you know them. More context
-                helps me respond with the right next step more quickly.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="font-medium text-black/74">
-                    Your Name
-                  </Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(event) => setFormData((current) => ({ ...current, name: event.target.value }))}
-                    placeholder="Brandon Davis"
-                    className="h-14 rounded-xl border border-black/14 bg-white px-4 text-base text-[#111111] placeholder:text-black/32"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="font-medium text-black/74">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(event) => setFormData((current) => ({ ...current, email: event.target.value }))}
-                    placeholder="hello@example.com"
-                    className="h-14 rounded-xl border border-black/14 bg-white px-4 text-base text-[#111111] placeholder:text-black/32"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="subject" className="font-medium text-black/74">
-                  Subject
-                </Label>
-                <Input
-                  id="subject"
-                  value={formData.subject}
-                  onChange={(event) => setFormData((current) => ({ ...current, subject: event.target.value }))}
-                  placeholder="What's this about?"
-                  className="h-14 rounded-xl border border-black/14 bg-white px-4 text-base text-[#111111] placeholder:text-black/32"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="message" className="font-medium text-black/74">
-                  Your Message
-                </Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(event) => setFormData((current) => ({ ...current, message: event.target.value }))}
-                  placeholder="Tell me about the production, venue, timeline, and design goals..."
-                  className="min-h-[200px] resize-none rounded-xl border border-black/14 bg-white px-4 py-4 text-base leading-7 text-[#111111] placeholder:text-black/32"
-                  required
-                />
-                <p className="text-xs text-black/42">
-                  Include schedule, venue, and budget parameters if known.
+                  CONTACT
+                </h1>
+                <p className="mt-7 max-w-[34rem] text-[clamp(1.05rem,1.5vw,1.45rem)] leading-[1.45] tracking-[-0.025em]" style={{ color: homeTheme.muted }}>
+                  Scenic design, rendering, teaching, and collaboration inquiries are welcome. Share
+                  the production, venue, timeline, and design goals, and I&apos;ll respond with a clear
+                  next step.
                 </p>
               </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                disabled={isSubmitting}
-                className="h-14 w-full rounded-full bg-[#6f4bd8] px-10 text-base font-medium text-white hover:bg-[#5f3fc7] md:w-auto"
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                <Send className="ml-2 h-5 w-5" />
-              </Button>
-            </form>
-
-            <div className="mt-14 border-t border-black/10 pt-6">
-              <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <div className="grid gap-8 border-t pt-7 md:grid-cols-2" style={{ borderColor: homeTheme.ghost }}>
                 <div>
-                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/42">
-                    Contact
+                  <p
+                    className="text-[0.78rem] font-black uppercase tracking-[0.12em]"
+                    style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}
+                  >
+                    Direct
                   </p>
-                  <div className="mt-4 space-y-3 text-sm text-black/62">
-                    <a href="mailto:info@brandonptdavis.com" className="flex items-center gap-3 transition-colors hover:text-black">
+                  <div className="mt-4 space-y-3 text-[0.95rem] leading-6">
+                    <a href="mailto:info@brandonptdavis.com" className="flex items-center gap-3 no-underline transition-opacity hover:opacity-70">
                       <Mail className="h-4 w-4" />
                       <span>info@brandonptdavis.com</span>
                     </a>
-                    <a href="https://instagram.com/brandonptdavisdesign" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-black">
+                    <a href="https://instagram.com/brandonptdavisdesign" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 no-underline transition-opacity hover:opacity-70">
                       <Instagram className="h-4 w-4" />
                       <span>@brandonptdavisdesign</span>
                     </a>
-                    <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-black">
+                    <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 no-underline transition-opacity hover:opacity-70">
                       <Linkedin className="h-4 w-4" />
                       <span>@brandonptdavis</span>
                     </a>
-                    <a href="https://www.pinterest.com/BrandonPTDavis/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-black">
+                    <a href="https://www.pinterest.com/BrandonPTDavis/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 no-underline transition-opacity hover:opacity-70">
                       <PinterestIcon className="h-4 w-4" />
                       <span>@BrandonPTDavis</span>
                     </a>
@@ -244,10 +186,13 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/42">
-                    Best to Include
+                  <p
+                    className="text-[0.78rem] font-black uppercase tracking-[0.12em]"
+                    style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}
+                  >
+                    Best to include
                   </p>
-                  <ul className="mt-4 space-y-2 text-sm leading-6 text-black/58">
+                  <ul className="mt-4 space-y-2 text-[0.95rem] leading-6" style={{ color: homeTheme.muted }}>
                     <li>Production title and organization</li>
                     <li>Venue, city, and target dates</li>
                     <li>Scope of work and deliverables</li>
@@ -256,11 +201,113 @@ export function ContactPage() {
                 </div>
               </div>
             </div>
+
+            <div>
+              {status === "success" ? (
+                <div className="mb-5 rounded-[1.1rem] border border-emerald-700/20 bg-emerald-100/80 p-4 text-sm font-semibold text-emerald-950">
+                  Message sent. Thanks for reaching out.
+                </div>
+              ) : null}
+              {status === "error" ? (
+                <div className="mb-5 rounded-[1.1rem] border border-rose-700/20 bg-rose-100/80 p-4 text-sm font-semibold text-rose-950">
+                  <p>{errorMessage || "Failed to send message. Please try again."}</p>
+                  <a
+                    href={mailtoHref}
+                    className="mt-3 inline-flex text-rose-950 underline decoration-rose-950/25 underline-offset-4 transition-colors hover:decoration-rose-950"
+                  >
+                    Send this message by email instead.
+                  </a>
+                </div>
+              ) : null}
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-[0.78rem] font-black uppercase tracking-[0.1em]" style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}>
+                      Your Name
+                    </Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(event) => setFormData((current) => ({ ...current, name: event.target.value }))}
+                      placeholder="Brandon Davis"
+                      className="contact-field h-14 rounded-[1rem] border bg-[var(--contact-field-bg)] px-4 text-base shadow-none outline-none focus-visible:ring-2 focus-visible:ring-current/20"
+                      style={{ ...fieldStyle, borderColor: "var(--contact-field-border)", color: homeTheme.ink }}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-[0.78rem] font-black uppercase tracking-[0.1em]" style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}>
+                      Email Address
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(event) => setFormData((current) => ({ ...current, email: event.target.value }))}
+                      placeholder="hello@example.com"
+                      className="contact-field h-14 rounded-[1rem] border bg-[var(--contact-field-bg)] px-4 text-base shadow-none outline-none focus-visible:ring-2 focus-visible:ring-current/20"
+                      style={{ ...fieldStyle, borderColor: "var(--contact-field-border)", color: homeTheme.ink }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="text-[0.78rem] font-black uppercase tracking-[0.1em]" style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}>
+                    Subject
+                  </Label>
+                  <Input
+                    id="subject"
+                    value={formData.subject}
+                    onChange={(event) => setFormData((current) => ({ ...current, subject: event.target.value }))}
+                    placeholder="What's this about?"
+                    className="contact-field h-14 rounded-[1rem] border bg-[var(--contact-field-bg)] px-4 text-base shadow-none outline-none focus-visible:ring-2 focus-visible:ring-current/20"
+                    style={{ ...fieldStyle, borderColor: "var(--contact-field-border)", color: homeTheme.ink }}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-[0.78rem] font-black uppercase tracking-[0.1em]" style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}>
+                    Your Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={(event) => setFormData((current) => ({ ...current, message: event.target.value }))}
+                    placeholder="Tell me about the production, venue, timeline, and design goals..."
+                    className="contact-field min-h-[14rem] resize-none rounded-[1rem] border bg-[var(--contact-field-bg)] px-4 py-4 text-base leading-7 shadow-none outline-none focus-visible:ring-2 focus-visible:ring-current/20"
+                    style={{ ...fieldStyle, borderColor: "var(--contact-field-border)", color: homeTheme.ink }}
+                    required
+                  />
+                  <p className="text-[0.82rem] leading-5" style={{ color: homeTheme.muted }}>
+                    Include schedule, venue, and budget parameters if known.
+                  </p>
+                </div>
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="h-14 w-full rounded-full border-0 px-8 text-[0.95rem] font-black uppercase tracking-[0.04em] shadow-none transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-60 md:w-auto"
+                  style={{
+                    backgroundColor: homeTheme.controlBg,
+                    color: homeTheme.controlInk,
+                    fontFamily: HOME_DISPLAY_FONT,
+                  }}
+                >
+                  {isSubmitting ? "Sending" : "Send Message"}
+                  <Send className="ml-2 h-4 w-4" />
+                </Button>
+              </form>
+            </div>
           </div>
         </section>
       </main>
 
-      <Footer tone="light" />
+      <Footer backgroundColor={homeTheme.footerBg} displayTextColor={homeTheme.footerDisplay} textColor={homeTheme.footerInk} />
     </div>
   );
 }

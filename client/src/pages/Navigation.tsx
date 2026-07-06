@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type CSSProperties, useMemo, useState } from "react";
 import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
@@ -33,6 +33,54 @@ type SectionCard = {
   text: string;
   accent: string;
 };
+
+type NavFloatingImage = {
+  url: string;
+  alt: string;
+};
+
+const floatingImageFrames: Array<{
+  className: string;
+  style: CSSProperties;
+  imageStyle?: CSSProperties;
+}> = [
+  {
+    className:
+      "left-[4%] top-[8%] aspect-[1.45/1] w-[clamp(8.5rem,18vw,18rem)] rotate-[-8deg]",
+    style: { animationDelay: "0ms" },
+    imageStyle: { objectPosition: "center" },
+  },
+  {
+    className:
+      "right-[7%] top-[2%] aspect-[0.78/1] w-[clamp(7rem,13vw,12.5rem)] rotate-[7deg]",
+    style: { animationDelay: "90ms" },
+    imageStyle: { objectPosition: "center top" },
+  },
+  {
+    className:
+      "left-[10%] bottom-[11%] aspect-[0.88/1] w-[clamp(7.5rem,14vw,13.5rem)] rotate-[5deg]",
+    style: { animationDelay: "170ms" },
+    imageStyle: { objectPosition: "center" },
+  },
+  {
+    className:
+      "right-[3%] bottom-[14%] aspect-[1.68/1] w-[clamp(9rem,19vw,19rem)] rotate-[-5deg]",
+    style: { animationDelay: "240ms" },
+    imageStyle: { objectPosition: "center" },
+  },
+  {
+    className:
+      "left-[32%] top-[0%] aspect-square w-[clamp(6rem,10vw,9.5rem)] rotate-[11deg]",
+    style: { animationDelay: "310ms" },
+    imageStyle: { objectPosition: "center" },
+  },
+  {
+    className:
+      "right-[31%] bottom-[4%] aspect-[1.18/1] w-[clamp(6.5rem,12vw,11rem)] rotate-[-10deg]",
+    style: { animationDelay: "380ms" },
+    imageStyle: { objectPosition: "center" },
+  },
+];
 
 function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
   const portfolioImage =
@@ -160,25 +208,28 @@ function RecentScenicDesign({
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeProject = activeIndex === null ? null : projects[activeIndex] || null;
-  const activeImages = useMemo(() => {
-    const mediaImages =
-      activeProject?.media
+  const floatingImages = useMemo<NavFloatingImage[]>(() => {
+    if (activeProject) {
+      const mediaImages = activeProject.media
         .filter((item) => item.type === "image" && item.imageUrl)
         .map((item) => ({
           url: item.imageUrl || "",
-          alt: item.altText,
-        })) || [];
+          alt: item.altText || `${activeProject.title} scenic design`,
+        }));
 
-    const fallbackImage = activeProject?.coverImageUrl
-      ? [
-          {
-            url: activeProject.coverImageUrl,
-            alt: `${activeProject.title} scenic design`,
-          },
-        ]
-      : [];
+      const fallbackImage = activeProject.coverImageUrl
+        ? [
+            {
+              url: activeProject.coverImageUrl,
+              alt: `${activeProject.title} scenic design`,
+            },
+          ]
+        : [];
 
-    return [...mediaImages, ...fallbackImage].slice(0, 3);
+      return [...mediaImages, ...fallbackImage].slice(0, floatingImageFrames.length);
+    }
+
+    return [];
   }, [activeProject]);
 
   if (!projects.length) return null;
@@ -186,58 +237,64 @@ function RecentScenicDesign({
   return (
     <section
       id="recent-scenic-design"
-      className="relative mx-auto flex w-full max-w-[92rem] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(5rem,8vw,7rem)] pt-[clamp(4rem,7vw,6rem)] text-center md:px-8"
+      className="relative mx-auto flex w-full max-w-[96rem] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(5rem,8vw,7rem)] pt-[clamp(4rem,7vw,6rem)] text-center md:px-8"
     >
-      <div className="relative z-10 mb-[-0.5rem] aspect-square w-[clamp(7rem,13vw,10.5rem)]">
-        {activeProject && activeImages[1] ? (
-          <div
-            className="h-full w-full overflow-hidden rounded-[1.15rem] shadow-[0_2rem_4rem_rgba(0,0,0,0.16)]"
-            style={{
-              filter: "saturate(1.14)",
-              transform: "rotate(6deg)",
-            }}
-          >
-            <img
-              src={activeImages[1].url}
-              alt={activeImages[1].alt}
-              draggable={false}
-              className="h-full w-full select-none object-cover motion-safe:animate-[nav-image-pop_420ms_cubic-bezier(0.18,1.15,0.3,1)_both]"
-              style={{
-                objectPosition: activeProject.coverImagePosition || "center",
-              }}
-            />
-          </div>
-        ) : null}
-      </div>
-      <h2
-        className="relative z-20 text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
-        style={{ color: theme.ink }}
-      >
-        DESIGN
-      </h2>
+      <div className="relative min-h-[clamp(34rem,58vw,45rem)] w-full">
+        <div className="pointer-events-none absolute inset-0 z-10 hidden md:block">
+          {floatingImages.map((image, index) => {
+            const frame = floatingImageFrames[index % floatingImageFrames.length];
+            return (
+              <div
+                key={`${activeProject?.slug || "default"}-${image.url}-${index}`}
+                className={`absolute overflow-hidden rounded-[1.15rem] shadow-[0_1.7rem_3.7rem_rgba(0,0,0,0.18)] motion-safe:animate-[nav-image-pop_520ms_cubic-bezier(0.18,1.15,0.3,1)_both] ${frame.className}`}
+                style={frame.style}
+              >
+                <img
+                  src={image.url}
+                  alt={image.alt}
+                  draggable={false}
+                  className="h-full w-full select-none object-cover"
+                  style={frame.imageStyle}
+                />
+              </div>
+            );
+          })}
+        </div>
 
-      <div className="relative mt-8 grid min-h-[24rem] w-full max-w-[76rem] grid-cols-1 items-center gap-8 md:grid-cols-[13rem_minmax(0,1fr)_13rem] md:gap-10">
-        <div className="pointer-events-none relative z-10 mx-auto hidden aspect-square w-full max-w-[11rem] md:block">
-          {activeProject && activeImages[0] ? (
-            <div className="h-full w-full overflow-hidden rounded-[1.15rem] shadow-[0_2rem_4rem_rgba(0,0,0,0.16)]">
+        <div className="pointer-events-none absolute inset-x-0 top-[4%] z-10 flex justify-between gap-3 md:hidden">
+          {floatingImages.slice(0, 3).map((image, index) => (
+            <div
+              key={`${activeProject?.slug || "mobile-default"}-${image.url}-${index}`}
+              className={[
+                "overflow-hidden rounded-[1rem] shadow-[0_1.2rem_2.4rem_rgba(0,0,0,0.18)] motion-safe:animate-[nav-image-pop_520ms_cubic-bezier(0.18,1.15,0.3,1)_both]",
+                index === 0 ? "aspect-[0.82/1] w-[30%] rotate-[-7deg]" : "",
+                index === 1 ? "mt-8 aspect-[1.5/1] w-[38%] rotate-[5deg]" : "",
+                index === 2 ? "aspect-square w-[28%] rotate-[10deg]" : "",
+              ].join(" ")}
+              style={{ animationDelay: `${index * 120}ms` }}
+            >
               <img
-                src={activeImages[0].url}
-                alt={activeImages[0].alt}
+                src={image.url}
+                alt={image.alt}
                 draggable={false}
-                className="h-full w-full select-none object-cover motion-safe:animate-[nav-image-pop_420ms_cubic-bezier(0.18,1.15,0.3,1)_both]"
-                style={{
-                  objectPosition: activeProject.coverImagePosition || "center",
-                }}
+                className="h-full w-full select-none object-cover"
               />
             </div>
-          ) : null}
+          ))}
         </div>
 
         <div
-          className="relative z-20 mx-auto flex max-w-[42rem] flex-col"
+          className="relative z-20 mx-auto flex min-h-[clamp(27rem,43vw,34rem)] max-w-[50rem] flex-col items-center justify-center pt-[clamp(8rem,13vw,10rem)] md:pt-0"
           onMouseLeave={() => setActiveIndex(null)}
           onPointerLeave={() => setActiveIndex(null)}
         >
+          <h2
+            className="mb-8 text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
+            style={{ color: theme.ink }}
+          >
+            DESIGN
+          </h2>
+
           {projects.map((project, index) => {
             const isActive = index === activeIndex;
             return (
@@ -263,23 +320,6 @@ function RecentScenicDesign({
               </Link>
             );
           })}
-        </div>
-
-        <div className="pointer-events-none relative z-10 mx-auto hidden aspect-square w-full max-w-[11rem] md:block">
-          {activeProject && activeImages[2] ? (
-            <div className="h-full w-full overflow-hidden rounded-[1.15rem] shadow-[0_2rem_4rem_rgba(0,0,0,0.16)]">
-              <img
-                src={activeImages[2].url}
-                alt={activeImages[2].alt}
-                draggable={false}
-                className="h-full w-full select-none object-cover motion-safe:animate-[nav-image-pop_420ms_cubic-bezier(0.18,1.15,0.3,1)_both]"
-                style={{
-                  objectPosition: activeProject.coverImagePosition || "center",
-                  animationDelay: "140ms",
-                }}
-              />
-            </div>
-          ) : null}
         </div>
       </div>
     </section>

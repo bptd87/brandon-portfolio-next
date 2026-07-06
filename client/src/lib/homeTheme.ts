@@ -31,14 +31,14 @@ export const HOME_COLOR_THEMES: HomeColorTheme[] = [
     name: "White",
     bg: HOME_REFERENCE_WHITE,
     ink: HOME_REFERENCE_BLACK,
-    muted: "rgba(44,44,44,0.38)",
+    muted: "rgba(44,44,44,0.62)",
     ghost: HOME_REFERENCE_GREY,
     accent: HOME_REFERENCE_BLACK,
     accentSoft: "rgba(44,44,44,0.08)",
     controlBg: HOME_REFERENCE_BLACK,
     controlInk: HOME_REFERENCE_WHITE,
     footerBg: HOME_REFERENCE_GREY,
-    footerDisplay: HOME_REFERENCE_WHITE,
+    footerDisplay: "rgba(44,44,44,0.7)",
     footerInk: HOME_REFERENCE_BLACK,
   },
   {
@@ -84,6 +84,21 @@ export const HOME_COLOR_THEMES: HomeColorTheme[] = [
     footerInk: "#f4f0e5",
   },
 ];
+
+const HOME_CSS_THEME: HomeColorTheme = {
+  name: "Stored",
+  bg: "var(--home-theme-bg, #ffffff)",
+  ink: "var(--home-theme-ink, #2c2c2c)",
+  muted: "var(--home-theme-muted, rgba(44,44,44,0.62))",
+  ghost: "var(--home-theme-ghost, #cbcbcb)",
+  accent: "var(--home-theme-accent, #2c2c2c)",
+  accentSoft: "var(--home-theme-accent-soft, rgba(44,44,44,0.08))",
+  controlBg: "var(--home-theme-control-bg, #2c2c2c)",
+  controlInk: "var(--home-theme-control-ink, #ffffff)",
+  footerBg: "var(--home-theme-footer-bg, #cbcbcb)",
+  footerDisplay: "var(--home-theme-footer-display, rgba(44,44,44,0.7))",
+  footerInk: "var(--home-theme-footer-ink, #2c2c2c)",
+};
 
 const HOME_THEME_STORAGE_KEY = "brandon-home-theme-index";
 const HOME_THEME_CHANGE_EVENT = "brandon-home-theme-change";
@@ -137,7 +152,9 @@ export function useHomeTheme() {
   }, []);
 
   return {
-    homeTheme: HOME_COLOR_THEMES[homeThemeIndex] || HOME_COLOR_THEMES[0],
+    homeTheme: hasLoadedStoredTheme
+      ? HOME_COLOR_THEMES[homeThemeIndex] || HOME_COLOR_THEMES[0]
+      : HOME_CSS_THEME,
     homeThemeIndex,
     setHomeThemeIndex,
   };
@@ -153,6 +170,17 @@ export function useHomeDocumentTheme(homeTheme: HomeColorTheme) {
 
     html.style.backgroundColor = homeTheme.bg;
     body.style.backgroundColor = homeTheme.bg;
+    html.style.setProperty("--home-theme-bg", homeTheme.bg);
+    html.style.setProperty("--home-theme-ink", homeTheme.ink);
+    html.style.setProperty("--home-theme-muted", homeTheme.muted);
+    html.style.setProperty("--home-theme-ghost", homeTheme.ghost);
+    html.style.setProperty("--home-theme-accent", homeTheme.accent);
+    html.style.setProperty("--home-theme-accent-soft", homeTheme.accentSoft);
+    html.style.setProperty("--home-theme-control-bg", homeTheme.controlBg);
+    html.style.setProperty("--home-theme-control-ink", homeTheme.controlInk);
+    html.style.setProperty("--home-theme-footer-bg", homeTheme.footerBg);
+    html.style.setProperty("--home-theme-footer-display", homeTheme.footerDisplay);
+    html.style.setProperty("--home-theme-footer-ink", homeTheme.footerInk);
     html.style.colorScheme = "light";
 
     return () => {
@@ -160,5 +188,5 @@ export function useHomeDocumentTheme(homeTheme: HomeColorTheme) {
       body.style.backgroundColor = previousBodyBackground;
       html.style.colorScheme = previousColorScheme;
     };
-  }, [homeTheme.bg]);
+  }, [homeTheme]);
 }

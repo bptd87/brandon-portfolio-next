@@ -4,15 +4,22 @@ import {
   useEffect,
   useMemo,
   useState,
+  type CSSProperties,
   type FormEvent,
   type ReactNode,
 } from "react";
-import { Send, X } from "lucide-react";
+import { Mail, Send, X } from "lucide-react";
 
 import {
   capturePostHogEvent,
   isPostHogConfigured,
 } from "../../lib/analytics/posthog-browser";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  type HomeColorTheme,
+  useHomeTheme,
+} from "../../client/src/lib/homeTheme";
 
 type ContactStatus = "idle" | "success" | "error";
 
@@ -71,6 +78,7 @@ function ContactOverlay({
   open: boolean;
   onClose: () => void;
 }) {
+  const { homeTheme } = useHomeTheme();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -90,6 +98,11 @@ function ContactOverlay({
       )}`,
     [formData]
   );
+  const fieldVars = {
+    "--contact-overlay-field-bg": `color-mix(in srgb, ${homeTheme.bg} 86%, ${homeTheme.ink} 14%)`,
+    "--contact-overlay-field-border": homeTheme.ghost,
+    "--contact-overlay-placeholder": homeTheme.muted,
+  } as CSSProperties;
 
   useEffect(() => {
     if (!open) return;
@@ -153,7 +166,7 @@ function ContactOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/28 px-3 py-5 md:px-8"
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/42 p-[clamp(0.75rem,2vw,1.5rem)] backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="contact-overlay-title"
@@ -161,57 +174,103 @@ function ContactOverlay({
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="relative flex max-h-[calc(100vh-2.5rem)] w-full max-w-[64rem] flex-col overflow-hidden rounded-lg border border-black/10 bg-[#f7f6f2] text-[#111111] shadow-[0_28px_90px_rgba(0,0,0,0.28)]">
-        <div className="grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-black/10 bg-white/54 px-5">
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#9f3b2d]/22 bg-[#c6533f] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.18)] transition-colors hover:bg-[#a8482c]"
-            aria-label="Close contact window"
-          >
-            <X className="h-4 w-4" />
-          </button>
-          <p
-            id="contact-overlay-title"
-            className="text-[0.88rem] font-semibold tracking-[-0.02em] text-black/58"
-          >
-            Contact
-          </p>
-          <div />
-        </div>
+      <style>
+        {`
+          .contact-overlay-field::placeholder {
+            color: var(--contact-overlay-placeholder);
+            opacity: 1;
+          }
+        `}
+      </style>
 
-        <form onSubmit={handleSubmit} className="min-h-0 overflow-y-auto">
-          <div className="px-6 py-6 md:px-10 md:py-7">
-            <div className="max-w-3xl">
-              <h3 className="text-[clamp(2.25rem,4.2vw,4rem)] font-medium leading-[0.93] tracking-[-0.06em] text-black">
-                Start a scenic design conversation.
-              </h3>
-              <p className="mt-5 max-w-2xl text-[1rem] leading-7 text-black/58">
-                Share the production, venue, timeline, and design goals.
-                I&apos;ll respond with a clear next step.
-              </p>
-              <a
-                href="mailto:info@brandonptdavis.com"
-                className="mt-5 inline-flex text-sm font-semibold text-[#496784] underline decoration-[#496784]/24 underline-offset-4 transition-colors hover:text-[#2f4c66] hover:decoration-[#496784]/60"
+      <div
+        className="relative flex h-[calc(100dvh-clamp(0.7rem,2vw,1.5rem))] w-full max-w-[118rem] flex-col overflow-hidden rounded-[clamp(1.35rem,2.4vw,2.25rem)] border shadow-[0_2rem_5rem_rgba(0,0,0,0.24)]"
+        style={{
+          backgroundColor: `color-mix(in srgb, ${homeTheme.bg} 94%, ${homeTheme.ink} 6%)`,
+          borderColor: homeTheme.ghost,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+        }}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-[clamp(1rem,2.2vw,2rem)] top-[clamp(1rem,2.2vw,2rem)] z-10 inline-flex h-12 w-12 items-center justify-center rounded-full transition-transform hover:scale-105"
+          style={{
+            backgroundColor: homeTheme.controlBg,
+            color: homeTheme.controlInk,
+          }}
+          aria-label="Close contact window"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        <form onSubmit={handleSubmit} className="min-h-0 flex-1 overflow-y-auto">
+          <div className="grid min-h-full gap-[clamp(2rem,5vw,5rem)] px-[clamp(1.35rem,4.2vw,5rem)] pb-[clamp(1.5rem,4vw,4rem)] pt-[clamp(5rem,7vw,6rem)] lg:grid-cols-[minmax(0,0.9fr)_minmax(34rem,0.88fr)] lg:items-center">
+            <div className="flex min-h-[min(36rem,62vh)] flex-col justify-between gap-10">
+              <div>
+                <h2
+                  id="contact-overlay-title"
+                  className="max-w-[8ch] text-[clamp(5.2rem,11.5vw,13rem)] font-black uppercase leading-[0.8] tracking-[0]"
+                  style={{ fontFamily: HOME_DISPLAY_FONT }}
+                >
+                  CONTACT
+                </h2>
+                <p
+                  className="mt-7 max-w-[38rem] text-[clamp(1.08rem,1.45vw,1.55rem)] leading-[1.42] tracking-[-0.025em]"
+                  style={{ color: homeTheme.muted }}
+                >
+                  Share the production, venue, timeline, and design goals.
+                  I&apos;ll respond with a clear next step.
+                </p>
+                <a
+                  href="mailto:info@brandonptdavis.com"
+                  className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-black uppercase tracking-[0.06em] no-underline transition-opacity hover:opacity-70"
+                  style={{
+                    color: homeTheme.ink,
+                    fontFamily: HOME_DISPLAY_FONT,
+                  }}
+                >
+                  <Mail className="h-4 w-4" />
+                  info@brandonptdavis.com
+                </a>
+              </div>
+
+              <div
+                className="border-t pt-7"
+                style={{ borderColor: homeTheme.ghost }}
               >
-                info@brandonptdavis.com
-              </a>
+                <p
+                  className="max-w-[32rem] text-[0.95rem] leading-6"
+                  style={{ color: homeTheme.muted }}
+                >
+                  Best to include: production title, organization, venue,
+                  target dates, scope, and any known budget or schedule
+                  constraints.
+                </p>
+              </div>
             </div>
 
-            <div className="mt-7 border-t border-black/10 pt-5">
+            <div
+              className="rounded-[clamp(1.2rem,2vw,1.75rem)] border p-[clamp(1rem,2.6vw,2rem)]"
+              style={{
+                backgroundColor: `color-mix(in srgb, ${homeTheme.bg} 88%, ${homeTheme.ink} 12%)`,
+                borderColor: homeTheme.ghost,
+              }}
+            >
               {status === "success" ? (
-                <div className="mb-6 rounded-md border border-[#5d744d]/22 bg-[#5d744d]/10 px-4 py-3 text-sm font-medium text-black/72">
+                <div className="mb-5 rounded-[1.1rem] border border-emerald-700/20 bg-emerald-100/80 p-4 text-sm font-semibold text-emerald-950">
                   Message sent. Thanks for reaching out.
                 </div>
               ) : null}
               {status === "error" ? (
-                <div className="mb-6 rounded-md border border-[#a8482c]/24 bg-[#a8482c]/10 px-4 py-3 text-sm font-medium text-black/72">
+                <div className="mb-5 rounded-[1.1rem] border border-rose-700/20 bg-rose-100/80 p-4 text-sm font-semibold text-rose-950">
                   <p>
                     {errorMessage ||
                       "Failed to send message. Please try again."}
                   </p>
                   <a
-                    className="mt-2 inline-flex text-[#496784] underline decoration-[#496784]/24 underline-offset-4 hover:text-[#2f4c66] hover:decoration-[#496784]/60"
+                    className="mt-3 inline-flex text-rose-950 underline decoration-rose-950/25 underline-offset-4 transition-colors hover:decoration-rose-950"
                     href={mailtoHref}
                   >
                     Send this message by email instead.
@@ -219,69 +278,91 @@ function ContactOverlay({
                 </div>
               ) : null}
 
-              <div className="grid gap-5 md:grid-cols-[0.82fr_1.18fr]">
-                <div className="space-y-5">
-                  <ContactField
-                    id="overlay-name"
-                    label="Your name"
-                    value={formData.name}
-                    onChange={value =>
-                      setFormData(current => ({ ...current, name: value }))
-                    }
-                    placeholder="Brandon Davis"
-                    autoComplete="name"
-                  />
-                  <ContactField
-                    id="overlay-email"
-                    label="Your email"
-                    type="email"
-                    value={formData.email}
-                    onChange={value =>
-                      setFormData(current => ({ ...current, email: value }))
-                    }
-                    placeholder="hello@example.com"
-                    autoComplete="email"
-                  />
-                  <ContactField
-                    id="overlay-subject"
-                    label="Subject"
-                    value={formData.subject}
-                    onChange={value =>
-                      setFormData(current => ({ ...current, subject: value }))
-                    }
-                    placeholder="Scenic design inquiry"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="overlay-message"
-                    className="mb-2 block text-sm font-semibold tracking-[-0.02em] text-black/58"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="overlay-message"
-                    value={formData.message}
-                    onChange={event =>
-                      setFormData(current => ({
-                        ...current,
-                        message: event.target.value,
-                      }))
-                    }
-                    placeholder="Production, venue, timeline, and design goals..."
-                    className="min-h-56 w-full resize-none rounded-md border border-black/12 bg-white/72 px-4 py-3 text-[1rem] leading-7 text-black outline-none transition-colors placeholder:text-black/28 focus:border-[#496784] md:min-h-[16rem]"
-                    required
-                  />
-                </div>
+              <div className="grid gap-5 md:grid-cols-2">
+                <ContactField
+                  id="overlay-name"
+                  label="Your name"
+                  value={formData.name}
+                  onChange={value =>
+                    setFormData(current => ({ ...current, name: value }))
+                  }
+                  placeholder="Brandon Davis"
+                  autoComplete="name"
+                  homeTheme={homeTheme}
+                  fieldVars={fieldVars}
+                />
+                <ContactField
+                  id="overlay-email"
+                  label="Your email"
+                  type="email"
+                  value={formData.email}
+                  onChange={value =>
+                    setFormData(current => ({ ...current, email: value }))
+                  }
+                  placeholder="hello@example.com"
+                  autoComplete="email"
+                  homeTheme={homeTheme}
+                  fieldVars={fieldVars}
+                />
+              </div>
+
+              <div className="mt-5">
+                <ContactField
+                  id="overlay-subject"
+                  label="Subject"
+                  value={formData.subject}
+                  onChange={value =>
+                    setFormData(current => ({ ...current, subject: value }))
+                  }
+                  placeholder="Scenic design inquiry"
+                  homeTheme={homeTheme}
+                  fieldVars={fieldVars}
+                />
+              </div>
+
+              <div className="mt-5">
+                <label
+                  htmlFor="overlay-message"
+                  className="mb-2 block text-[0.78rem] font-black uppercase tracking-[0.1em]"
+                  style={{
+                    color: homeTheme.muted,
+                    fontFamily: HOME_DISPLAY_FONT,
+                  }}
+                >
+                  Message
+                </label>
+                <textarea
+                  id="overlay-message"
+                  value={formData.message}
+                  onChange={event =>
+                    setFormData(current => ({
+                      ...current,
+                      message: event.target.value,
+                    }))
+                  }
+                  placeholder="Production, venue, timeline, and design goals..."
+                  className="contact-overlay-field min-h-[clamp(15rem,30vh,23rem)] w-full resize-none rounded-[1rem] border bg-[var(--contact-overlay-field-bg)] px-4 py-4 text-[1rem] leading-7 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-current/20"
+                  style={{
+                    ...fieldVars,
+                    borderColor: "var(--contact-overlay-field-border)",
+                    color: homeTheme.ink,
+                  }}
+                  required
+                />
               </div>
 
               <div className="mt-5 flex justify-end">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex h-12 items-center justify-center rounded-md bg-[#496784] px-7 text-[0.92rem] font-semibold tracking-[-0.01em] text-white transition-colors hover:bg-[#3c5872] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex h-14 w-full items-center justify-center rounded-full px-8 text-[0.95rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:translate-y-0 disabled:opacity-60 md:w-auto"
+                  style={{
+                    backgroundColor: homeTheme.controlBg,
+                    color: homeTheme.controlInk,
+                    fontFamily: HOME_DISPLAY_FONT,
+                  }}
                 >
-                  {isSubmitting ? "Sending" : "Send inquiry"}
+                  {isSubmitting ? "Sending" : "Send Message"}
                   <Send className="ml-2 h-4 w-4" />
                 </button>
               </div>
@@ -301,6 +382,8 @@ function ContactField({
   placeholder,
   type = "text",
   autoComplete,
+  homeTheme,
+  fieldVars,
 }: {
   id: string;
   label: string;
@@ -309,12 +392,18 @@ function ContactField({
   placeholder: string;
   type?: string;
   autoComplete?: string;
+  homeTheme: HomeColorTheme;
+  fieldVars: CSSProperties;
 }) {
   return (
     <div>
       <label
         htmlFor={id}
-        className="mb-2 block text-sm font-semibold tracking-[-0.02em] text-black/58"
+        className="mb-2 block text-[0.78rem] font-black uppercase tracking-[0.1em]"
+        style={{
+          color: homeTheme.muted,
+          fontFamily: HOME_DISPLAY_FONT,
+        }}
       >
         {label}
       </label>
@@ -325,7 +414,12 @@ function ContactField({
         onChange={event => onChange(event.target.value)}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="h-12 w-full rounded-md border border-black/12 bg-white/72 px-4 text-[1rem] text-black outline-none transition-colors placeholder:text-black/28 focus:border-[#496784]"
+        className="contact-overlay-field h-14 w-full rounded-[1rem] border bg-[var(--contact-overlay-field-bg)] px-4 text-[1rem] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-current/20"
+        style={{
+          ...fieldVars,
+          borderColor: "var(--contact-overlay-field-border)",
+          color: homeTheme.ink,
+        }}
         required
       />
     </div>

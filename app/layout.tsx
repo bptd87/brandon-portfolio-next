@@ -93,16 +93,103 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isProduction = process.env.NODE_ENV === "production";
+  const themeBootScript = `
+    (function () {
+      try {
+        var themes = [
+          {
+            bg: "#ffffff",
+            ink: "#2c2c2c",
+            muted: "rgba(44,44,44,0.62)",
+            ghost: "#cbcbcb",
+            accent: "#2c2c2c",
+            accentSoft: "rgba(44,44,44,0.08)",
+            controlBg: "#2c2c2c",
+            controlInk: "#ffffff",
+            footerBg: "#cbcbcb",
+            footerDisplay: "rgba(44,44,44,0.7)",
+            footerInk: "#2c2c2c"
+          },
+          {
+            bg: "#496784",
+            ink: "#f7f7f2",
+            muted: "rgba(247,247,242,0.58)",
+            ghost: "rgba(247,247,242,0.22)",
+            accent: "#f7f7f2",
+            accentSoft: "rgba(247,247,242,0.16)",
+            controlBg: "#063f95",
+            controlInk: "#88e7ff",
+            footerBg: "#334f68",
+            footerDisplay: "rgba(247,247,242,0.68)",
+            footerInk: "#f7f7f2"
+          },
+          {
+            bg: "#d39a24",
+            ink: "#17120a",
+            muted: "rgba(23,18,10,0.58)",
+            ghost: "rgba(23,18,10,0.18)",
+            accent: "#17120a",
+            accentSoft: "rgba(23,18,10,0.12)",
+            controlBg: "#17120a",
+            controlInk: "#f2b427",
+            footerBg: "#b47b14",
+            footerDisplay: "rgba(255,244,216,0.66)",
+            footerInk: "#17120a"
+          },
+          {
+            bg: "#6f7d59",
+            ink: "#f4f0e5",
+            muted: "rgba(244,240,229,0.62)",
+            ghost: "rgba(244,240,229,0.24)",
+            accent: "#f4f0e5",
+            accentSoft: "rgba(244,240,229,0.16)",
+            controlBg: "#0c5f2e",
+            controlInk: "#d9ff00",
+            footerBg: "#566541",
+            footerDisplay: "rgba(244,240,229,0.66)",
+            footerInk: "#f4f0e5"
+          }
+        ];
+        var stored = window.localStorage.getItem("brandon-home-theme-index");
+        var index = Number.parseInt(stored || "0", 10);
+        if (!Number.isFinite(index) || index < 0 || index >= themes.length) index = 0;
+        var theme = themes[index];
+        document.documentElement.style.setProperty("--home-theme-bg", theme.bg);
+        document.documentElement.style.setProperty("--home-theme-ink", theme.ink);
+        document.documentElement.style.setProperty("--home-theme-muted", theme.muted);
+        document.documentElement.style.setProperty("--home-theme-ghost", theme.ghost);
+        document.documentElement.style.setProperty("--home-theme-accent", theme.accent);
+        document.documentElement.style.setProperty("--home-theme-accent-soft", theme.accentSoft);
+        document.documentElement.style.setProperty("--home-theme-control-bg", theme.controlBg);
+        document.documentElement.style.setProperty("--home-theme-control-ink", theme.controlInk);
+        document.documentElement.style.setProperty("--home-theme-footer-bg", theme.footerBg);
+        document.documentElement.style.setProperty("--home-theme-footer-display", theme.footerDisplay);
+        document.documentElement.style.setProperty("--home-theme-footer-ink", theme.footerInk);
+        document.documentElement.style.backgroundColor = theme.bg;
+        document.documentElement.style.color = theme.ink;
+        document.documentElement.style.colorScheme = "light";
+      } catch (error) {}
+    })();
+  `;
 
   return (
     <html
       lang="en"
       className="dark"
-      style={{ colorScheme: "dark" }}
+      style={{
+        backgroundColor: "var(--home-theme-bg, #ffffff)",
+        color: "var(--home-theme-ink, #2c2c2c)",
+        colorScheme: "light",
+      }}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: themeBootScript,
+          }}
+        />
         <JsonLdScript
           id="site-entity-json-ld"
           data={[
@@ -112,7 +199,14 @@ export default function RootLayout({
           ]}
         />
       </head>
-      <body className="min-h-screen bg-white">
+      <body
+        className="min-h-screen"
+        style={{
+          backgroundColor: "var(--home-theme-bg, #ffffff)",
+          color: "var(--home-theme-ink, #2c2c2c)",
+        }}
+        suppressHydrationWarning
+      >
         <StudioFrameMode />
         <LegacyClientCleanup />
         {isProduction ? <PostHogAnalytics /> : null}

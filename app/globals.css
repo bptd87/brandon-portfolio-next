@@ -2,8 +2,8 @@
 
 html:has([data-page-shell="home"]),
 body:has([data-page-shell="home"]) {
-  background: #ffffff;
-  background-color: #ffffff;
+  background: var(--home-theme-bg, #ffffff);
+  background-color: var(--home-theme-bg, #ffffff);
   color-scheme: light;
   height: 100%;
   min-height: 100%;
@@ -19,5 +19,5 @@ body:has([data-page-shell="home"]) {
   overflow-y: auto;
   overscroll-behavior-y: none;
   -webkit-overflow-scrolling: touch;
-  background: #ffffff;
+  background: var(--home-theme-bg, #ffffff);
 }

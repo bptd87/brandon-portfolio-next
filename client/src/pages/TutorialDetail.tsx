@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getTutorialArticleBlueprint } from "@/data/tutorialArticleBlueprints";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT } from "@/lib/homeTheme";
 import { getYouTubeThumbnail } from "@/lib/videoUtils";
 import { getLocalTutorialBySlug, getLocalTutorials } from "@shared/localStudio";
 import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
@@ -1469,7 +1470,10 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   };
 
   return (
-    <div className="publish-editorial publish-editorial-dark min-h-screen bg-[#030303] text-white">
+    <div
+      className="tutorial-detail-page publish-editorial publish-editorial-dark min-h-screen bg-[#030303] text-white"
+      style={{ fontFamily: HOME_BODY_FONT }}
+    >
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
         description={tutorialSummary}
@@ -1527,6 +1531,16 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
       <Header />
       <PublishingTopBar active="articles" tone="dark" />
 
+      <style>{`
+        .tutorial-detail-page h1,
+        .tutorial-detail-page h2,
+        .tutorial-detail-page h3,
+        .tutorial-detail-page h4 {
+          font-family: ${HOME_DISPLAY_FONT};
+          letter-spacing: 0;
+        }
+      `}</style>
+
       <article className="overflow-hidden bg-[#030303] pb-16 text-white md:pb-24">
         <div className="mx-auto w-full max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-24 lg:px-10">
           <AnimatedSection>
@@ -1538,7 +1552,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                 </time>
               </div>
 
-              <h1 className="mt-8 max-w-[13ch] font-sans text-[clamp(2.9rem,5.8vw,5.7rem)] font-semibold leading-[0.96] tracking-[-0.072em] text-white">
+              <h1 className="mt-8 max-w-[13ch] font-sans text-[2.7rem] font-semibold leading-[0.96] tracking-[0] text-white sm:text-[4rem] lg:text-[5.7rem]">
                 {tutorialDisplayTitle}
               </h1>
 

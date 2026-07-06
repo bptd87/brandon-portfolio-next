@@ -325,6 +325,19 @@
     line-height: 1.2;
   }
 
+  /* Legacy heading markup used font-sans before the sitewide display system. */
+  h1.font-sans,
+  h2.font-sans,
+  h3.font-sans,
+  h4.font-sans,
+  .article-html-content h1,
+  .article-html-content h2,
+  .article-html-content h3,
+  .article-html-content h4 {
+    font-family: var(--font-display) !important;
+    font-stretch: condensed;
+  }
+
   p {
     font-size: 1rem;
     line-height: 1.68;

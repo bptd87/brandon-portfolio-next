@@ -141,69 +141,6 @@ const MIN_TUTORIAL_UPDATED_DATE = new Date(
   "2025-05-01T00:00:00.000Z"
 ).getTime();
 
-type ArticleSwatch = {
-  background: string;
-  text: string;
-  muted: string;
-};
-
-const ARTICLE_CATEGORY_SWATCHES: Record<string, ArticleSwatch> = {
-  "Design Process": {
-    background: "#a65f3a",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.72)",
-  },
-  "Scenic Design": {
-    background: "#496784",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.74)",
-  },
-  "Tools & Technology": {
-    background: "#c4932f",
-    text: "#15110b",
-    muted: "rgba(21,17,11,0.68)",
-  },
-  "Performance History & Culture": {
-    background: "#7f906f",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.74)",
-  },
-  "Profiles & Interviews": {
-    background: "#bd8b8d",
-    text: "#1f1515",
-    muted: "rgba(31,21,21,0.68)",
-  },
-  Rendering: {
-    background: "#3f6686",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.72)",
-  },
-  "Art Direction": {
-    background: "#c57050",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.74)",
-  },
-  "Themed Entertainment": {
-    background: "#5e704d",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.72)",
-  },
-  "Personal Essay": {
-    background: "#7a3f1b",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.72)",
-  },
-};
-
-const DEFAULT_ARTICLE_SWATCH: ArticleSwatch = {
-  background: "#a33f24",
-  text: "#ffffff",
-  muted: "rgba(255,255,255,0.72)",
-};
-
-const getArticleSwatch = (category: string | null | undefined) =>
-  ARTICLE_CATEGORY_SWATCHES[category || ""] || DEFAULT_ARTICLE_SWATCH;
-
 const getDisplayUpdatedDate = (
   dateString: string | Date | null | undefined
 ) => {
@@ -947,7 +884,7 @@ function ArticleDetailContent({
 
   const scrollRelatedArticles = (direction: "previous" | "next") => {
     relatedArticleRailRef.current?.scrollBy({
-      left: direction === "next" ? 330 : -330,
+      left: direction === "next" ? 360 : -360,
       behavior: "smooth",
     });
   };
@@ -1311,8 +1248,6 @@ function ArticleDetailContent({
     variant === "tutorial" ||
     LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
   const isNarrativeArticle = !isLearningPortalArticle;
-  const hasOpeningDropCap =
-    isNarrativeArticle && article.slug !== "what-does-a-scenic-designer-do";
   const articleBasePath = "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
   const articleDisplayUpdatedAt = getDisplayUpdatedDate(
@@ -1500,7 +1435,7 @@ function ArticleDetailContent({
                     aria-label={
                       linkCopied ? "Article link copied" : "Copy article link"
                     }
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-black"
                   >
                     {linkCopied ? (
                       <Check className="h-4 w-4" />
@@ -1511,7 +1446,7 @@ function ArticleDetailContent({
                   <a
                     href={emailShareUrl}
                     aria-label="Share article by email"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-black"
                   >
                     <Mail className="h-4 w-4" />
                   </a>
@@ -1520,7 +1455,7 @@ function ArticleDetailContent({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Share article on LinkedIn"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-black"
                   >
                     <Linkedin className="h-4 w-4" />
                   </a>
@@ -1529,7 +1464,7 @@ function ArticleDetailContent({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Share article on Facebook"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#6f2dff]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-black"
                   >
                     f
                   </a>
@@ -1614,7 +1549,13 @@ function ArticleDetailContent({
                 {article.categoryName ? (
                   <Link
                     href={`/articles?category=${encodeURIComponent(article.categoryName)}`}
-                    className="rounded-full bg-[#6f2dff] px-4 py-1.5 text-white no-underline transition-colors hover:bg-[#7c3cff]"
+                    className="rounded-full px-4 py-1.5 no-underline transition-opacity hover:opacity-72"
+                    style={{
+                      backgroundColor: homeTheme.controlBg,
+                      color: homeTheme.controlInk,
+                      fontFamily: HOME_DISPLAY_FONT,
+                      fontStretch: "condensed",
+                    }}
                   >
                     {article.categoryName}
                   </Link>
@@ -1906,17 +1847,11 @@ function ArticleDetailContent({
                                   }
 
                                 case "paragraph":
-                                  const isOpeningParagraph =
-                                    paragraphIndex === 0;
                                   paragraphIndex += 1;
                                   return (
                                     <p
                                       key={index}
-                                      className={`${isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"} ${
-                                        isOpeningParagraph && hasOpeningDropCap
-                                          ? "first-letter:float-left first-letter:mr-3 first-letter:mt-2 first-letter:font-sans first-letter:text-[5.4rem] first-letter:font-semibold first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-white"
-                                          : ""
-                                      }`}
+                                      className={isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-7 text-[1.07rem] leading-[1.78] tracking-[0] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"}
                                       dangerouslySetInnerHTML={{
                                         __html: decodeHTMLEntities(
                                           section.text || section.content || ""
@@ -2277,7 +2212,7 @@ function ArticleDetailContent({
                                             onClick={() =>
                                               scrollGallery(index, "prev")
                                             }
-                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
+                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
                                           >
                                             <ChevronLeft className="h-4 w-4" />
                                           </button>
@@ -2287,7 +2222,7 @@ function ArticleDetailContent({
                                             onClick={() =>
                                               scrollGallery(index, "next")
                                             }
-                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6f2dff]/30 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
+                                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 ${isNarrativeArticle ? "bg-white/[0.055] text-white/58 hover:bg-white/[0.1] hover:text-white" : "bg-black/[0.045] text-black/52 hover:bg-black/[0.08] hover:text-black"}`}
                                           >
                                             <ChevronRight className="h-4 w-4" />
                                           </button>
@@ -2348,13 +2283,13 @@ function ArticleDetailContent({
                                   return (
                                     <ListTag
                                       key={index}
-                                      className={`my-6 space-y-3 ml-6 ${section.listType === "numbered" ? "list-decimal" : "list-disc"} [&_strong]:font-bold`}
+                                      className={`my-8 list-outside space-y-3 pl-7 ${section.listType === "numbered" ? "list-decimal" : "list-disc"} [&_strong]:font-bold`}
                                     >
                                       {section.items?.map(
                                         (item: string, itemIndex: number) => (
                                           <li
                                             key={itemIndex}
-                                            className="leading-relaxed"
+                                            className="pl-1 leading-[1.72]"
                                             dangerouslySetInnerHTML={{
                                               __html: decodeHTMLEntities(item),
                                             }}
@@ -2368,7 +2303,7 @@ function ArticleDetailContent({
                                   return (
                                     <div
                                       key={index}
-                                      className="article-html-content [&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
+                                      className="article-html-content [&_p]:mb-7 [&_p]:text-[1.07rem] [&_p]:leading-[1.78] [&_p]:tracking-[0]"
                                       dangerouslySetInnerHTML={{
                                         __html: processHTMLImages(
                                           decodeHTMLEntities(section.content)
@@ -2381,7 +2316,7 @@ function ArticleDetailContent({
                                   return (
                                     <div
                                       key={index}
-                                      className="[&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
+                                      className="[&_p]:mb-7 [&_p]:text-[1.07rem] [&_p]:leading-[1.78] [&_p]:tracking-[0]"
                                       dangerouslySetInnerHTML={{
                                         __html: processHTMLImages(
                                           section.content
@@ -2394,10 +2329,15 @@ function ArticleDetailContent({
                                   return (
                                     <section
                                       key={index}
-                                      className="mb-20 mt-12 max-w-[50rem]"
+                                      className="mb-20 mt-16 max-w-[44rem]"
                                     >
                                       <h2
-                                        className={`mb-5 font-sans text-[clamp(1.65rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                                        className="mb-5 text-[clamp(1.9rem,2.8vw,2.7rem)] font-black uppercase leading-[0.9] tracking-[0]"
+                                        style={{
+                                          color: homeTheme.ink,
+                                          fontFamily: HOME_DISPLAY_FONT,
+                                          fontStretch: "condensed",
+                                        }}
                                       >
                                         {decodeHTMLEntities(
                                           section.heading ||
@@ -2405,26 +2345,33 @@ function ArticleDetailContent({
                                         )}
                                       </h2>
                                       <div
-                                        className={`overflow-hidden rounded-[1.15rem] border shadow-[0_14px_40px_rgba(17,17,17,0.035)] ${isNarrativeArticle ? "border-white/8 bg-white/[0.02] shadow-none" : "border-black/[0.08] bg-[#fbfaf7]"}`}
+                                        className="border-y bg-transparent"
+                                        style={{ borderColor: homeTheme.ghost }}
                                       >
                                         <Accordion
                                           type="single"
                                           collapsible
-                                          className="space-y-0 px-5 py-1 md:px-6 md:py-2"
+                                          className="space-y-0"
                                         >
                                           {section.items?.map(
                                             (item: any, faqIndex: number) => (
                                               <AccordionItem
                                                 key={faqIndex}
                                                 value={`faq-${faqIndex}`}
-                                                className={`border-b last:border-b-0 ${isNarrativeArticle ? "border-white/8" : "border-black/[0.08]"}`}
+                                                className="border-b last:border-b-0"
+                                                style={{ borderColor: homeTheme.ghost }}
                                               >
                                                 <AccordionTrigger
-                                                  className={`group/faq rounded-none py-0 text-left hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-[#6f2dff]/28 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:border-[#6f2dff] [&[data-state=open]_.faq-plus-ring]:bg-[#6f2dff] [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0 ${isNarrativeArticle ? "text-white" : "text-[#1d1d1f]"}`}
+                                                  className="group/faq rounded-none bg-transparent py-0 text-left hover:bg-transparent hover:no-underline focus-visible:border-transparent focus-visible:ring-0 [&:focus-visible_.faq-plus-ring]:ring-2 [&:focus-visible_.faq-plus-ring]:ring-black/20 [&[data-state=open]_.faq-plus-ring]:scale-95 [&[data-state=open]_.faq-plus-ring]:bg-black [&[data-state=open]_.faq-plus-line]:bg-white [&[data-state=open]_.faq-plus-vertical]:rotate-90 [&[data-state=open]_.faq-plus-vertical]:opacity-0"
+                                                  style={{
+                                                    backgroundColor: "transparent",
+                                                    color: homeTheme.ink,
+                                                  }}
                                                 >
-                                                  <div className="flex w-full items-center justify-between gap-5 py-5">
+                                                  <div className="flex w-full items-center justify-between gap-5 py-4">
                                                     <div
-                                                      className={`pr-2 text-[1.02rem] font-medium leading-[1.35] tracking-[-0.026em] md:text-[1.08rem] ${isNarrativeArticle ? "text-white" : "text-[#24211f]"}`}
+                                                      className="pr-2 text-[1.02rem] font-semibold leading-[1.38] tracking-[0] md:text-[1.08rem]"
+                                                      style={{ color: homeTheme.ink }}
                                                     >
                                                       {decodeHTMLEntities(
                                                         item.question
@@ -2432,20 +2379,27 @@ function ArticleDetailContent({
                                                     </div>
                                                     <span
                                                       aria-hidden="true"
-                                                      className={`faq-plus-ring relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-out group-hover/faq:scale-105 ${isNarrativeArticle ? "border-white/14 bg-white/[0.04]" : "border-black/10 bg-black/[0.035]"}`}
+                                                      className="faq-plus-ring relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-out group-hover/faq:scale-105"
+                                                      style={{
+                                                        backgroundColor: homeTheme.accentSoft,
+                                                        borderColor: homeTheme.ghost,
+                                                      }}
                                                     >
                                                       <span
-                                                        className={`faq-plus-line absolute h-[2px] w-4 rounded-full transition-colors duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`}
+                                                        className="faq-plus-line absolute h-[2px] w-4 rounded-full transition-colors duration-300"
+                                                        style={{ backgroundColor: homeTheme.ink }}
                                                       />
                                                       <span
-                                                        className={`faq-plus-line faq-plus-vertical absolute h-[2px] w-4 rotate-90 rounded-full transition-all duration-300 ${isNarrativeArticle ? "bg-white/72" : "bg-[#24211f]"}`}
+                                                        className="faq-plus-line faq-plus-vertical absolute h-[2px] w-4 rotate-90 rounded-full transition-all duration-300"
+                                                        style={{ backgroundColor: homeTheme.ink }}
                                                       />
                                                     </span>
                                                   </div>
                                                 </AccordionTrigger>
                                                 <AccordionContent className="pb-5">
                                                   <div
-                                                    className={`max-w-3xl pr-8 text-[0.98rem] leading-7 tracking-[-0.01em] [&_p]:mb-4 [&_a]:underline [&_a]:underline-offset-4 ${isNarrativeArticle ? "text-white/64 [&_a]:text-white [&_a]:decoration-white/30" : "text-black/64 [&_a]:text-[#111111] [&_a]:decoration-black/25"}`}
+                                                    className="max-w-3xl pr-8 text-[0.98rem] leading-7 tracking-[0] [&_p]:mb-4 [&_a]:underline [&_a]:underline-offset-4"
+                                                    style={{ color: homeTheme.muted }}
                                                     dangerouslySetInnerHTML={{
                                                       __html: item.answer,
                                                     }}
@@ -2533,10 +2487,16 @@ function ArticleDetailContent({
                 {article.tags && article.tags.length > 0 && (
                   <MotionReveal className="article-body-reveal" delay={80}>
                     <div
-                      className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+                      className="mx-auto mt-16 max-w-[54rem] border-t pt-12"
+                      style={{ borderColor: homeTheme.ghost }}
                     >
                       <h3
-                        className={`mb-4 font-sans ${isNarrativeArticle ? "text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48" : "text-[1.08rem] font-medium tracking-[-0.025em] text-black/50"}`}
+                        className="mb-4 text-[1.08rem] font-semibold tracking-[0]"
+                        style={{
+                          color: homeTheme.muted,
+                          fontFamily: HOME_DISPLAY_FONT,
+                          fontStretch: "condensed",
+                        }}
                       >
                         Tagged With
                       </h3>
@@ -2544,7 +2504,12 @@ function ArticleDetailContent({
                         {article.tags.map((tag: any) => (
                           <span
                             key={tag.id}
-                            className={`rounded-full border px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] ${isNarrativeArticle ? "border-white/10 bg-white/[0.03] text-white/64" : "border-black/10 bg-black/[0.035] text-black/58"}`}
+                            className="rounded-full border px-4 py-2 text-[0.86rem] font-medium leading-none tracking-[0]"
+                            style={{
+                              backgroundColor: homeTheme.accentSoft,
+                              borderColor: homeTheme.ghost,
+                              color: homeTheme.ink,
+                            }}
                           >
                             {tag.name}
                           </span>
@@ -2557,7 +2522,7 @@ function ArticleDetailContent({
                 {/* Author Bio with Engagement */}
                 <MotionReveal className="article-body-reveal" delay={80}>
                   <div
-                    className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+                    className="mx-auto mt-16 max-w-[54rem] pt-12"
                   >
                     <div className="flex items-start gap-6">
                       <div className="flex-shrink-0">
@@ -2571,16 +2536,25 @@ function ArticleDetailContent({
                         </div>
                       </div>
                       <div className="flex-1">
-                        <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">
+                        <h3
+                          className="mb-2 text-2xl font-semibold tracking-[0]"
+                          style={{
+                            color: homeTheme.ink,
+                            fontFamily: HOME_DISPLAY_FONT,
+                            fontStretch: "condensed",
+                          }}
+                        >
                           Brandon PT Davis
                         </h3>
                         <p
-                          className={`mb-4 text-sm ${isNarrativeArticle ? "uppercase tracking-wider text-white/48" : "font-medium tracking-[-0.015em] text-black/42"}`}
+                          className="mb-4 text-sm font-medium tracking-[0]"
+                          style={{ color: homeTheme.muted }}
                         >
                           Scenic Designer
                         </p>
                         <p
-                          className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}
+                          className="mb-6 leading-relaxed tracking-[0]"
+                          style={{ color: homeTheme.muted }}
                         >
                           Brandon PT Davis is a scenic designer based in San
                           Diego. His work explores the intersection of physical
@@ -2599,22 +2573,27 @@ function ArticleDetailContent({
       </article>
 
       {linkedScenicProjects.length > 0 && (
-        <section
-          className={`${isNarrativeArticle ? "article-editorial article-editorial-article" : "article-editorial article-editorial-light"} ${related.length > 0 ? "pb-10" : "pb-20"}`}
-        >
+        <section className={`article-editorial article-editorial-light ${related.length > 0 ? "pb-10" : "pb-20"}`}>
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <div
-              className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+              className="border-t pt-12"
+              style={{ borderColor: homeTheme.ghost }}
             >
               <div className="mb-8 flex items-end justify-between">
                 <div>
                   <p
-                    className={`mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] ${isNarrativeArticle ? "text-white/40" : "text-black/42"}`}
+                    className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.18em]"
+                    style={{ color: homeTheme.muted }}
                   >
                     Scenic Design Project
                   </p>
                   <h2
-                    className={`text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#111111]"}`}
+                    className="text-2xl font-semibold tracking-[0] md:text-3xl"
+                    style={{
+                      color: homeTheme.ink,
+                      fontFamily: HOME_DISPLAY_FONT,
+                      fontStretch: "condensed",
+                    }}
                   >
                     Related production
                   </h2>
@@ -2631,12 +2610,16 @@ function ArticleDetailContent({
                     <Link
                       key={project.slug}
                       href={`/project/${project.slug}`}
-                      className={
-                        singleProject ? "lg:col-span-2 xl:col-span-1" : ""
-                      }
+                      className={`${singleProject ? "lg:col-span-2 xl:col-span-1" : ""} no-underline`}
                     >
-                      <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
-                        <div className="aspect-square overflow-hidden bg-white/[0.02]">
+                      <div
+                        className="group h-full cursor-pointer overflow-hidden rounded-lg border transition-all duration-300 hover:-translate-y-0.5"
+                        style={{
+                          backgroundColor: homeTheme.accentSoft,
+                          borderColor: homeTheme.ghost,
+                        }}
+                      >
+                        <div className="aspect-square overflow-hidden bg-black/[0.035]">
                           {project.coverImageUrl ? (
                             <img
                               src={project.coverImageUrl}
@@ -2647,14 +2630,20 @@ function ArticleDetailContent({
                           ) : null}
                         </div>
 
-                        <div className="pt-4">
+                        <div className="p-4">
                           <h3
-                            className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-sans font-normal leading-[1.12] tracking-[-0.04em] transition-colors ${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#111111] group-hover:text-black/72"}`}
+                            className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-semibold leading-[1.08] tracking-[0] transition-opacity group-hover:opacity-75`}
+                            style={{
+                              color: homeTheme.ink,
+                              fontFamily: HOME_DISPLAY_FONT,
+                              fontStretch: "condensed",
+                            }}
                           >
                             {project.title}
                           </h3>
                           <div
-                            className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}
+                            className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[0]"
+                            style={{ color: homeTheme.muted }}
                           >
                             <span>
                               {project.subcategory || "Scenic Design"}
@@ -2676,24 +2665,29 @@ function ArticleDetailContent({
       )}
 
       {related.length > 0 && (
-        <section
-          className={`${isNarrativeArticle ? "article-editorial article-editorial-article" : "article-editorial article-editorial-light"} pb-20`}
-        >
-          <div className="mx-auto w-full max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
+        <section className="article-editorial article-editorial-light pb-20">
+          <div className="w-full px-[clamp(1.5rem,5vw,6rem)]">
             <div
-              className={`border-t pt-12 md:pt-14 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}
+              className="border-t pt-12 md:pt-14"
+              style={{ borderColor: homeTheme.ghost }}
             >
               <MotionReveal className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <div className="max-w-3xl">
                   <p
-                    className={`mb-4 text-[clamp(1rem,1.25vw,1.12rem)] font-medium leading-[1.08] tracking-[-0.012em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}
+                    className="mb-4 text-[clamp(1rem,1.25vw,1.12rem)] font-medium leading-[1.08] tracking-[0]"
+                    style={{ color: homeTheme.muted }}
                   >
                     {isLearningPortalArticle
                       ? "Scenic design archive"
                       : "Scenic design writing"}
                   </p>
                   <h2
-                    className={`${isNarrativeArticle ? "text-white" : "text-[#111111]"} max-w-[12ch] font-sans text-[clamp(2.25rem,4.2vw,4.2rem)] font-semibold leading-[0.98] tracking-[-0.036em]`}
+                    className="max-w-[12ch] text-[clamp(2.25rem,4.2vw,4.2rem)] font-semibold leading-[0.92] tracking-[0]"
+                    style={{
+                      color: homeTheme.ink,
+                      fontFamily: HOME_DISPLAY_FONT,
+                      fontStretch: "condensed",
+                    }}
                   >
                     {isLearningPortalArticle
                       ? "Keep learning."
@@ -2704,7 +2698,14 @@ function ArticleDetailContent({
                 </div>
                 <Link
                   href={articleBasePath}
-                  className={`${isNarrativeArticle ? "border-white/18 bg-white/[0.04] text-white/72 hover:border-white/36 hover:bg-white hover:text-black" : "border-black/[0.12] bg-[#fbfaf7] text-[#111111] hover:bg-white"} inline-flex h-11 w-fit items-center justify-center border px-5 font-sans text-[0.95rem] font-semibold tracking-[-0.018em] shadow-[0_8px_26px_rgba(0,0,0,0.14)] transition-colors md:justify-self-end`}
+                  className="inline-flex h-11 w-fit items-center justify-center rounded-full border px-5 text-[0.95rem] font-semibold tracking-[0] shadow-[0_10px_30px_rgba(17,17,17,0.12)] transition-opacity hover:opacity-75 md:justify-self-end"
+                  style={{
+                    backgroundColor: homeTheme.controlBg,
+                    borderColor: homeTheme.controlBg,
+                    color: homeTheme.controlInk,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
                 >
                   View articles
                 </Link>
@@ -2714,7 +2715,7 @@ function ArticleDetailContent({
                 ref={relatedArticleRailRef}
                 className="overflow-x-auto pb-7 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               >
-                <div className="flex min-w-max snap-x snap-mandatory gap-4 pr-5">
+                <div className="flex min-w-max snap-x snap-mandatory gap-5 pr-5">
                   {related.map((relatedArticle, index) => {
                     const relatedTitle = decodeHTMLEntities(
                       isLearningPortalArticle
@@ -2724,8 +2725,10 @@ function ArticleDetailContent({
                             .trim()
                         : relatedArticle.title
                     );
-                    const dateLabel = formatUtcDate(relatedArticle.publishedAt, "short");
-                    const swatch = getArticleSwatch(relatedArticle.categoryName);
+                    const dateLabel = formatUtcDate(
+                      relatedArticle.publishedAt,
+                      "short"
+                    );
                     const metadata = [
                       dateLabel,
                       relatedArticle.readTime
@@ -2734,54 +2737,58 @@ function ArticleDetailContent({
                     ]
                       .filter(Boolean)
                       .join(" · ");
+                    const relatedDescription = getHtmlTextContent(
+                      relatedArticle.excerpt ||
+                        relatedArticle.seoDescription ||
+                        ""
+                    );
+                    const relatedExcerpt =
+                      relatedDescription.length > 112
+                        ? `${relatedDescription.slice(0, 109).trim()}...`
+                        : relatedDescription;
 
                     return (
                       <MotionReveal
                         key={relatedArticle.id}
-                        className="w-[min(16.75rem,72vw)] flex-none snap-start sm:w-[18rem] lg:w-[19.25rem]"
+                        className="h-full w-[min(18.5rem,78vw)] flex-none snap-start sm:w-[19.5rem] lg:w-[21rem]"
                         delay={(index % 6) * 80}
                       >
                         <Link
                           href={`${articleBasePath}/${relatedArticle.slug}`}
-                          className={`${isNarrativeArticle ? "shadow-[0_12px_32px_rgba(0,0,0,0.28)] ring-white/[0.08]" : "shadow-[0_10px_24px_rgba(17,17,17,0.055)] ring-black/[0.055]"} publish-motion-card group flex h-full flex-col overflow-hidden bg-white no-underline ring-1 transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.22)]`}
+                          className="publish-motion-card group relative flex h-[25rem] flex-col justify-end overflow-hidden rounded-[1.25rem] bg-black p-5 text-white no-underline shadow-[0_12px_28px_rgba(0,0,0,0.2)] ring-1 ring-white/10 transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.24)] md:h-[28rem] md:rounded-[1.5rem] md:p-6"
+                          aria-label={`Article: ${relatedTitle}`}
                         >
-                          <div
-                            className={`publish-card-media article-card-media relative aspect-square overflow-hidden ${isNarrativeArticle ? "bg-white/[0.04]" : "bg-black/[0.04]"}`}
-                          >
-                            {relatedArticle.coverImageUrl ? (
-                              <img
-                                src={relatedArticle.coverImageUrl}
-                                alt={
-                                  relatedArticle.coverImageAlt ||
-                                  decodeHTMLEntities(relatedArticle.title)
-                                }
-                                className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-                                loading="lazy"
-                              />
-                            ) : null}
-                          </div>
+                          {relatedArticle.coverImageUrl ? (
+                            <img
+                              src={relatedArticle.coverImageUrl}
+                              alt={
+                                relatedArticle.coverImageAlt ||
+                                decodeHTMLEntities(relatedArticle.title)
+                              }
+                              className="site-media-square absolute inset-0 h-full w-full object-cover motion-safe:scale-[1.015] motion-safe:transition-transform motion-safe:duration-[1200ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.055]"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 bg-black" />
+                          )}
+                          <div className="absolute inset-0 bg-black/18" />
+                          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
+                          <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
 
-                          <div
-                            className="publish-card-copy flex h-[9.75rem] flex-col px-4 py-4 sm:px-5"
-                            style={{
-                              backgroundColor: swatch.background,
-                              color: swatch.text,
-                            }}
-                          >
-                            <p
-                              className="text-[0.78rem] font-semibold tracking-[-0.006em]"
-                              style={{ color: swatch.muted }}
-                            >
+                          <div className="relative z-10">
+                            <p className="text-[0.74rem] font-semibold tracking-[0] text-white/68">
                               {relatedArticle.categoryName || "Article"}
                             </p>
-                            <h3 className="mt-3 line-clamp-2 max-w-[17rem] font-sans text-[clamp(1.02rem,1.12vw,1.18rem)] font-semibold leading-[1.08] tracking-[-0.018em] transition-opacity duration-500 group-hover:opacity-85">
+                            <h3 className="mt-3 line-clamp-3 max-w-[13ch] text-[1.64rem] font-medium leading-[0.98] tracking-[0] text-white transition-opacity duration-500 group-hover:opacity-85">
                               {relatedTitle}
                             </h3>
+                            {relatedExcerpt ? (
+                              <p className="mt-4 line-clamp-3 max-w-[18rem] text-[0.94rem] leading-6 tracking-[0] text-white/68">
+                                {relatedExcerpt}
+                              </p>
+                            ) : null}
                             {metadata ? (
-                              <p
-                                className="mt-auto pt-4 text-[0.78rem] font-semibold tracking-[-0.006em]"
-                                style={{ color: swatch.muted }}
-                              >
+                              <p className="mt-5 text-[0.78rem] font-semibold tracking-[0] text-white/64">
                                 {metadata}
                               </p>
                             ) : null}
@@ -2797,7 +2804,12 @@ function ArticleDetailContent({
                 <button
                   type="button"
                   onClick={() => scrollRelatedArticles("previous")}
-                  className={`${isNarrativeArticle ? "bg-white/[0.08] text-white/62 hover:bg-white hover:text-black" : "bg-black/[0.08] text-black/62 hover:bg-black hover:text-white"} inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors`}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
+                  style={{
+                    backgroundColor: homeTheme.accentSoft,
+                    borderColor: homeTheme.ghost,
+                    color: homeTheme.ink,
+                  }}
                   aria-label="Previous related article cards"
                 >
                   <ChevronLeft
@@ -2809,7 +2821,12 @@ function ArticleDetailContent({
                 <button
                   type="button"
                   onClick={() => scrollRelatedArticles("next")}
-                  className={`${isNarrativeArticle ? "bg-white/[0.12] text-white/72 hover:bg-white hover:text-black" : "bg-black/[0.12] text-black/72 hover:bg-black hover:text-white"} inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors`}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
+                  style={{
+                    backgroundColor: homeTheme.controlBg,
+                    borderColor: homeTheme.controlBg,
+                    color: homeTheme.controlInk,
+                  }}
                   aria-label="Next related article cards"
                 >
                   <ChevronRight
@@ -2835,6 +2852,10 @@ function ArticleDetailContent({
         .article-detail-page {
           --article-body-font: ${HOME_BODY_FONT};
           --article-display-font: ${HOME_DISPLAY_FONT};
+          --article-copy: color-mix(in srgb, var(--article-ink) 84%, transparent);
+          --article-copy-strong: var(--article-ink);
+          --article-copy-muted: var(--article-muted);
+          --article-rule: var(--article-ghost);
         }
 
         .article-editorial {
@@ -2851,7 +2872,101 @@ function ArticleDetailContent({
         }
 
         .article-editorial-article {
-          color: #ffffff;
+          color: var(--article-ink);
+        }
+
+        .article-editorial-article > section:not(:first-child) {
+          color: var(--article-ink);
+        }
+
+        .article-editorial-article > section:not(:first-child) [class*="text-white"] {
+          color: var(--article-muted) !important;
+        }
+
+        .article-editorial-article > section:not(:first-child) [class*="border-white"] {
+          border-color: var(--article-rule) !important;
+        }
+
+        .article-editorial-article > section:not(:first-child) [class*="hover:text-white"]:hover {
+          color: var(--article-ink) !important;
+        }
+
+        .article-editorial-article .article-content,
+        .article-editorial-article .article-content p,
+        .article-editorial-article .article-content li,
+        .article-editorial-article .article-content dd,
+        .article-editorial-article .article-content figcaption {
+          color: var(--article-copy) !important;
+        }
+
+        .article-editorial-article .article-content p,
+        .article-editorial-article .article-content li {
+          font-size: clamp(1.04rem, 1.18vw, 1.12rem) !important;
+          font-weight: 430 !important;
+          line-height: 1.76 !important;
+          letter-spacing: 0 !important;
+        }
+
+        .article-editorial-article .article-content [class*="text-white"] {
+          color: var(--article-copy) !important;
+        }
+
+        .article-editorial-article .article-content [class*="bg-white"] {
+          background-color: var(--article-accent-soft) !important;
+        }
+
+        .article-editorial-article .article-content h2,
+        .article-editorial-article .article-content h3,
+        .article-editorial-article .article-content h4,
+        .article-editorial-article .article-content strong,
+        .article-editorial-article .article-content blockquote p {
+          color: var(--article-copy-strong) !important;
+        }
+
+        .article-editorial-article .article-content h2 {
+          font-weight: 900 !important;
+          line-height: 0.9 !important;
+          letter-spacing: 0 !important;
+          text-transform: uppercase;
+        }
+
+        .article-editorial-article .article-content h3 {
+          font-weight: 850 !important;
+          line-height: 0.96 !important;
+          letter-spacing: 0 !important;
+        }
+
+        .article-editorial-article .article-content h4 {
+          font-weight: 760 !important;
+          letter-spacing: 0.04em !important;
+        }
+
+        .article-editorial-article .article-content a {
+          color: var(--article-copy-strong) !important;
+          text-decoration-color: var(--article-copy-muted) !important;
+        }
+
+        .article-editorial-article .article-content p::first-letter {
+          float: none !important;
+          margin: 0 !important;
+          color: inherit !important;
+          font: inherit !important;
+          letter-spacing: inherit !important;
+          line-height: inherit !important;
+        }
+
+        .article-editorial-article .article-content [class*="border-white"] {
+          border-color: var(--article-rule) !important;
+        }
+
+        .article-editorial .article-content [data-slot="accordion-trigger"] {
+          background-color: transparent !important;
+          background-image: none !important;
+        }
+
+        .article-editorial-article .article-content ul li::marker,
+        .article-editorial-article .article-content ol li::marker {
+          color: var(--article-copy-muted) !important;
         }
 
         .article-editorial-light {
@@ -2882,7 +2997,7 @@ function ArticleDetailContent({
         }
 
         .article-editorial-learning .article-content {
-          font-family: var(--font-sans, inherit);
+          font-family: var(--article-body-font);
         }
 
         .article-editorial-learning .article-content h2 {
@@ -2967,20 +3082,42 @@ function ArticleDetailContent({
           letter-spacing: -0.018em !important;
         }
 
-        .article-editorial .article-content ul li::marker,
-        .article-editorial .article-content ol li::marker {
-          color: rgba(255,255,255,0.55) !important;
+        .article-editorial .article-content ul,
+        .article-editorial .article-content ol {
+          list-style-position: outside !important;
+          padding-left: 1.75rem !important;
         }
 
-        .article-editorial-light .article-content ul li::marker,
-        .article-editorial-light .article-content ol li::marker {
-          color: rgba(17,17,17,0.45) !important;
+        .article-editorial .article-content ul {
+          list-style-type: disc !important;
+        }
+
+        .article-editorial .article-content ol {
+          list-style-type: decimal !important;
+        }
+
+        .article-editorial .article-content li {
+          display: list-item !important;
+          padding-left: 0.2rem !important;
+        }
+
+        .article-editorial .article-content ul li::marker,
+        .article-editorial .article-content ol li::marker {
+          color: var(--article-copy-strong) !important;
+          font-weight: 700 !important;
         }
 
         .article-editorial .article-content img,
         .article-editorial .article-content video,
         .article-editorial .article-content iframe {
+          border-radius: 1.35rem !important;
           box-shadow: none;
+        }
+
+        .article-editorial .article-content figure img,
+        .article-editorial .article-content figure video,
+        .article-editorial .article-content figure iframe {
+          overflow: hidden;
         }
 
         .article-editorial .article-inline-video {
@@ -2989,13 +3126,13 @@ function ArticleDetailContent({
         }
 
         .article-editorial .article-inline-video > div {
-          border-radius: 0;
+          border-radius: 1.35rem !important;
           background: transparent !important;
           box-shadow: none !important;
         }
 
         .article-editorial .article-inline-video video {
-          border-radius: 0 !important;
+          border-radius: 1.35rem !important;
           background: #050505 !important;
           box-shadow: none !important;
         }

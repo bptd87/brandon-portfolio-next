@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
 import HomePaletteControl from "@/components/HomePaletteControl";
@@ -15,11 +15,20 @@ export default function Header() {
   const pathname = usePathname() || "/";
   const { homeTheme, homeThemeIndex, setHomeThemeIndex } = useHomeTheme();
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [isPortfolioQuickView, setIsPortfolioQuickView] = useState(false);
   const isNavigationRoute = pathname === "/navigation";
   const targetHref = isNavigationRoute ? "/" : "/navigation";
   const label = isNavigationRoute ? "Return home" : "Open navigation";
 
   useHomeDocumentTheme(homeTheme);
+
+  useEffect(() => {
+    setIsPortfolioQuickView(
+      new URLSearchParams(window.location.search).get("quickView") === "1"
+    );
+  }, []);
+
+  if (isPortfolioQuickView) return null;
 
   return (
     <>

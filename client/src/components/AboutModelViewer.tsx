@@ -8,13 +8,19 @@ import { useHomeTheme } from "@/lib/homeTheme";
 type AboutModelViewerProps = {
   src: string;
   downloadName: string;
+  className?: string;
+  showCaption?: boolean;
+  showOnMobile?: boolean;
 };
 
 type LoadedModel = import("three").Object3D;
 
 export default function AboutModelViewer({
+  className = "",
   src,
   downloadName,
+  showCaption = true,
+  showOnMobile = false,
 }: AboutModelViewerProps) {
   const { homeTheme } = useHomeTheme();
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +48,7 @@ export default function AboutModelViewer({
   }, []);
 
   useEffect(() => {
-    if (!isDesktop) return;
+    if (!isDesktop && !showOnMobile) return;
 
     const mount = mountRef.current;
     if (!mount) return;
@@ -286,16 +292,17 @@ export default function AboutModelViewer({
       }
       modelRef.current = null;
     };
-  }, [isDesktop, src]);
+  }, [isDesktop, showOnMobile, src]);
 
-  if (!isDesktop) return null;
+  if (!isDesktop && !showOnMobile) return null;
 
   return (
-    <figure className="space-y-3 pt-8" aria-label="3D model">
-      <div
-        ref={mountRef}
-        className="relative aspect-[2/3] w-full cursor-grab overflow-visible bg-transparent active:cursor-grabbing"
-      >
+    <figure className={`space-y-3 pt-8 ${className}`} aria-label="3D model">
+      <div className="relative aspect-[2/3] w-full overflow-visible bg-transparent">
+        <div
+          ref={mountRef}
+          className="absolute inset-0 cursor-grab active:cursor-grabbing"
+        />
         {status !== "ready" ? (
           <div
             className="absolute inset-0 grid place-items-center px-3 text-center font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em]"
@@ -306,19 +313,21 @@ export default function AboutModelViewer({
         ) : null}
       </div>
 
-      <figcaption
-        className="flex items-center justify-center gap-2 font-sans text-[0.72rem] font-semibold leading-5 tracking-[0.02em]"
-        style={{ color: homeTheme.muted }}
-      >
-        <a
-          href={src}
-          download={downloadName}
-          className="inline-flex items-center gap-1.5 underline-offset-4 transition-opacity hover:opacity-80 hover:underline"
+      {showCaption ? (
+        <figcaption
+          className="flex items-center justify-center gap-2 font-sans text-[0.72rem] font-semibold leading-5 tracking-[0.02em]"
+          style={{ color: homeTheme.muted }}
         >
-          <Download className="h-3 w-3" aria-hidden="true" />
-          GLB
-        </a>
-      </figcaption>
+          <a
+            href={src}
+            download={downloadName}
+            className="inline-flex items-center gap-1.5 underline-offset-4 transition-opacity hover:opacity-80 hover:underline"
+          >
+            <Download className="h-3 w-3" aria-hidden="true" />
+            GLB
+          </a>
+        </figcaption>
+      ) : null}
     </figure>
   );
 }

@@ -1,131 +1,123 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
-import Image from "next/image";
-import { Link } from "wouter";
+import { type CSSProperties } from "react";
 
+import AboutModelViewer from "@/components/AboutModelViewer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
-import { recentScenicProjects } from "@/components/navigationData";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
+
+const notFoundLinks = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Scenic Design" },
+  { href: "/studio", label: "Studio" },
+  { href: "/search", label: "Search" },
+] as const;
+const ABOUT_MODEL_URL = "/assets/about/3d/brandon-pt-davis-3d-model.glb";
 
 export default function NotFound() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+
+  const pageStyle = {
+    "--background": homeTheme.bg,
+    "--border": homeTheme.ghost,
+    "--foreground": homeTheme.ink,
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+    fontStretch: "condensed",
+  } as CSSProperties;
+
   return (
-    <div className="min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div className="min-h-screen transition-colors duration-500" style={pageStyle}>
       <SEO
         title="404 | Brandon PT Davis"
-        description="The page you’re looking for isn’t available. Return to the portfolio, studio, or homepage."
+        description="The page you’re looking for isn’t available."
         noindex={true}
         nofollow={true}
       />
 
       <Header />
 
-      <main>
-        <section className="border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-24">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.72fr)] lg:items-end">
-            <div>
-              <p className="section-kicker text-black/40">404</p>
-              <h1 className="mt-6 max-w-[10ch] font-sans text-[clamp(4.4rem,11vw,10rem)] font-medium leading-[0.82] tracking-[-0.09em] text-black">
-                Page not found.
-              </h1>
-            </div>
+      <main
+        className="relative z-10 px-[clamp(1.25rem,5vw,5rem)]"
+        style={{ backgroundColor: homeTheme.bg }}
+      >
+        <section className="mx-auto grid min-h-[100svh] max-w-[92rem] items-center gap-[clamp(2rem,6vw,6rem)] py-[clamp(6.5rem,10vw,9rem)] lg:grid-cols-[minmax(0,0.86fr)_minmax(16rem,0.54fr)]">
+          <div>
+            <p
+              className="text-[clamp(5rem,17vw,13rem)] font-black uppercase leading-[0.78] tracking-[0]"
+              style={displayStyle}
+            >
+              404
+            </p>
 
-            <div className="max-w-xl lg:pb-2">
-              <p className="text-[clamp(1.05rem,1.4vw,1.24rem)] leading-8 tracking-[-0.02em] text-black/64">
-                The link may have moved during a site update. Start with the scenic design
-                portfolio, browse recent project pages, or use the sitemap for a full index.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-3 text-[0.9rem] font-medium tracking-[-0.02em] transition-colors hover:bg-black/80"
+            <h1
+              className="mt-8 text-[clamp(2.35rem,6vw,5rem)] font-black uppercase leading-[0.86] tracking-[0]"
+              style={displayStyle}
+            >
+              Page not found
+            </h1>
+
+            <p
+              className="mt-6 max-w-[34rem] text-[clamp(1rem,1.6vw,1.2rem)] leading-8"
+              style={{ color: homeTheme.muted }}
+            >
+              The page you were looking for is not available. Use one of these links to
+              keep moving through the site.
+            </p>
+
+            <nav
+              aria-label="404 navigation"
+              className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t pt-6"
+              style={{ borderColor: homeTheme.ghost }}
+            >
+              {notFoundLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-[0.92rem] font-black uppercase leading-none underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35"
+                  style={{
+                    color: homeTheme.ink,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
                 >
-                  <span className="text-[#f1f0ec]">Scenic Design</span>
-                  <ArrowUpRight className="h-4 w-4 text-[#f1f0ec]" />
-                </Link>
-                <Link
-                  href="/studio"
-                  className="inline-flex items-center gap-2 rounded-full border border-black/14 px-5 py-3 text-[0.9rem] font-medium tracking-[-0.02em] text-black/68 transition-colors hover:border-black/28 hover:text-black"
-                >
-                  Studio
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/sitemap"
-                  className="inline-flex items-center gap-2 rounded-full border border-black/14 px-5 py-3 text-[0.9rem] font-medium tracking-[-0.02em] text-black/68 transition-colors hover:border-black/28 hover:text-black"
-                >
-                  Sitemap
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
+                  {link.label}
+                </a>
+              ))}
+            </nav>
           </div>
-        </section>
 
-        <section className="border-b border-black/10">
-          <div className="grid md:grid-cols-3">
-            {recentScenicProjects.map((project) => (
-              <Link
-                key={project.href}
-                href={project.href}
-                className="group border-b border-r border-black/10 md:border-b-0"
-              >
-                <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-black/[0.035]">
-                  <Image
-                    src={project.imageUrl}
-                    alt={project.imageAlt}
-                    fill
-                    quality={82}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="site-media-square object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                  />
-                </div>
-                <div className="min-h-[8.5rem] border-t border-black/10 p-[clamp(1rem,2vw,1.5rem)]">
-                  <h2 className="max-w-[16ch] font-sans text-[clamp(1.45rem,2.3vw,2.35rem)] font-medium leading-[0.95] tracking-[-0.06em] text-black transition-colors group-hover:text-black/68">
-                    {project.title}
-                  </h2>
-                  <p className="mt-3 max-w-[22ch] text-[0.95rem] leading-6 tracking-[-0.015em] text-black/48">
-                    {project.meta}
-                  </p>
-                </div>
-              </Link>
-            ))}
+          <div className="mx-auto w-full max-w-[min(18rem,68vw)] lg:max-w-[24rem]">
+            <AboutModelViewer
+              src={ABOUT_MODEL_URL}
+              downloadName="brandon-pt-davis-3d-model.glb"
+              className="pt-0"
+              showCaption={false}
+              showOnMobile={true}
+            />
           </div>
-        </section>
-
-        <section className="grid border-b border-black/10 md:grid-cols-3">
-          <Link
-            href="/projects"
-            className="group border-b border-r border-black/10 px-[clamp(1.5rem,4vw,3rem)] py-10 md:border-b-0"
-          >
-            <p className="section-kicker text-black/40">Portfolio</p>
-            <p className="mt-4 max-w-[18rem] text-[1.02rem] leading-7 tracking-[-0.015em] text-black/62 group-hover:text-black">
-              Browse scenic design projects and production pages.
-            </p>
-          </Link>
-          <Link
-            href="/studio/directory"
-            className="group border-b border-r border-black/10 px-[clamp(1.5rem,4vw,3rem)] py-10 md:border-b-0"
-          >
-            <p className="section-kicker text-black/40">Directory</p>
-            <p className="mt-4 max-w-[18rem] text-[1.02rem] leading-7 tracking-[-0.015em] text-black/62 group-hover:text-black">
-              Find scenic design resources, suppliers, archives, and tools.
-            </p>
-          </Link>
-          <Link
-            href="/search"
-            className="group px-[clamp(1.5rem,4vw,3rem)] py-10"
-          >
-            <p className="section-kicker text-black/40">Search</p>
-            <p className="mt-4 max-w-[18rem] text-[1.02rem] leading-7 tracking-[-0.015em] text-black/62 group-hover:text-black">
-              Search across projects, articles, tools, and studio pages.
-            </p>
-          </Link>
         </section>
       </main>
 
-      <Footer tone="light" />
+      <Footer
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+        variant="standard"
+      />
     </div>
   );
 }

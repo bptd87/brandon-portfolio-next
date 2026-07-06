@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties, ReactNode } from "react";
+import type {
+  CSSProperties,
+  ReactNode,
+} from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import {
   Drama,
@@ -10,6 +14,7 @@ import {
   Music,
   Theater,
   UsersRound,
+  X,
   type LucideIcon,
 } from "lucide-react";
 
@@ -20,6 +25,7 @@ import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import {
   HOME_BODY_FONT,
   HOME_DISPLAY_FONT,
+  HOME_SCENIC_DESIGN_BLUE,
   type HomeColorTheme,
   useHomeTheme,
 } from "@/lib/homeTheme";
@@ -560,9 +566,9 @@ const getExperientialProjectPanelClass = (index: number) => {
 
 const HOME_FEATURED_DESIGN_SLUGS = [
   "the-penelopiad",
+  "the-merry-wives-of-windsor",
   "million-dollar-quartet",
-  "the-glass-menagerie",
-  "romero",
+  "dont-dress-for-dinner",
 ];
 
 type HomeFeatureCard = {
@@ -581,6 +587,9 @@ function HomeIdentityCard({
   theme: HomeColorTheme;
 }) {
   const [heroMounted, setHeroMounted] = useState(false);
+  const [heroCardsEntered, setHeroCardsEntered] = useState(false);
+  const [isHeroStackHovered, setIsHeroStackHovered] = useState(false);
+  const [heroStackMotion, setHeroStackMotion] = useState({ x: 0, y: 0 });
   const featuredDesignCards: HomeFeatureCard[] = HOME_FEATURED_DESIGN_SLUGS
     .map(slug => projects.find(project => project.slug === slug))
     .filter(
@@ -599,13 +608,18 @@ function HomeIdentityCard({
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setHeroMounted(true));
-    return () => window.cancelAnimationFrame(frame);
+    const enteredTimer = window.setTimeout(() => setHeroCardsEntered(true), 1380);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(enteredTimer);
+    };
   }, []);
 
   return (
     <section
-      className="relative overflow-hidden px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(1.25rem,3vw,2rem)] pt-[clamp(5.75rem,8vw,7.25rem)] transition-colors duration-500"
+      className="relative overflow-hidden px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(1.25rem,3vw,2rem)] pt-[clamp(3.75rem,5.5vw,4.75rem)] transition-colors duration-500"
       data-home-mounted={heroMounted ? "true" : "false"}
+      data-home-cards-entered={heroCardsEntered ? "true" : "false"}
       style={
         {
           "--home-display-font": HOME_DISPLAY_FONT,
@@ -631,22 +645,38 @@ function HomeIdentityCard({
         @keyframes home-stack-enter {
           0% {
             opacity: 0;
-            transform: translate3d(var(--home-card-offset-x), var(--home-card-offset-y), 0) rotate(calc(var(--home-card-rotate) - 5deg)) scale(0.82);
+            transform: translate3d(
+              calc(-50% + var(--home-card-x) + var(--home-card-offset-x)),
+              calc(-50% + var(--home-card-y) + var(--home-card-offset-y)),
+              0
+            ) rotate(calc(var(--home-card-rotate) - 5deg)) scale(0.82);
             filter: blur(10px);
           }
           48% {
             opacity: 1;
-            transform: translate3d(calc(var(--home-card-offset-x) * -0.12), -0.72rem, 0) rotate(calc(var(--home-card-rotate) + 2deg)) scale(1.045);
+            transform: translate3d(
+              calc(-50% + var(--home-card-x) + (var(--home-card-offset-x) * -0.12)),
+              calc(-50% + var(--home-card-y) - 0.72rem),
+              0
+            ) rotate(calc(var(--home-card-rotate) + 2deg)) scale(1.045);
             filter: blur(0);
           }
           72% {
             opacity: 1;
-            transform: translate3d(0, 0.18rem, 0) rotate(calc(var(--home-card-rotate) - 0.7deg)) scale(0.988);
+            transform: translate3d(
+              calc(-50% + var(--home-card-x)),
+              calc(-50% + var(--home-card-y) + 0.18rem),
+              0
+            ) rotate(calc(var(--home-card-rotate) - 0.7deg)) scale(0.988);
             filter: blur(0);
           }
           100% {
             opacity: 1;
-            transform: translate3d(0, var(--home-card-y), 0) rotate(var(--home-card-rotate)) scale(1);
+            transform: translate3d(
+              calc(-50% + var(--home-card-x)),
+              calc(-50% + var(--home-card-y)),
+              0
+            ) rotate(var(--home-card-rotate)) scale(var(--home-card-scale));
             filter: blur(0);
           }
         }
@@ -654,6 +684,12 @@ function HomeIdentityCard({
         @keyframes home-role-drift {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(0.45rem); }
+        }
+
+        @keyframes home-stack-stage-float {
+          0%, 100% { transform: translateY(0) rotate(-0.15deg); }
+          45% { transform: translateY(-0.85rem) rotate(0.35deg); }
+          72% { transform: translateY(0.18rem) rotate(-0.22deg); }
         }
 
         @keyframes home-stack-boop {
@@ -727,15 +763,60 @@ function HomeIdentityCard({
           animation: home-role-drift 5.4s cubic-bezier(0.45, 0, 0.2, 1) 1.15s infinite;
         }
 
+        .home-stack-stage {
+          position: relative;
+          transform-origin: 50% 50%;
+          touch-action: pan-y;
+          user-select: none;
+        }
+
+        .home-stack-float {
+          position: absolute;
+          inset: 0;
+          animation: home-stack-stage-float 5.8s cubic-bezier(0.45, 0, 0.2, 1) 1.4s infinite;
+        }
+
+        .home-stack-stage:hover .home-stack-float,
+        .home-stack-stage:focus-within .home-stack-float,
+        .home-stack-stage[data-peeking="true"] .home-stack-float {
+          animation-play-state: paused;
+        }
+
         .home-stack-card {
           animation: none;
+          left: 50%;
           opacity: 0;
-          transform: translate3d(var(--home-card-offset-x), var(--home-card-offset-y), 0) rotate(calc(var(--home-card-rotate) - 5deg)) scale(0.82);
+          top: 50%;
+          transform: translate3d(
+            calc(-50% + var(--home-card-offset-x)),
+            calc(-50% + var(--home-card-offset-y)),
+            0
+          ) rotate(calc(var(--home-card-rotate) - 5deg)) scale(0.82);
           transform-origin: 50% 70%;
           transition:
             filter 360ms ease,
-            transform 520ms cubic-bezier(0.18, 1.22, 0.24, 1);
+            transform 1080ms cubic-bezier(0.13, 1.92, 0.16, 1);
+          user-select: none;
+          -webkit-user-drag: none;
           will-change: transform;
+        }
+
+        .home-stack-card-shadow {
+          background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0) 68%);
+          border-radius: inherit;
+          filter: blur(10px);
+          inset: auto 8% -15% 8%;
+          pointer-events: none;
+          position: absolute;
+          height: 25%;
+          transform: translate3d(0, 0.7rem, 0) scaleX(0.92);
+          transition: transform 1080ms cubic-bezier(0.13, 1.92, 0.16, 1), opacity 360ms ease;
+          z-index: -1;
+        }
+
+        .home-stack-card img {
+          user-select: none;
+          -webkit-user-drag: none;
         }
 
         [data-home-mounted="true"] .home-stack-card {
@@ -743,10 +824,37 @@ function HomeIdentityCard({
           animation-delay: var(--home-card-delay);
         }
 
-        .home-stack-card:hover,
-        .home-stack-card:focus-visible {
+        [data-home-cards-entered="true"] .home-stack-card {
+          animation: none;
           opacity: 1;
-          transform: translateY(calc(var(--home-card-y) - 0.8rem)) rotate(var(--home-card-rotate)) scale(1.035);
+          transform: translate3d(
+            calc(-50% + var(--home-card-x)),
+            calc(-50% + var(--home-card-y)),
+            0
+          ) rotate(var(--home-card-rotate)) scale(var(--home-card-scale));
+        }
+
+        .home-stack-stage:hover .home-stack-card,
+        .home-stack-stage:focus-within .home-stack-card,
+        .home-stack-stage[data-peeking="true"] .home-stack-card {
+          animation: none;
+          opacity: 1;
+          transform: translate3d(
+            calc(-50% + var(--home-card-hover-x) + var(--home-card-motion-x)),
+            calc(-50% + var(--home-card-hover-y) + var(--home-card-motion-y)),
+            0
+          ) rotate(var(--home-card-hover-rotate)) scale(var(--home-card-hover-scale));
+        }
+
+        .home-stack-stage:hover .home-stack-card-shadow,
+        .home-stack-stage:focus-within .home-stack-card-shadow,
+        .home-stack-stage[data-peeking="true"] .home-stack-card-shadow {
+          opacity: 0.82;
+          transform: translate3d(
+            var(--home-card-shadow-x),
+            calc(1rem + var(--home-card-shadow-y)),
+            0
+          ) scaleX(1.08);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -763,7 +871,17 @@ function HomeIdentityCard({
           .home-stack-card {
             animation: none !important;
             opacity: 1 !important;
-            transform: translateY(var(--home-card-y)) rotate(var(--home-card-rotate)) scale(1) !important;
+            transform: translate3d(
+              calc(-50% + var(--home-card-x)),
+              calc(-50% + var(--home-card-y)),
+              0
+            ) rotate(var(--home-card-rotate)) scale(var(--home-card-scale)) !important;
+          }
+
+          .home-stack-stage,
+          .home-stack-float {
+            animation: none !important;
+            transition: none !important;
           }
 
           .home-palette-spinner,
@@ -775,7 +893,7 @@ function HomeIdentityCard({
 
       <div className="mx-auto grid min-h-[calc(100svh-5.5rem)] max-w-[92rem] grid-rows-[auto_1fr_auto] place-items-center text-center">
         <div
-          className="home-hero-top pt-[clamp(0.5rem,2vw,1.5rem)] text-[0.72rem] font-black uppercase leading-[1] tracking-[0.09em]"
+          className="home-hero-top pt-0 text-[0.72rem] font-black uppercase leading-[1] tracking-[0.09em]"
           style={{ fontFamily: HOME_DISPLAY_FONT }}
         >
           <p>San Diego, California</p>
@@ -799,52 +917,118 @@ function HomeIdentityCard({
             BRANDON PT DAVIS
           </h1>
 
-          <div className="relative flex w-full max-w-[66rem] items-center justify-center">
-            {stackCards.map((card, index) => {
-              const rotation = ["-3deg", "-2deg", "5deg", "-2deg"][index] || "0deg";
-              const translateY = ["9%", "-5%", "7%", "-2%"][index] || "0%";
+          <div className="relative flex w-full max-w-[74rem] items-center justify-center">
+            <div
+              className="home-stack-stage h-[clamp(11.25rem,25vw,19.5rem)] w-[min(96vw,66rem)]"
+              role="group"
+              aria-label="Featured scenic design image stack"
+              data-peeking={isHeroStackHovered ? "true" : "false"}
+              onContextMenu={event => event.preventDefault()}
+              onMouseEnter={() => setIsHeroStackHovered(true)}
+              onMouseLeave={() => {
+                setIsHeroStackHovered(false);
+                setHeroStackMotion({ x: 0, y: 0 });
+              }}
+              onPointerEnter={() => setIsHeroStackHovered(true)}
+              onPointerMove={event => {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+                const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+                setIsHeroStackHovered(true);
+                setHeroStackMotion({
+                  x: Math.max(-1, Math.min(1, x)),
+                  y: Math.max(-1, Math.min(1, y)),
+                });
+              }}
+              onPointerLeave={() => {
+                setIsHeroStackHovered(false);
+                setHeroStackMotion({ x: 0, y: 0 });
+              }}
+            >
+              <div className="home-stack-float">
+                {stackCards.map((card, index) => {
+                  const rotation =
+                    ["-1.6deg", "-3.6deg", "4.8deg", "-0.9deg"][index] || "0deg";
+                  const translateX =
+                    ["-18rem", "-6.4rem", "5.5rem", "17.2rem"][index] || "0rem";
+                  const translateY =
+                    ["1.45rem", "-1.65rem", "0.9rem", "-0.75rem"][index] || "0rem";
+                  const restScale =
+                    ["0.98", "1.04", "1.02", "1.03"][index] || "1";
+                  const layerOrder =
+                    [1, 2, 3, 4][index] || index + 1;
+                  const hoverX =
+                    ["-22.8rem", "-9.2rem", "8.6rem", "22.5rem"][index] ||
+                    "0rem";
+                  const hoverY =
+                    ["2.65rem", "-3.1rem", "2.2rem", "-2rem"][index] ||
+                    "0rem";
+                  const hoverRotation =
+                    ["-5.5deg", "-5.2deg", "8deg", "-2deg"][index] || rotation;
+                  const hoverScale =
+                    ["1.045", "1.08", "1.065", "1.07"][index] || "1.06";
+                  const motionXStrength =
+                    [-22, -10, 13, 24][index] || 0;
+                  const motionYStrength =
+                    [14, -18, 16, -12][index] || 0;
+                  const motionX = `${heroStackMotion.x * motionXStrength}px`;
+                  const motionY = `${heroStackMotion.y * motionYStrength}px`;
+                  const shadowX = `${heroStackMotion.x * motionXStrength * -0.18}px`;
+                  const shadowY = `${heroStackMotion.y * motionYStrength * 0.16}px`;
 
-              return (
-                <a
-                  key={card.title}
-                  href={card.href || "/projects"}
-                  aria-label={`View ${card.title}`}
-                  title={`View ${card.title}`}
-                  className={`home-stack-card group relative grid aspect-square w-[clamp(6rem,14vw,13rem)] overflow-hidden rounded-[1rem] shadow-[0_2rem_4.4rem_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-[filter,transform] duration-500 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 ${
-                    index > 0 ? "-ml-[clamp(2.6rem,6vw,5.6rem)]" : ""
-                  }`}
-                  style={
-                    {
-                      zIndex: index + 1,
-                      "--home-card-rotate": rotation,
-                      "--home-card-y": translateY,
-                      "--home-card-wobble": `${index % 2 === 0 ? "-" : ""}1.2deg`,
-                      "--home-card-rise": `${-5 - index}px`,
-                      "--home-card-duration": `${5.2 + index * 0.45}s`,
-                      "--home-card-delay": `${180 + index * 100}ms`,
-                      "--home-card-offset-x": "0rem",
-                      "--home-card-offset-y": "1rem",
-                      borderColor: theme.accent,
-                      backgroundColor: theme.accentSoft,
-                    } as CSSProperties
-                  }
-                >
-                  <Image
-                    src={card.image || ""}
-                    alt={`${card.title} scenic design by Brandon PT Davis`}
-                    fill
-                    priority={index < 4}
-                    loading={index < 4 ? "eager" : "lazy"}
-                    fetchPriority={index < 4 ? "high" : "auto"}
-                    sizes="(max-width: 768px) 42vw, 13rem"
-                    className="site-media-square object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-                  />
-                  <span className="sr-only">
-                    {card.title}
-                  </span>
-                </a>
-              );
-            })}
+                  return (
+                    <div
+                      key={card.title}
+                      role="img"
+                      aria-label={`${card.title} scenic design by Brandon PT Davis`}
+                      className="home-stack-card group absolute grid aspect-square w-[clamp(9rem,19vw,18.5rem)] select-none overflow-hidden rounded-[1.15rem] shadow-[0_2.2rem_5rem_rgba(0,0,0,0.2)] ring-1 ring-black/5 transition-[filter,transform] duration-500 hover:brightness-105"
+                      style={
+                        {
+                          zIndex: layerOrder,
+                          "--home-card-rotate": rotation,
+                          "--home-card-scale": restScale,
+                          "--home-card-x": translateX,
+                          "--home-card-y": translateY,
+                          "--home-card-wobble": `${index % 2 === 0 ? "-" : ""}1.2deg`,
+                          "--home-card-rise": `${-5 - index}px`,
+                          "--home-card-duration": `${5.2 + index * 0.45}s`,
+                          "--home-card-delay": `${180 + index * 100}ms`,
+                          "--home-card-offset-x": "0rem",
+                          "--home-card-offset-y": "1rem",
+                          "--home-card-hover-x": hoverX,
+                          "--home-card-hover-y": hoverY,
+                          "--home-card-hover-rotate": hoverRotation,
+                          "--home-card-hover-scale": hoverScale,
+                          "--home-card-motion-x": motionX,
+                          "--home-card-motion-y": motionY,
+                          "--home-card-shadow-x": shadowX,
+                          "--home-card-shadow-y": shadowY,
+                          borderColor: theme.accent,
+                          backgroundColor: theme.accentSoft,
+                        } as CSSProperties
+                      }
+                    >
+                      <span className="home-stack-card-shadow" aria-hidden="true" />
+                      <Image
+                        src={card.image || ""}
+                        alt={`${card.title} scenic design by Brandon PT Davis`}
+                        fill
+                        priority={index < 4}
+                        loading={index < 4 ? "eager" : "lazy"}
+                        fetchPriority={index < 4 ? "high" : "auto"}
+                        sizes="(max-width: 768px) 48vw, 16rem"
+                        draggable={false}
+                        onDragStart={event => event.preventDefault()}
+                        className="site-media-square pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+                      />
+                      <span className="sr-only">
+                        {card.title}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <p
@@ -859,7 +1043,7 @@ function HomeIdentityCard({
           </p>
         </div>
 
-        <div className="home-hero-bottom pb-[clamp(1.2rem,2vw,1.8rem)]">
+        <div className="home-hero-bottom pb-[calc(5.25rem+env(safe-area-inset-bottom))] md:pb-[clamp(1.2rem,2vw,1.8rem)]">
           <p
             className="text-[0.72rem] font-black uppercase leading-none tracking-[0.09em]"
             style={{ fontFamily: HOME_DISPLAY_FONT }}
@@ -867,11 +1051,17 @@ function HomeIdentityCard({
             COLLABORATIONS INCLUDE
           </p>
           <p
-            className="mx-auto mt-2 max-w-[68rem] text-[0.56rem] font-medium uppercase leading-[1.3] tracking-[0.08em] md:whitespace-nowrap"
+            className="mx-auto mt-2 max-w-[68rem] text-[0.56rem] font-medium uppercase leading-[1.45] tracking-[0.08em]"
             style={{ color: theme.muted, fontFamily: HOME_BODY_FONT }}
           >
-            SOUTH COAST REPERTORY, MAPLES REPERTORY THEATRE, THEATRE SILCO,
-            NEW SWAN SHAKESPEARE FESTIVAL, AND OKOBOJI SUMMER THEATRE
+            <span className="block">
+              SOUTH COAST REPERTORY, MAPLES REPERTORY THEATRE, THEATRE SILCO,
+            </span>
+            <span className="mt-1 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+              NEW SWAN SHAKESPEARE FESTIVAL, OKOBOJI SUMMER THEATRE, AMONG
+              OTHERS
+              <Heart className="h-[1em] w-[1em] fill-none" strokeWidth={1.7} />
+            </span>
           </p>
         </div>
       </div>
@@ -891,6 +1081,9 @@ function HomeMinimalGallery({
   const gallerySectionRef = useRef<HTMLElement | null>(null);
   const portfolioGridRef = useRef<HTMLDivElement | null>(null);
   const [featuredInView, setFeaturedInView] = useState(false);
+  const [activePortfolioProject, setActivePortfolioProject] =
+    useState<ScenicProjectSummary | null>(null);
+  const [isPortfolioLightboxOpen, setIsPortfolioLightboxOpen] = useState(false);
   const galleryProjects = projects
     .filter(project => project.coverImageUrl);
   const carouselProjects = galleryProjects.slice(0, 8);
@@ -1154,6 +1347,46 @@ function HomeMinimalGallery({
     return () => observer.disconnect();
   }, [moreProjects.length]);
 
+  useEffect(() => {
+    if (!activePortfolioProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActivePortfolioProject(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activePortfolioProject]);
+
+  useEffect(() => {
+    if (!activePortfolioProject) {
+      setIsPortfolioLightboxOpen(false);
+      return;
+    }
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type !== "portfolioQuickViewLightbox") return;
+      setIsPortfolioLightboxOpen(Boolean(event.data.open));
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      setIsPortfolioLightboxOpen(false);
+    };
+  }, [activePortfolioProject]);
+
   if (!galleryProjects.length) return null;
 
   return (
@@ -1366,15 +1599,15 @@ function HomeMinimalGallery({
         className="home-featured-carousel relative left-1/2 ml-[-50vw] w-screen cursor-grab overflow-x-clip py-[clamp(2.5rem,5vw,5rem)] active:cursor-grabbing"
         style={
           {
-            "--home-feature-size": "min(30rem,80vw)",
-            "--home-feature-media": "min(25rem,70vw)",
+            "--home-feature-size": "min(33rem,84vw)",
+            "--home-feature-media": "min(28rem,76vw)",
             "--home-feature-gap": "16px",
           } as CSSProperties
         }
       >
         <div
           ref={carouselTrackRef}
-          className="home-featured-strip-track flex h-[clamp(29rem,38vw,40rem)] w-max items-center gap-[var(--home-feature-gap)] px-[max(1rem,calc((100vw-var(--home-feature-size))/2))] will-change-transform"
+          className="home-featured-strip-track flex h-[clamp(31rem,41vw,43rem)] w-max items-center gap-[var(--home-feature-gap)] px-[max(1rem,calc((100vw-var(--home-feature-size))/2))] will-change-transform"
         >
           {carouselItems.map((project, index) => {
             const meta = [project.client, project.year].filter(Boolean).join(" / ");
@@ -1410,7 +1643,7 @@ function HomeMinimalGallery({
                       priority={index < 3}
                       loading={index < 3 ? "eager" : "lazy"}
                       fetchPriority={index < 3 ? "high" : "auto"}
-                      sizes="(max-width: 768px) 70vw, 25rem"
+                      sizes="(max-width: 768px) 76vw, 28rem"
                       draggable={false}
                       onContextMenu={event => event.preventDefault()}
                       className="site-media-square pointer-events-none select-none object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
@@ -1443,11 +1676,18 @@ function HomeMinimalGallery({
       </div>
 
       <div className="mx-auto mt-[clamp(5rem,10vw,8rem)] max-w-[56rem] text-center">
-        <h2
-          className="text-[clamp(3.8rem,7vw,7rem)] font-black uppercase leading-[0.82] tracking-[-0.02em]"
-          style={{ fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}
-        >
-          PORTFOLIO
+        <h2>
+          <a
+            href="/projects"
+            className="inline-flex text-[clamp(3.8rem,7vw,7rem)] font-black uppercase leading-[0.82] tracking-[-0.02em] transition-opacity hover:opacity-70"
+            style={{
+              color: theme.ink,
+              fontFamily: HOME_DISPLAY_FONT,
+              fontStretch: "condensed",
+            }}
+          >
+            PORTFOLIO
+          </a>
         </h2>
         <p
           className="mt-3 text-[clamp(0.92rem,1.2vw,1.05rem)] font-medium"
@@ -1462,15 +1702,15 @@ function HomeMinimalGallery({
         className="mx-auto mt-[clamp(4rem,8vw,7rem)] grid max-w-[64rem] gap-[clamp(2.25rem,5vw,4.25rem)] px-[clamp(1rem,3vw,2rem)] pb-[clamp(4rem,8vw,7rem)] sm:grid-cols-2 lg:grid-cols-3"
       >
         {moreProjects.map((project, index) => {
-          const meta = [project.client, project.year].filter(Boolean).join(" / ");
+          const meta = project.client || "";
 
           return (
-            <a
+            <button
               key={project.slug}
-              href={getProjectPath(project)}
+              type="button"
               data-home-portfolio-card
               data-inview="false"
-              className="home-portfolio-card group grid place-items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+              className="home-portfolio-card group grid place-items-center text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
               style={
                 {
                   color: theme.ink,
@@ -1478,6 +1718,7 @@ function HomeMinimalGallery({
                 } as CSSProperties
               }
               aria-label={`${project.title} scenic design by Brandon PT Davis`}
+              onClick={() => setActivePortfolioProject(project)}
             >
               <article className="w-full">
                 <div
@@ -1530,7 +1771,7 @@ function HomeMinimalGallery({
                   ) : null}
                 </div>
               </article>
-            </a>
+            </button>
           );
         })}
       </div>
@@ -1550,6 +1791,51 @@ function HomeMinimalGallery({
           View full portfolio
         </a>
       </div>
+
+      {activePortfolioProject && typeof document !== "undefined" ? createPortal(
+        <div
+          className="fixed inset-0 z-[2147483646] overflow-hidden bg-black/42 p-[clamp(0.55rem,1.5vw,1.25rem)] backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={`home-portfolio-modal-${activePortfolioProject.slug}`}
+          onClick={() => setActivePortfolioProject(null)}
+        >
+          <div
+            className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-[clamp(1.5rem,3vw,2.8rem)] shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
+            style={{ backgroundColor: HOME_SCENIC_DESIGN_BLUE }}
+            onClick={event => event.stopPropagation()}
+          >
+            <h2
+              id={`home-portfolio-modal-${activePortfolioProject.slug}`}
+              className="sr-only"
+            >
+              {activePortfolioProject.title}
+            </h2>
+
+            <iframe
+              src={`${getProjectPath(activePortfolioProject)}?quickView=1`}
+              title={`${activePortfolioProject.title} portfolio project`}
+              className="absolute inset-0 h-full w-full border-0"
+            />
+
+            <button
+              type="button"
+              aria-label="Close portfolio project"
+              className={`absolute right-[clamp(0.75rem,1.6vw,1.15rem)] top-[clamp(0.75rem,1.6vw,1.15rem)] z-[5] grid h-12 w-12 place-items-center rounded-full shadow-[0_1rem_2.5rem_rgba(0,0,0,0.22)] transition-[opacity,transform] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 ${
+                isPortfolioLightboxOpen ? "pointer-events-none opacity-0" : "opacity-100"
+              }`}
+              style={{
+                backgroundColor: theme.controlBg,
+                color: theme.controlInk,
+              }}
+              onClick={() => setActivePortfolioProject(null)}
+            >
+              <X className="h-6 w-6" strokeWidth={2} />
+            </button>
+          </div>
+        </div>,
+        document.body
+      ) : null}
     </section>
   );
 }

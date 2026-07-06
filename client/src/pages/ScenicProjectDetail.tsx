@@ -15,7 +15,6 @@ import { copyTextToClipboard } from "@/lib/clipboard";
 import {
   HOME_BODY_FONT,
   HOME_DISPLAY_FONT,
-  HOME_REFERENCE_BLACK,
   useHomeTheme,
 } from "@/lib/homeTheme";
 import { Button } from "@/components/ui/button";
@@ -503,6 +502,27 @@ export default function ScenicProjectDetail({
   }, [selectedVisualImage]);
 
   useEffect(() => {
+    const isQuickView =
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("quickView") === "1" &&
+      window.parent !== window;
+
+    if (!isQuickView) return;
+
+    window.parent.postMessage(
+      { type: "portfolioQuickViewLightbox", open: Boolean(selectedVisualImage) },
+      window.location.origin
+    );
+
+    return () => {
+      window.parent.postMessage(
+        { type: "portfolioQuickViewLightbox", open: false },
+        window.location.origin
+      );
+    };
+  }, [selectedVisualImage]);
+
+  useEffect(() => {
     if (!selectedVisualImage || selectedVisualImageIndex < 0) return;
 
     window.requestAnimationFrame(() => {
@@ -512,6 +532,18 @@ export default function ScenicProjectDetail({
       selectedImage?.scrollIntoView({ block: "nearest", inline: "center" });
     });
   }, [selectedVisualImage, selectedVisualImageIndex]);
+
+  useEffect(() => {
+    const isQuickView =
+      new URLSearchParams(window.location.search).get("quickView") === "1";
+    if (!isQuickView) return;
+
+    document.documentElement.classList.add("project-quick-view");
+
+    return () => {
+      document.documentElement.classList.remove("project-quick-view");
+    };
+  }, []);
 
   return (
     <div
@@ -535,23 +567,40 @@ export default function ScenicProjectDetail({
         keywords={scenicSeoKeywords}
         url={projectUrl}
       />
+      <style>
+        {`
+          .project-quick-view,
+          .project-quick-view body {
+            scrollbar-width: none;
+          }
+
+          .project-quick-view::-webkit-scrollbar,
+          .project-quick-view body::-webkit-scrollbar {
+            display: none;
+            height: 0;
+            width: 0;
+          }
+        `}
+      </style>
       <Header />
 
-      <main className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
+      <main className="relative z-10 flex flex-col" style={{ backgroundColor: homeTheme.bg }}>
         <section
           className="flex min-h-[100svh] items-center justify-center"
           style={
             {
               "--project-hero-pad": "clamp(2rem, 5vw, 5rem)",
+              "--project-hero-bottom-pad": "clamp(0.75rem, 2vw, 1.5rem)",
               backgroundColor: homeTheme.bg,
-              padding: "var(--project-hero-pad)",
+              order: 1,
+              padding: "var(--project-hero-pad) var(--project-hero-pad) var(--project-hero-bottom-pad)",
             } as CSSProperties
           }
         >
           <div
-            className="relative mx-auto flex w-full max-w-[88rem] overflow-hidden rounded-[1.75rem] shadow-[0_1.6rem_5rem_rgba(0,0,0,0.2)]"
+            className="relative mx-auto flex w-full max-w-[86rem] overflow-hidden rounded-[1.75rem]"
             style={{
-              minHeight: "calc(100svh - var(--project-hero-pad) - var(--project-hero-pad))",
+              minHeight: "calc(100svh - var(--project-hero-pad) - var(--project-hero-bottom-pad))",
             }}
           >
             {project.coverImageUrl ? (
@@ -561,7 +610,7 @@ export default function ScenicProjectDetail({
                 fill
                 priority
                 quality={84}
-                sizes="(max-width: 900px) 100vw, 88rem"
+                sizes="(max-width: 900px) 100vw, 86rem"
                 className="object-cover"
                 style={{ objectPosition: project.coverImagePosition || "center" }}
                 fetchPriority="high"
@@ -635,6 +684,7 @@ export default function ScenicProjectDetail({
           style={{
             backgroundColor: homeTheme.bg,
             color: homeTheme.ink,
+            order: 3,
           }}
         >
           <MotionReveal>
@@ -806,9 +856,9 @@ export default function ScenicProjectDetail({
         <section
           id="project-process"
           className="scroll-mt-28 [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
-          style={{ backgroundColor: homeTheme.bg }}
+          style={{ backgroundColor: homeTheme.bg, order: 2 }}
         >
-          <div className="mx-auto w-full max-w-[86rem] px-[clamp(1.5rem,5vw,5.5rem)] py-[clamp(2rem,5vw,4rem)]">
+          <div className="mx-auto w-full max-w-[86rem] px-[clamp(1rem,3vw,1.5rem)] pb-[clamp(2rem,5vw,4rem)] pt-[clamp(0.75rem,2vw,1.25rem)] md:px-0">
             <div className="grid w-full grid-flow-dense grid-cols-1 gap-[clamp(1rem,2vw,1.6rem)] md:grid-cols-12">
               {visualMediaItems.map((item, index) => {
                 const isFullWidth =
@@ -826,7 +876,7 @@ export default function ScenicProjectDetail({
                         <button
                           type="button"
                           aria-label={`Open ${item.altText}`}
-                          className={`relative block w-full overflow-hidden rounded-[1.35rem] text-left shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/40 ${getScenicMediaAspectClass(
+                          className={`relative block w-full overflow-hidden rounded-[1.35rem] text-left focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/40 ${getScenicMediaAspectClass(
                             item.display,
                             index,
                             isFullWidth
@@ -843,11 +893,11 @@ export default function ScenicProjectDetail({
                           />
                         </button>
                       ) : item.mediaType === "video" ? (
-                        <div className="overflow-hidden rounded-[1.35rem] shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)]">
+                        <div className="overflow-hidden rounded-[1.35rem]">
                           <AutoPlayEmbed url={item.videoUrl} title={item.title} />
                         </div>
                       ) : (
-                        <div className="relative aspect-[3/2] overflow-hidden rounded-[1.35rem] bg-black shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)]">
+                        <div className="relative aspect-[3/2] overflow-hidden rounded-[1.35rem] bg-black">
                           {item.items.map((rendering, renderingIndex) => (
                             <img
                               key={rendering.key}
@@ -898,7 +948,7 @@ export default function ScenicProjectDetail({
         {moreScenicProjects.length > 0 ? (
           <section
             className="pt-16 [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24"
-            style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+            style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink, order: 4 }}
           >
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
@@ -984,14 +1034,19 @@ export default function ScenicProjectDetail({
         >
           <button
             type="button"
-            className="absolute right-[clamp(1rem,2.6vw,2rem)] top-[clamp(1rem,2.6vw,2rem)] z-[102] inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/10 text-[1.45rem] font-normal leading-none text-black transition hover:bg-black/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            className="absolute right-[clamp(1rem,2.6vw,2rem)] top-[clamp(1rem,2.6vw,2rem)] z-[102] inline-flex h-11 w-11 items-center justify-center rounded-full text-[1.45rem] font-normal leading-none shadow-[0_1rem_2.5rem_rgba(0,0,0,0.18)] transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            style={{
+              backgroundColor: homeTheme.controlBg,
+              color: homeTheme.controlInk,
+            }}
             onClick={() => setSelectedVisualImage(null)}
             aria-label="Close project image gallery"
           >
             ×
           </button>
           <div
-            className="relative h-full w-full overflow-hidden rounded-[1.65rem] bg-white shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
+            className="relative h-full w-full overflow-hidden rounded-[1.65rem] shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
+            style={{ backgroundColor: homeTheme.bg }}
             onClick={(event) => event.stopPropagation()}
           >
             <div
@@ -1015,7 +1070,7 @@ export default function ScenicProjectDetail({
                   {item.caption || item.altText ? (
                     <figcaption
                       className="mt-4 max-w-[38rem] text-center text-[0.82rem] font-medium leading-snug tracking-[-0.015em]"
-                      style={{ color: HOME_REFERENCE_BLACK, fontFamily: HOME_BODY_FONT }}
+                      style={{ color: homeTheme.ink, fontFamily: HOME_BODY_FONT }}
                     >
                       {item.caption || item.altText}
                     </figcaption>

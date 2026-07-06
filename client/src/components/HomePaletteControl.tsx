@@ -37,7 +37,7 @@ export default function HomePaletteControl({
           100% { transform: rotate(360deg) scale(1); }
         }
       `}</style>
-      <div className="pointer-events-none fixed bottom-[clamp(0.25rem,1.2vw,0.75rem)] right-[clamp(0.25rem,1.2vw,0.75rem)] z-[90] h-28 w-32">
+      <div className="pointer-events-none fixed bottom-[calc(0.75rem+env(safe-area-inset-bottom))] right-[calc(0.75rem+env(safe-area-inset-right))] z-[90] h-28 w-32 md:bottom-[clamp(0.25rem,1.2vw,0.75rem)] md:right-[clamp(0.25rem,1.2vw,0.75rem)]">
         <div className="absolute bottom-4 right-4 h-12 w-12">
           {HOME_COLOR_THEMES.map((theme, index) => {
             const angle = (arcAngles[index] * Math.PI) / 180;
