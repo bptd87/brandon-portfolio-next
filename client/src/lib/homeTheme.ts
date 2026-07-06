@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 export const HOME_SCENIC_DESIGN_BLUE = "#496784";
 export const HOME_REFERENCE_WHITE = "#ffffff";
@@ -161,32 +161,27 @@ export function useHomeTheme() {
 }
 
 export function useHomeDocumentTheme(homeTheme: HomeColorTheme) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const html = document.documentElement;
     const body = document.body;
-    const previousHtmlBackground = html.style.backgroundColor;
-    const previousBodyBackground = body.style.backgroundColor;
-    const previousColorScheme = html.style.colorScheme;
+    const setThemeVariable = (name: string, value: string) => {
+      if (value.trim().startsWith("var(")) return;
+      html.style.setProperty(name, value);
+    };
 
     html.style.backgroundColor = homeTheme.bg;
     body.style.backgroundColor = homeTheme.bg;
-    html.style.setProperty("--home-theme-bg", homeTheme.bg);
-    html.style.setProperty("--home-theme-ink", homeTheme.ink);
-    html.style.setProperty("--home-theme-muted", homeTheme.muted);
-    html.style.setProperty("--home-theme-ghost", homeTheme.ghost);
-    html.style.setProperty("--home-theme-accent", homeTheme.accent);
-    html.style.setProperty("--home-theme-accent-soft", homeTheme.accentSoft);
-    html.style.setProperty("--home-theme-control-bg", homeTheme.controlBg);
-    html.style.setProperty("--home-theme-control-ink", homeTheme.controlInk);
-    html.style.setProperty("--home-theme-footer-bg", homeTheme.footerBg);
-    html.style.setProperty("--home-theme-footer-display", homeTheme.footerDisplay);
-    html.style.setProperty("--home-theme-footer-ink", homeTheme.footerInk);
+    setThemeVariable("--home-theme-bg", homeTheme.bg);
+    setThemeVariable("--home-theme-ink", homeTheme.ink);
+    setThemeVariable("--home-theme-muted", homeTheme.muted);
+    setThemeVariable("--home-theme-ghost", homeTheme.ghost);
+    setThemeVariable("--home-theme-accent", homeTheme.accent);
+    setThemeVariable("--home-theme-accent-soft", homeTheme.accentSoft);
+    setThemeVariable("--home-theme-control-bg", homeTheme.controlBg);
+    setThemeVariable("--home-theme-control-ink", homeTheme.controlInk);
+    setThemeVariable("--home-theme-footer-bg", homeTheme.footerBg);
+    setThemeVariable("--home-theme-footer-display", homeTheme.footerDisplay);
+    setThemeVariable("--home-theme-footer-ink", homeTheme.footerInk);
     html.style.colorScheme = "light";
-
-    return () => {
-      html.style.backgroundColor = previousHtmlBackground;
-      body.style.backgroundColor = previousBodyBackground;
-      html.style.colorScheme = previousColorScheme;
-    };
   }, [homeTheme]);
 }

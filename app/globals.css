@@ -1,5 +1,11 @@
 @import "../client/src/index.css";
 
+html,
+body {
+  background: var(--home-theme-bg, #ffffff);
+  background-color: var(--home-theme-bg, #ffffff);
+}
+
 html:has([data-page-shell="home"]),
 body:has([data-page-shell="home"]) {
   background: var(--home-theme-bg, #ffffff);
