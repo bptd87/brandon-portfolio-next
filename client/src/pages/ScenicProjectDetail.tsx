@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -11,6 +12,12 @@ import { SEO } from "@/components/SEO";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
 import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import { copyTextToClipboard } from "@/lib/clipboard";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  HOME_REFERENCE_BLACK,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 import { Button } from "@/components/ui/button";
 import {
   getLocalScenicProjectBySlug,
@@ -237,6 +244,7 @@ export default function ScenicProjectDetail({
   currentPath,
   params,
 }: ScenicProjectDetailProps = {}) {
+  const { homeTheme } = useHomeTheme();
   const getDisplayHeading = (heading?: string | null) => {
     return String(heading || "").trim();
   };
@@ -256,10 +264,10 @@ export default function ScenicProjectDetail({
   const [linkCopied, setLinkCopied] = useState(false);
   const [activeRenderingIndex, setActiveRenderingIndex] = useState(0);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-  const [isProjectDetailsOpen, setIsProjectDetailsOpen] = useState(false);
   const [selectedVisualImage, setSelectedVisualImage] = useState<VisualImageMediaItem | null>(
     null
   );
+  const lightboxScrollRef = useRef<HTMLDivElement | null>(null);
   const allScenicProjects = getLocalScenicProjects();
 
   if (!project) {
@@ -456,6 +464,16 @@ export default function ScenicProjectDetail({
   const renderingGalleryItems = renderingGalleryItem?.items || [];
   const safeRenderingIndex =
     renderingGalleryItems.length > 0 ? activeRenderingIndex % renderingGalleryItems.length : 0;
+  const lightboxImageItems = useMemo(
+    () =>
+      visualMediaItems.filter(
+        (item): item is VisualImageMediaItem => item.mediaType === "image"
+      ),
+    [visualMediaItems]
+  );
+  const selectedVisualImageIndex = selectedVisualImage
+    ? lightboxImageItems.findIndex((item) => item.key === selectedVisualImage.key)
+    : -1;
 
   useEffect(() => {
     setActiveRenderingIndex(0);
@@ -484,8 +502,30 @@ export default function ScenicProjectDetail({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedVisualImage]);
 
+  useEffect(() => {
+    if (!selectedVisualImage || selectedVisualImageIndex < 0) return;
+
+    window.requestAnimationFrame(() => {
+      const selectedImage = lightboxScrollRef.current?.querySelector<HTMLElement>(
+        `[data-lightbox-index="${selectedVisualImageIndex}"]`
+      );
+      selectedImage?.scrollIntoView({ block: "nearest", inline: "center" });
+    });
+  }, [selectedVisualImage, selectedVisualImageIndex]);
+
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div
+      className="min-h-screen transition-colors duration-500"
+      style={
+        {
+          "--background": homeTheme.bg,
+          "--foreground": homeTheme.ink,
+          backgroundColor: homeTheme.bg,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+        } as CSSProperties
+      }
+    >
       <SEO
         title={scenicSeoTitle}
         description={scenicSeoDescription}
@@ -497,124 +537,143 @@ export default function ScenicProjectDetail({
       />
       <Header />
 
-      <main className="bg-[#111111]">
-        <section className="relative flex min-h-[100svh] overflow-hidden border-b border-white/10 bg-black px-[clamp(1.5rem,5vw,5.5rem)] pb-12 pt-28 md:pb-16 md:pt-34">
-          {project.coverImageUrl ? (
-            <Image
-              src={project.coverImageUrl}
-              alt={`${project.title} scenic design cover image`}
-              fill
-              priority
-              quality={84}
-              sizes="100vw"
-              className="object-cover"
-              style={{ objectPosition: project.coverImagePosition || "center", borderRadius: 0 }}
-              fetchPriority="high"
-            />
-          ) : null}
-          <div className="absolute inset-0 bg-black/50" />
-          <header
-            className="relative z-10 mt-auto grid w-full gap-8 lg:grid-cols-[minmax(0,0.84fr)_minmax(21rem,0.48fr)] lg:items-end"
-            style={{ transform: "translateY(calc(-1 * clamp(6rem, 16vh, 12rem)))" }}
+      <main className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
+        <section
+          className="flex min-h-[100svh] items-center justify-center"
+          style={
+            {
+              "--project-hero-pad": "clamp(2rem, 5vw, 5rem)",
+              backgroundColor: homeTheme.bg,
+              padding: "var(--project-hero-pad)",
+            } as CSSProperties
+          }
+        >
+          <div
+            className="relative mx-auto flex w-full max-w-[88rem] overflow-hidden rounded-[1.75rem] shadow-[0_1.6rem_5rem_rgba(0,0,0,0.2)]"
+            style={{
+              minHeight: "calc(100svh - var(--project-hero-pad) - var(--project-hero-pad))",
+            }}
           >
-            <MotionReveal eager>
-            <div>
-              <div className="mb-4 text-[clamp(1rem,1.15vw,1.24rem)] font-medium tracking-[0.02em] text-white/74">
-                Scenic Design
+            {project.coverImageUrl ? (
+              <Image
+                src={project.coverImageUrl}
+                alt={`${project.title} scenic design cover image`}
+                fill
+                priority
+                quality={84}
+                sizes="(max-width: 900px) 100vw, 88rem"
+                className="object-cover"
+                style={{ objectPosition: project.coverImagePosition || "center" }}
+                fetchPriority="high"
+              />
+            ) : null}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/74 via-black/34 to-black/10" />
+            <header
+              className="relative z-10 mt-auto grid w-full gap-[clamp(2rem,5vw,5rem)] px-[clamp(1.35rem,4vw,4rem)] pb-[clamp(2.5rem,7vh,5rem)] pt-[clamp(9rem,24vh,16rem)] lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-center"
+            >
+              <MotionReveal eager>
+              <div>
+                <h1
+                  className="max-w-[11ch] text-[clamp(3rem,6.4vw,7rem)] font-black uppercase leading-[0.86] tracking-[0] text-white"
+                  style={{ fontFamily: HOME_DISPLAY_FONT }}
+                >
+                  {project.title}
+                </h1>
               </div>
-              <h1
-                className="max-w-[12ch] font-sans text-[clamp(4rem,10.2vw,11.25rem)] font-medium leading-[0.84] tracking-[-0.065em] text-white"
-              >
-                {project.title}
-              </h1>
-            </div>
-            </MotionReveal>
+              </MotionReveal>
 
-            <MotionReveal eager delay={140}>
-            <div className="border-t border-white/22 pt-5">
-              <p
-                className="max-w-[31rem] text-[clamp(1rem,1.25vw,1.24rem)] font-normal leading-[1.52] tracking-[-0.025em] text-white/70"
-              >
-                {project.excerpt}
-              </p>
-              <div className="mt-6 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleCopyLink}
-                  aria-label={linkCopied ? "Project link copied" : "Copy project link"}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 transition-colors hover:bg-white/[0.08] hover:text-white"
+              <MotionReveal eager delay={140}>
+              <div className="max-w-[30rem] pt-5 lg:justify-self-end">
+                <p
+                  className="max-w-[31rem] text-[clamp(1rem,1.25vw,1.24rem)] font-normal leading-[1.52] tracking-[-0.025em] text-white/70"
                 >
-                  {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                </button>
-                <a
-                  href={emailShareUrl}
-                  aria-label="Share project by email"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
-                >
-                  <Mail className="h-4 w-4" />
-                </a>
-                <a
-                  href={linkedInShareUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Share project on LinkedIn"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
-                >
-                  <Linkedin className="h-4 w-4" />
-                </a>
-                <a
-                  href={facebookShareUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Share project on Facebook"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
-                >
-                  f
-                </a>
+                  {project.excerpt}
+                </p>
+                <div className="mt-6 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCopyLink}
+                    aria-label={linkCopied ? "Project link copied" : "Copy project link"}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 transition-colors hover:bg-white/[0.08] hover:text-white"
+                  >
+                    {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                  </button>
+                  <a
+                    href={emailShareUrl}
+                    aria-label="Share project by email"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={linkedInShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share project on LinkedIn"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={facebookShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share project on Facebook"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                  >
+                    f
+                  </a>
+                </div>
               </div>
-            </div>
-            </MotionReveal>
-          </header>
+              </MotionReveal>
+            </header>
+          </div>
         </section>
 
-        <section className="border-y border-white/12 bg-black px-[clamp(1.5rem,5vw,5.5rem)] text-white">
+        <section
+          className="px-[clamp(1.5rem,7vw,8rem)]"
+          style={{
+            backgroundColor: homeTheme.bg,
+            color: homeTheme.ink,
+          }}
+        >
           <MotionReveal>
-          <button
-            type="button"
-            onClick={() => setIsProjectDetailsOpen((open) => !open)}
-            className="flex w-full items-center justify-between gap-5 py-4 text-left text-[0.92rem] tracking-[-0.015em] text-white/72 transition-colors hover:text-white"
-            aria-expanded={isProjectDetailsOpen}
-            aria-controls="scenic-project-details"
+          <div
+            className="mx-auto flex w-full max-w-[86rem] items-center justify-between gap-5 py-4 text-[0.92rem] font-black uppercase tracking-[0.04em]"
+            style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}
           >
-            <span>Details</span>
-            <span className="flex flex-wrap justify-end gap-x-4 gap-y-1 text-right">
-              {project.client ? (
-                <span className="text-white/62">{project.client}</span>
-              ) : null}
-              {project.year ? (
-                <span className="text-white/38">{project.year}</span>
-              ) : null}
-              {!project.client && !project.year ? (
-                <span className="text-white/48">Scenic Design</span>
-              ) : null}
+            <span className="min-w-0 truncate text-left">
+              {project.client || "Scenic Design"}
             </span>
-          </button>
+            {project.year ? (
+              <span className="shrink-0 text-right">{project.year}</span>
+            ) : null}
+          </div>
           </MotionReveal>
 
-          {isProjectDetailsOpen ? (
-            <MotionReveal delay={80}>
+          <MotionReveal delay={80}>
             <div
               id="scenic-project-details"
-              className="mx-auto grid w-full max-w-[88rem] gap-x-10 gap-y-10 border-t border-white/10 py-8 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(24rem,1fr)_minmax(17rem,0.58fr)_minmax(14rem,0.46fr)] md:py-10"
+              className="mx-auto grid w-full max-w-[86rem] gap-x-[clamp(2.5rem,5vw,5rem)] gap-y-10 py-8 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(20rem,0.92fr)_minmax(15rem,0.5fr)_minmax(12rem,0.36fr)] md:py-10"
+              style={{
+                color: homeTheme.ink,
+              }}
             >
               <div>
-                <div className="text-[0.98rem] leading-[1.66] text-white md:text-[0.9rem] md:leading-[1.48]">
+                <div
+                  className="text-[0.98rem] leading-[1.66] md:text-[0.9rem] md:leading-[1.48]"
+                  style={{ color: homeTheme.ink }}
+                >
                   {projectNarrativeSections.length ? (
                     hasNarrativeHeadings ? (
                       <div className="space-y-6 md:space-y-5">
                         {projectNarrativeSections.map((section, sectionIndex) => (
                           <div key={`${section.heading || "description"}-${sectionIndex}`} className="space-y-3.5 md:space-y-2.5">
-                            {section.heading ? <p className="font-medium text-white">{section.heading}</p> : null}
+                            {section.heading ? (
+                              <p className="font-black uppercase tracking-[0.04em]" style={{ fontFamily: HOME_DISPLAY_FONT }}>
+                                {section.heading}
+                              </p>
+                            ) : null}
                             {section.content.map((paragraph, paragraphIndex) => (
                               <p key={paragraphIndex}>{paragraph}</p>
                             ))}
@@ -624,7 +683,10 @@ export default function ScenicProjectDetail({
                     ) : (
                       <div className="max-w-[38rem] space-y-5 text-left hyphens-auto [text-wrap:pretty] md:max-w-none md:space-y-4 md:text-justify">
                         <p className="text-left">
-                          <span className="text-[0.96rem] font-medium tracking-[-0.02em] text-white">
+                          <span
+                            className="text-[0.96rem] font-black uppercase tracking-[0.04em]"
+                            style={{ fontFamily: HOME_DISPLAY_FONT }}
+                          >
                             Description
                           </span>
                         </p>
@@ -635,7 +697,8 @@ export default function ScenicProjectDetail({
                           <button
                             type="button"
                             onClick={() => setIsDescriptionExpanded((expanded) => !expanded)}
-                            className="inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 pt-1 text-left text-[0.72rem] font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white md:pt-1"
+                            className="inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 pt-1 text-left text-[0.72rem] font-black uppercase tracking-[0.12em] transition-opacity hover:opacity-70 md:pt-1"
+                            style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT }}
                             aria-expanded={isDescriptionExpanded}
                           >
                             {isDescriptionExpanded ? "Show less" : "Show more"}
@@ -651,9 +714,12 @@ export default function ScenicProjectDetail({
                   ) : (
                     <div className="max-w-[38rem] space-y-5 text-left hyphens-auto [text-wrap:pretty] md:max-w-none md:space-y-4 md:text-justify">
                       <p className="text-left">
-                        <span className="text-[0.96rem] font-medium tracking-[-0.02em] text-white">
-                          Description
-                        </span>
+                          <span
+                            className="text-[0.96rem] font-black uppercase tracking-[0.04em]"
+                            style={{ fontFamily: HOME_DISPLAY_FONT }}
+                          >
+                            Description
+                          </span>
                       </p>
                       <p>{project.excerpt}</p>
                     </div>
@@ -662,7 +728,10 @@ export default function ScenicProjectDetail({
               </div>
 
               <div id="project-credits" className="scroll-mt-28">
-                <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
+                <p
+                  className="mb-5 text-[0.96rem] font-black uppercase tracking-[0.04em]"
+                  style={{ fontFamily: HOME_DISPLAY_FONT }}
+                >
                   Credits
                 </p>
                 <div className="space-y-2.5">
@@ -671,12 +740,12 @@ export default function ScenicProjectDetail({
                       key={`${member.role}-${member.name}`}
                       className="grid min-w-0 grid-cols-[8.5rem_minmax(0,1fr)] gap-4"
                     >
-                      <span className="text-white/48">{getCreditRoleLabel(member.role)}</span>
-                      <span className="text-white/76">
+                      <span style={{ color: homeTheme.muted }}>{getCreditRoleLabel(member.role)}</span>
+                      <span style={{ color: homeTheme.ink }}>
                         {member.url ? (
                           <ExternalLinkPreview
                             href={member.url}
-                            className="text-white/76 no-underline transition-colors hover:text-white"
+                            className="no-underline transition-opacity hover:opacity-70"
                             previewLabel={member.name}
                           >
                             {member.name}
@@ -684,7 +753,7 @@ export default function ScenicProjectDetail({
                         ) : (
                           <CreditNameLinks
                             name={member.name}
-                            className="text-white/76 no-underline transition-colors hover:text-white"
+                            className="no-underline transition-opacity hover:opacity-70"
                           />
                         )}
                       </span>
@@ -696,7 +765,10 @@ export default function ScenicProjectDetail({
 
               {projectInfoLinks.length ? (
                 <div>
-                  <p className="mb-5 text-[0.96rem] font-medium tracking-[-0.02em] text-white">
+                  <p
+                    className="mb-5 text-[0.96rem] font-black uppercase tracking-[0.04em]"
+                    style={{ fontFamily: HOME_DISPLAY_FONT }}
+                  >
                     Links
                   </p>
                   <div className="space-y-2.5">
@@ -705,7 +777,8 @@ export default function ScenicProjectDetail({
                         <ExternalLinkPreview
                           key={`${link.kind}-${link.href}`}
                           href={link.href}
-                          className="block text-white/60 no-underline transition-colors hover:text-white"
+                          className="block no-underline transition-opacity hover:opacity-70"
+                          style={{ color: homeTheme.ink }}
                           previewLabel={link.label}
                         >
                           {link.label}
@@ -714,7 +787,8 @@ export default function ScenicProjectDetail({
                         <Link
                           key={`${link.kind}-${link.href}`}
                           href={link.href}
-                          className="block text-white/60 no-underline transition-colors hover:text-white"
+                          className="block no-underline transition-opacity hover:opacity-70"
+                          style={{ color: homeTheme.ink }}
                         >
                           {link.label}
                         </Link>
@@ -726,16 +800,16 @@ export default function ScenicProjectDetail({
                 <div aria-hidden="true" />
               )}
             </div>
-            </MotionReveal>
-          ) : null}
+          </MotionReveal>
         </section>
 
         <section
           id="project-process"
-          className="scroll-mt-28 bg-[#111111] [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
+          className="scroll-mt-28 [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
+          style={{ backgroundColor: homeTheme.bg }}
         >
-          <div className="relative left-1/2 w-screen -translate-x-1/2">
-            <div className="grid w-full grid-flow-dense grid-cols-1 bg-black md:grid-cols-12">
+          <div className="mx-auto w-full max-w-[86rem] px-[clamp(1.5rem,5vw,5.5rem)] py-[clamp(2rem,5vw,4rem)]">
+            <div className="grid w-full grid-flow-dense grid-cols-1 gap-[clamp(1rem,2vw,1.6rem)] md:grid-cols-12">
               {visualMediaItems.map((item, index) => {
                 const isFullWidth =
                   item.mediaType === "image" && (index === 0 || item.display === "full" || item.display === "wide");
@@ -744,15 +818,15 @@ export default function ScenicProjectDetail({
                 return (
                   <MotionReveal
                     key={item.key}
-                    className={`site-media-square ${blockClass}`}
+                    className={blockClass}
                     delay={(index % 4) * 60}
                   >
-                    <figure className="site-media-square">
+                    <figure>
                       {item.mediaType === "image" ? (
                         <button
                           type="button"
                           aria-label={`Open ${item.altText}`}
-                          className={`site-media-square relative block w-full overflow-hidden border border-black bg-black text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-white/70 ${getScenicMediaAspectClass(
+                          className={`relative block w-full overflow-hidden rounded-[1.35rem] text-left shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/40 ${getScenicMediaAspectClass(
                             item.display,
                             index,
                             isFullWidth
@@ -762,24 +836,24 @@ export default function ScenicProjectDetail({
                           <img
                             src={item.imageUrl}
                             alt={item.altText}
-                            className="site-media-square absolute inset-0 h-full w-full object-cover"
+                            className="absolute inset-0 h-full w-full object-cover"
                             style={{ objectPosition: getScenicMediaObjectPosition(item.id) }}
                             loading="lazy"
                             decoding="async"
                           />
                         </button>
                       ) : item.mediaType === "video" ? (
-                        <div className="border border-black">
+                        <div className="overflow-hidden rounded-[1.35rem] shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)]">
                           <AutoPlayEmbed url={item.videoUrl} title={item.title} />
                         </div>
                       ) : (
-                        <div className="site-media-square relative aspect-[3/2] overflow-hidden border border-black bg-black">
+                        <div className="relative aspect-[3/2] overflow-hidden rounded-[1.35rem] bg-black shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)]">
                           {item.items.map((rendering, renderingIndex) => (
                             <img
                               key={rendering.key}
                               src={rendering.imageUrl}
                               alt={rendering.altText}
-                              className={`site-media-square absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-700 ${
+                              className={`absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-700 ${
                                 renderingIndex === safeRenderingIndex ? "opacity-100" : "opacity-0"
                               }`}
                               loading="lazy"
@@ -807,7 +881,8 @@ export default function ScenicProjectDetail({
 
                       {item.caption ? (
                         <figcaption
-                          className="border-x border-b border-black bg-[#111111] px-4 py-3 text-[0.82rem] leading-5 tracking-[-0.01em] text-white/48"
+                          className="px-2 py-3 text-[0.82rem] leading-5 tracking-[-0.01em]"
+                          style={{ color: homeTheme.muted }}
                         >
                           {item.caption}
                         </figcaption>
@@ -821,23 +896,34 @@ export default function ScenicProjectDetail({
         </section>
 
         {moreScenicProjects.length > 0 ? (
-          <section className="bg-[#111111] border-t border-white/12 pt-16 text-white [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24">
+          <section
+            className="pt-16 [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24"
+            style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+          >
             <AnimatedSection>
               <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                  <h2 className="max-w-[12ch] font-sans text-[clamp(2.6rem,5.6vw,6rem)] font-medium leading-[0.88] tracking-[-0.07em] text-white">
+                  <h2
+                    className="max-w-[14ch] text-[clamp(2.6rem,5.2vw,5.4rem)] font-black uppercase leading-[0.86] tracking-[0]"
+                    style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT }}
+                  >
                     More scenic design.
                   </h2>
                   <Link
                     href="/projects"
-                    className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-white/18 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white/38 hover:text-white"
+                    className="inline-flex h-11 w-fit items-center justify-center rounded-full px-5 text-[0.82rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: homeTheme.controlBg,
+                      color: homeTheme.controlInk,
+                      fontFamily: HOME_DISPLAY_FONT,
+                    }}
                   >
                     Portfolio index
                   </Link>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+              <div className="mx-auto grid w-full max-w-[86rem] grid-cols-1 gap-[clamp(1rem,2vw,1.5rem)] px-[clamp(1.5rem,5vw,6rem)] pb-[clamp(4rem,7vw,7rem)] md:grid-cols-4">
                   {moreScenicProjects.map((item, index) => (
                     <MotionReveal
                       key={item.slug}
@@ -846,29 +932,34 @@ export default function ScenicProjectDetail({
                     >
                     <Link
                       href={`/project/${item.slug}`}
-                      className="group block h-full border-b border-r border-white/12 text-white"
+                      className="group block h-full text-current no-underline"
                     >
-                      <article className="bg-[#111111]">
-                        <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
+                      <article className="h-full">
+                        <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] shadow-[0_1.2rem_3.6rem_rgba(0,0,0,0.14)]">
                           {item.coverImageUrl ? (
                             <img
                               src={item.coverImageUrl}
                               alt={`${item.title} scenic design cover image`}
-                              className="site-media-square h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-[0.88]"
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
                               loading="lazy"
                               decoding="async"
                             />
                           ) : null}
-                        </div>
-                        <div className="min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
-                          <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
+                          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/64 via-black/24 to-transparent px-5 pb-5 pt-16 text-white">
+                          <h3
+                            className="max-w-[18ch] text-[clamp(1.25rem,2vw,2.1rem)] font-black uppercase leading-[0.9] tracking-[0]"
+                            style={{ fontFamily: HOME_DISPLAY_FONT }}
+                          >
                             {item.title}
                           </h3>
                           {item.client ? (
-                            <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
+                            <p
+                              className="mt-2 max-w-[20ch] text-[0.94rem] font-medium leading-tight tracking-[-0.025em] text-white/72"
+                            >
                               {item.client}
                             </p>
                           ) : null}
+                          </div>
                         </div>
                       </article>
                     </Link>
@@ -885,7 +976,7 @@ export default function ScenicProjectDetail({
 
       {selectedVisualImage ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/82 px-4 py-16 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/58 p-[clamp(0.75rem,2vw,1.5rem)] backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label="Project image"
@@ -893,20 +984,45 @@ export default function ScenicProjectDetail({
         >
           <button
             type="button"
-            className="absolute right-4 top-4 px-2 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/70 transition hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-white/70 md:right-8 md:top-8"
+            className="absolute right-[clamp(1rem,2.6vw,2rem)] top-[clamp(1rem,2.6vw,2rem)] z-[102] inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/10 text-[1.45rem] font-normal leading-none text-black transition hover:bg-black/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
             onClick={() => setSelectedVisualImage(null)}
+            aria-label="Close project image gallery"
           >
-            Close
+            ×
           </button>
           <div
-            className="relative max-h-full max-w-full"
+            className="relative h-full w-full overflow-hidden rounded-[1.65rem] bg-white shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <img
-              src={selectedVisualImage.imageUrl}
-              alt={selectedVisualImage.altText}
-              className="max-h-[82vh] w-auto max-w-[92vw] object-contain"
-            />
+            <div
+              ref={lightboxScrollRef}
+              className="flex h-full snap-x snap-mandatory items-center gap-[clamp(1.25rem,4vw,4rem)] overflow-x-auto overflow-y-hidden px-[clamp(1.5rem,7vw,8rem)] py-[clamp(3.5rem,7vh,6rem)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {lightboxImageItems.map((item, index) => (
+                <figure
+                  key={item.key}
+                  data-lightbox-index={index}
+                  className="flex h-full min-w-[min(82vw,46rem)] snap-center flex-col items-center justify-center"
+                >
+                  <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.altText}
+                      className="max-h-full w-auto max-w-full rounded-[1.1rem] object-contain"
+                      draggable={false}
+                    />
+                  </div>
+                  {item.caption || item.altText ? (
+                    <figcaption
+                      className="mt-4 max-w-[38rem] text-center text-[0.82rem] font-medium leading-snug tracking-[-0.015em]"
+                      style={{ color: HOME_REFERENCE_BLACK, fontFamily: HOME_BODY_FONT }}
+                    >
+                      {item.caption || item.altText}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}

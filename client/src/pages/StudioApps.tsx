@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 
 type StudioApp = {
   title: string;
@@ -135,6 +136,22 @@ export default function StudioApps() {
   const [isAppClosing, setIsAppClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
   const featuredApp = useMemo(() => apps[0], [apps]);
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+  const pageStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+  } as CSSProperties;
+  const mutedStyle = { color: homeTheme.muted } as CSSProperties;
+  const softPanelStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.ink,
+  } as CSSProperties;
 
   function openStudioApp(app: StudioApp) {
     if (
@@ -231,7 +248,7 @@ export default function StudioApps() {
   }, [activeApp]);
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white">
+    <div className="min-h-screen transition-colors duration-500" style={pageStyle}>
       <SEO
         title="Studio Apps for Scenic Design"
         description="Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research."
@@ -243,19 +260,19 @@ export default function StudioApps() {
       <Header />
       <PublishingTopBar active="apps" tone="dark" />
 
-      <main className="pb-0">
-        <section className="bg-[#080808] px-5 pb-14 pt-10 text-white md:px-8 md:pb-20 md:pt-14">
+      <main className="pb-0" style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}>
+        <section className="px-[clamp(1.5rem,5vw,6rem)] pb-14 pt-28 md:pb-20 md:pt-32">
           <AnimatedSection>
-            <div className="mx-auto max-w-[88rem]">
+            <div className="mx-auto max-w-[76rem]">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(22rem,0.58fr)] lg:items-end">
                 <div>
-                  <p className="section-kicker text-white/38">Studio Apps</p>
-                  <h1 className="mt-5 max-w-[11ch] font-sans text-[clamp(4rem,11vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.085em] text-white">
+                  <p className="text-[0.8rem] font-black uppercase tracking-[0.16em]" style={mutedStyle}>Studio Apps</p>
+                  <h1 className="mt-5 max-w-[12ch] text-[clamp(3.2rem,7.2vw,7rem)] font-black uppercase leading-[0.86] tracking-[0]" style={displayStyle}>
                     Scenic tools for fast studio work.
                   </h1>
                 </div>
                 <div className="max-w-[34rem] lg:justify-self-end">
-                  <p className="text-[clamp(1.08rem,1.55vw,1.4rem)] font-medium leading-[1.35] tracking-[-0.04em] text-white/66">
+                  <p className="text-[clamp(1.05rem,1.55vw,1.35rem)] font-medium leading-[1.35] tracking-[0]" style={mutedStyle}>
                     Five mobile studio tools for scale conversion, 3D printing,
                     paint, reference, and research, plus a Mac converter for 3D
                     handoffs when the workflow needs to leave the browser.
@@ -265,9 +282,10 @@ export default function StudioApps() {
                       (item) => (
                         <div
                           key={item}
-                          className="rounded-[1.25rem] border border-white/10 bg-white/[0.055] px-3 py-4 shadow-[0_18px_48px_rgba(0,0,0,0.24)]"
+                          className="rounded-[1.25rem] px-3 py-4 shadow-[0_18px_48px_rgba(17,17,17,0.08)]"
+                          style={softPanelStyle}
                         >
-                          <p className="text-[0.72rem] font-medium uppercase tracking-[0.14em] text-white/44">
+                          <p className="text-[0.72rem] font-black uppercase tracking-[0.14em]" style={mutedStyle}>
                             {item}
                           </p>
                         </div>
@@ -280,18 +298,18 @@ export default function StudioApps() {
           </AnimatedSection>
         </section>
 
-        <section className="border-y border-white/10 bg-[#111111] px-5 py-12 text-white md:px-8 md:py-16">
-          <div className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
+          <div className="mx-auto grid max-w-[76rem] gap-10 rounded-[2rem] p-6 shadow-[0_18px_54px_rgba(17,17,17,0.08)] md:p-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center" style={softPanelStyle}>
             <AnimatedSection>
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-white/52">
+                <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.78rem] font-black uppercase tracking-[0.16em]" style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}>
                   <Smartphone className="h-4 w-4" />
                   Mobile Studio Tool
                 </div>
-                <h2 className="mt-7 max-w-[9ch] font-sans text-[clamp(2.8rem,7vw,7.4rem)] font-medium leading-[0.84] tracking-[-0.085em] text-white">
+                <h2 className="mt-7 max-w-[10ch] text-[clamp(2.6rem,5.6vw,5.6rem)] font-black uppercase leading-[0.88] tracking-[0]" style={displayStyle}>
                   Scale checks for the printer bed.
                 </h2>
-                <p className="mt-7 max-w-xl text-[1rem] leading-7 tracking-[-0.015em] text-white/58">
+                <p className="mt-7 max-w-xl text-[1rem] font-medium leading-7 tracking-[0]" style={mutedStyle}>
                   The scale calculator is built for architectural and scenic
                   model making: turn full-size feet and inches into millimeters,
                   then check whether the part fits a common 3D printer bed.
@@ -317,7 +335,7 @@ export default function StudioApps() {
                 onClick={(event) => handleStudioAppLink(event, featuredApp)}
                 className="group mx-auto block w-full max-w-[28rem] text-left"
               >
-                <div className="relative mx-auto aspect-[768/1572] max-w-[24rem] overflow-hidden shadow-[0_34px_120px_rgba(0,0,0,0.68)]">
+                <div className="relative mx-auto aspect-[763/1574] max-w-[25rem] drop-shadow-[0_34px_80px_rgba(17,17,17,0.24)]">
                   <Image
                     src={featuredApp.screenImage ?? featuredApp.image}
                     alt={`${featuredApp.title} screen`}
@@ -332,8 +350,8 @@ export default function StudioApps() {
           </div>
         </section>
 
-        <section className="bg-[#f4f5f7] px-0 text-[#111111]">
-          <div className="grid grid-cols-2 border-b border-black/8 [grid-auto-rows:1fr] md:grid-cols-2 lg:grid-cols-3">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-12">
+          <div className="mx-auto grid max-w-[76rem] grid-cols-2 gap-5 [grid-auto-rows:1fr] md:grid-cols-2 lg:grid-cols-3">
             {appTiles.map((app, index) => (
               <AnimatedSection
                 key={app.title}
@@ -343,7 +361,7 @@ export default function StudioApps() {
                 <Link
                   href={app.href}
                   onClick={(event) => handleStudioAppLink(event, app)}
-                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-none border-b border-r border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors md:min-h-[27rem] md:border-t"
+                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[1.5rem] p-0 text-left shadow-[0_18px_54px_rgba(17,17,17,0.08)] transition-transform hover:-translate-y-1 md:min-h-[27rem]"
                   style={
                     {
                       "--studio-app-card": app.cardColor,
@@ -352,7 +370,7 @@ export default function StudioApps() {
                     } as CSSProperties
                   }
                 >
-                  <div className="site-media-square relative aspect-square w-full overflow-hidden rounded-none bg-black [border-radius:0]">
+                  <div className="site-media-square relative aspect-square w-full overflow-hidden bg-black">
                     <Image
                       src={app.image}
                       alt=""
@@ -367,7 +385,10 @@ export default function StudioApps() {
                     <p className="text-[0.58rem] font-medium uppercase leading-4 tracking-[0.16em] text-[var(--studio-app-card-muted)] md:text-[0.72rem] md:tracking-[0.18em]">
                       {app.category} / {app.tone}
                     </p>
-                    <h3 className="mt-2 font-sans text-[clamp(1.38rem,6vw,1.85rem)] font-medium leading-[0.9] tracking-[-0.07em] md:mt-3 md:max-w-[10ch] md:text-[clamp(2rem,4vw,3.5rem)] md:tracking-[-0.075em]">
+                    <h3
+                      className="mt-2 text-[clamp(1.25rem,5vw,1.72rem)] font-black uppercase leading-[0.95] tracking-[0] md:mt-3 md:max-w-[10ch] md:text-[clamp(1.9rem,3.4vw,3rem)]"
+                      style={{ fontFamily: HOME_DISPLAY_FONT }}
+                    >
                       <span className="md:hidden">{app.shortTitle}</span>
                       <span className="hidden md:inline">{app.title}</span>
                     </h3>
@@ -386,36 +407,37 @@ export default function StudioApps() {
         </section>
 
         {isDesktopViewport ? (
-          <section className="border-t border-white/10 bg-[#080808] px-5 py-14 text-white md:px-8 md:py-18">
+          <section className="px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-18">
             <AnimatedSection>
-              <div className="mx-auto grid max-w-[88rem] overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-0 shadow-[0_34px_120px_rgba(0,0,0,0.38)] md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-stretch">
-                <div className="site-media-square relative min-h-[18rem] overflow-hidden rounded-none bg-black [border-radius:0] md:min-h-[24rem]">
+              <div className="mx-auto grid max-w-[76rem] overflow-hidden rounded-[2rem] p-0 shadow-[0_34px_120px_rgba(17,17,17,0.16)] md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-stretch" style={softPanelStyle}>
+                <div className="site-media-square relative min-h-[18rem] overflow-hidden bg-black md:min-h-[24rem]">
                   <Image
                     src={converterTool.image}
                     alt={converterTool.title}
                     fill
                     quality={84}
                     sizes="(max-width: 768px) 86vw, 42rem"
-                    className="site-media-square object-cover opacity-80"
+                    className="site-media-square object-cover"
                   />
                 </div>
 
                 <div className="flex flex-col justify-between px-5 py-8 md:px-8 md:py-10">
                   <div>
-                    <p className="section-kicker text-white/38">
+                    <p className="text-[0.8rem] font-black uppercase tracking-[0.16em]" style={mutedStyle}>
                       {converterTool.category}
                     </p>
-                    <h2 className="mt-5 max-w-[9ch] font-sans text-[clamp(2.9rem,7vw,6.8rem)] font-medium leading-[0.84] tracking-[-0.08em] text-white">
+                    <h2 className="mt-5 max-w-[10ch] text-[clamp(2.6rem,5.8vw,5.7rem)] font-black uppercase leading-[0.88] tracking-[0]" style={displayStyle}>
                       {converterTool.title}
                     </h2>
-                    <p className="mt-7 max-w-2xl text-[1rem] leading-7 tracking-[-0.015em] text-white/58">
+                    <p className="mt-7 max-w-2xl text-[1rem] font-medium leading-7 tracking-[0]" style={mutedStyle}>
                       {converterTool.description}
                     </p>
                   </div>
 
                   <Link
                     href={converterTool.href}
-                    className="mt-8 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
+                    className="mt-8 inline-flex h-12 w-fit items-center justify-center rounded-full px-6 text-[0.95rem] font-black tracking-[0] transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
                   >
                     View Mac download
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -426,18 +448,18 @@ export default function StudioApps() {
           </section>
         ) : null}
 
-        <section className="bg-[#111111] px-5 py-16 text-white md:px-8 md:py-20">
-          <div className="mx-auto grid max-w-[88rem] gap-10 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-end">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
+          <div className="mx-auto grid max-w-[76rem] gap-10 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-end">
             <AnimatedSection>
               <div>
-                <p className="section-kicker text-white/38">Home Screen</p>
-                <h2 className="mt-5 max-w-[11ch] font-sans text-[clamp(2.8rem,7vw,6.6rem)] font-medium leading-[0.84] tracking-[-0.08em] text-white">
+                <p className="text-[0.8rem] font-black uppercase tracking-[0.16em]" style={mutedStyle}>Home Screen</p>
+                <h2 className="mt-5 max-w-[12ch] text-[clamp(2.5rem,5.8vw,5.6rem)] font-black uppercase leading-[0.88] tracking-[0]" style={displayStyle}>
                   Save the tools you use most.
                 </h2>
               </div>
             </AnimatedSection>
             <AnimatedSection delay={80}>
-              <div className="grid gap-3 text-[1rem] leading-7 tracking-[-0.015em] text-white/58 sm:grid-cols-3">
+              <div className="grid gap-3 text-[1rem] font-medium leading-7 tracking-[0] sm:grid-cols-3" style={mutedStyle}>
                 {[
                   "Open a Studio tool in Safari.",
                   "Tap Share, then Add to Home Screen.",
@@ -445,9 +467,10 @@ export default function StudioApps() {
                 ].map((step, index) => (
                   <div
                     key={step}
-                    className="border-t border-white/12 pt-4"
+                    className="rounded-[1.25rem] p-5"
+                    style={softPanelStyle}
                   >
-                    <p className="mb-5 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-white/34">
+                    <p className="mb-5 text-[0.76rem] font-black uppercase tracking-[0.18em]" style={mutedStyle}>
                       0{index + 1}
                     </p>
                     <p>{step}</p>
@@ -459,7 +482,12 @@ export default function StudioApps() {
         </section>
       </main>
 
-      <Footer />
+      <Footer
+        tone="light"
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+      />
 
       <StudioAppScreen
         app={activeApp}

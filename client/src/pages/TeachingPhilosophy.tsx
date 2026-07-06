@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
@@ -13,6 +13,7 @@ import Header from "@/components/Header";
 import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 
 const TEACHING_HERO_IMAGE =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png";
@@ -124,9 +125,17 @@ const lectureResources = [
 ] as const;
 
 export default function TeachingPhilosophy() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
   const activeGalleryImage = teachingGallery[activeGalleryIndex] || teachingGallery[0];
+  const displayTextStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+    fontStretch: "condensed",
+  } as CSSProperties;
+  const mutedTextStyle = { color: homeTheme.muted } as CSSProperties;
 
   const showPreviousImage = () => {
     setActiveGalleryIndex((current) =>
@@ -193,7 +202,18 @@ export default function TeachingPhilosophy() {
   ];
 
   return (
-    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
+    <div
+      className="about-profile-light min-h-screen transition-colors duration-500"
+      style={
+        {
+          backgroundColor: homeTheme.bg,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+          "--background": homeTheme.bg,
+          "--foreground": homeTheme.ink,
+        } as CSSProperties
+      }
+    >
       <SEO
         title="Teaching Philosophy | Scenic Design Education"
         description="A teaching philosophy and CV record centered on scenic design process, professional practice, mentorship, and adaptable design pedagogy."
@@ -266,13 +286,19 @@ export default function TeachingPhilosophy() {
           imageSrc="/images/about/icons/teaching-icon.png"
           showImage={false}
           title="Teaching Philosophy"
-          updatedAt="May 22, 2026"
+          updatedAt="July 5, 2026"
         />
 
-        <article className="overflow-hidden bg-[#f1f0ec]">
+        <article
+          className="overflow-hidden transition-colors duration-500"
+          style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+        >
           <section className="px-5 py-5 sm:px-8 md:px-[clamp(3rem,7vw,7rem)]">
             <div className="mx-auto grid max-w-[88rem] gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-              <p className="max-w-[45rem] text-[1rem] leading-7 tracking-[0] text-black/58">
+              <p
+                className="max-w-[45rem] text-[1rem] leading-7 tracking-[0]"
+                style={mutedTextStyle}
+              >
                 Download the full teaching philosophy and course experience, then move through the
                 page as the statement becomes studio practice, course structure, and student work.
               </p>
@@ -280,7 +306,8 @@ export default function TeachingPhilosophy() {
                 <a
                   href={TEACHING_PDF_URL}
                   download
-                  className="inline-flex min-h-11 w-fit items-center gap-2 whitespace-nowrap rounded-full bg-black px-5 text-[0.92rem] font-medium tracking-[0] text-white transition-colors hover:bg-[color-mix(in_oklch,var(--accent-articles)_58%,black)]"
+                  className="inline-flex min-h-11 w-fit items-center gap-2 whitespace-nowrap rounded-full px-5 text-[0.92rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                  style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
                 >
                   <Download className="h-4 w-4" />
                   Teaching PDF
@@ -289,7 +316,12 @@ export default function TeachingPhilosophy() {
                   href={CV_PDF_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 w-fit items-center gap-2 whitespace-nowrap rounded-full border border-black/14 bg-white px-5 text-[0.92rem] font-medium tracking-[0] text-black transition-colors hover:bg-black/[0.04]"
+                  className="inline-flex min-h-11 w-fit items-center gap-2 whitespace-nowrap rounded-full border px-5 text-[0.92rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                  style={{
+                    backgroundColor: homeTheme.accentSoft,
+                    borderColor: homeTheme.ghost,
+                    color: homeTheme.ink,
+                  }}
                 >
                   <Download className="h-4 w-4" />
                   CV
@@ -301,17 +333,23 @@ export default function TeachingPhilosophy() {
           <section className="px-5 py-12 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
             <AnimatedSection className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.46fr)_minmax(0,0.54fr)] lg:items-end">
               <div className="min-w-0">
-                <h2 className="max-w-[12ch] font-sans text-5xl font-semibold leading-[0.95] tracking-[0] text-black sm:text-7xl lg:text-[clamp(4.5rem,7vw,5.8rem)] 2xl:text-[6.5rem]">
+                <h2
+                  className="max-w-[12ch] text-5xl font-black uppercase leading-[0.9] tracking-[0] sm:text-7xl lg:text-[clamp(4.5rem,7vw,5.8rem)] 2xl:text-[6.5rem]"
+                  style={displayTextStyle}
+                >
                   Mentorship for an evolving landscape.
                 </h2>
-                <p className="mt-6 max-w-[34rem] text-[1.08rem] leading-8 tracking-[0] text-black/62">
+                <p
+                  className="mt-6 max-w-[34rem] text-[1.08rem] leading-8 tracking-[0]"
+                  style={mutedTextStyle}
+                >
                   Scenic design education has to prepare students for theatre and for the adjacent
                   creative worlds their skills can enter: film, television, events, themed
                   entertainment, and emerging visualization workflows.
                 </p>
               </div>
               <motion.figure
-                className="relative min-h-[32rem] min-w-0 overflow-hidden bg-black md:min-h-[42rem]"
+                className="relative min-h-[32rem] min-w-0 overflow-hidden rounded-[1.65rem] bg-black md:min-h-[42rem]"
                 initial={{ opacity: 0, y: 34 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.32 }}
@@ -352,7 +390,7 @@ export default function TeachingPhilosophy() {
                   }`}
                 >
                   <motion.div
-                    className="relative aspect-[4/3] overflow-hidden bg-black"
+                    className="relative aspect-[4/3] overflow-hidden rounded-[1.65rem] bg-black"
                     initial={{ opacity: 0, scale: 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.28 }}
@@ -369,13 +407,22 @@ export default function TeachingPhilosophy() {
                   </motion.div>
 
                   <AnimatedSection delay={index * 80} className="max-w-[39rem] lg:mx-auto">
-                    <p className="font-mono text-[0.78rem] uppercase tracking-[0.24em] text-black/40">
+                    <p
+                      className="font-mono text-[0.78rem] uppercase tracking-[0.24em]"
+                      style={mutedTextStyle}
+                    >
                       {chapter.number} · {chapter.label}
                     </p>
-                    <h3 className="mt-5 font-sans text-4xl font-semibold leading-[1] tracking-[0] text-black sm:text-5xl lg:text-6xl">
+                    <h3
+                      className="mt-5 text-4xl font-black uppercase leading-[0.94] tracking-[0] sm:text-5xl lg:text-6xl"
+                      style={displayTextStyle}
+                    >
                       {chapter.title}
                     </h3>
-                    <p className="mt-6 text-[1.05rem] leading-8 tracking-[0] text-black/62 sm:text-[1.16rem]">
+                    <p
+                      className="mt-6 text-[1.05rem] leading-8 tracking-[0] sm:text-[1.16rem]"
+                      style={mutedTextStyle}
+                    >
                       {chapter.body}
                     </p>
                   </AnimatedSection>
@@ -388,8 +435,11 @@ export default function TeachingPhilosophy() {
             <div className="mx-auto max-w-[88rem]">
               <AnimatedSection className="grid gap-8 py-8 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-14">
                 <div className="lg:pt-5">
-                  <p className="section-kicker text-black/42">Teaching Record</p>
-                  <p className="mt-3 max-w-[18rem] text-[0.98rem] leading-7 tracking-[0] text-black/56">
+                  <p className="section-kicker" style={mutedTextStyle}>Teaching Record</p>
+                  <p
+                    className="mt-3 max-w-[18rem] text-[0.98rem] leading-7 tracking-[0]"
+                    style={mutedTextStyle}
+                  >
                     The CV carries the fuller academic record, production history, and teaching
                     appointments behind this page.
                   </p>
@@ -397,7 +447,12 @@ export default function TeachingPhilosophy() {
                     href={CV_PDF_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 inline-flex min-h-11 w-fit items-center gap-2 whitespace-nowrap rounded-full border border-black/14 bg-white px-5 text-[0.92rem] font-medium tracking-[0] text-black transition-colors hover:bg-black/[0.04]"
+                    className="mt-5 inline-flex min-h-11 w-fit items-center gap-2 whitespace-nowrap rounded-full border px-5 text-[0.92rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: homeTheme.accentSoft,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.ink,
+                    }}
                   >
                     <Download className="h-4 w-4" />
                     View CV
@@ -411,14 +466,20 @@ export default function TeachingPhilosophy() {
                       className="grid gap-2 py-5 sm:grid-cols-[minmax(0,1fr)_8rem] sm:gap-8"
                     >
                       <div>
-                        <p className="font-sans text-[1.18rem] font-medium leading-7 tracking-[0] text-black/86">
+                        <p
+                          className="text-[1.18rem] font-black uppercase leading-[0.96] tracking-[0]"
+                          style={displayTextStyle}
+                        >
                           {credit.institution}
                         </p>
-                        <p className="mt-1 text-[0.98rem] leading-7 tracking-[0] text-black/52">
+                        <p className="mt-1 text-[0.98rem] leading-7 tracking-[0]" style={mutedTextStyle}>
                           {credit.role}
                         </p>
                       </div>
-                      <p className="font-mono text-[0.84rem] leading-7 tracking-[0.12em] text-black/38 sm:text-right">
+                      <p
+                        className="font-mono text-[0.84rem] leading-7 tracking-[0.12em] sm:text-right"
+                        style={mutedTextStyle}
+                      >
                         {credit.years}
                       </p>
                     </div>
@@ -431,13 +492,14 @@ export default function TeachingPhilosophy() {
                 className="grid gap-8 py-8 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-14"
               >
                 <div className="lg:pt-3">
-                  <p className="section-kicker text-black/42">Courses Taught</p>
+                  <p className="section-kicker" style={mutedTextStyle}>Courses Taught</p>
                 </div>
                 <div>
                   {coursesTaught.map((course) => (
                     <p
                       key={course}
-                      className="py-2.5 text-[1rem] leading-6 tracking-[0] text-black/62"
+                      className="py-2.5 text-[1rem] leading-6 tracking-[0]"
+                      style={mutedTextStyle}
                     >
                       {course}
                     </p>
@@ -450,8 +512,11 @@ export default function TeachingPhilosophy() {
           <section className="px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
             <div className="mx-auto max-w-[88rem]">
               <AnimatedSection className="max-w-4xl">
-                <p className="section-kicker text-black/42">Course Structures</p>
-                <h2 className="mt-4 font-sans text-4xl font-semibold leading-[1] tracking-[0] text-black sm:text-5xl lg:text-6xl">
+                <p className="section-kicker" style={mutedTextStyle}>Course Structures</p>
+                <h2
+                  className="mt-4 text-4xl font-black uppercase leading-[0.94] tracking-[0] sm:text-5xl lg:text-6xl"
+                  style={displayTextStyle}
+                >
                   Syllabi as working maps for creative practice.
                 </h2>
               </AnimatedSection>
@@ -463,7 +528,7 @@ export default function TeachingPhilosophy() {
                       href={card.href}
                       className="group grid gap-6 py-7 md:grid-cols-[18rem_minmax(0,1fr)_2rem] md:items-center"
                     >
-                      <div className="relative aspect-[16/10] overflow-hidden bg-black">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-[1.65rem] bg-black">
                         <Image
                           src={card.image}
                           alt={card.title}
@@ -474,17 +539,29 @@ export default function TeachingPhilosophy() {
                         />
                       </div>
                       <div>
-                        <p className="font-mono text-[0.74rem] uppercase tracking-[0.22em] text-black/38">
+                        <p
+                          className="font-mono text-[0.74rem] uppercase tracking-[0.22em]"
+                          style={mutedTextStyle}
+                        >
                           Syllabus → sequence
                         </p>
-                        <h3 className="mt-3 font-sans text-3xl font-semibold leading-[1.05] tracking-[0] text-black sm:text-4xl">
+                        <h3
+                          className="mt-3 text-3xl font-black uppercase leading-[0.96] tracking-[0] sm:text-4xl"
+                          style={displayTextStyle}
+                        >
                           {card.title}
                         </h3>
-                        <p className="mt-4 max-w-[44rem] text-[1rem] leading-7 tracking-[0] text-black/58">
+                        <p
+                          className="mt-4 max-w-[44rem] text-[1rem] leading-7 tracking-[0]"
+                          style={mutedTextStyle}
+                        >
                           {card.description}
                         </p>
                       </div>
-                      <ArrowRight className="hidden h-5 w-5 text-black/42 transition-transform group-hover:translate-x-1 group-hover:text-black md:block" />
+                      <ArrowRight
+                        className="hidden h-5 w-5 transition-transform group-hover:translate-x-1 md:block"
+                        style={{ color: homeTheme.muted }}
+                      />
                     </Link>
                   </AnimatedSection>
                 ))}
@@ -495,17 +572,24 @@ export default function TeachingPhilosophy() {
           <section className="px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
             <div className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-start lg:gap-14">
               <AnimatedSection>
-                <p className="section-kicker text-black/42">Lectures + Articles</p>
-                <h2 className="mt-4 max-w-[11ch] font-sans text-4xl font-semibold leading-[1] tracking-[0] text-black sm:text-5xl">
+                <p className="section-kicker" style={mutedTextStyle}>Lectures + Articles</p>
+                <h2
+                  className="mt-4 max-w-[11ch] text-4xl font-black uppercase leading-[0.94] tracking-[0] sm:text-5xl"
+                  style={displayTextStyle}
+                >
                   Teaching as public practice.
                 </h2>
-                <p className="mt-5 max-w-[18rem] text-[0.98rem] leading-7 tracking-[0] text-black/58">
+                <p
+                  className="mt-5 max-w-[18rem] text-[0.98rem] leading-7 tracking-[0]"
+                  style={mutedTextStyle}
+                >
                   Some lectures become articles. Some demos become articles. Together, they extend
                   the classroom into a shared record of methods, references, and working habits.
                 </p>
                 <Link
                   href="/articles"
-                  className="mt-7 inline-flex items-center gap-2 text-[0.95rem] font-medium tracking-[0] text-black/62 transition-colors hover:text-black"
+                  className="mt-7 inline-flex items-center gap-2 text-[0.95rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                  style={{ color: homeTheme.ink }}
                 >
                   Articles
                   <ArrowRight className="h-4 w-4" />
@@ -520,22 +604,37 @@ export default function TeachingPhilosophy() {
                     className="group grid gap-4 py-6 md:grid-cols-[12rem_minmax(0,1fr)_2rem] md:items-start"
                   >
                     <div className="pt-1">
-                      <p className="font-mono text-[0.7rem] uppercase leading-5 tracking-[0.18em] text-black/44">
+                      <p
+                        className="font-mono text-[0.7rem] uppercase leading-5 tracking-[0.18em]"
+                        style={mutedTextStyle}
+                      >
                         {resource.type}
                       </p>
-                      <p className="mt-1 font-mono text-[0.68rem] uppercase leading-5 tracking-[0.16em] text-black/28">
+                      <p
+                        className="mt-1 font-mono text-[0.68rem] uppercase leading-5 tracking-[0.16em]"
+                        style={mutedTextStyle}
+                      >
                         {resource.focus}
                       </p>
                     </div>
                     <div>
-                      <h3 className="font-sans text-[1.32rem] font-semibold leading-[1.08] tracking-[0] text-black sm:text-[1.55rem]">
+                      <h3
+                        className="text-[1.32rem] font-black uppercase leading-[0.96] tracking-[0] sm:text-[1.55rem]"
+                        style={displayTextStyle}
+                      >
                         {resource.title}
                       </h3>
-                      <p className="mt-2 max-w-[42rem] text-[0.96rem] leading-7 tracking-[0] text-black/56">
+                      <p
+                        className="mt-2 max-w-[42rem] text-[0.96rem] leading-7 tracking-[0]"
+                        style={mutedTextStyle}
+                      >
                         {resource.description}
                       </p>
                     </div>
-                    <ArrowRight className="mt-1 hidden h-5 w-5 text-black/34 transition-transform group-hover:translate-x-1 group-hover:text-black md:block" />
+                    <ArrowRight
+                      className="mt-1 hidden h-5 w-5 transition-transform group-hover:translate-x-1 md:block"
+                      style={{ color: homeTheme.muted }}
+                    />
                   </Link>
                 ))}
               </div>
@@ -546,11 +645,14 @@ export default function TeachingPhilosophy() {
             <div className="mx-auto max-w-[88rem]">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)] lg:items-end">
                 <AnimatedSection>
-                  <p className="section-kicker text-black/42">Teaching Studio</p>
-                  <h2 className="mt-4 font-sans text-4xl font-semibold leading-[1] tracking-[0] text-black sm:text-5xl">
+                  <p className="section-kicker" style={mutedTextStyle}>Teaching Studio</p>
+                  <h2
+                    className="mt-4 text-4xl font-black uppercase leading-[0.94] tracking-[0] sm:text-5xl"
+                    style={displayTextStyle}
+                  >
                     Critique, presentation, and visible process.
                   </h2>
-                  <p className="mt-5 text-[1rem] leading-7 tracking-[0] text-black/58">
+                  <p className="mt-5 text-[1rem] leading-7 tracking-[0]" style={mutedTextStyle}>
                     The studio is both classroom and culture: a place for shared language,
                     feedback, confidence, and the habits that make professional collaboration
                     possible.
@@ -559,7 +661,7 @@ export default function TeachingPhilosophy() {
 
                 <figure>
                   <motion.div
-                    className="relative aspect-[16/10] w-full overflow-hidden bg-black md:aspect-[16/9]"
+                    className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.65rem] bg-black md:aspect-[16/9]"
                     key={activeGalleryImage.src}
                     initial={{ opacity: 0.76 }}
                     animate={{ opacity: 1 }}
@@ -575,12 +677,21 @@ export default function TeachingPhilosophy() {
                     />
                   </motion.div>
 
-                  <figcaption className="mt-4 flex flex-col gap-4 pt-4 text-black/58 sm:flex-row sm:items-center sm:justify-between">
+                  <figcaption
+                    className="mt-4 flex flex-col gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between"
+                    style={mutedTextStyle}
+                  >
                     <div>
-                      <p className="font-sans text-[1.04rem] font-medium leading-7 tracking-[0] text-black/80">
+                      <p
+                        className="text-[1.04rem] font-black uppercase leading-[0.98] tracking-[0]"
+                        style={displayTextStyle}
+                      >
                         {activeGalleryImage.caption}
                       </p>
-                      <p className="mt-1 font-mono text-[0.78rem] leading-6 tracking-[0.12em] text-black/38">
+                      <p
+                        className="mt-1 font-mono text-[0.78rem] leading-6 tracking-[0.12em]"
+                        style={mutedTextStyle}
+                      >
                         {String(activeGalleryIndex + 1).padStart(2, "0")} ·{" "}
                         {String(teachingGallery.length).padStart(2, "0")}
                       </p>
@@ -590,7 +701,8 @@ export default function TeachingPhilosophy() {
                       <button
                         type="button"
                         onClick={showPreviousImage}
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/20 text-black/62 transition-colors hover:border-black/45 hover:text-black"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-transform hover:-translate-y-0.5"
+                        style={{ borderColor: homeTheme.ghost, color: homeTheme.ink }}
                         aria-label="Previous teaching image"
                       >
                         <ArrowLeft className="h-4 w-4" />
@@ -598,7 +710,8 @@ export default function TeachingPhilosophy() {
                       <button
                         type="button"
                         onClick={showNextImage}
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/20 text-black/62 transition-colors hover:border-black/45 hover:text-black"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-transform hover:-translate-y-0.5"
+                        style={{ borderColor: homeTheme.ghost, color: homeTheme.ink }}
                         aria-label="Next teaching image"
                       >
                         <ArrowRight className="h-4 w-4" />
@@ -614,11 +727,11 @@ export default function TeachingPhilosophy() {
                     key={image.src}
                     type="button"
                     onClick={() => setActiveGalleryIndex(index)}
-                    className={`group relative h-20 w-32 shrink-0 overflow-hidden border transition-colors sm:h-24 sm:w-40 ${
-                      index === activeGalleryIndex
-                        ? "border-black/70"
-                        : "border-black/16 hover:border-black/42"
-                    }`}
+                    className="group relative h-20 w-32 shrink-0 overflow-hidden border transition-transform hover:-translate-y-0.5 sm:h-24 sm:w-40"
+                    style={{
+                      borderColor:
+                        index === activeGalleryIndex ? homeTheme.ink : homeTheme.ghost,
+                    }}
                     aria-label={`Show ${image.caption}`}
                     aria-current={index === activeGalleryIndex}
                   >

@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { Link } from "wouter";
 
+import { HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
+
 type PortfolioNavItem = {
   path: string;
   label: string;
@@ -18,6 +20,7 @@ const portfolioNavItems: PortfolioNavItem[] = [
 
 export default function PortfolioTopBar() {
   const pathname = usePathname() || "/";
+  const { homeTheme } = useHomeTheme();
 
   const isActive = (item: PortfolioNavItem) => {
     if (item.exact) return pathname === item.path;
@@ -27,31 +30,27 @@ export default function PortfolioTopBar() {
   return (
     <nav
       aria-label="Portfolio section navigation"
-      className="sticky top-[72px] z-30 border-b border-black/10 bg-white/90 backdrop-blur-xl"
+      className="absolute left-[clamp(1.25rem,2.4vw,2.25rem)] top-[clamp(1.25rem,2.4vw,2.25rem)] z-[60] max-w-[calc(100vw-7rem)] overflow-visible"
+      style={{ fontFamily: HOME_DISPLAY_FONT }}
     >
-      <div className="flex min-h-16 flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
-        <Link
-          href="/projects"
-          className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]"
-        >
-          Portfolio
-        </Link>
+      <div className="flex max-w-full flex-wrap items-center gap-2 overflow-visible">
+        {portfolioNavItems.map((item) => {
+          const active = isActive(item);
 
-        <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex min-w-max items-center gap-6 md:gap-8">
-            {portfolioNavItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={`text-[0.95rem] tracking-[-0.025em] transition-colors ${
-                  isActive(item) ? "text-[#111111]" : "text-black/52 hover:text-black"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
+          return (
+            <Link
+              key={item.path}
+              href={item.path}
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-full px-4 text-[0.75rem] font-black uppercase leading-none tracking-[0.04em] transition-[background-color,color,transform] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+              style={{
+                backgroundColor: active ? homeTheme.controlBg : homeTheme.accentSoft,
+                color: active ? homeTheme.controlInk : homeTheme.muted,
+              }}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

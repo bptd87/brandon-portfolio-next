@@ -1,5 +1,7 @@
 import type { ElementType, ReactNode } from "react";
 
+import { HOME_DISPLAY_FONT } from "@/lib/homeTheme";
+
 type SectionIntroTone = "dark" | "light" | "publishing" | "profile" | "hybrid";
 type SectionIntroAlign = "left" | "center";
 type SectionIntroSize = "compact" | "default" | "hero";
@@ -39,9 +41,9 @@ const toneClasses: Record<
     description: "text-foreground/62",
   },
   publishing: {
-    eyebrow: "section-kicker text-[#111111]/42",
-    title: "text-[#111111]",
-    description: "text-[#111111]/62",
+    eyebrow: "section-kicker text-foreground/42",
+    title: "text-foreground",
+    description: "text-foreground/62",
   },
   profile: {
     eyebrow: "section-kicker text-foreground/42",
@@ -63,17 +65,17 @@ const sizeClasses: Record<
   }
 > = {
   compact: {
-    title: "font-sans text-[1.2rem] font-medium tracking-[-0.04em]",
+    title: "text-[1.2rem] font-black uppercase leading-[0.96] tracking-[0]",
     description: "mt-4 max-w-2xl text-[0.98rem] leading-7",
   },
   default: {
     title:
-      "font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em]",
+      "text-[clamp(2.1rem,4vw,3.2rem)] font-black uppercase leading-[0.92] tracking-[0]",
     description: "mt-5 max-w-3xl text-[1rem] leading-7 md:text-[1.08rem]",
   },
   hero: {
     title:
-      "font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em]",
+      "text-[clamp(3rem,6vw,5.4rem)] font-black uppercase leading-[0.88] tracking-[0]",
     description: "mt-7 max-w-3xl text-[1.06rem] leading-8 md:text-[1.14rem]",
   },
 };
@@ -106,6 +108,7 @@ export default function SectionIntro({
       ) : null}
       <TitleTag
         className={`${sizeClass.title} ${toneClass.title} ${titleClassName}`.trim()}
+        style={{ fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}
       >
         {title}
       </TitleTag>

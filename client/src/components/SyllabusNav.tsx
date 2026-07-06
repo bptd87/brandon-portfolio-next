@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Link } from "wouter";
+import { HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
 
 const navItems = [
   { path: "/syllabus/experiential-design", label: "Experiential Design" },
@@ -10,31 +11,42 @@ const navItems = [
 
 export default function SyllabusNav() {
   const pathname = usePathname() || "/";
+  const { homeTheme } = useHomeTheme();
 
   return (
     <nav
       aria-label="Syllabus navigation"
-      className="sticky top-[72px] z-30 border-b border-black/[0.06] bg-[#f1f0ec]/92 backdrop-blur-xl"
+      className="relative z-30 px-5 pt-7 sm:px-8 md:px-[clamp(3rem,7vw,7rem)]"
     >
-      <div className="flex min-h-16 flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-3">
         <Link
           href="/about/teaching"
-          className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]"
+          className="inline-flex h-10 items-center rounded-full px-4 text-[0.75rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+          style={{
+            backgroundColor: homeTheme.accentSoft,
+            color: homeTheme.ink,
+            fontFamily: HOME_DISPLAY_FONT,
+            fontStretch: "condensed",
+          }}
         >
           Teaching
         </Link>
 
         <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex min-w-max items-center gap-6 md:gap-8">
+          <div className="flex min-w-max items-center gap-3">
             {navItems.map((item) => {
               const isActive = pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`text-[0.95rem] tracking-[-0.025em] transition-colors ${
-                    isActive ? "text-[#111111]" : "text-[#777169] hover:text-[#111111]"
-                  }`}
+                  className="inline-flex h-10 items-center rounded-full px-4 text-[0.75rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                  style={{
+                    backgroundColor: isActive ? homeTheme.controlBg : homeTheme.accentSoft,
+                    color: isActive ? homeTheme.controlInk : homeTheme.ink,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
                 >
                   {item.label}
                 </Link>

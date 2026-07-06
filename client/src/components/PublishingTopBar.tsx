@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
 
 type PublishingTopBarProps = {
   active?: "articles" | "apps" | "directory";
@@ -8,62 +8,40 @@ type PublishingTopBarProps = {
 };
 
 export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarProps) {
-  const isDark = tone === "dark";
-  const linkClass = (key: PublishingTopBarProps["active"]) =>
-    `text-[0.95rem] tracking-[-0.025em] transition-colors ${
-      active === key
-        ? isDark ? "text-white" : "text-[#111111]"
-        : isDark ? "text-white/52 hover:text-white" : "text-[#777169] hover:text-[#111111]"
-    }`;
+  const { homeTheme } = useHomeTheme();
+
+  const navItems = [
+    { key: undefined, href: "/studio", label: "Studio" },
+    { key: "articles" as const, href: "/articles", label: "Articles" },
+    { key: "apps" as const, href: "/studio/apps", label: "Apps" },
+    { key: "directory" as const, href: "/studio/directory", label: "Directory" },
+  ];
 
   return (
-    <div
-      className={`sticky top-[64px] z-30 border-b backdrop-blur-xl md:top-[72px] ${
-        isDark
-          ? "border-white/[0.08] bg-[#070707]/88"
-          : "border-black/[0.06] bg-[#f1f0ec]/92"
-      }`}
+    <nav
+      aria-label="Studio section navigation"
+      className="absolute left-[clamp(1.25rem,2.4vw,2.25rem)] top-[clamp(1.25rem,2.4vw,2.25rem)] z-[60] max-w-[calc(100vw-7rem)] overflow-visible"
+      style={{ fontFamily: HOME_DISPLAY_FONT }}
     >
-      <div className="grid min-h-12 gap-2 px-[clamp(1rem,5vw,6rem)] py-2.5 md:min-h-16 md:grid-cols-[10.875rem_minmax(0,1fr)_auto] md:items-center md:gap-8 md:px-[clamp(1.5rem,5vw,6rem)] md:py-3">
-        <a
-          href="/studio"
-          className={`hidden text-[1.35rem] font-semibold leading-none tracking-[-0.045em] md:block ${isDark ? "text-white" : "text-[#111111]"}`}
-        >
-          Studio
-        </a>
+      <div className="flex max-w-full flex-wrap items-center gap-2 overflow-visible">
+        {navItems.map((item) => {
+          const isActive = item.key ? active === item.key : !active;
 
-        <nav className="flex min-w-0 items-center gap-x-5 overflow-x-auto whitespace-nowrap pr-2 md:flex-wrap md:gap-x-6 md:gap-y-2 md:overflow-visible md:pr-0">
-          <a href="/articles" className={linkClass("articles")}>
-            Articles
-          </a>
-          <a href="/studio/apps" className={linkClass("apps")}>
-            <span className="md:hidden">Apps</span>
-            <span className="hidden md:inline">Studio Apps</span>
-          </a>
-          <a href="/studio/directory" className={linkClass("directory")}>
-            <span className="md:hidden">Directory</span>
-            <span className="hidden md:inline">Scenic Directory</span>
-          </a>
-        </nav>
-
-        <form
-          action="/search"
-          method="get"
-          className="relative hidden w-full md:block md:w-[15rem]"
-        >
-          <Search className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${isDark ? "text-white/46" : "text-[#5d5851]"}`} />
-          <input
-            name="q"
-            type="search"
-            placeholder="Search studio"
-            className={`h-9 w-full rounded-full border-0 pl-9 pr-4 text-[0.9rem] font-medium tracking-[-0.02em] outline-none focus:ring-2 focus:ring-[#6f2dff]/30 ${
-              isDark
-                ? "bg-white/[0.08] text-white placeholder:text-white/46 focus:bg-white/[0.12]"
-                : "bg-[#e5e3dc] text-[#111111] placeholder:text-[#5d5851] focus:bg-[#fbfaf7]"
-            }`}
-          />
-        </form>
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-full px-4 text-[0.75rem] font-black uppercase leading-none tracking-[0.04em] transition-[background-color,color,transform] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+              style={{
+                backgroundColor: isActive ? homeTheme.controlBg : homeTheme.accentSoft,
+                color: isActive ? homeTheme.controlInk : homeTheme.muted,
+              }}
+            >
+              {item.label}
+            </a>
+          );
+        })}
       </div>
-    </div>
+    </nav>
   );
 }

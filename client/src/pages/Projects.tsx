@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,15 +12,10 @@ import {
   CalendarArrowUp,
   Check,
   ChevronDown,
-  Drama,
-  Laugh,
   LayoutGrid,
   List,
-  Music,
   Rows3,
   SlidersHorizontal,
-  Theater,
-  UsersRound,
   type LucideIcon,
 } from "lucide-react";
 
@@ -40,6 +35,13 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { getProjectPath } from "@/lib/projectRoutes";
 import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  type HomeColorTheme,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
+import {
   getScenicProjectTimestamp,
   scenicPortfolioLandingCopy,
 } from "@/lib/scenicShowcase";
@@ -54,18 +56,6 @@ const SORT_OPTIONS: Array<{ key: SortKey; label: string; icon: LucideIcon }> = [
   { key: "title", label: "Production title", icon: ArrowDownAZ },
   { key: "venue", label: "Venue", icon: Building2 },
 ];
-
-const CATEGORY_ICON_MAP: Record<string, LucideIcon> = {
-  comedy: Laugh,
-  drama: Drama,
-  musical: Music,
-  "musical theatre": Music,
-  "musical-theatre": Music,
-  shakespeare: Theater,
-  tya: UsersRound,
-  "theatre for young audiences": UsersRound,
-  "theatre-for-young-audiences": UsersRound,
-};
 
 const normalizeText = (value?: string | null) => {
   if (!value) return "";
@@ -87,14 +77,8 @@ const formatProjectDate = (project: any) => {
   return String(project.year);
 };
 
-const isNonEmptyString = (value: string | null | undefined): value is string => Boolean(value);
-
 const getDirectorLabel = (project: ScenicProjectSummary) => {
   return project.directorName ? `Dir. ${project.directorName}` : null;
-};
-
-const getCategoryIcon = (label: string) => {
-  return CATEGORY_ICON_MAP[normalizeText(label)] || Rows3;
 };
 
 function ProjectCard({
@@ -105,6 +89,8 @@ function ProjectCard({
   scenicAlt,
   eager,
   sizes,
+  aspectClassName,
+  homeTheme,
   revealDelay = 0,
 }: {
   href: string;
@@ -114,51 +100,70 @@ function ProjectCard({
   scenicAlt: (title: string) => string;
   eager?: boolean;
   sizes: string;
+  aspectClassName: string;
+  homeTheme: HomeColorTheme;
   revealDelay?: number;
 }) {
-  void revealDelay;
-
   return (
     <div className={`${layoutClass || ""} h-full`}>
       <a
         href={href}
         onClick={(event) => onNavigate(event, href)}
-        className="portfolio-focus-card group block h-full border-b border-r border-black/10"
+        data-project-landing-card
+        data-inview="false"
+        className="project-landing-card portfolio-focus-card group block h-full"
+        style={
+          {
+            color: homeTheme.ink,
+            "--project-landing-delay": `${revealDelay}ms`,
+          } as CSSProperties
+        }
       >
-        <article className="h-full bg-white">
-          <div
-            className="portfolio-focus-media site-media-square relative aspect-[4/3] overflow-hidden bg-[#f1f0ec]"
-            style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
-          >
-            {project.coverImageUrl ? (
-              <Image
-                src={project.coverImageUrl}
-                alt={scenicAlt(project.title)}
-                fill
-                quality={eager ? 84 : 78}
-                className="site-media-square object-cover object-center"
-                style={{
-                  objectPosition: project.coverImagePosition || "center",
-                }}
-                priority={Boolean(eager)}
-                loading={eager ? "eager" : "lazy"}
-                fetchPriority={eager ? "high" : "auto"}
-                sizes={sizes}
-              />
-            ) : (
-              <div className="aspect-[4/3] w-full bg-muted" />
-            )}
-          </div>
-          <div className="portfolio-focus-copy min-h-[8.5rem] border-t border-black/10 p-[clamp(0.9rem,1.5vw,1.2rem)] text-[#111111]">
-            <div>
-              <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#111111] transition-opacity duration-500 group-hover:opacity-70">
-                {project.title}
-              </h2>
-              {getVenueLabel(project) ? (
-                <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-black/55">
-                  {getVenueLabel(project)}
-                </p>
-              ) : null}
+        <article className="h-full">
+          <div className={`relative ${aspectClassName}`}>
+            <div className="project-landing-shadow" aria-hidden="true" />
+            <div
+              className="project-landing-media-shell portfolio-focus-media relative h-full overflow-hidden rounded-[1.65rem] bg-[#f1f0ec] shadow-[0_1rem_2.4rem_rgba(0,0,0,0.12)] ring-1 ring-black/5"
+              style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
+            >
+              {project.coverImageUrl ? (
+                <Image
+                  src={project.coverImageUrl}
+                  alt={scenicAlt(project.title)}
+                  fill
+                  draggable={false}
+                  quality={eager ? 84 : 78}
+                  className="project-landing-image select-none object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018]"
+                  style={{
+                    objectPosition: project.coverImagePosition || "center",
+                  }}
+                  priority={Boolean(eager)}
+                  loading={eager ? "eager" : "lazy"}
+                  fetchPriority={eager ? "high" : "auto"}
+                  sizes={sizes}
+                />
+              ) : (
+                <div className="h-full w-full rounded-[inherit] bg-muted" />
+              )}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/58 via-black/24 to-transparent px-5 pb-5 pt-14 text-white md:px-6 md:pb-6">
+                <h2
+                  className="max-w-[18ch] text-[clamp(1.05rem,1.35vw,1.45rem)] font-black uppercase leading-[0.9] tracking-[0] drop-shadow-[0_0.16rem_0.5rem_rgba(0,0,0,0.36)]"
+                  style={{
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
+                >
+                  {project.title}
+                </h2>
+                {getVenueLabel(project) ? (
+                  <p
+                    className="mt-1 max-w-[22ch] text-[0.78rem] font-medium leading-tight text-white/78 drop-shadow-[0_0.12rem_0.35rem_rgba(0,0,0,0.34)] md:text-[0.85rem]"
+                    style={{ fontFamily: HOME_BODY_FONT }}
+                  >
+                    {getVenueLabel(project)}
+                  </p>
+                ) : null}
+              </div>
             </div>
           </div>
         </article>
@@ -168,11 +173,16 @@ function ProjectCard({
 }
 
 const getProjectPanelClass = (index: number) => {
-  return index % 6 < 2 ? "md:col-span-2" : "";
+  const patternIndex = index % 5;
+  return patternIndex < 2 ? "md:col-span-3" : "md:col-span-2";
+};
+
+const getProjectAspectClass = (index: number) => {
+  return index % 5 < 2 ? "aspect-[3/2]" : "aspect-square";
 };
 
 const getProjectImageSizes = (index: number) => {
-  return index % 6 < 2 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw";
+  return index % 5 < 2 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw";
 };
 
 export default function Projects({
@@ -181,10 +191,11 @@ export default function Projects({
   initialProjects: ScenicProjectSummary[];
 }) {
   const router = useRouter();
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
   const isDesktopViewport = useIsDesktopViewport();
+  const projectGridRef = useRef<HTMLDivElement | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
-  const [selectedVenue, setSelectedVenue] = useState<string>("all");
-  const [selectedYear, setSelectedYear] = useState<string>("all");
   const [sortKey, setSortKey] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
@@ -206,22 +217,6 @@ export default function Projects({
       .map(([key, label]) => ({ key, label }));
   }, [mergedProjects]);
 
-  const venueOptions = useMemo(() => {
-    if (!mergedProjects.length) return [] as string[];
-    return Array.from(
-      new Set(mergedProjects.map((project) => getVenueLabel(project)).filter(isNonEmptyString))
-    ).sort((a, b) => a.localeCompare(b));
-  }, [mergedProjects]);
-
-  const yearOptions = useMemo(() => {
-    if (!mergedProjects.length) return [] as string[];
-    return Array.from(
-      new Set(
-        mergedProjects.map((project) => (project.year ? String(project.year) : null)).filter(isNonEmptyString)
-      )
-    ).sort((a, b) => Number(b) - Number(a));
-  }, [mergedProjects]);
-
   const filteredProjects = useMemo(() => {
     if (!mergedProjects.length) return [];
 
@@ -233,17 +228,9 @@ export default function Projects({
         return false;
       }
 
-      if (selectedVenue !== "all" && getVenueLabel(project) !== selectedVenue) {
-        return false;
-      }
-
-      if (selectedYear !== "all" && String(project.year || "") !== selectedYear) {
-        return false;
-      }
-
       return true;
     });
-  }, [mergedProjects, selectedSubcategory, selectedVenue, selectedYear]);
+  }, [mergedProjects, selectedSubcategory]);
 
   const sortedProjects = useMemo(() => {
     const list = [...filteredProjects];
@@ -269,6 +256,41 @@ export default function Projects({
 
     return list;
   }, [filteredProjects, sortKey]);
+  const visibleViewMode = isDesktopViewport ? viewMode : "grid";
+  const eagerProjectCount = isDesktopViewport ? 2 : 1;
+
+  useEffect(() => {
+    if (visibleViewMode !== "grid") return;
+
+    const grid = projectGridRef.current;
+    if (!grid) return;
+
+    const cards = Array.from(
+      grid.querySelectorAll<HTMLElement>("[data-project-landing-card]")
+    );
+
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+      card.dataset.inview = "false";
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          (entry.target as HTMLElement).dataset.inview = "true";
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, [sortedProjects, visibleViewMode]);
+
   const latestProjectUpdate = sortedProjects
     .map((project: any) => project.updatedAt || project.publishedAt || project.createdAt)
     .filter(Boolean)
@@ -284,42 +306,19 @@ export default function Projects({
   const selectedCategoryLabel =
     subcategories.find((item) => item.key === selectedSubcategory)?.label || null;
   const currentHeading =
-    selectedVenue !== "all"
-      ? selectedVenue
-      : selectedCategoryLabel
-        ? selectedCategoryLabel
-        : selectedYear !== "all"
-          ? selectedYear
-          : pageTitle;
+    selectedCategoryLabel ? selectedCategoryLabel : pageTitle;
   const heroDisplayTitle = currentHeading;
-  const activeFilterCount =
-    (selectedVenue !== "all" ? 1 : 0) + (selectedYear !== "all" ? 1 : 0);
-  const visibleViewMode = isDesktopViewport ? viewMode : "grid";
-  const eagerProjectCount = isDesktopViewport ? 2 : 1;
+  const activeFilterCount = selectedSubcategory !== "all" ? 1 : 0;
   const scenicArchiveTitle =
-    selectedVenue !== "all"
-      ? `${selectedVenue} Scenic Design | Brandon PT Davis`
-      : selectedCategoryLabel
-        ? `${selectedCategoryLabel} Scenic Design | Brandon PT Davis`
-        : selectedYear !== "all"
-          ? `${selectedYear} Scenic Design Portfolio | Brandon PT Davis`
-          : "Scenic Design Portfolio | Brandon PT Davis";
+    selectedCategoryLabel
+      ? `${selectedCategoryLabel} Scenic Design | Brandon PT Davis`
+      : "Scenic Design Portfolio | Brandon PT Davis";
   const scenicArchiveDescription =
-    selectedVenue !== "all"
-      ? `Scenic design work by Brandon PT Davis for productions at ${selectedVenue}.`
-      : selectedCategoryLabel
-        ? `${selectedCategoryLabel} scenic design projects by Brandon PT Davis, including realized productions, design notes, and portfolio documentation.`
-        : selectedYear !== "all"
-          ? `Scenic design projects by Brandon PT Davis from ${selectedYear}, spanning realized productions, renderings, and production photography.`
-          : `Explore scenic design productions by Brandon PT Davis. ${pageDescription}`;
+    selectedCategoryLabel
+      ? `${selectedCategoryLabel} scenic design projects by Brandon PT Davis, including realized productions, design notes, and portfolio documentation.`
+      : `Explore scenic design productions by Brandon PT Davis. ${pageDescription}`;
   const scenicCollectionName =
-    selectedVenue !== "all"
-      ? `${selectedVenue} Scenic Design`
-      : selectedCategoryLabel
-        ? `${selectedCategoryLabel} Scenic Design`
-        : selectedYear !== "all"
-          ? `${selectedYear} Scenic Design Portfolio`
-          : "Scenic Design Portfolio";
+    selectedCategoryLabel ? `${selectedCategoryLabel} Scenic Design` : "Scenic Design Portfolio";
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
     if (!card || typeof card.animate !== "function") return;
@@ -361,8 +360,24 @@ export default function Projects({
     void performNavigation();
   };
 
+  const themedButtonStyle = (active: boolean): CSSProperties => ({
+    backgroundColor: active ? homeTheme.controlBg : homeTheme.accentSoft,
+    color: active ? homeTheme.controlInk : homeTheme.ink,
+    borderColor: active ? homeTheme.controlBg : homeTheme.accentSoft,
+    fontFamily: HOME_DISPLAY_FONT,
+  });
+
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div
+      className="flex min-h-screen flex-col [--border:rgba(17,17,17,0.14)]"
+      style={{
+        "--background": homeTheme.bg,
+        "--foreground": homeTheme.ink,
+        backgroundColor: homeTheme.bg,
+        color: homeTheme.ink,
+        fontFamily: HOME_BODY_FONT,
+      } as CSSProperties}
+    >
       <SEO
         title={scenicArchiveTitle}
         description={scenicArchiveDescription}
@@ -377,8 +392,6 @@ export default function Projects({
           "theatre set design",
           "Brandon PT Davis",
           selectedCategoryLabel,
-          selectedVenue !== "all" ? selectedVenue : null,
-          selectedYear !== "all" ? selectedYear : null,
         ]
           .filter(Boolean)
           .join(", ")}
@@ -451,199 +464,166 @@ export default function Projects({
       <Header />
       <PortfolioTopBar />
 
-      <main className="flex-1">
-        <section className="bg-white pt-12 md:pt-16">
+      <main className="relative z-10 flex-1" style={{ backgroundColor: homeTheme.bg }}>
+        <style jsx global>{`
+          .project-landing-card {
+            opacity: 0;
+            transform: translate3d(0, 2.4rem, 0) scale(0.84);
+            transition:
+              opacity 520ms ease,
+              transform 980ms cubic-bezier(0.18, 1.42, 0.24, 1);
+            transition-delay: var(--project-landing-delay, 0ms);
+            will-change: opacity, transform;
+          }
+
+          .project-landing-card[data-inview="true"] {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+
+          .project-landing-media-shell {
+            transform: scale(0.72);
+            transition:
+              box-shadow 520ms ease,
+              transform 980ms cubic-bezier(0.18, 1.42, 0.24, 1);
+            transition-delay: var(--project-landing-delay, 0ms);
+            will-change: transform;
+          }
+
+          .project-landing-card[data-inview="true"] .project-landing-media-shell {
+            transform: scale(1);
+          }
+
+          .project-landing-shadow {
+            background: rgba(0, 0, 0, 0.16);
+            border-radius: 1.65rem;
+            box-shadow:
+              0 1.2rem 2.8rem rgba(0, 0, 0, 0.08),
+              0 4.5rem 5.5rem rgba(0, 0, 0, 0.07),
+              0 8rem 7rem rgba(0, 0, 0, 0.035);
+            filter: blur(18px);
+            inset: 5% 4% -3%;
+            opacity: 0;
+            position: absolute;
+            transform: translate3d(0, 1.25rem, 0) scale(0.76);
+            transition:
+              opacity 620ms ease,
+              transform 980ms cubic-bezier(0.18, 1.42, 0.24, 1);
+            transition-delay: var(--project-landing-delay, 0ms);
+          }
+
+          .project-landing-card[data-inview="true"] .project-landing-shadow {
+            opacity: 0.72;
+            transform: translate3d(0, 0.75rem, 0) scale(1);
+          }
+
+          .project-landing-media-shell,
+          .project-landing-media-shell:has(> img),
+          .project-landing-media-shell img,
+          img.project-landing-image {
+            border-radius: 1.65rem !important;
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .project-landing-card,
+            .project-landing-media-shell,
+            .project-landing-shadow {
+              opacity: 1;
+              transform: none;
+              transition: none;
+            }
+          }
+        `}</style>
+        <section className="pt-[clamp(8rem,12vw,11rem)]">
           <div className="w-full">
-            <div className="px-[clamp(1.5rem,5vw,6rem)]">
+            <div className="mx-auto max-w-[54rem] px-[clamp(2rem,8vw,9rem)] text-center">
               <MotionReveal delay={120}>
-                <h1 className="font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-[#111111]">
-                  {heroDisplayTitle}
+                <h1
+                  className="mx-auto max-w-[10.5ch] text-balance text-[clamp(3.2rem,7vw,7rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                  style={{
+                    color: homeTheme.ink,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
+                >
+                  {heroDisplayTitle.toUpperCase()}
                 </h1>
+                <p
+                  className="mx-auto mt-5 max-w-[30rem] text-[clamp(0.98rem,1.2vw,1.12rem)] font-medium leading-7 tracking-[-0.02em]"
+                  style={{ color: homeTheme.muted }}
+                >
+                  {scenicPortfolioLandingCopy.intro}
+                </p>
               </MotionReveal>
             </div>
 
             <MotionReveal
-              className="mt-6 flex flex-col gap-5 px-[clamp(1.5rem,5vw,6rem)] py-4 lg:flex-row lg:items-center lg:justify-between"
+              className="mx-auto mt-[clamp(2rem,4vw,3.25rem)] flex max-w-[74rem] flex-wrap items-center justify-center gap-3 px-[clamp(2rem,8vw,9rem)] py-4"
               delay={210}
             >
-              <div className="md:hidden">
-                <div className="-mx-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  <div className="flex min-w-max items-center gap-2 px-1">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedSubcategory("all")}
-                      className={`inline-flex h-10 items-center rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
-                        selectedSubcategory === "all"
-                          ? "border-foreground/20 bg-foreground text-background"
-                          : "border-border/50 bg-background/70 text-black/68 hover:border-border hover:text-black"
-                      }`}
-                    >
-                      <Rows3 className="mr-2 h-4 w-4" />
-                      All
-                    </button>
-                    {subcategories.map((category) => {
-                      const CategoryIcon = getCategoryIcon(category.label);
-
-                      return (
-                        <button
-                          key={category.key}
-                          type="button"
-                          onClick={() => setSelectedSubcategory(category.key)}
-                          className={`inline-flex h-10 items-center whitespace-nowrap rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
-                            selectedSubcategory === category.key
-                              ? "border-foreground/20 bg-foreground text-background"
-                              : "border-border/50 bg-background/70 text-black/68 hover:border-border hover:text-black"
-                          }`}
-                        >
-                          <CategoryIcon className="mr-2 h-4 w-4" />
-                          {category.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              <div className="hidden overflow-x-auto md:block">
-                <div className="flex min-w-max items-center gap-6">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedSubcategory("all")}
-                    className={`inline-flex items-center gap-2 text-[1.05rem] transition-colors ${
-                      selectedSubcategory === "all"
-                        ? "text-black"
-                        : "text-black/52 hover:text-black/80"
-                    }`}
-                  >
-                    <Rows3 className="h-4 w-4" />
-                    All
-                  </button>
-                  {subcategories.map((category) => {
-                    const CategoryIcon = getCategoryIcon(category.label);
-
-                    return (
-                      <button
-                        key={category.key}
-                        type="button"
-                        onClick={() => setSelectedSubcategory(category.key)}
-                        className={`inline-flex items-center gap-2 text-[1.05rem] transition-colors ${
-                          selectedSubcategory === category.key
-                            ? "text-black"
-                            : "text-black/52 hover:text-black/80"
-                        }`}
-                      >
-                        <CategoryIcon className="h-4 w-4" />
-                        {category.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 md:flex-nowrap">
                 <Popover>
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-black/72 transition-colors hover:border-border hover:text-black"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                      style={themedButtonStyle(activeFilterCount > 0)}
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Filter
                       {activeFilterCount > 0 ? (
-                        <span className="rounded-full bg-foreground px-2 py-0.5 text-[11px] font-medium leading-none text-background">
+                        <span className="rounded-full bg-white/24 px-2 py-0.5 text-[11px] font-medium leading-none">
                           {activeFilterCount}
                         </span>
                       ) : null}
                     </button>
                   </PopoverTrigger>
                   <PopoverContent
-                    align="end"
-                    className="w-[min(24rem,calc(100vw-2rem))] rounded-3xl border-border/60 bg-background/95 p-5"
+                    align="center"
+                    className="w-[min(24rem,calc(100vw-2rem))] rounded-3xl border-0 bg-white/95 p-5 shadow-2xl"
                   >
-                    <div className="space-y-5">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-medium text-[#111111]">Filter productions</p>
-                          <p className="text-xs text-black/52">Refine by venue or date.</p>
+                          <p
+                            className="text-sm font-black uppercase tracking-[0.04em] text-[#111111]"
+                            style={{ fontFamily: HOME_DISPLAY_FONT }}
+                          >
+                            Categories
+                          </p>
+                          <p className="mt-1 text-xs text-black/52">Choose the scenic work type.</p>
                         </div>
-                        {(selectedVenue !== "all" || selectedYear !== "all") && (
+                        {selectedSubcategory !== "all" ? (
                           <button
                             type="button"
-                            onClick={() => {
-                              setSelectedVenue("all");
-                              setSelectedYear("all");
-                            }}
+                            onClick={() => setSelectedSubcategory("all")}
                             className="text-xs text-black/55 transition-colors hover:text-black"
                           >
                             Clear
                           </button>
-                        )}
+                        ) : null}
                       </div>
 
-                      <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/45">
-                          Venue
-                        </p>
-                        <div className="flex max-h-40 flex-wrap gap-2 overflow-y-auto pr-1">
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedSubcategory("all")}
+                          className="inline-flex h-9 items-center gap-2 rounded-full border px-3 text-[0.78rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                          style={themedButtonStyle(selectedSubcategory === "all")}
+                        >
+                          <Rows3 className="h-4 w-4" />
+                          All
+                        </button>
+                        {subcategories.map((category) => (
                           <button
+                            key={category.key}
                             type="button"
-                            onClick={() => setSelectedVenue("all")}
-                            className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                              selectedVenue === "all"
-                                ? "border-black bg-black text-white"
-                                : "border-border/50 text-black/62 hover:border-border hover:text-black"
-                            }`}
+                            onClick={() => setSelectedSubcategory(category.key)}
+                            className="inline-flex h-9 items-center rounded-full border px-3 text-[0.78rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                            style={themedButtonStyle(selectedSubcategory === category.key)}
                           >
-                            All venues
+                            {category.label}
                           </button>
-                          {venueOptions.map((venue) => (
-                            <button
-                              key={venue}
-                              type="button"
-                              onClick={() => setSelectedVenue(venue)}
-                              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                                selectedVenue === venue
-                                  ? "border-black bg-black text-white"
-                                  : "border-border/50 text-black/62 hover:border-border hover:text-black"
-                              }`}
-                            >
-                              {venue}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/45">
-                          Date
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedYear("all")}
-                            className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                              selectedYear === "all"
-                                ? "border-black bg-black text-white"
-                                : "border-border/50 text-black/62 hover:border-border hover:text-black"
-                            }`}
-                          >
-                            All dates
-                          </button>
-                          {yearOptions.map((year) => (
-                            <button
-                              key={year}
-                              type="button"
-                              onClick={() => setSelectedYear(year)}
-                              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                                selectedYear === year
-                                  ? "border-black bg-black text-white"
-                                  : "border-border/50 text-black/62 hover:border-border hover:text-black"
-                              }`}
-                            >
-                              {year}
-                            </button>
-                          ))}
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </PopoverContent>
@@ -653,7 +633,8 @@ export default function Projects({
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-black/72 transition-colors hover:border-border hover:text-black"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                      style={themedButtonStyle(sortKey !== "newest")}
                     >
                       <ArrowUpDown className="h-4 w-4" />
                       Sort
@@ -662,7 +643,7 @@ export default function Projects({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="end"
-                    className="w-56 rounded-2xl border-border/60 bg-background/95 p-2"
+                    className="w-56 rounded-2xl border-0 bg-white/95 p-2 text-[#111111] shadow-2xl"
                   >
                     {SORT_OPTIONS.map((option) => {
                       const SortIcon = option.icon;
@@ -671,7 +652,7 @@ export default function Projects({
                         <DropdownMenuItem
                           key={option.key}
                           onClick={() => setSortKey(option.key)}
-                          className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm"
+                          className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm text-[#111111]"
                         >
                           <span className="inline-flex items-center gap-2">
                             <SortIcon className="h-4 w-4 text-black/54" />
@@ -684,15 +665,18 @@ export default function Projects({
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <div className="hidden h-10 items-center rounded-full border border-border/50 p-1 md:inline-flex">
+                <div
+                  className="hidden h-10 items-center rounded-full p-1 md:inline-flex"
+                  style={{ backgroundColor: homeTheme.accentSoft }}
+                >
                   <button
                     type="button"
                     onClick={() => setViewMode("grid")}
-                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-                      viewMode === "grid"
-                        ? "bg-foreground text-background"
-                        : "text-black/55 hover:text-black"
-                    }`}
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors"
+                    style={{
+                      backgroundColor: viewMode === "grid" ? homeTheme.controlBg : "transparent",
+                      color: viewMode === "grid" ? homeTheme.controlInk : homeTheme.muted,
+                    }}
                     aria-label="Grid view"
                   >
                     <LayoutGrid className="h-4 w-4" />
@@ -700,24 +684,25 @@ export default function Projects({
                   <button
                     type="button"
                     onClick={() => setViewMode("list")}
-                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-                      viewMode === "list"
-                        ? "bg-foreground text-background"
-                        : "text-black/55 hover:text-black"
-                    }`}
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors"
+                    style={{
+                      backgroundColor: viewMode === "list" ? homeTheme.controlBg : "transparent",
+                      color: viewMode === "list" ? homeTheme.controlInk : homeTheme.muted,
+                    }}
                     aria-label="List view"
                   >
                     <List className="h-4 w-4" />
                   </button>
                 </div>
-              </div>
             </MotionReveal>
 
-            {(selectedVenue !== "all" || selectedYear !== "all" || sortKey !== "newest") && (
-              <div className="flex flex-wrap items-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-sm text-black/52">
+            {(selectedSubcategory !== "all" || sortKey !== "newest") && (
+              <div
+                className="mx-auto flex max-w-[74rem] flex-wrap items-center gap-3 px-[clamp(2rem,8vw,9rem)] py-3 text-sm"
+                style={{ color: homeTheme.muted }}
+              >
                 <span>{sortedProjects.length} productions</span>
-                {selectedVenue !== "all" ? <span>Venue: {selectedVenue}</span> : null}
-                {selectedYear !== "all" ? <span>Date: {selectedYear}</span> : null}
+                {selectedCategoryLabel ? <span>Category: {selectedCategoryLabel}</span> : null}
                 {sortKey !== "newest" ? (
                   <span>Sort: {SORT_OPTIONS.find((option) => option.key === sortKey)?.label}</span>
                 ) : null}
@@ -729,9 +714,12 @@ export default function Projects({
         {isLoading ? (
           <PortfolioGridSkeleton />
         ) : sortedProjects.length > 0 ? (
-          <section className="border-t border-black/10 bg-white">
+          <section className="px-[clamp(2rem,8vw,9rem)] py-[clamp(2.5rem,5vw,4.5rem)]">
             {visibleViewMode === "grid" ? (
-              <div className="portfolio-focus-grid grid grid-cols-1 border-l border-black/10 md:grid-cols-4">
+              <div
+                ref={projectGridRef}
+                className="portfolio-focus-grid mx-auto grid max-w-[74rem] grid-cols-1 gap-[clamp(1.25rem,2.5vw,2rem)] sm:grid-cols-2 md:grid-cols-6"
+              >
                 {sortedProjects.map((project, index) => {
                   const href = getProjectPath(project);
 
@@ -740,6 +728,8 @@ export default function Projects({
                       key={`${project.slug}-${index}`}
                       eager={index < eagerProjectCount}
                       href={href}
+                      homeTheme={homeTheme}
+                      aspectClassName={getProjectAspectClass(index)}
                       layoutClass={getProjectPanelClass(index)}
                       onNavigate={navigateWithTransition}
                       project={project}
@@ -751,7 +741,7 @@ export default function Projects({
                 })}
               </div>
             ) : (
-              <div className="mx-auto max-w-[88rem] border-t border-black/10">
+              <div className="mx-auto max-w-[74rem]">
                 {sortedProjects.map((project, index) => {
                   const href = getProjectPath(project);
                   const directorLabel = getDirectorLabel(project);
@@ -761,22 +751,30 @@ export default function Projects({
                       key={`${project.slug}-${index}`}
                       href={href}
                       onClick={(event) => navigateWithTransition(event, href)}
-                      className="group grid gap-4 border-b border-black/10 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                      className="group grid gap-4 rounded-[1.15rem] px-4 py-5 transition-colors md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                      style={{ backgroundColor: index % 2 === 0 ? homeTheme.accentSoft : "transparent" }}
                     >
-                      <div className="space-y-2 text-sm text-black/48">
-                        <p className="text-black/82">{getVenueLabel(project)}</p>
+                      <div className="space-y-2 text-sm" style={{ color: homeTheme.muted }}>
+                        <p style={{ color: homeTheme.ink }}>{getVenueLabel(project)}</p>
                         <p>{formatProjectDate(project) || "Date unavailable"}</p>
                       </div>
 
                       <div className="min-w-0">
-                        <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-black/88">
+                        <p
+                          className="text-[1.12rem] font-black uppercase tracking-[0]"
+                          style={{
+                            color: homeTheme.ink,
+                            fontFamily: HOME_DISPLAY_FONT,
+                            fontStretch: "condensed",
+                          }}
+                        >
                           {project.title}
                         </p>
                         {directorLabel ? (
-                          <p className="mt-2 text-sm leading-6 text-black/52">{directorLabel}</p>
+                          <p className="mt-2 text-sm leading-6" style={{ color: homeTheme.muted }}>{directorLabel}</p>
                         ) : null}
                         {project.subcategory ? (
-                          <p className="mt-1 text-sm leading-6 text-black/38">{project.subcategory}</p>
+                          <p className="mt-1 text-sm leading-6" style={{ color: homeTheme.muted }}>{project.subcategory}</p>
                         ) : null}
                       </div>
                     </a>
@@ -786,9 +784,9 @@ export default function Projects({
             )}
           </section>
         ) : (
-          <section className="bg-white pb-24 pt-16">
+          <section className="pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-black/55">
+              <p style={{ color: homeTheme.muted }}>
                 No scenic design productions match the current filters.
               </p>
             </div>

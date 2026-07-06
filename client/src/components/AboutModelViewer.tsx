@@ -3,6 +3,8 @@
 import { Download } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { useHomeTheme } from "@/lib/homeTheme";
+
 type AboutModelViewerProps = {
   src: string;
   downloadName: string;
@@ -14,6 +16,7 @@ export default function AboutModelViewer({
   src,
   downloadName,
 }: AboutModelViewerProps) {
+  const { homeTheme } = useHomeTheme();
   const mountRef = useRef<HTMLDivElement | null>(null);
   const modelRef = useRef<LoadedModel | null>(null);
   const pointerDownRef = useRef(false);
@@ -291,20 +294,26 @@ export default function AboutModelViewer({
     <figure className="space-y-3 pt-8" aria-label="3D model">
       <div
         ref={mountRef}
-        className="relative aspect-[2/3] w-full cursor-grab overflow-hidden bg-[#f1f0ec] active:cursor-grabbing"
+        className="relative aspect-[2/3] w-full cursor-grab overflow-visible bg-transparent active:cursor-grabbing"
       >
         {status !== "ready" ? (
-          <div className="absolute inset-0 grid place-items-center px-3 text-center font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-black/36">
+          <div
+            className="absolute inset-0 grid place-items-center px-3 text-center font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em]"
+            style={{ color: homeTheme.muted }}
+          >
             {status === "error" ? "Model unavailable" : "Loading model"}
           </div>
         ) : null}
       </div>
 
-      <figcaption className="flex items-center justify-center gap-2 font-sans text-[0.72rem] font-semibold leading-5 tracking-[0.02em] text-black/32">
+      <figcaption
+        className="flex items-center justify-center gap-2 font-sans text-[0.72rem] font-semibold leading-5 tracking-[0.02em]"
+        style={{ color: homeTheme.muted }}
+      >
         <a
           href={src}
           download={downloadName}
-          className="inline-flex items-center gap-1.5 underline-offset-4 transition-colors hover:text-black/58 hover:underline"
+          className="inline-flex items-center gap-1.5 underline-offset-4 transition-opacity hover:opacity-80 hover:underline"
         >
           <Download className="h-3 w-3" aria-hidden="true" />
           GLB

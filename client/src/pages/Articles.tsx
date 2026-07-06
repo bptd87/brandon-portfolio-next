@@ -27,11 +27,16 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { AnimatedSection } from "@/components/AnimatedSection";
 import MotionReveal from "@/components/MotionReveal";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 import {
   Dialog,
   DialogClose,
@@ -263,14 +268,14 @@ function ArticleGridCard({
     color: categoryStyle.swatchTextColor,
   } as CSSProperties;
   const cardClassName = featured
-    ? "publish-motion-card group grid overflow-hidden rounded-none bg-white shadow-[0_18px_38px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.05] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(17,17,17,0.11)] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]"
-    : "publish-motion-card group block h-full overflow-hidden rounded-none bg-white shadow-[0_10px_22px_rgba(17,17,17,0.052)] ring-1 ring-black/[0.05] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(17,17,17,0.085)]";
+    ? "publish-motion-card group grid overflow-hidden rounded-[1.75rem] shadow-[0_22px_55px_rgba(17,17,17,0.12)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_30px_70px_rgba(17,17,17,0.16)] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]"
+    : "publish-motion-card group block h-full overflow-hidden rounded-[1.35rem] shadow-[0_14px_34px_rgba(17,17,17,0.09)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(17,17,17,0.13)]";
   const mediaClassName = featured
-    ? "publish-card-media article-card-media transition-card relative aspect-square overflow-hidden bg-black/[0.04] lg:h-full lg:min-h-[26rem]"
-    : "publish-card-media article-card-media transition-card relative aspect-square overflow-hidden bg-black/[0.04]";
+    ? "publish-card-media article-card-media transition-card relative aspect-square overflow-hidden lg:h-full lg:min-h-[26rem]"
+    : "publish-card-media article-card-media transition-card relative aspect-square overflow-hidden";
   const copyClassName = featured
     ? "publish-card-copy flex min-h-[18rem] flex-col px-6 pb-6 pt-6 sm:px-8 sm:pb-8 sm:pt-8 lg:min-h-0"
-    : "publish-card-copy flex min-h-[12.75rem] flex-col px-5 pb-6 pt-5 sm:px-6 sm:pb-7";
+    : "publish-card-copy flex min-h-[12.75rem] flex-1 flex-col px-5 pb-6 pt-5 sm:px-6 sm:pb-7";
   const titleClassName = featured
     ? "block max-w-[34rem] text-[clamp(1.9rem,3.7vw,4.35rem)] font-semibold leading-[0.96] tracking-[-0.038em] transition-opacity duration-500 group-hover:opacity-85"
     : "block max-w-[21rem] text-[clamp(1.02rem,1.12vw,1.22rem)] font-semibold leading-[1.13] tracking-[-0.022em] transition-opacity duration-500 group-hover:opacity-85";
@@ -313,7 +318,10 @@ function ArticleGridCard({
                 }
               />
             ) : (
-              <div className="h-full w-full bg-muted" />
+              <div
+                className="h-full w-full"
+                style={{ backgroundColor: categoryStyle.swatchColor }}
+              />
             )}
           </div>
 
@@ -341,7 +349,7 @@ function ArticleGridCard({
                 {article.categoryName || "Article"}
               </span>
             </div>
-            <span className={titleClassName}>
+            <span className={titleClassName} style={{ fontFamily: HOME_DISPLAY_FONT }}>
               {decodeHTMLEntities(article.title)}
             </span>
             {dateLabel ? (
@@ -361,6 +369,32 @@ function ArticleGridCard({
 
 export default function Articles() {
   const router = useRouter();
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+  const pageStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+  } as CSSProperties;
+  const mutedStyle = {
+    color: homeTheme.muted,
+  } as CSSProperties;
+  const panelStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+  } as CSSProperties;
+  const primaryControlStyle = {
+    backgroundColor: homeTheme.controlBg,
+    color: homeTheme.controlInk,
+  } as CSSProperties;
+  const secondaryControlStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.muted,
+  } as CSSProperties;
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
     return normalizeCategoryParam(
@@ -466,27 +500,6 @@ export default function Articles() {
   ]
     .filter(Boolean)
     .join(", ");
-  const animateCardDeparture = async (target: HTMLElement) => {
-    const card = target.querySelector(".transition-card") as HTMLElement | null;
-    if (!card || typeof card.animate !== "function") return;
-    const animation = card.animate(
-      [
-        { transform: "scale(1)", filter: "brightness(1)" },
-        { transform: "scale(0.975)", filter: "brightness(1.08)" },
-      ],
-      {
-        duration: 150,
-        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-        fill: "forwards",
-      }
-    );
-    try {
-      await animation.finished;
-    } catch {
-      // Ignore interrupted animation.
-    }
-  };
-
   const navigateWithTransition = (
     event: MouseEvent<HTMLAnchorElement>,
     href: string
@@ -503,22 +516,7 @@ export default function Articles() {
     }
 
     event.preventDefault();
-    const anchor = event.currentTarget;
-    const navigate = () => router.push(href);
-    const performNavigation = async () => {
-      await animateCardDeparture(anchor);
-      navigate();
-    };
-    const doc = document as Document & {
-      startViewTransition?: (cb: () => void) => void;
-    };
-    if (doc.startViewTransition) {
-      doc.startViewTransition(() => {
-        void performNavigation();
-      });
-    } else {
-      void performNavigation();
-    }
+    router.push(href);
   };
 
   const itemHref = (article: ArticleCardItem) => `/articles/${article.slug}`;
@@ -554,7 +552,7 @@ export default function Articles() {
   };
 
   return (
-    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
+    <div className="articles-page relative min-h-screen transition-colors duration-500" style={pageStyle}>
       <SEO
         title={articleArchiveTitle}
         description={articleArchiveDescription}
@@ -570,26 +568,33 @@ export default function Articles() {
       <Header />
       <PublishingTopBar active="articles" />
 
-      <main>
+      <main className="relative z-10 transition-colors duration-500" style={{ backgroundColor: homeTheme.bg }}>
         <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
           <DialogContent
             showCloseButton={false}
-            overlayClassName="bg-[#f1f0ec]/55 backdrop-blur-2xl"
-            className="max-h-[min(88vh,44rem)] max-w-[min(46rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.7rem] border-0 bg-[#fbfaf7] p-8 text-[#111111] shadow-[0_35px_110px_rgba(17,17,17,0.24)] sm:p-10"
+            overlayClassName="bg-black/18 backdrop-blur-xl"
+            className="max-h-[min(88vh,44rem)] max-w-[min(46rem,calc(100vw-2rem))] overflow-y-auto rounded-[2rem] border-0 p-8 shadow-[0_35px_110px_rgba(17,17,17,0.24)] sm:p-10"
+            style={panelStyle}
           >
-            <DialogClose className="absolute left-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/[0.06] text-[#6f6b64] transition-colors hover:bg-black/[0.1] hover:text-[#111111]">
+            <DialogClose
+              className="absolute left-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors"
+              style={secondaryControlStyle}
+            >
               <X className="h-5 w-5" />
               <span className="sr-only">Close filters</span>
             </DialogClose>
             <div className="pl-14 sm:pl-16">
-              <DialogTitle className="text-[clamp(2rem,4vw,3rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
+              <DialogTitle
+                className="text-[clamp(2rem,4vw,3rem)] font-black uppercase leading-[0.92]"
+                style={displayStyle}
+              >
                 Filter by
               </DialogTitle>
             </div>
 
             <div className="mt-10 space-y-9">
               <div>
-                <p className="mb-4 text-[0.92rem] font-semibold tracking-[-0.02em] text-[#6f6b64]">
+                <p className="mb-4 text-[0.92rem] font-black uppercase" style={mutedStyle}>
                   Category
                 </p>
                 <div className="flex flex-wrap gap-3">
@@ -598,9 +603,14 @@ export default function Articles() {
                     onClick={() => setDraftCategory("all")}
                     className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[1rem] font-semibold tracking-[-0.025em] transition-colors ${
                       draftCategory === "all"
-                        ? "bg-[#111111] text-[#fbfaf7]"
-                        : "bg-black/[0.055] text-[#24211f] hover:bg-black/[0.09]"
+                        ? ""
+                        : ""
                     }`}
+                    style={
+                      draftCategory === "all"
+                        ? primaryControlStyle
+                        : secondaryControlStyle
+                    }
                   >
                     <Sparkles className="h-4 w-4" strokeWidth={2.8} />
                     All
@@ -616,8 +626,13 @@ export default function Articles() {
                         className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[1rem] font-semibold tracking-[-0.025em] transition-colors ${
                           draftCategory === category
                             ? `${categoryStyle.bg} ${categoryStyle.color} ring-1 ring-current/25`
-                            : "bg-black/[0.055] text-[#24211f] hover:bg-black/[0.09]"
+                            : ""
                         }`}
+                        style={
+                          draftCategory === category
+                            ? undefined
+                            : secondaryControlStyle
+                        }
                       >
                         <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
                         {category}
@@ -631,7 +646,8 @@ export default function Articles() {
                 <button
                   type="button"
                   onClick={applyFilters}
-                  className="rounded-full bg-[#6f2dff] px-7 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-white transition-colors hover:bg-[#6822e6]"
+                  className="rounded-full px-7 py-3 text-[1rem] font-black uppercase transition-colors"
+                  style={primaryControlStyle}
                 >
                   Apply
                 </button>
@@ -640,7 +656,8 @@ export default function Articles() {
                   onClick={() => {
                     setDraftCategory("all");
                   }}
-                  className="rounded-full bg-black/[0.055] px-5 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-[#5d5851] transition-colors hover:bg-black/[0.09] hover:text-[#111111]"
+                  className="rounded-full px-5 py-3 text-[1rem] font-black uppercase transition-colors"
+                  style={secondaryControlStyle}
                 >
                   Clear
                 </button>
@@ -653,17 +670,21 @@ export default function Articles() {
           <>
             <section
               id="article-archive"
-              className="scroll-mt-32 pb-12 pt-10 md:pb-16 md:pt-14"
+              className="scroll-mt-32 pb-12 pt-28 md:pb-16 md:pt-36"
             >
               <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
-                <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-                  <h1 className="font-sans text-[clamp(3.2rem,6.6vw,6.3rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-[#111111]">
-                    Articles
+                <div className="mb-10 flex flex-col items-center gap-7 text-center">
+                  <h1
+                    className="text-[clamp(4.6rem,12vw,10.5rem)] font-black uppercase leading-[0.82]"
+                    style={displayStyle}
+                  >
+                    ARTICLES
                   </h1>
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-wrap items-center justify-center gap-3">
                     <a
                       href="/articles/archive"
-                      className="inline-flex h-11 items-center gap-2 border border-black/[0.12] bg-[#111111] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#f1f0ec] shadow-[0_8px_26px_rgba(17,17,17,0.1)] transition-colors hover:bg-[#2a2724]"
+                      className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[0.95rem] font-black transition-colors"
+                      style={primaryControlStyle}
                     >
                       <BookOpen className="h-4 w-4" strokeWidth={2.6} />
                       View archive
@@ -671,12 +692,16 @@ export default function Articles() {
                     <button
                       type="button"
                       onClick={openFilter}
-                      className="inline-flex h-11 items-center gap-2 border border-black/[0.12] bg-[#fbfaf7] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#111111] shadow-[0_8px_26px_rgba(17,17,17,0.08)] transition-colors hover:bg-white"
+                      className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[0.95rem] font-black transition-colors"
+                      style={secondaryControlStyle}
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Filter
                       {activeFilterCount > 0 ? (
-                        <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#111111] px-1.5 text-[0.72rem] leading-none text-[#f1f0ec]">
+                        <span
+                          className="inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[0.72rem] leading-none"
+                          style={primaryControlStyle}
+                        >
                           {activeFilterCount}
                         </span>
                       ) : null}
@@ -728,9 +753,14 @@ export default function Articles() {
                         onClick={() => changePage(page)}
                         className={`h-10 min-w-10 rounded-full px-3 text-[0.95rem] font-semibold tracking-[-0.02em] transition-colors ${
                           currentPage === page
-                            ? "bg-[#111111] text-[#fbfaf7]"
-                            : "bg-[#fbfaf7] text-[#5d5851] shadow-sm ring-1 ring-black/[0.06] hover:text-[#111111]"
+                            ? ""
+                            : ""
                         }`}
+                        style={
+                          currentPage === page
+                            ? primaryControlStyle
+                            : secondaryControlStyle
+                        }
                       >
                         {page}
                       </button>
@@ -743,7 +773,7 @@ export default function Articles() {
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-[#5d5851]">
+              <p style={mutedStyle}>
                 No articles match the current filters.
               </p>
             </div>
@@ -752,12 +782,15 @@ export default function Articles() {
 
         <section className="pb-20 pt-2 md:pb-24">
           <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
-            <div className="border-t border-black/[0.08] pt-10 md:pt-12">
+            <div className="pt-10 md:pt-12">
               <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <p className="text-[clamp(1.05rem,1.35vw,1.28rem)] font-semibold leading-[1.08] tracking-[-0.018em] text-[#111111]">
-                  Reading Paths
+                <p
+                  className="text-[clamp(2.8rem,7vw,6rem)] font-black uppercase leading-[0.85]"
+                  style={displayStyle}
+                >
+                  READING PATHS
                 </p>
-                <p className="max-w-[26rem] text-[0.95rem] leading-6 tracking-[-0.015em] text-[#6f6b64] md:text-right">
+                <p className="max-w-[26rem] text-[0.95rem] leading-6 md:text-right" style={mutedStyle}>
                   Move through the archive by practice area, from project work
                   to tools and experiential design.
                 </p>
@@ -772,7 +805,7 @@ export default function Articles() {
                       key={path.title}
                       type="button"
                       onClick={() => navigateToCategory(path.category)}
-                      className="group min-h-[11rem] rounded-none p-6 text-left shadow-[0_10px_30px_rgba(17,17,17,0.075)] ring-1 ring-black/[0.06] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_18px_46px_rgba(17,17,17,0.12)]"
+                      className="group min-h-[11rem] rounded-[1.5rem] p-6 text-left shadow-[0_16px_42px_rgba(17,17,17,0.11)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_58px_rgba(17,17,17,0.15)]"
                       style={
                         {
                           backgroundColor: pathStyle.swatchColor,
@@ -781,7 +814,10 @@ export default function Articles() {
                       }
                     >
                       <span className="flex items-start justify-between gap-5">
-                        <span className="text-[1.35rem] font-semibold leading-[1.08] tracking-[-0.022em]">
+                        <span
+                          className="text-[1.75rem] font-black uppercase leading-[0.95]"
+                          style={{ fontFamily: HOME_DISPLAY_FONT }}
+                        >
                           {path.title}
                         </span>
                         <span
@@ -806,7 +842,12 @@ export default function Articles() {
         </section>
       </main>
 
-      <Footer tone="light" />
+      <Footer
+        tone="light"
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+      />
     </div>
   );
 }

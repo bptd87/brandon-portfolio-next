@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { type CSSProperties, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,6 +9,12 @@ import Header from "@/components/Header";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 import { RETIRED_LEARNING_ARTICLE_REDIRECTS } from "@shared/learningPortal";
 import { getTutorialArticles } from "@shared/articleTutorials";
 import { getLocalArticles } from "@shared/localArticles";
@@ -66,9 +72,35 @@ const getMonthLabel = (key: string) => {
 };
 
 export default function ArticlesArchive() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedYear, setSelectedYear] = useState("all");
   const [selectedMonth, setSelectedMonth] = useState("all");
+  const pageStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+  } as CSSProperties;
+  const mutedStyle = {
+    color: homeTheme.muted,
+  } as CSSProperties;
+  const panelStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.ink,
+  } as CSSProperties;
+  const controlStyle = {
+    backgroundColor: homeTheme.controlBg,
+    color: homeTheme.controlInk,
+  } as CSSProperties;
+  const secondaryControlStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+  } as CSSProperties;
 
   const allArticles = useMemo<ArticleArchiveItem[]>(
     () =>
@@ -146,7 +178,7 @@ export default function ArticlesArchive() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f1f0ec] text-[#111111]">
+    <div className="relative min-h-screen transition-colors duration-500" style={pageStyle}>
       <SEO
         title="Article Archive | Brandon PT Davis"
         description="A chronological archive of scenic design articles, Vectorworks tutorials, and studio writing by Brandon PT Davis."
@@ -155,15 +187,30 @@ export default function ArticlesArchive() {
       <Header />
       <PublishingTopBar active="articles" />
 
-      <main>
-        <section className="bg-[#e5e1d8] px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-12">
-          <div className="mx-auto flex max-w-[86rem] flex-col gap-4 lg:flex-row lg:items-center">
-            <span className="text-[1.05rem] font-semibold tracking-[-0.025em] text-[#7a7770]">Filter</span>
-            <div className="grid flex-1 gap-4 md:grid-cols-3">
+      <main className="relative z-10 pb-20 transition-colors duration-500" style={{ backgroundColor: homeTheme.bg }}>
+        <section className="px-[clamp(1.5rem,5vw,6rem)] pb-12 pt-28 md:pb-16 md:pt-32">
+          <div className="mx-auto max-w-[76rem] text-center">
+            <h1
+              className="text-[clamp(4.5rem,12vw,9rem)] font-black uppercase leading-[0.82]"
+              style={displayStyle}
+            >
+              ARCHIVE
+            </h1>
+            <p
+              className="mx-auto mt-5 max-w-[38rem] text-[clamp(1rem,1.7vw,1.28rem)] leading-8"
+              style={mutedStyle}
+            >
+              All articles, tutorials, and studio writing by date.
+            </p>
+            <div
+              className="mx-auto mt-8 grid max-w-[58rem] gap-3 rounded-[1.75rem] p-4 shadow-[0_22px_70px_rgba(17,17,17,0.08)] md:grid-cols-[1fr_0.7fr_0.7fr_auto]"
+              style={panelStyle}
+            >
               <select
                 value={selectedCategory}
                 onChange={(event) => setSelectedCategory(event.target.value)}
-                className="h-14 w-full border-0 bg-[#fbfaf7] px-4 text-[1.08rem] font-semibold tracking-[-0.035em] text-[#111111] shadow-sm outline-none ring-1 ring-black/[0.04]"
+                className="h-12 w-full rounded-full border-0 px-4 text-[0.95rem] font-black outline-none"
+                style={secondaryControlStyle}
               >
                 <option value="all">All Articles</option>
                 {categories.map((category) => (
@@ -178,7 +225,8 @@ export default function ArticlesArchive() {
                   setSelectedYear(event.target.value);
                   setSelectedMonth("all");
                 }}
-                className="h-14 w-full border-0 bg-[#fbfaf7] px-4 text-[1.08rem] font-semibold tracking-[-0.035em] text-[#111111] shadow-sm outline-none ring-1 ring-black/[0.04]"
+                className="h-12 w-full rounded-full border-0 px-4 text-[0.95rem] font-black outline-none"
+                style={secondaryControlStyle}
               >
                 <option value="all">All Years</option>
                 {years.map((year) => (
@@ -190,7 +238,8 @@ export default function ArticlesArchive() {
               <select
                 value={selectedMonth}
                 onChange={(event) => setSelectedMonth(event.target.value)}
-                className="h-14 w-full border-0 bg-[#fbfaf7] px-4 text-[1.08rem] font-semibold tracking-[-0.035em] text-[#111111] shadow-sm outline-none ring-1 ring-black/[0.04]"
+                className="h-12 w-full rounded-full border-0 px-4 text-[0.95rem] font-black outline-none"
+                style={secondaryControlStyle}
               >
                 <option value="all">All Months</option>
                 {months.map((month) => (
@@ -201,34 +250,42 @@ export default function ArticlesArchive() {
                   </option>
                 ))}
               </select>
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="h-12 rounded-full px-5 text-[0.95rem] font-black transition-transform hover:-translate-y-0.5"
+                style={controlStyle}
+              >
+                Reset
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="h-14 px-1 text-left text-[1.05rem] font-semibold tracking-[-0.025em] text-[#8a8780] transition-colors hover:text-[#111111]"
-            >
-              Reset
-            </button>
           </div>
         </section>
 
-        <section className="px-[clamp(1.5rem,5vw,6rem)] py-20 md:py-24">
-          <div className="mx-auto max-w-[86rem]">
+        <section className="px-[clamp(1.5rem,5vw,6rem)]">
+          <div className="mx-auto max-w-[76rem]">
             {groupedArticles.length > 0 ? (
-              <div className="space-y-20">
+              <div className="space-y-8">
                 {groupedArticles.map(([monthKey, articles]) => (
-                  <section key={monthKey}>
-                    <h1 className="text-[clamp(2.55rem,5vw,4.2rem)] font-semibold leading-none tracking-[-0.075em]">
+                  <section key={monthKey} className="rounded-[2rem] p-4 sm:p-6" style={panelStyle}>
+                    <h2
+                      className="px-2 text-[clamp(2.2rem,5vw,4rem)] font-black uppercase leading-none"
+                      style={displayStyle}
+                    >
                       {getMonthLabel(monthKey)}
-                    </h1>
-                    <div className="mt-7 divide-y divide-black/[0.12] border-t border-black/[0.12]">
+                    </h2>
+                    <div className="mt-6 grid gap-5">
                       {articles.map((article) => (
                         <Link
                           key={article.id}
                           href={`/articles/${article.slug}`}
-                          className="grid gap-8 py-9 transition-opacity hover:opacity-80 md:grid-cols-[minmax(15rem,24rem)_minmax(0,1fr)] md:items-center"
+                          className="grid gap-5 rounded-[1.5rem] p-3 transition-transform duration-300 hover:-translate-y-1 md:grid-cols-[minmax(12rem,20rem)_minmax(0,1fr)] md:items-center"
+                          style={secondaryControlStyle}
                         >
-                          <div className="relative aspect-[16/9] overflow-hidden rounded-none bg-black/[0.06]">
+                          <div
+                            className="relative aspect-[3/2] overflow-hidden rounded-[1.25rem]"
+                            style={{ backgroundColor: homeTheme.ghost }}
+                          >
                             {article.coverImageUrl ? (
                               <Image
                                 src={article.coverImageUrl}
@@ -240,13 +297,16 @@ export default function ArticlesArchive() {
                             ) : null}
                           </div>
                           <div>
-                            <p className="text-[1.05rem] font-semibold tracking-[-0.025em] text-[#848078]">
+                            <p className="text-[0.95rem] font-black uppercase tracking-[-0.02em]" style={mutedStyle}>
                               {article.categoryName || "Article"}
                             </p>
-                            <h2 className="mt-4 max-w-[52rem] text-[clamp(2rem,3.5vw,3.4rem)] font-semibold leading-[0.95] tracking-[-0.075em]">
+                            <h3
+                              className="mt-3 max-w-[48rem] text-[clamp(1.7rem,3vw,3rem)] font-black uppercase leading-[0.9]"
+                              style={displayStyle}
+                            >
                               {article.title}
-                            </h2>
-                            <p className="mt-6 text-[1.1rem] font-semibold tracking-[-0.025em] text-[#77736c]">
+                            </h3>
+                            <p className="mt-5 text-[1rem] font-semibold tracking-[-0.02em]" style={mutedStyle}>
                               {formatUtcDate(article.publishedAt || article.createdAt || "", "short")}
                               {article.readTime ? ` · ${article.readTime} min read` : ""}
                             </p>
@@ -258,8 +318,8 @@ export default function ArticlesArchive() {
                 ))}
               </div>
             ) : (
-              <div className="border-t border-black/[0.12] pt-10">
-                <p className="text-[1.2rem] font-semibold tracking-[-0.035em] text-[#77736c]">
+              <div className="rounded-[1.5rem] p-8" style={panelStyle}>
+                <p className="text-[1.2rem] font-semibold tracking-[-0.035em]" style={mutedStyle}>
                   No articles match those filters.
                 </p>
               </div>
@@ -268,7 +328,12 @@ export default function ArticlesArchive() {
         </section>
       </main>
 
-      <Footer tone="light" />
+      <Footer
+        tone="light"
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+      />
     </div>
   );
 }

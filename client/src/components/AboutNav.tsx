@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { Link } from "wouter";
 
+import { HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
+
 type AboutNavProps = {
   tone?: "light" | "dark";
 };
@@ -10,6 +12,7 @@ type AboutNavProps = {
 export default function AboutNav({ tone = "light" }: AboutNavProps) {
   const pathname = usePathname() || "/";
   const isDark = tone === "dark";
+  const { homeTheme } = useHomeTheme();
 
   const navItems = [
     { path: "/about", label: "Profile" },
@@ -18,53 +21,44 @@ export default function AboutNav({ tone = "light" }: AboutNavProps) {
     { path: "/about/teaching", label: "Teaching", aliases: ["/teaching-philosophy", "/about/philosophy"] },
   ];
 
-  const linkClass = (isActive: boolean) =>
-    `text-[0.95rem] tracking-[-0.025em] transition-colors ${
-      isDark
-        ? isActive
-          ? "text-white"
-          : "text-white/48 hover:text-white"
-        : isActive
-          ? "text-[#111111]"
-          : "text-[#777169] hover:text-[#111111]"
-    }`;
+  const linkClass =
+    "inline-flex h-10 shrink-0 items-center justify-center rounded-full border px-4 text-[0.75rem] font-black uppercase leading-none tracking-[0.04em] transition-[background-color,color,transform] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30";
 
   return (
     <nav
       aria-label="About section navigation"
-      className={`sticky top-[72px] z-30 border-b backdrop-blur-xl ${
-        isDark ? "border-white/12 bg-black/88" : "border-black/[0.06] bg-[#f7f6f2]/90"
-      }`}
+      className="absolute left-[clamp(1.25rem,2.4vw,2.25rem)] top-[clamp(1.25rem,2.4vw,2.25rem)] z-[60] max-w-[calc(100vw-7rem)] overflow-visible"
+      style={{ fontFamily: HOME_DISPLAY_FONT }}
     >
-      <div className="grid min-h-16 gap-3 px-[clamp(1rem,5vw,6rem)] py-3 md:grid-cols-[10.875rem_minmax(0,1fr)] md:items-center md:gap-8 md:px-[clamp(1.5rem,5vw,6rem)]">
-        <Link
-          href="/about"
-          className={`text-[1.35rem] font-semibold leading-none tracking-[-0.045em] ${
-            isDark ? "text-white" : "text-[#111111]"
-          }`}
-        >
-          About
-        </Link>
-
-        <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex min-w-max items-center gap-6 md:gap-8">
-            {navItems.map((item) => {
-              const isActive =
-                pathname === item.path ||
-                item.aliases?.includes(pathname);
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className={linkClass(Boolean(isActive))}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
+      <div className="flex max-w-full flex-wrap items-center gap-2 overflow-visible">
+        {navItems.map((item) => {
+          const isActive =
+            pathname === item.path ||
+            item.aliases?.includes(pathname);
+          return (
+            <Link
+              key={item.path}
+              href={item.path}
+              className={linkClass}
+              style={{
+                backgroundColor: isActive
+                  ? homeTheme.controlBg
+                  : isDark
+                    ? "rgba(255,255,255,0.14)"
+                    : homeTheme.accentSoft,
+                color: isActive
+                  ? homeTheme.controlInk
+                  : isDark
+                    ? "rgba(255,255,255,0.74)"
+                    : homeTheme.ink,
+                borderColor: isActive ? "transparent" : homeTheme.ghost,
+              }}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
         </div>
-      </div>
     </nav>
   );
 }

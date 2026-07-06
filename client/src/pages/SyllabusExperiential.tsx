@@ -1,11 +1,13 @@
 "use client";
 
+import { type CSSProperties } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SyllabusNav from "@/components/SyllabusNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { getLocalArticles } from "@shared/localArticles";
@@ -76,12 +78,36 @@ const modules = [
 ];
 
 export default function SyllabusExperiential() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
   const featuredCourseArticle = getLocalArticles().find(
     (article) => article.slug === "studio-ghibli-inspired-immersive-dining-experience"
   );
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+    fontStretch: "condensed",
+  } as CSSProperties;
+  const mutedStyle = { color: homeTheme.muted } as CSSProperties;
+  const panelStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.ink,
+  } as CSSProperties;
 
   return (
-    <div className="min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div
+      className="min-h-screen transition-colors duration-500"
+      style={
+        {
+          backgroundColor: homeTheme.bg,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+          "--background": homeTheme.bg,
+          "--foreground": homeTheme.ink,
+          "--border": homeTheme.ghost,
+        } as CSSProperties
+      }
+    >
       <SEO
         title="Experiential Design Syllabus"
         description="Course syllabus for experiential design: themed entertainment, immersive environments, and commercial storytelling workflows."
@@ -128,11 +154,14 @@ export default function SyllabusExperiential() {
       <section className="px-5 pb-16 pt-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:pb-20 md:pt-20">
         <div className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(22rem,0.34fr)] lg:items-start lg:gap-12">
           <div className="min-w-0">
-            <p className="section-kicker text-black/42">Course Syllabus</p>
-            <h1 className="mt-6 max-w-[9.5ch] font-sans text-[clamp(3.7rem,8vw,7.8rem)] font-semibold leading-[0.9] tracking-[0] text-black">
+            <p className="section-kicker" style={mutedStyle}>Course Syllabus</p>
+            <h1
+              className="mt-6 max-w-[9.5ch] text-[clamp(3.5rem,7vw,6.8rem)] font-black uppercase leading-[0.9] tracking-[0]"
+              style={displayStyle}
+            >
               Experiential Design
             </h1>
-            <p className="mt-8 max-w-3xl text-[1.18rem] leading-8 tracking-[0] text-black/62 md:text-[1.32rem] md:leading-9">
+            <p className="mt-8 max-w-3xl text-[1.08rem] leading-8 tracking-[0] md:text-[1.18rem] md:leading-9" style={mutedStyle}>
               Commercial storytelling through space, audience, and experience. The course asks
               scenic designers to apply theatrical methods to themed entertainment, museums,
               restaurants, and brand-centered environments.
@@ -140,46 +169,48 @@ export default function SyllabusExperiential() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="/articles?category=Themed%20Entertainment"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-black px-5 text-[0.95rem] font-medium tracking-[0] text-white transition-colors hover:bg-[color-mix(in_oklch,var(--accent-articles)_58%,black)]"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
               >
                 <span>Course Materials</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
               <Link
                 href="/about/teaching"
-                className="inline-flex min-h-11 items-center rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[0] text-black transition-colors hover:bg-white/80"
+                className="inline-flex min-h-11 items-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                style={panelStyle}
               >
                 Teaching Context
               </Link>
             </div>
           </div>
 
-          <aside className="rounded-lg bg-white/58 p-6 md:p-7 lg:mt-16">
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.22em] text-black/40">
+          <aside className="rounded-[1.65rem] p-6 md:p-7 lg:mt-16" style={panelStyle}>
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.22em]" style={mutedStyle}>
               Course frame
             </p>
             <dl className="mt-8 space-y-6">
               <div>
-                <dt className="text-[0.82rem] font-medium uppercase tracking-[0.14em] text-black/38">
+                <dt className="text-[0.82rem] font-black uppercase tracking-[0.12em]" style={displayStyle}>
                   Practice
                 </dt>
-                <dd className="mt-2 text-[1.06rem] leading-7 text-black/72">
+                <dd className="mt-2 text-[1rem] leading-7" style={mutedStyle}>
                   Themed entertainment, immersive environments, commercial storytelling.
                 </dd>
               </div>
               <div>
-                <dt className="text-[0.82rem] font-medium uppercase tracking-[0.14em] text-black/38">
+                <dt className="text-[0.82rem] font-black uppercase tracking-[0.12em]" style={displayStyle}>
                   Method
                 </dt>
-                <dd className="mt-2 text-[1.06rem] leading-7 text-black/72">
+                <dd className="mt-2 text-[1rem] leading-7" style={mutedStyle}>
                   Concept research, guest flow, client presentation, and visual pitch work.
                 </dd>
               </div>
               <div>
-                <dt className="text-[0.82rem] font-medium uppercase tracking-[0.14em] text-black/38">
+                <dt className="text-[0.82rem] font-black uppercase tracking-[0.12em]" style={displayStyle}>
                   Semester
                 </dt>
-                <dd className="mt-2 text-[1.06rem] leading-7 text-black/72">
+                <dd className="mt-2 text-[1rem] leading-7" style={mutedStyle}>
                   Five projects, four guest responses, 1300 points.
                 </dd>
               </div>
@@ -191,16 +222,16 @@ export default function SyllabusExperiential() {
       <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto max-w-[88rem]">
           <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="section-kicker text-foreground/40 md:sticky md:top-32">
+            <div className="section-kicker md:sticky md:top-32" style={mutedStyle}>
               Overview
             </div>
             <div className="max-w-4xl space-y-8">
-              <p className="text-[1.14rem] leading-9 text-foreground/72 md:text-[1.22rem]">
+              <p className="text-[1.08rem] leading-9 md:text-[1.16rem]" style={mutedStyle}>
                 Using theatre design skills, this course bridges the world of commercial design:
                 theme parks, restaurants, museums, interactive installations, and other
                 environments centered on storytelling or concept-based communication.
               </p>
-              <p className="text-[1.06rem] leading-8 text-foreground/60 md:text-[1.12rem]">
+              <p className="text-[1.02rem] leading-8 md:text-[1.08rem]" style={mutedStyle}>
                 Students are asked to embrace the specific constraints of commercial work,
                 including integration, longevity, audience engagement, and the translation of ideas
                 into a pitchable, client-ready format.
@@ -212,26 +243,26 @@ export default function SyllabusExperiential() {
 
       <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto grid max-w-[88rem] gap-4 lg:grid-cols-2">
-          <div className="rounded-lg bg-white/58 p-6 md:p-8">
-            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-black/40">
+          <div className="rounded-[1.65rem] p-6 md:p-8" style={panelStyle}>
+            <h2 className="text-[0.9rem] font-black uppercase tracking-[0.12em]" style={displayStyle}>
               Course Objectives
             </h2>
             <div className="mt-6 space-y-4">
               {objectives.map((item) => (
-                <p key={item} className="text-[1rem] leading-7 text-black/68">
+                <p key={item} className="text-[1rem] leading-7" style={mutedStyle}>
                   {item}
                 </p>
               ))}
             </div>
           </div>
 
-          <div className="rounded-lg bg-white/58 p-6 md:p-8">
-            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-black/40">
+          <div className="rounded-[1.65rem] p-6 md:p-8" style={panelStyle}>
+            <h2 className="text-[0.9rem] font-black uppercase tracking-[0.12em]" style={displayStyle}>
               Software and Materials
             </h2>
             <div className="mt-6 space-y-4">
               {software.map((item) => (
-                <p key={item} className="text-[1rem] leading-7 text-black/68">
+                <p key={item} className="text-[1rem] leading-7" style={mutedStyle}>
                   {item}
                 </p>
               ))}
@@ -243,10 +274,13 @@ export default function SyllabusExperiential() {
       <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+            <h2
+              className="text-[clamp(1.9rem,3.4vw,2.85rem)] font-black uppercase leading-[0.94] tracking-[0]"
+              style={displayStyle}
+            >
               Evaluation and project structure.
             </h2>
-            <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
+            <p className="mt-6 text-[1.02rem] leading-8 md:text-[1.08rem]" style={mutedStyle}>
               The semester builds through increasingly complex projects, ending in a final
               collaboration that asks students to synthesize concept, branding, visualization, and
               presentation.
@@ -257,21 +291,25 @@ export default function SyllabusExperiential() {
             {evaluation.map(([title, points, description]) => (
               <div
                 key={title}
-                className="grid gap-3 rounded-lg bg-white/50 px-4 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8 md:px-6"
+                className="grid gap-3 rounded-[1.25rem] px-4 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8 md:px-6"
+                style={panelStyle}
               >
-                <p className="font-sans text-[1rem] font-medium tracking-[-0.03em] text-foreground">
+                <p className="text-[1rem] font-black uppercase tracking-[0]" style={displayStyle}>
                   {title}
                 </p>
-                <p className="text-[0.98rem] leading-7 text-foreground/54">{points}</p>
-                <p className="text-[0.98rem] leading-7 text-foreground/60">{description}</p>
+                <p className="text-[0.98rem] leading-7" style={mutedStyle}>{points}</p>
+                <p className="text-[0.98rem] leading-7" style={mutedStyle}>{description}</p>
               </div>
             ))}
-            <div className="grid gap-3 rounded-lg bg-black px-4 py-5 text-white md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8 md:px-6">
-              <p className="font-sans text-[1rem] font-medium tracking-[-0.03em]">
+            <div
+              className="grid gap-3 rounded-[1.25rem] px-4 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8 md:px-6"
+              style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
+            >
+              <p className="text-[1rem] font-black uppercase tracking-[0]" style={{ fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}>
                 Total
               </p>
-              <p className="text-[0.98rem] leading-7 text-white/68">1300</p>
-              <p className="text-[0.98rem] leading-7 text-white/72">Semester total</p>
+              <p className="text-[0.98rem] leading-7 opacity-80">1300</p>
+              <p className="text-[0.98rem] leading-7 opacity-80">Semester total</p>
             </div>
           </div>
         </div>
@@ -280,20 +318,26 @@ export default function SyllabusExperiential() {
       <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
         <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+            <h2
+              className="text-[clamp(1.9rem,3.4vw,2.85rem)] font-black uppercase leading-[0.94] tracking-[0]"
+              style={displayStyle}
+            >
               Weekly modules.
             </h2>
           </div>
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {modules.map((module) => (
-              <div key={module.title} className="rounded-lg bg-white/50 p-5 md:p-6">
-                <h3 className="font-sans text-[1.35rem] font-medium leading-[1.1] tracking-[-0.04em] text-foreground">
+              <div key={module.title} className="rounded-[1.65rem] p-5 md:p-6" style={panelStyle}>
+                <h3
+                  className="text-[1.28rem] font-black uppercase leading-[0.98] tracking-[0]"
+                  style={displayStyle}
+                >
                   {module.title}
                 </h3>
                 <div className="mt-5 space-y-3">
                   {module.weeks.map((week) => (
-                    <p key={week} className="text-[1rem] leading-7 text-foreground/62">
+                    <p key={week} className="text-[1rem] leading-7" style={mutedStyle}>
                       {week}
                     </p>
                   ))}
@@ -308,13 +352,16 @@ export default function SyllabusExperiential() {
         <section className="px-5 py-14 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-20">
           <div className="mx-auto max-w-[88rem]">
             <div className="max-w-3xl">
-              <p className="section-kicker text-foreground/40">
+              <p className="section-kicker" style={mutedStyle}>
                 Featured Course Article
               </p>
-              <h2 className="mt-5 font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+              <h2
+                className="mt-5 text-[clamp(1.9rem,3.4vw,2.85rem)] font-black uppercase leading-[0.94] tracking-[0]"
+                style={displayStyle}
+              >
                 Student work from this class, documented as a full themed entertainment studio project.
               </h2>
-              <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
+              <p className="mt-6 text-[1.02rem] leading-8 md:text-[1.08rem]" style={mutedStyle}>
                 This article follows the Studio Ghibli-inspired immersive dining project developed by
                 Stephens students in the experiential design course, showing how the class moves from
                 concept development into collaborative world-building, visualization, and pitch-ready
@@ -325,24 +372,28 @@ export default function SyllabusExperiential() {
             <div className="mt-10">
               <Link
                 href={`/articles/${featuredCourseArticle.slug}`}
-                className="group grid gap-6 rounded-lg bg-white/58 px-6 py-8 transition-colors hover:bg-white/78 md:grid-cols-[minmax(0,1fr)_2rem] md:px-10 md:py-10"
+                className="group grid gap-6 rounded-[1.65rem] px-6 py-8 transition-transform hover:-translate-y-1 md:grid-cols-[minmax(0,1fr)_2rem] md:px-10 md:py-10"
+                style={panelStyle}
               >
                 <div className="max-w-4xl">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.78rem] uppercase tracking-[0.18em] text-black/42">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.78rem] uppercase tracking-[0.18em]" style={mutedStyle}>
                     <span>{featuredCourseArticle.categoryName}</span>
                     <span>{formatUtcDate(featuredCourseArticle.publishedAt, "short")}</span>
                   </div>
-                  <h3 className="mt-4 font-sans text-[clamp(1.7rem,3vw,2.45rem)] font-medium leading-[1.02] tracking-[-0.05em] text-black">
+                  <h3
+                    className="mt-4 text-[clamp(1.65rem,2.8vw,2.25rem)] font-black uppercase leading-[0.96] tracking-[0]"
+                    style={displayStyle}
+                  >
                     {featuredCourseArticle.title}
                   </h3>
-                  <p className="mt-4 text-[1rem] leading-7 text-black/62 md:text-[1.05rem]">
+                  <p className="mt-4 text-[1rem] leading-7 md:text-[1.05rem]" style={mutedStyle}>
                     {featuredCourseArticle.excerpt}
                   </p>
-                  <div className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-medium tracking-[-0.02em] text-black">
+                  <div className="mt-6 inline-flex items-center gap-2 text-[0.92rem] font-black uppercase tracking-[0.02em]" style={{ color: homeTheme.ink }}>
                     <span>Read the full project article</span>
                   </div>
                 </div>
-                <ArrowRight className="hidden h-5 w-5 text-black/42 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-black md:block" />
+                <ArrowRight className="hidden h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 md:block" style={{ color: homeTheme.muted }} />
               </Link>
             </div>
           </div>
@@ -351,21 +402,29 @@ export default function SyllabusExperiential() {
 
       <section className="px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
         <div className="mx-auto max-w-[88rem]">
-          <div className="rounded-lg bg-black px-6 py-16 text-center text-white md:px-12 md:py-20">
-            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em]">
+          <div className="rounded-[1.65rem] px-6 py-16 text-center md:px-12 md:py-20" style={panelStyle}>
+            <h2
+              className="mx-auto max-w-4xl text-[clamp(2rem,3.8vw,3.6rem)] font-black uppercase leading-[0.94] tracking-[0]"
+              style={displayStyle}
+            >
               Return to teaching philosophy and course context.
             </h2>
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/about/teaching"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
+                className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
               >
                 <span>Back to Teaching Philosophy</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/syllabus/3d-modeling"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-white/14"
+                className="inline-flex h-11 items-center gap-2 rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: homeTheme.bg,
+                  color: homeTheme.ink,
+                }}
               >
                 <span>See 3D Modeling Syllabus</span>
               </Link>
@@ -374,7 +433,7 @@ export default function SyllabusExperiential() {
         </div>
       </section>
 
-      <Footer tone="light" />
+      <Footer tone="light" backgroundColor={homeTheme.bg} />
     </div>
   );
 }

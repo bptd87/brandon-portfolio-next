@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Avenir Next", Avenir, "Gill Sans", "Trebuchet MS", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Avenir Next", Avenir, "Gill Sans", "Trebuchet MS", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: Inter, "Inter Tight", "Avenir Next", Avenir, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --radius-sm: 2px;
   --radius-md: 4px;
@@ -189,16 +189,16 @@
 }
 
 .about-profile-light {
-  --background: #f1f0ec;
-  --foreground: #111111;
-  --card: rgba(17, 17, 17, 0.06);
-  --card-foreground: #111111;
-  --popover: rgba(255, 255, 255, 0.9);
-  --popover-foreground: #111111;
-  --muted: rgba(17, 17, 17, 0.08);
-  --muted-foreground: rgba(17, 17, 17, 0.58);
-  --border: rgba(17, 17, 17, 0.14);
-  --input: rgba(17, 17, 17, 0.12);
+  background-color: var(--background);
+  color: var(--foreground);
+  --card: color-mix(in srgb, var(--foreground) 6%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: color-mix(in srgb, var(--background) 92%, white);
+  --popover-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 8%, transparent);
+  --muted-foreground: color-mix(in srgb, var(--foreground) 58%, transparent);
+  --border: color-mix(in srgb, var(--foreground) 14%, transparent);
+  --input: color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 
 @layer base {
@@ -347,14 +347,6 @@
     border-radius: 9999px !important;
   }
 
-  .site-media-square,
-  .site-media-square:has(> img),
-  .site-media-square:has(> picture),
-  .site-media-square img,
-  img.site-media-square {
-    border-radius: 0 !important;
-  }
-
   .project-hero-media,
   .project-hero-media img,
   img.project-hero-media {
@@ -413,6 +405,32 @@
 
   .dark ::-webkit-scrollbar-thumb:hover {
     background: oklch(1 0 0 / 30%);
+    background-clip: padding-box;
+  }
+
+  [data-home-scroll-root] {
+    scrollbar-color: rgb(44 44 44 / 18%) transparent;
+    scrollbar-width: thin;
+  }
+
+  [data-home-scroll-root]::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  [data-home-scroll-root]::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  [data-home-scroll-root]::-webkit-scrollbar-thumb {
+    background: rgb(44 44 44 / 16%);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+  }
+
+  [data-home-scroll-root]::-webkit-scrollbar-thumb:hover {
+    background: rgb(44 44 44 / 24%);
     background-clip: padding-box;
   }
 }

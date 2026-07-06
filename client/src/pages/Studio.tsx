@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -15,6 +15,7 @@ import Header from "@/components/Header";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 import {
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
 } from "@shared/learningPortal";
@@ -111,7 +112,7 @@ const apps = [
 type StudioTool = (typeof apps)[number];
 
 const studioToolCardClass =
-  "group flex h-full min-h-[29rem] w-full flex-col overflow-hidden rounded-none bg-white p-0 text-left shadow-[0_10px_24px_rgba(17,17,17,0.055)] ring-1 ring-black/[0.055] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(17,17,17,0.085)]";
+  "group flex h-full min-h-[28rem] w-full flex-col overflow-hidden rounded-[1.75rem] p-0 text-left shadow-[0_18px_54px_rgba(17,17,17,0.12)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)]";
 
 const studioLinks = [
   {
@@ -159,6 +160,8 @@ export default function Studio() {
   const closeTimerRef = useRef<number | null>(null);
   const [activeApp, setActiveApp] = useState<StudioTool | null>(null);
   const [isAppClosing, setIsAppClosing] = useState(false);
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
   const latestArticles = useMemo(
     () =>
       [...getLocalArticles(), ...getTutorialArticles()]
@@ -167,6 +170,24 @@ export default function Studio() {
         .slice(0, 3),
     []
   );
+  const pageStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+    "--background": homeTheme.bg,
+    "--foreground": homeTheme.ink,
+    "--border": homeTheme.ghost,
+  } as CSSProperties;
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+    fontStretch: "condensed",
+  } as CSSProperties;
+  const mutedStyle = { color: homeTheme.muted } as CSSProperties;
+  const softPanelStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.ink,
+  } as CSSProperties;
 
   function openStudioApp(app: StudioTool) {
     if (app.launchMode === "page") {
@@ -258,7 +279,7 @@ export default function Studio() {
   }, [activeApp]);
 
   return (
-    <div className="min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div className="min-h-screen transition-colors duration-500" style={pageStyle}>
       <SEO
         title="Studio | Articles, Apps & Directory"
         description="Studio hub for articles, design tools, and curated scenic design references by Brandon PT Davis."
@@ -304,48 +325,49 @@ export default function Studio() {
       <Header />
       <PublishingTopBar tone="white" />
 
-      <main className="pb-0">
-        <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
+      <main
+        className="relative z-10 pb-0 transition-colors duration-500"
+        style={{ backgroundColor: homeTheme.bg }}
+      >
+        <section className="px-[clamp(1.5rem,5vw,6rem)] pb-12 pt-28 md:pb-18 md:pt-32">
           <AnimatedSection>
-            <div className="mx-auto flex max-w-[62rem] flex-col items-center gap-8 md:gap-12">
-              <Image
-                src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/publish/article-top.png"
-                alt=""
-                width={1960}
-                height={484}
-                priority
-                className="site-media-square pointer-events-none h-auto w-full object-contain"
-              />
-              <h1 className="text-center font-sans text-[clamp(3.8rem,8vw,7.4rem)] font-semibold leading-[0.94] tracking-[-0.04em] text-[#111111]">
-                Studio
+            <div className="mx-auto flex max-w-[76rem] flex-col items-center text-center">
+              <h1
+                className="max-w-[10ch] text-[clamp(4.6rem,13vw,12rem)] font-black uppercase leading-[0.78] tracking-[0]"
+                style={displayStyle}
+              >
+                STUDIO
               </h1>
-              <Image
-                src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/publish/article-bottom-v2.png"
-                alt=""
-                width={1960}
-                height={484}
-                priority
-                className="site-media-square pointer-events-none h-auto w-full object-contain"
-              />
+              <p
+                className="mt-7 max-w-[42rem] text-[clamp(1.05rem,1.6vw,1.45rem)] font-medium leading-[1.35] tracking-[0]"
+                style={mutedStyle}
+              >
+                Articles, apps, and reference material for scenic design workflows that need to stay useful in the room.
+              </p>
             </div>
           </AnimatedSection>
         </section>
 
-        <section className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
+        <section className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
           <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-sans text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[0.96] tracking-[-0.038em] text-[#111111]">
-              Recent articles
+            <h2
+              className="text-[clamp(2.4rem,5vw,5.4rem)] font-black uppercase leading-[0.84] tracking-[0]"
+              style={displayStyle}
+            >
+              ARTICLES
             </h2>
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/articles"
-                className="inline-flex h-11 items-center border border-black/[0.12] bg-[#111111] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#f1f0ec] shadow-[0_8px_26px_rgba(17,17,17,0.1)] transition-colors hover:bg-[#2a2724]"
+                className="inline-flex h-11 items-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.04em] shadow-[0_10px_28px_rgba(17,17,17,0.1)] transition-transform hover:-translate-y-0.5"
+                style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
               >
                 Articles
               </Link>
               <Link
                 href="/articles/archive"
-                className="inline-flex h-11 items-center border border-black/[0.12] bg-[#fbfaf7] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#111111] shadow-[0_8px_26px_rgba(17,17,17,0.08)] transition-colors hover:bg-white"
+                className="inline-flex h-11 items-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                style={softPanelStyle}
               >
                 Archive
               </Link>
@@ -360,10 +382,10 @@ export default function Studio() {
                   <Link
                     key={article.id}
                     href={`/articles/${article.slug}`}
-                    className="group flex h-full flex-col overflow-hidden bg-white shadow-[0_10px_24px_rgba(17,17,17,0.055)] ring-1 ring-black/[0.055] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(17,17,17,0.085)]"
+                    className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] shadow-[0_18px_54px_rgba(17,17,17,0.12)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)]"
                     aria-label={`Article: ${article.title}`}
                   >
-                    <div className="relative aspect-square overflow-hidden bg-black/[0.06]">
+                    <div className="relative aspect-square overflow-hidden">
                       {article.coverImageUrl ? (
                         <img
                           src={article.coverImageUrl}
@@ -373,14 +395,14 @@ export default function Studio() {
                         />
                       ) : null}
                     </div>
-                    <div
-                      className="flex h-[12.5rem] flex-col px-5 py-5 sm:px-6"
-                      style={{ backgroundColor: swatch.background, color: swatch.text }}
-                    >
-                      <p className="text-[0.86rem] font-semibold tracking-[-0.02em]" style={{ color: swatch.muted }}>
+                      <div
+                        className="flex min-h-[12.5rem] flex-1 flex-col px-5 py-5 sm:px-6"
+                        style={{ backgroundColor: swatch.background, color: swatch.text }}
+                      >
+                      <p className="text-[0.86rem] font-black uppercase tracking-[0.04em]" style={{ color: swatch.muted }}>
                         {article.categoryName || "Article"}
                       </p>
-                      <h3 className="mt-4 line-clamp-3 max-w-[20rem] text-[clamp(1.18rem,1.38vw,1.48rem)] font-semibold leading-[1.08] tracking-[-0.028em]">
+                      <h3 className="mt-4 line-clamp-3 max-w-[20rem] text-[clamp(1.18rem,1.38vw,1.48rem)] font-black leading-[1.02] tracking-[0]">
                         {article.title}
                       </h3>
                     </div>
@@ -391,22 +413,26 @@ export default function Studio() {
           ) : null}
         </section>
 
-        <section className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)] pb-14 md:pb-20">
+        <section className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)] pb-12 md:pb-16">
           <Link
             href="/studio/directory"
-            className="group grid overflow-hidden bg-[#496784] text-white shadow-[0_14px_34px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.06] transition-transform duration-500 hover:-translate-y-0.5 hover:shadow-[0_20px_46px_rgba(17,17,17,0.12)] md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+            className="group grid overflow-hidden rounded-[2rem] shadow-[0_18px_54px_rgba(17,17,17,0.13)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)] md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+            style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
           >
             <div className="flex min-h-[24rem] flex-col px-6 py-7 sm:px-8 sm:py-9 md:min-h-[30rem]">
-              <p className="text-[1rem] font-semibold tracking-[-0.025em] text-white/68">
+              <p className="text-[0.9rem] font-black uppercase tracking-[0.06em] opacity-70">
                 Scenic Directory
               </p>
-              <h2 className="mt-8 max-w-[12ch] font-sans text-[clamp(2.8rem,5.8vw,6rem)] font-semibold leading-[0.94] tracking-[-0.042em]">
-                Research shelf.
+              <h2
+                className="mt-8 max-w-[12ch] text-[clamp(3rem,6vw,6.4rem)] font-black uppercase leading-[0.82] tracking-[0]"
+                style={{ fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}
+              >
+                DIRECTORY
               </h2>
-              <p className="mt-7 max-w-[34rem] text-[1.02rem] leading-7 tracking-[-0.018em] text-white/74">
+              <p className="mt-7 max-w-[34rem] text-[1.02rem] font-medium leading-7 tracking-[0] opacity-72">
                 A curated set of theatre organizations, archives, software references, suppliers, and production resources for scenic design work.
               </p>
-              <span className="mt-auto inline-flex items-center gap-2 pt-8 text-[1rem] font-semibold tracking-[-0.025em] text-white">
+              <span className="mt-auto inline-flex items-center gap-2 pt-8 text-[1rem] font-black uppercase tracking-[0.04em]">
                 Browse directory
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </span>
@@ -423,15 +449,19 @@ export default function Studio() {
           </Link>
         </section>
 
-        <section className="bg-[#f1f0ec] px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
           <div className="mx-auto max-w-[76rem]">
             <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-              <h2 className="max-w-[11ch] font-sans text-[clamp(2.6rem,5vw,4.8rem)] font-semibold leading-[0.96] tracking-[-0.038em] text-[#111111]">
-                Studio apps
+              <h2
+                className="max-w-[11ch] text-[clamp(2.4rem,5vw,5.4rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                style={displayStyle}
+              >
+                APPS
               </h2>
               <Link
                 href="/studio/apps"
-                className="inline-flex h-11 w-fit items-center border border-black/[0.12] bg-[#fbfaf7] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#111111] shadow-[0_8px_26px_rgba(17,17,17,0.08)] transition-colors hover:bg-white md:justify-self-end"
+                className="inline-flex h-11 w-fit items-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5 md:justify-self-end"
+                style={softPanelStyle}
               >
                 View all apps
               </Link>
@@ -460,7 +490,12 @@ export default function Studio() {
         </section>
       </main>
 
-      <Footer tone="light" />
+      <Footer
+        tone="light"
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+      />
       <StudioAppScreen
         app={activeApp}
         isClosing={isAppClosing}

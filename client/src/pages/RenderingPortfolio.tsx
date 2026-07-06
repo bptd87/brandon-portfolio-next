@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
+import { X } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MotionReveal from "@/components/MotionReveal";
@@ -9,6 +10,7 @@ import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
 import StructuredData from "@/components/StructuredData";
 import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
 
@@ -66,9 +68,12 @@ const getRenderingImages = (item: RenderingDisplayItem) => {
 };
 
 export default function RenderingPortfolio() {
+  const { homeTheme } = useHomeTheme();
   const isDesktopViewport = useIsDesktopViewport();
   const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const lightboxTrackRef = useRef<HTMLDivElement | null>(null);
+  const lightboxScrollFrameRef = useRef<number | null>(null);
   const projects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
   const galleryItems = getLocalRenderingGallery();
   const isLoading = false;
@@ -137,6 +142,14 @@ export default function RenderingPortfolio() {
     selectedItemIndex === null ? null : allRenderingItems[selectedItemIndex] || null;
   const selectedImages = selectedItem ? getRenderingImages(selectedItem) : [];
   const selectedImage = selectedImages[selectedImageIndex] || selectedImages[0] || null;
+  const previousImage =
+    selectedImages.length > 1
+      ? selectedImages[(selectedImageIndex - 1 + selectedImages.length) % selectedImages.length]
+      : null;
+  const nextImage =
+    selectedImages.length > 1
+      ? selectedImages[(selectedImageIndex + 1) % selectedImages.length]
+      : null;
   const canMoveImage = selectedImages.length > 1;
 
   const openRenderingLightbox = (index: number) => {
@@ -180,8 +193,64 @@ export default function RenderingPortfolio() {
     };
   }, [selectedItem, canMoveImage, selectedImages.length]);
 
+  useEffect(() => {
+    if (!selectedItem || !selectedImage) return undefined;
+
+    const frameId = window.requestAnimationFrame(() => {
+      const selectedSlide = lightboxTrackRef.current?.querySelector<HTMLElement>(
+        `[data-lightbox-index="${selectedImageIndex}"]`
+      );
+
+      selectedSlide?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [selectedImageIndex, selectedItem, selectedImage]);
+
+  const syncRenderingIndexFromLightboxScroll = () => {
+    if (lightboxScrollFrameRef.current !== null) return;
+
+    lightboxScrollFrameRef.current = window.requestAnimationFrame(() => {
+      lightboxScrollFrameRef.current = null;
+      const track = lightboxTrackRef.current;
+      if (!track) return;
+
+      const trackRect = track.getBoundingClientRect();
+      const trackCenter = trackRect.left + trackRect.width / 2;
+      const slides = [...track.querySelectorAll<HTMLElement>("[data-lightbox-index]")];
+      const closestSlide = slides.reduce<HTMLElement | null>((closest, slide) => {
+        if (!closest) return slide;
+
+        const slideRect = slide.getBoundingClientRect();
+        const closestRect = closest.getBoundingClientRect();
+        const slideDistance = Math.abs(slideRect.left + slideRect.width / 2 - trackCenter);
+        const closestDistance = Math.abs(closestRect.left + closestRect.width / 2 - trackCenter);
+
+        return slideDistance < closestDistance ? slide : closest;
+      }, null);
+
+      const closestIndex = Number(closestSlide?.dataset.lightboxIndex);
+      if (!Number.isNaN(closestIndex) && closestIndex !== selectedImageIndex) {
+        setSelectedImageIndex(closestIndex);
+      }
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div
+      className="min-h-screen [--border:rgba(17,17,17,0.14)]"
+      style={{
+        "--background": homeTheme.bg,
+        "--foreground": homeTheme.ink,
+        backgroundColor: homeTheme.bg,
+        color: homeTheme.ink,
+        fontFamily: HOME_BODY_FONT,
+      } as CSSProperties}
+    >
       <SEO
         title={RENDERING_PORTFOLIO_TITLE}
         description={RENDERING_PORTFOLIO_DESCRIPTION}
@@ -251,27 +320,38 @@ export default function RenderingPortfolio() {
       <Header />
       <PortfolioTopBar />
 
-      <main>
-        <section className="border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
-          <MotionReveal className="mx-auto max-w-[92rem]">
+      <main className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
+        <section className="px-[clamp(2rem,8vw,9rem)] pb-[clamp(3rem,6vw,5rem)] pt-[clamp(8rem,12vw,11rem)] text-center">
+          <MotionReveal className="mx-auto max-w-[42rem]">
             <div>
-              <h1 className="font-sans text-[clamp(3.8rem,9.2vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-[#111111]">
-                Rendering
+              <h1
+                className="mx-auto max-w-[10.5ch] text-balance text-[clamp(3.1rem,7vw,6.8rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                style={{
+                  color: homeTheme.ink,
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
+              >
+                RENDERING
               </h1>
-              <div className="mt-8 grid gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-start">
-                <p className="max-w-3xl text-[clamp(1.08rem,1.55vw,1.34rem)] font-medium leading-8 tracking-[-0.024em] text-black/62">
-                  Concept images and production visualizations used to test
-                  atmosphere, scale, color, and intent before the work reaches
-                  the stage.
-                </p>
-              </div>
+              <p
+                className="mx-auto mt-5 max-w-[30rem] text-center text-[clamp(0.98rem,1.2vw,1.12rem)] font-medium leading-7 tracking-[-0.02em]"
+                style={{ color: homeTheme.muted }}
+              >
+                Concept images and production visualizations used to test
+                atmosphere, scale, color, and intent before the work reaches
+                the stage.
+              </p>
             </div>
           </MotionReveal>
         </section>
 
         {allRenderingItems.length > 0 && (
-          <section id="rendering" className="scroll-mt-24 py-0">
-            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          <section
+            id="rendering"
+            className="scroll-mt-24 px-[clamp(2rem,8vw,9rem)] py-[clamp(2.5rem,5vw,4.5rem)]"
+          >
+            <div className="mx-auto grid w-full max-w-[68rem] grid-cols-1 gap-[clamp(1.25rem,2.5vw,2rem)] sm:grid-cols-2">
               {allRenderingItems.map((item, index) => (
                 <button
                   key={item.id}
@@ -279,7 +359,9 @@ export default function RenderingPortfolio() {
                   id={item.slug}
                   aria-label={`Open ${item.title} rendering gallery`}
                   onClick={() => openRenderingLightbox(index)}
-                  className="portfolio-focus-card group relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
+                  className={`portfolio-focus-card group relative block w-full overflow-hidden rounded-[1.15rem] bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/70 ${
+                    index % 3 === 2 ? "aspect-[3/2] sm:col-span-2" : "aspect-square"
+                  }`}
                 >
                   {item.imageUrl ? (
                     <ProgressiveImage
@@ -311,7 +393,7 @@ export default function RenderingPortfolio() {
 
       {selectedItem && selectedImage ? (
         <div
-          className="fixed inset-0 z-[100] flex bg-black/90 text-white backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/62 p-2 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label={`${selectedItem.title} rendering gallery`}
@@ -319,77 +401,45 @@ export default function RenderingPortfolio() {
         >
           <button
             type="button"
-            className="absolute right-4 top-4 z-30 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white/78 transition hover:bg-white/18 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-8 md:top-8"
+            className="absolute right-5 top-5 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#d9d9d9] text-[#111111] transition hover:bg-[#cfcfcf] focus:outline-none focus-visible:ring-2 focus-visible:ring-black/50 md:right-8 md:top-8"
             aria-label="Close rendering gallery"
             onClick={closeRenderingLightbox}
           >
             <X className="h-5 w-5" />
           </button>
 
-          {canMoveImage ? (
-            <>
-              <button
-                type="button"
-                className="absolute left-3 top-1/2 z-30 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white/76 transition hover:bg-white/18 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:left-8"
-                aria-label="Previous rendering"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  showPreviousImage();
-                }}
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-              <button
-                type="button"
-                className="absolute right-3 top-1/2 z-30 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white/76 transition hover:bg-white/18 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-8"
-                aria-label="Next rendering"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  showNextImage();
-                }}
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
-            </>
-          ) : null}
-
           <div
-            className="flex min-h-0 w-full flex-col items-center justify-center gap-5 px-5 py-16 md:px-20 md:py-12"
+            className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[1.5rem] bg-white py-[clamp(4.5rem,7vw,6rem)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex min-h-0 w-full flex-1 items-center justify-center">
-              <img
-                src={selectedImage.url}
-                alt={selectedImage.altText || selectedItem.title}
-                className="max-h-[68vh] max-w-[92vw] object-contain md:max-h-[72vh]"
-              />
-            </div>
-
-            <div className="w-full max-w-5xl text-center">
-              <h2 className="font-sans text-[clamp(1.55rem,3vw,3.2rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                {selectedItem.title}
-              </h2>
-              {selectedImage.caption ? (
-                <p className="mx-auto mt-3 max-w-3xl text-[0.95rem] leading-6 text-white/62">
-                  {selectedImage.caption}
-                </p>
-              ) : null}
-              {selectedImages.length > 1 ? (
-                <div className="mt-5 flex flex-wrap justify-center gap-2">
-                  {selectedImages.map((image, index) => (
-                    <button
-                      key={`${image.id}-${image.url}`}
-                      type="button"
-                      aria-label={`Show rendering ${index + 1} of ${selectedImages.length}`}
-                      aria-pressed={selectedImageIndex === index}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className={`h-2.5 w-2.5 border border-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                        selectedImageIndex === index ? "bg-white" : "bg-transparent"
-                      }`}
-                    />
-                  ))}
+            <div
+              ref={lightboxTrackRef}
+              className="flex min-h-0 w-full flex-1 snap-x snap-mandatory items-center gap-[clamp(1rem,4vw,5rem)] overflow-x-auto overscroll-x-contain px-[clamp(1rem,18vw,26rem)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              onScroll={syncRenderingIndexFromLightboxScroll}
+              onWheel={(event) => {
+                if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+                event.currentTarget.scrollLeft += event.deltaY;
+              }}
+            >
+              {selectedImages.map((image, index) => (
+                <div
+                  key={`${image.id}-${image.url}`}
+                  data-lightbox-index={index}
+                  className="grid h-full min-w-[min(78vw,56rem)] snap-center place-items-center"
+                >
+                  <img
+                    src={image.url}
+                    alt={image.altText || selectedItem.title}
+                    draggable={false}
+                    className="max-h-[78vh] max-w-full select-none rounded-[0.8rem] object-contain"
+                  />
                 </div>
-              ) : null}
+              ))}
+            </div>
+            <div className="mt-5 w-full px-6 text-center text-[#111111]">
+              <p className="mx-auto max-w-[42rem] text-[0.95rem] font-medium leading-6 tracking-[-0.02em] text-black/62">
+                {selectedImage.caption || selectedItem.title}
+              </p>
             </div>
           </div>
         </div>

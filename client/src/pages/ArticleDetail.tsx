@@ -30,12 +30,19 @@ import {
   Linkedin,
 } from "lucide-react";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { SEO } from "@/components/SEO";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 import {
   getLocalArticleRecordBySlug,
   getLocalArticles,
@@ -874,6 +881,19 @@ function ArticleDetailContent({
 }: ArticleDetailProps) {
   const slug = slugProp || params?.slug || "";
   const article = initialArticle || getLocalArticleRecordBySlug(slug);
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+  const articleThemeStyle = {
+    "--article-bg": homeTheme.bg,
+    "--article-ink": homeTheme.ink,
+    "--article-muted": homeTheme.muted,
+    "--article-ghost": homeTheme.ghost,
+    "--article-accent": homeTheme.accent,
+    "--article-accent-soft": homeTheme.accentSoft,
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
 
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -892,33 +912,6 @@ function ArticleDetailContent({
     number | null
   >(null);
   const [audioCurrentTimeSeconds, setAudioCurrentTimeSeconds] = useState(0);
-  const [heroScrollProgress, setHeroScrollProgress] = useState(0);
-  const [heroIntroProgress, setHeroIntroProgress] = useState(0);
-  const [isMobileHero, setIsMobileHero] = useState(false);
-  const heroIntroProgressRef = useRef(0);
-  const introTouchYRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateMobileHero = () => setIsMobileHero(mediaQuery.matches);
-
-    updateMobileHero();
-    mediaQuery.addEventListener("change", updateMobileHero);
-    return () => mediaQuery.removeEventListener("change", updateMobileHero);
-  }, []);
-
-  useEffect(() => {
-    const updateHeroScrollProgress = () => {
-      setHeroScrollProgress(Math.min(Math.max(window.scrollY / 180, 0), 1));
-    };
-
-    updateHeroScrollProgress();
-    window.addEventListener("scroll", updateHeroScrollProgress, {
-      passive: true,
-    });
-    return () => window.removeEventListener("scroll", updateHeroScrollProgress);
-  }, []);
-
   const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
     const container = galleryRefs.current[sectionIndex];
     if (!container) return;
@@ -1314,8 +1307,10 @@ function ArticleDetailContent({
   const articleDescription =
     article.excerpt ||
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
-  const isLearningPortalArticle = variant === "tutorial" && false;
-  const isNarrativeArticle = true;
+  const isLearningPortalArticle =
+    variant === "tutorial" ||
+    LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
+  const isNarrativeArticle = !isLearningPortalArticle;
   const hasOpeningDropCap =
     isNarrativeArticle && article.slug !== "what-does-a-scenic-designer-do";
   const articleBasePath = "/articles";
@@ -1330,83 +1325,12 @@ function ArticleDetailContent({
   const emailShareUrl = `mailto:?subject=${encodedArticleTitle}&body=${encodedArticleTitle}%0A%0A${encodedArticleUrl}`;
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedArticleUrl}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedArticleUrl}`;
-  const rawHeroProgress = Math.max(heroScrollProgress, heroIntroProgress);
-  const heroProgress = isMobileHero ? 1 : rawHeroProgress;
-  const usesStaticHeroTitle =
-    article.slug === "what-theatre-designers-get-paid";
-  const heroTitleProgress = isMobileHero
-    ? 1
-    : Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
-  const heroTitleOpacity = usesStaticHeroTitle ? 1 : heroTitleProgress;
-  const heroOverlayOpacity = usesStaticHeroTitle
-    ? Math.min(0.58, 0.3 + heroProgress * 0.28)
-    : heroProgress * 0.58;
-
-  useEffect(() => {
-    if (!isNarrativeArticle || usesStaticHeroTitle) return;
-    if (isMobileHero) {
-      heroIntroProgressRef.current = 1;
-      setHeroIntroProgress(1);
-      return;
-    }
-
-    heroIntroProgressRef.current = 0;
-    setHeroIntroProgress(0);
-
-    const advanceIntro = (delta: number) => {
-      if (delta <= 0 || window.scrollY > 2 || heroIntroProgressRef.current >= 1)
-        return false;
-
-      const nextProgress = Math.min(
-        1,
-        heroIntroProgressRef.current + delta / 420
-      );
-      heroIntroProgressRef.current = nextProgress;
-      setHeroIntroProgress(nextProgress);
-      return true;
-    };
-
-    const handleWheel = (event: WheelEvent) => {
-      if (advanceIntro(event.deltaY)) {
-        event.preventDefault();
-      }
-    };
-
-    const handleTouchStart = (event: TouchEvent) => {
-      introTouchYRef.current = event.touches[0]?.clientY ?? null;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      const currentY = event.touches[0]?.clientY;
-      const previousY = introTouchYRef.current;
-      if (currentY == null || previousY == null) return;
-
-      const delta = previousY - currentY;
-      introTouchYRef.current = currentY;
-
-      if (advanceIntro(delta)) {
-        event.preventDefault();
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [article.slug, isMobileHero, isNarrativeArticle, usesStaticHeroTitle]);
-
   return (
     <div
-      className={
-        isNarrativeArticle
-          ? "min-h-screen bg-[#030303] text-white"
-          : "publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]"
-      }
+      className={`article-detail-page min-h-screen transition-colors duration-500 ${
+        isNarrativeArticle ? "" : "publish-editorial"
+      }`}
+      style={articleThemeStyle}
     >
       <SEO
         title={`${article.title} | Brandon PT Davis`}
@@ -1429,67 +1353,118 @@ function ArticleDetailContent({
         url={articleUrl}
       />
       <Header />
-      <PublishingTopBar
-        active="articles"
-        tone={isNarrativeArticle ? "dark" : "light"}
-      />
+      {isNarrativeArticle ? null : (
+        <PublishingTopBar active="articles" tone="light" />
+      )}
       <article
         className={
           isNarrativeArticle
-            ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24"
-            : "article-editorial article-editorial-light article-editorial-learning overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"
+            ? "article-editorial article-editorial-article overflow-hidden pb-16 md:pb-24"
+            : "article-editorial article-editorial-light article-editorial-learning overflow-hidden pb-16 md:pb-24"
         }
       >
         {isNarrativeArticle ? (
-          <section className="relative min-h-[64svh] overflow-hidden bg-black md:min-h-[calc(100svh-8.5rem)]">
-            {article.coverImageUrl ? (
-              <button
-                type="button"
-                aria-label="Open article image"
-                className="absolute inset-0 block h-full w-full"
-                onClick={() => openArticleLightboxAt("cover")}
-              >
+          <section
+            className="flex min-h-[100svh] items-center justify-center"
+            style={
+              {
+                "--article-hero-pad": "clamp(2rem, 5vw, 5rem)",
+                backgroundColor: homeTheme.bg,
+                padding: "var(--article-hero-pad)",
+              } as CSSProperties
+            }
+          >
+            <div
+              className="relative mx-auto flex w-full max-w-[88rem] overflow-hidden rounded-[1.75rem] shadow-[0_1.6rem_5rem_rgba(0,0,0,0.2)]"
+              style={{
+                minHeight:
+                  "calc(100svh - var(--article-hero-pad) - var(--article-hero-pad))",
+              }}
+            >
+              {article.coverImageUrl ? (
                 <Image
                   src={article.coverImageUrl}
                   alt={article.coverImageAlt || article.title}
                   fill
                   priority
+                  quality={84}
                   unoptimized
                   loading="eager"
                   fetchPriority="high"
-                  sizes="100vw"
+                  sizes="(max-width: 900px) 100vw, 88rem"
                   className="object-cover"
                 />
-              </button>
-            ) : null}
-            <div
-              className="absolute inset-0 transition-colors duration-200"
-              style={{
-                backgroundColor: `rgba(0, 0, 0, ${heroOverlayOpacity})`,
-              }}
-            />
-            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/72 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#030303] via-[#030303]/68 to-transparent" />
+              ) : null}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/42 to-black/10" />
+              <header className="relative z-10 mt-auto grid w-full gap-[clamp(2rem,5vw,5rem)] px-[clamp(1.35rem,4vw,4rem)] pb-[clamp(2.5rem,7vh,5rem)] pt-[clamp(9rem,24vh,16rem)] lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-center">
+                <MotionReveal eager>
+                  <div>
+                    <h1
+                      className="max-w-[13ch] text-[clamp(2.45rem,4.9vw,5.6rem)] font-black leading-[0.88] tracking-[0]"
+                      style={{ color: "#ffffff", fontFamily: HOME_DISPLAY_FONT }}
+                    >
+                      {decodeHTMLEntities(article.title)}
+                    </h1>
+                  </div>
+                </MotionReveal>
 
-            <div className="relative z-10 flex min-h-[64svh] items-center justify-center px-[clamp(1.5rem,5vw,6rem)] py-14 text-center md:min-h-[calc(100svh-8.5rem)] md:py-20">
-              <div
-                className="mx-auto max-w-[58rem] transition-opacity duration-150"
-                style={{ opacity: heroTitleOpacity }}
-              >
-                <div className="mb-5 text-[0.86rem] font-semibold tracking-[-0.02em] text-white/72">
-                  Article
-                </div>
-
-                <h1 className="mx-auto max-w-[16ch] text-balance font-sans text-[clamp(2.35rem,4.7vw,5rem)] font-semibold leading-[0.94] tracking-[-0.072em] text-white drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.42)]">
-                  {decodeHTMLEntities(article.title)}
-                </h1>
-
-                {article.excerpt && (
-                  <p className="mx-auto mt-6 max-w-[40rem] text-balance text-[clamp(1rem,1.38vw,1.28rem)] font-medium leading-[1.34] tracking-[-0.032em] text-white/84 drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.45)]">
-                    {decodeHTMLEntities(article.excerpt)}
-                  </p>
-                )}
-              </div>
+                <MotionReveal eager delay={140}>
+                  <div className="max-w-[30rem] pt-5 lg:justify-self-end">
+                    {article.excerpt ? (
+                      <p
+                        className="max-w-[31rem] text-[clamp(1rem,1.25vw,1.24rem)] font-normal leading-[1.52] tracking-[-0.025em]"
+                        style={{ color: "rgba(255,255,255,0.7)" }}
+                      >
+                        {decodeHTMLEntities(article.excerpt)}
+                      </p>
+                    ) : null}
+                    <div
+                      className="mt-6 flex items-center gap-2"
+                      style={{ color: "rgba(255,255,255,0.62)" }}
+                    >
+                      <button
+                        type="button"
+                        onClick={handleShare}
+                        aria-label={
+                          linkCopied ? "Article link copied" : "Copy article link"
+                        }
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 transition-colors hover:bg-white/[0.08] hover:text-white"
+                      >
+                        {linkCopied ? (
+                          <Check className="h-4 w-4" />
+                        ) : (
+                          <LinkIcon className="h-4 w-4" />
+                        )}
+                      </button>
+                      <a
+                        href={emailShareUrl}
+                        aria-label="Share article by email"
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                      >
+                        <Mail className="h-4 w-4" />
+                      </a>
+                      <a
+                        href={linkedInShareUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share article on LinkedIn"
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                      </a>
+                      <a
+                        href={facebookShareUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share article on Facebook"
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                      >
+                        f
+                      </a>
+                    </div>
+                  </div>
+                </MotionReveal>
+              </header>
             </div>
           </section>
         ) : isLearningPortalArticle ? (
@@ -2625,7 +2600,7 @@ function ArticleDetailContent({
 
       {linkedScenicProjects.length > 0 && (
         <section
-          className={`${isNarrativeArticle ? "article-editorial bg-[#030303]" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} ${related.length > 0 ? "pb-10" : "pb-20"}`}
+          className={`${isNarrativeArticle ? "article-editorial article-editorial-article" : "article-editorial article-editorial-light"} ${related.length > 0 ? "pb-10" : "pb-20"}`}
         >
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <div
@@ -2702,7 +2677,7 @@ function ArticleDetailContent({
 
       {related.length > 0 && (
         <section
-          className={`${isNarrativeArticle ? "article-editorial bg-[#030303] text-white" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}
+          className={`${isNarrativeArticle ? "article-editorial article-editorial-article" : "article-editorial article-editorial-light"} pb-20`}
         >
           <div className="mx-auto w-full max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
             <div
@@ -2850,19 +2825,37 @@ function ArticleDetailContent({
       )}
 
       <div
-        className={`relative z-20 ${isNarrativeArticle ? "bg-background" : "bg-[#f1f0ec]"}`}
+        className="relative z-20"
+        style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
       >
-        <Footer tone={isNarrativeArticle ? "dark" : "light"} />
+        <Footer tone="light" variant="standard" />
       </div>
 
       <style>{`
-        /* Narrative article mode: black editorial pages separate essays from the white tutorial system. */
+        .article-detail-page {
+          --article-body-font: ${HOME_BODY_FONT};
+          --article-display-font: ${HOME_DISPLAY_FONT};
+        }
+
         .article-editorial {
+          color: var(--article-ink);
+          font-family: var(--article-body-font);
+        }
+
+        .article-editorial h1,
+        .article-editorial h2,
+        .article-editorial h3,
+        .article-editorial h4 {
+          font-family: var(--article-display-font);
+          letter-spacing: 0;
+        }
+
+        .article-editorial-article {
           color: #ffffff;
         }
 
         .article-editorial-light {
-          color: #111111;
+          color: var(--article-ink);
         }
 
         .article-editorial-light .article-content,

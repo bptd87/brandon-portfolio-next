@@ -9,6 +9,11 @@ import MotionReveal from "@/components/MotionReveal";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 import StructuredData from "@/components/StructuredData";
 import {
   getLocalExperientialProjectHref,
@@ -89,6 +94,7 @@ function getYoutubePosterUrl(url: string) {
 }
 
 export default function ExperientialPortfolio() {
+  const { homeTheme } = useHomeTheme();
   const isDesktopViewport = useIsDesktopViewport();
   const router = useRouter();
   const projects = sortExperientialProjectsChronologically(getLocalExperientialProjects());
@@ -141,7 +147,18 @@ export default function ExperientialPortfolio() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div
+      className="flex min-h-screen flex-col transition-colors duration-500"
+      style={
+        {
+          "--background": homeTheme.bg,
+          "--foreground": homeTheme.ink,
+          backgroundColor: homeTheme.bg,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+        } as CSSProperties
+      }
+    >
       <SEO
         title={EXPERIENTIAL_PORTFOLIO_TITLE}
         description={EXPERIENTIAL_PORTFOLIO_DESCRIPTION}
@@ -214,17 +231,38 @@ export default function ExperientialPortfolio() {
 
       <Header />
       <PortfolioTopBar />
+      <style jsx global>{`
+        .experiential-landing-media,
+        .experiential-landing-media:has(> img),
+        .experiential-landing-media img,
+        img.experiential-landing-image {
+          border-radius: 1.65rem !important;
+        }
+      `}</style>
 
-      <main className="flex-1">
-        <section className="bg-white px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-12 text-[#111111] md:pt-16">
-          <header className="w-full">
+      <main className="relative z-10 flex-1" style={{ backgroundColor: homeTheme.bg }}>
+        <section
+          className="px-[clamp(2rem,8vw,9rem)] pb-[clamp(2.5rem,5vw,4rem)] pt-[clamp(8rem,12vw,11rem)]"
+          style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+        >
+          <header className="mx-auto w-full max-w-[54rem] text-center">
             <MotionReveal>
-              <h1 className="max-w-[13ch] font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-[#111111]">
-                {experientialPortfolioLandingCopy.title}
+              <h1
+                className="mx-auto max-w-[10.5ch] text-balance text-[clamp(3.2rem,7vw,7rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                style={{
+                  color: homeTheme.ink,
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
+              >
+                {experientialPortfolioLandingCopy.title.toUpperCase()}
               </h1>
             </MotionReveal>
             <MotionReveal delay={120}>
-              <p className="mt-6 max-w-2xl text-[1rem] leading-6 text-black/58 md:text-[1.08rem]">
+              <p
+                className="mx-auto mt-5 max-w-[30rem] text-[clamp(0.98rem,1.2vw,1.12rem)] font-medium leading-7 tracking-[-0.02em]"
+                style={{ color: homeTheme.muted }}
+              >
                 {experientialPortfolioLandingCopy.intro}
               </p>
             </MotionReveal>
@@ -232,33 +270,37 @@ export default function ExperientialPortfolio() {
         </section>
 
         {projects.length > 0 ? (
-          <section className="border-t border-black/10 bg-white">
-            <div className="portfolio-focus-grid grid grid-cols-1 border-l border-black/10 md:grid-cols-4">
+          <section
+            className="px-[clamp(1.5rem,7vw,8rem)] pb-[clamp(4rem,8vw,7rem)]"
+            style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+          >
+            <div className="mx-auto grid w-full max-w-[86rem] grid-cols-1 gap-[clamp(1rem,2vw,1.6rem)] md:grid-cols-6">
               {projects.map((project, index) => {
                 const href = getLocalExperientialProjectHref(project);
-                const isFeatureCard = index % 6 < 2;
+                const isFeatureCard = index % 5 < 2;
                 const imageTreatment = getProjectImageTreatment(project);
 
                 return (
-                  <div
+                  <MotionReveal
                     key={project.slug}
-                    className={`${isFeatureCard ? "md:col-span-2" : ""} h-full`}
+                    className={`${isFeatureCard ? "md:col-span-3" : "md:col-span-2"} h-full`}
+                    delay={(index % 4) * 70}
                   >
                     <a
                       href={href}
                       onClick={(event) => navigateWithTransition(event, href)}
-                      className="portfolio-focus-card group block h-full border-b border-r border-black/10"
+                      className="portfolio-focus-card group block h-full text-current no-underline"
                     >
-                      <article className="h-full bg-white">
+                      <article className="h-full">
                         <div
-                          className={`portfolio-focus-media transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
+                          className={`portfolio-focus-media transition-card experiential-landing-media relative overflow-hidden rounded-[1.65rem] shadow-[0_1.2rem_3.6rem_rgba(0,0,0,0.14)] ring-1 ring-black/5 ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
                           style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
                         >
                           {project.coverVideoUrl ? (
                             <img
                               src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
                               alt={`${project.title} video preview poster`}
-                              className="site-media-square h-full w-full object-cover object-center"
+                              className="experiential-landing-image h-full w-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018]"
                               loading={index < eagerProjectCount ? "eager" : "lazy"}
                               fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                             />
@@ -266,31 +308,35 @@ export default function ExperientialPortfolio() {
                             <img
                               src={project.coverImageUrl}
                               alt={experientialAlt(project.title)}
-                              className={`site-media-square h-full w-full object-center ${imageTreatment.image}`}
+                              className={`experiential-landing-image h-full w-full object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018] ${imageTreatment.image}`}
                               loading={index < eagerProjectCount ? "eager" : "lazy"}
                               fetchPriority={index < eagerProjectCount ? "high" : "auto"}
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center text-black/42">
+                            <div
+                              className="flex h-full w-full items-center justify-center text-[0.75rem] font-black uppercase tracking-[0.12em]"
+                              style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}
+                            >
                               Image unavailable
                             </div>
                           )}
-                        </div>
-                        <div className="portfolio-focus-copy grid min-h-[8.5rem] gap-3 border-t border-black/10 p-[clamp(0.9rem,1.5vw,1.2rem)] text-[#111111] md:grid-cols-[minmax(0,1fr)_auto]">
-                          <div>
-                            <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#111111] transition-opacity group-hover:opacity-70">
+                          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/66 via-black/24 to-transparent px-5 pb-5 pt-16 text-white">
+                            <h2
+                              className="max-w-[18ch] text-[clamp(1.35rem,2.2vw,2.35rem)] font-black uppercase leading-[0.9] tracking-[0]"
+                              style={{ fontFamily: HOME_DISPLAY_FONT }}
+                            >
                               {project.title}
                             </h2>
+                            {project.year ? (
+                              <p className="mt-2 text-[0.88rem] font-medium leading-tight tracking-[-0.015em] text-white/70">
+                                {project.year}
+                              </p>
+                            ) : null}
                           </div>
-                          {project.year ? (
-                            <p className="font-sans text-[clamp(1.3rem,2vw,2.1rem)] font-normal leading-none tracking-[-0.055em] text-black/52">
-                              {project.year}
-                            </p>
-                          ) : null}
                         </div>
                       </article>
                     </a>
-                  </div>
+                  </MotionReveal>
                 );
               })}
             </div>

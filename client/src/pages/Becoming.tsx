@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
 import { becomingPhotos } from "@shared/becomingPhotos.generated";
 
 const orderedPhotos = [...becomingPhotos].sort(
@@ -55,16 +56,45 @@ const cropPositions: Record<string, string> = {
 };
 
 export default function Becoming() {
-  const [selectedPhoto, setSelectedPhoto] = useState<BecomingPhotoItem | null>(
-    null
-  );
+  const { homeTheme } = useHomeTheme();
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
+  const lightboxTrackRef = useRef<HTMLDivElement | null>(null);
+  const lightboxScrollFrameRef = useRef<number | null>(null);
+  const selectedPhoto =
+    selectedPhotoIndex === null ? null : orderedPhotos[selectedPhotoIndex] || null;
+  const previousPhoto =
+    selectedPhotoIndex === null
+      ? null
+      : orderedPhotos[(selectedPhotoIndex - 1 + orderedPhotos.length) % orderedPhotos.length] || null;
+  const nextPhoto =
+    selectedPhotoIndex === null
+      ? null
+      : orderedPhotos[(selectedPhotoIndex + 1) % orderedPhotos.length] || null;
+
+  const showPreviousPhoto = () => {
+    setSelectedPhotoIndex((current) =>
+      current === null ? null : (current - 1 + orderedPhotos.length) % orderedPhotos.length
+    );
+  };
+
+  const showNextPhoto = () => {
+    setSelectedPhotoIndex((current) =>
+      current === null ? null : (current + 1) % orderedPhotos.length
+    );
+  };
 
   useEffect(() => {
     if (!selectedPhoto) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSelectedPhoto(null);
+        setSelectedPhotoIndex(null);
+      }
+      if (event.key === "ArrowLeft") {
+        showPreviousPhoto();
+      }
+      if (event.key === "ArrowRight") {
+        showNextPhoto();
       }
     };
 
@@ -72,8 +102,64 @@ export default function Becoming() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedPhoto]);
 
+  useEffect(() => {
+    if (selectedPhotoIndex === null) return undefined;
+
+    const frameId = window.requestAnimationFrame(() => {
+      const selectedSlide = lightboxTrackRef.current?.querySelector<HTMLElement>(
+        `[data-lightbox-index="${selectedPhotoIndex}"]`
+      );
+
+      selectedSlide?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [selectedPhotoIndex]);
+
+  const syncPhotoIndexFromLightboxScroll = () => {
+    if (lightboxScrollFrameRef.current !== null) return;
+
+    lightboxScrollFrameRef.current = window.requestAnimationFrame(() => {
+      lightboxScrollFrameRef.current = null;
+      const track = lightboxTrackRef.current;
+      if (!track) return;
+
+      const trackRect = track.getBoundingClientRect();
+      const trackCenter = trackRect.left + trackRect.width / 2;
+      const slides = [...track.querySelectorAll<HTMLElement>("[data-lightbox-index]")];
+      const closestSlide = slides.reduce<HTMLElement | null>((closest, slide) => {
+        if (!closest) return slide;
+
+        const slideRect = slide.getBoundingClientRect();
+        const closestRect = closest.getBoundingClientRect();
+        const slideDistance = Math.abs(slideRect.left + slideRect.width / 2 - trackCenter);
+        const closestDistance = Math.abs(closestRect.left + closestRect.width / 2 - trackCenter);
+
+        return slideDistance < closestDistance ? slide : closest;
+      }, null);
+
+      const closestIndex = Number(closestSlide?.dataset.lightboxIndex);
+      if (!Number.isNaN(closestIndex) && closestIndex !== selectedPhotoIndex) {
+        setSelectedPhotoIndex(closestIndex);
+      }
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div
+      className="min-h-screen [--border:rgba(17,17,17,0.14)]"
+      style={{
+        "--background": homeTheme.bg,
+        "--foreground": homeTheme.ink,
+        backgroundColor: homeTheme.bg,
+        color: homeTheme.ink,
+        fontFamily: HOME_BODY_FONT,
+      } as React.CSSProperties}
+    >
       <SEO
         title="Photography Portfolio | Brandon PT Davis"
         description="A chronological photography portfolio and visual reference archive shaped by observation, attention, and scenic design practice."
@@ -84,32 +170,45 @@ export default function Becoming() {
       <Header />
       <PortfolioTopBar />
 
-      <main>
-        <section className="border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-20">
-          <AnimatedSection className="mx-auto max-w-[92rem]">
+      <main className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
+        <section className="px-[clamp(2rem,8vw,9rem)] pb-[clamp(3rem,6vw,5rem)] pt-[clamp(8rem,12vw,11rem)] text-center">
+          <AnimatedSection className="mx-auto max-w-[42rem]">
             <div>
-              <h1 className="font-sans text-[clamp(3.8rem,9.2vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-[#111111]">
-                Photography
+              <h1
+                className="mx-auto max-w-[10.5ch] text-balance text-[clamp(3.1rem,7vw,6.8rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                style={{
+                  color: homeTheme.ink,
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
+              >
+                PHOTOGRAPHY
               </h1>
-              <div className="mt-8 grid gap-5 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-start">
-                <p className="max-w-3xl text-[clamp(1.08rem,1.55vw,1.34rem)] font-medium leading-8 tracking-[-0.024em] text-black/62">
-                  Observations gathered before they become drawings, rooms, or
-                  designs.
-                </p>
-              </div>
+              <p
+                className="mx-auto mt-5 max-w-[28rem] text-center text-[clamp(0.98rem,1.2vw,1.12rem)] font-medium leading-7 tracking-[-0.02em]"
+                style={{ color: homeTheme.muted }}
+              >
+                Observations gathered before they become drawings, rooms, or
+                designs.
+              </p>
             </div>
           </AnimatedSection>
         </section>
 
-        <section className="py-0">
-          <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+        <section className="px-[clamp(2rem,8vw,9rem)] py-[clamp(2.5rem,5vw,4.5rem)]">
+          <div className="mx-auto grid w-full max-w-[68rem] grid-cols-1 gap-[clamp(1.25rem,2.5vw,2rem)] sm:grid-cols-2">
             {orderedPhotos.map((photo, index) => (
-              <figure key={photo.id} className="group">
+              <figure
+                key={photo.id}
+                className={`group ${index % 3 === 2 ? "sm:col-span-2" : ""}`}
+              >
                 <button
                   type="button"
                   aria-label={`Open ${photo.title}`}
-                  className="portfolio-focus-card relative block aspect-square w-full overflow-hidden rounded-none border border-white bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-1 focus-visible:ring-black/70"
-                  onClick={() => setSelectedPhoto(photo)}
+                  className={`portfolio-focus-card relative block w-full overflow-hidden rounded-[1.15rem] bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/70 ${
+                    index % 3 === 2 ? "aspect-[3/2]" : "aspect-square"
+                  }`}
+                  onClick={() => setSelectedPhotoIndex(index)}
                 >
                   <span className="portfolio-focus-media block h-full w-full overflow-hidden">
                     <Image
@@ -132,14 +231,24 @@ export default function Becoming() {
           </div>
         </section>
 
-        <section className="border-t border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-[clamp(4rem,10vw,9rem)]">
-          <AnimatedSection className="mx-auto max-w-[72rem] text-center">
+        <section className="px-[clamp(2rem,8vw,9rem)] py-[clamp(4rem,10vw,9rem)]">
+          <AnimatedSection className="mx-auto max-w-[58rem] text-center">
             <figure>
-              <blockquote className="mx-auto font-sans text-[clamp(2.25rem,5.8vw,7rem)] font-medium leading-[0.92] tracking-[-0.07em] text-[#111111]">
+              <blockquote
+                className="mx-auto text-[clamp(2rem,4.8vw,5.5rem)] font-black uppercase leading-[0.9] tracking-[0]"
+                style={{
+                  color: homeTheme.ink,
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
+              >
                 &ldquo;I am a camera with its shutter open, quite passive,
                 recording, not thinking.&rdquo;
               </blockquote>
-              <figcaption className="mx-auto mt-8 max-w-[28rem] text-[0.78rem] font-semibold uppercase leading-6 tracking-[0.16em] text-black/38">
+              <figcaption
+                className="mx-auto mt-8 max-w-[28rem] text-[0.78rem] font-semibold uppercase leading-6 tracking-[0.16em]"
+                style={{ color: homeTheme.muted }}
+              >
                 Christopher Isherwood, <cite>The Berlin Stories</cite>
               </figcaption>
             </figure>
@@ -151,31 +260,51 @@ export default function Becoming() {
 
       {selectedPhoto ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/82 px-4 py-16 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/62 p-2 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label={selectedPhoto.title}
-          onClick={() => setSelectedPhoto(null)}
+          onClick={() => setSelectedPhotoIndex(null)}
         >
           <button
             type="button"
-            className="absolute right-4 top-4 px-2 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-white/70 transition hover:text-white focus:outline-none focus-visible:ring-1 focus-visible:ring-white/70 md:right-8 md:top-8"
-            onClick={() => setSelectedPhoto(null)}
+            className="absolute right-5 top-5 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#d9d9d9] text-3xl font-light leading-none text-[#111111] transition hover:bg-[#cfcfcf] focus:outline-none focus-visible:ring-2 focus-visible:ring-black/50 md:right-8 md:top-8"
+            aria-label="Close photography lightbox"
+            onClick={() => setSelectedPhotoIndex(null)}
           >
-            Close
+            &times;
           </button>
           <div
-            className="relative max-h-full max-w-full"
+            className="relative flex h-full w-full items-center overflow-hidden rounded-[1.5rem] bg-white py-[clamp(4.5rem,7vw,6rem)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <Image
-              src={selectedPhoto.src}
-              alt={selectedPhoto.alt}
-              width={selectedPhoto.width}
-              height={selectedPhoto.height}
-              sizes="100vw"
-              className="max-h-[82vh] w-auto max-w-[92vw] object-contain"
-            />
+            <div
+              ref={lightboxTrackRef}
+              className="flex h-full w-full snap-x snap-mandatory items-center gap-[clamp(1rem,4vw,5rem)] overflow-x-auto overscroll-x-contain px-[clamp(1rem,18vw,26rem)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              onScroll={syncPhotoIndexFromLightboxScroll}
+              onWheel={(event) => {
+                if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+                event.currentTarget.scrollLeft += event.deltaY;
+              }}
+            >
+              {orderedPhotos.map((photo, index) => (
+                <div
+                  key={photo.id}
+                  data-lightbox-index={index}
+                  className="grid h-full min-w-[min(78vw,56rem)] snap-center place-items-center"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={photo.width}
+                    height={photo.height}
+                    sizes="(max-width: 768px) 78vw, 56rem"
+                    draggable={false}
+                    className="max-h-[78vh] w-auto max-w-full select-none rounded-[0.8rem] object-contain"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}

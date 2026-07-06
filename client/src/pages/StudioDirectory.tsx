@@ -5,10 +5,11 @@ import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { ExternalLinkPreview } from "@/components/ExternalLinkPreview";
 import { ExternalLink, Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { type CSSProperties, useMemo, useState } from "react";
 import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import StructuredData from "@/components/StructuredData";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 import { getLocalStudioDirectory } from "@shared/localStudio";
 
 function getDirectoryPlaceholder(name: string) {
@@ -33,9 +34,37 @@ export default function StudioDirectory() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"alphabetical" | "category">("alphabetical");
   const [searchQuery, setSearchQuery] = useState("");
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
 
   const resources = getLocalStudioDirectory();
   const isLoading = false;
+  const pageStyle = {
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+    "--background": homeTheme.bg,
+    "--foreground": homeTheme.ink,
+    "--border": homeTheme.ghost,
+  } as CSSProperties;
+  const displayStyle = {
+    color: homeTheme.ink,
+    fontFamily: HOME_DISPLAY_FONT,
+    fontStretch: "condensed",
+  } as CSSProperties;
+  const mutedStyle = { color: homeTheme.muted } as CSSProperties;
+  const softPanelStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.ink,
+  } as CSSProperties;
+  const quietControlStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.muted,
+  } as CSSProperties;
+  const inputStyle = {
+    backgroundColor: homeTheme.accentSoft,
+    color: homeTheme.ink,
+  } as CSSProperties;
 
   const filteredResources = useMemo(() => {
     const filtered = resources.filter((resource: any) => {
@@ -69,7 +98,7 @@ export default function StudioDirectory() {
   }, [filteredResources]);
 
   return (
-    <div className="publish-editorial min-h-screen bg-[#f4f5f7] text-[#111111] [--background:#f4f5f7] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div className="min-h-screen transition-colors duration-500" style={pageStyle}>
       <SEO
         title="Scenic Design Resource Directory | Brandon PT Davis"
         description="A curated scenic design resource directory covering theatre organizations, archives, software, drafting references, and production suppliers."
@@ -124,32 +153,40 @@ export default function StudioDirectory() {
       />
 
       <Header />
-      <PublishingTopBar active="directory" tone="light" />
+      <PublishingTopBar active="directory" tone="white" />
 
-      <main className="pb-0">
-        <section className="border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-18">
-          <p className="section-kicker text-black/40">
-            Studio Directory
-          </p>
-          <h1 className="mt-6 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.8rem)] font-medium leading-[0.88] tracking-[-0.075em] text-[#111111]">
-            Scenic Directory
+      <main className="pb-0" style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}>
+        <section className="px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-28 md:pb-14 md:pt-32">
+          <div className="mx-auto flex max-w-[76rem] flex-col items-center text-center">
+            <h1
+              className="max-w-[10ch] text-[clamp(4.2rem,10vw,9.6rem)] font-black uppercase leading-[0.8] tracking-[0]"
+              style={displayStyle}
+            >
+              DIRECTORY
           </h1>
-          <p className="mt-8 max-w-3xl text-[1.02rem] leading-8 tracking-[-0.018em] text-black/60 md:text-[1.16rem]">
-            A curated index of theatre organizations, archives, software, drafting references, and
-            suppliers that support scenic design research and professional practice.
-          </p>
+            <p
+              className="mt-7 max-w-[42rem] text-[clamp(1.05rem,1.6vw,1.35rem)] font-medium leading-[1.35] tracking-[0]"
+              style={mutedStyle}
+            >
+              A working list of theatre organizations, archives, software, drafting references, and suppliers for scenic design practice.
+            </p>
+          </div>
         </section>
 
-        <section className="border-b border-black/10 bg-[#f4f5f7] px-[clamp(1.5rem,5vw,6rem)] py-6">
-          <div className="flex flex-col gap-5">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-5">
+          <div
+            className="mx-auto flex max-w-[76rem] flex-col gap-5 rounded-[1.75rem] p-4 shadow-[0_18px_54px_rgba(17,17,17,0.08)] md:p-5"
+            style={softPanelStyle}
+          >
             <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
               <button
                 onClick={() => setSelectedCategory(null)}
-                className={`border-b pb-1 text-[0.88rem] font-medium tracking-[-0.02em] transition-colors ${
+                className={`rounded-full px-4 py-2 text-[0.82rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5 ${
                   selectedCategory === null
-                    ? "border-black/50 text-black"
-                    : "border-transparent text-black/44 hover:text-black/74"
+                    ? ""
+                    : "opacity-62 hover:opacity-100"
                 }`}
+                style={selectedCategory === null ? { backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk } : { color: homeTheme.ink }}
               >
                 All
               </button>
@@ -157,11 +194,12 @@ export default function StudioDirectory() {
                 <button
                   key={category.slug}
                   onClick={() => setSelectedCategory(category.slug)}
-                  className={`border-b pb-1 text-[0.88rem] font-medium tracking-[-0.02em] transition-colors ${
+                  className={`rounded-full px-4 py-2 text-[0.82rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5 ${
                     selectedCategory === category.slug
-                      ? "border-black/50 text-black"
-                      : "border-transparent text-black/44 hover:text-black/74"
+                      ? ""
+                      : "opacity-62 hover:opacity-100"
                   }`}
+                  style={selectedCategory === category.slug ? { backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk } : { color: homeTheme.ink }}
                 >
                   {category.name}
                 </button>
@@ -170,92 +208,88 @@ export default function StudioDirectory() {
 
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="relative w-full md:max-w-sm">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/42" />
+                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
                 <Input
                   placeholder="Search the directory..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-10 rounded-full border-black/12 bg-[#fbfaf7] pl-9 text-sm text-black placeholder:text-black/36"
+                  className="h-11 rounded-full border-0 pl-10 text-sm font-medium shadow-none placeholder:text-current placeholder:opacity-45"
+                  style={inputStyle}
                 />
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSortBy("alphabetical")}
-                  className={`rounded-full px-4 py-1.5 text-[0.78rem] font-medium tracking-[-0.01em] transition-colors ${
-                    sortBy === "alphabetical"
-                      ? "bg-black text-white"
-                      : "border border-black/10 text-black/56 hover:border-black/20 hover:text-black"
-                  }`}
+                  className="rounded-full px-4 py-2 text-[0.82rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                  style={sortBy === "alphabetical" ? { backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk } : quietControlStyle}
                 >
-                  <span style={sortBy === "alphabetical" ? { color: "#f1f0ec" } : undefined}>
-                    Alphabetical
-                  </span>
+                  Alphabetical
                 </button>
                 <button
                   onClick={() => setSortBy("category")}
-                  className={`rounded-full px-4 py-1.5 text-[0.78rem] font-medium tracking-[-0.01em] transition-colors ${
-                    sortBy === "category"
-                      ? "bg-black text-white"
-                      : "border border-black/10 text-black/56 hover:border-black/20 hover:text-black"
-                  }`}
+                  className="rounded-full px-4 py-2 text-[0.82rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                  style={sortBy === "category" ? { backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk } : quietControlStyle}
                 >
-                  <span style={sortBy === "category" ? { color: "#f1f0ec" } : undefined}>
-                    By category
-                  </span>
+                  By category
                 </button>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-[#f4f5f7]">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-8">
           {isLoading ? (
-            <div className="px-[clamp(1.5rem,5vw,6rem)] py-10">
+            <div className="mx-auto max-w-[76rem] space-y-4 py-6">
               {[...Array(8)].map((_, index) => (
                 <div
                   key={index}
-                  className="grid animate-pulse gap-4 border-t border-black/10 py-5 md:grid-cols-[64px_minmax(0,1.3fr)_minmax(0,1.5fr)_auto]"
+                  className="grid animate-pulse gap-4 rounded-[1.5rem] p-5 md:grid-cols-[64px_minmax(0,1.3fr)_minmax(0,1.5fr)_auto]"
+                  style={softPanelStyle}
                 >
-                  <div className="h-12 w-12 bg-black/8" />
-                  <div className="h-7 w-48 bg-black/8" />
-                  <div className="h-5 w-full bg-black/8" />
-                  <div className="h-5 w-20 bg-black/8" />
+                  <div className="h-12 w-12 rounded-2xl bg-current opacity-10" />
+                  <div className="h-7 w-48 rounded-full bg-current opacity-10" />
+                  <div className="h-5 w-full rounded-full bg-current opacity-10" />
+                  <div className="h-5 w-20 rounded-full bg-current opacity-10" />
                 </div>
               ))}
             </div>
           ) : sortBy === "category" ? (
-            <div>
+            <div className="mx-auto max-w-[76rem] space-y-8">
               {groupedResources.map((group) => (
-                <section key={group.slug} className="border-t border-black/10">
-                  <div className="px-[clamp(1.5rem,5vw,6rem)] py-6">
-                    <h2 className="font-sans text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-black">
+                <section key={group.slug}>
+                  <div className="py-2">
+                    <h2
+                      className="text-[clamp(1.7rem,3vw,2.6rem)] font-black uppercase leading-[0.9] tracking-[0]"
+                      style={displayStyle}
+                    >
                       {group.name}
                     </h2>
                   </div>
 
-                  <div className="border-t border-black/10">
+                  <div className="grid gap-4">
                     {group.items.map((resource: any) => (
                       <ExternalLinkPreview
                         key={resource.id}
                         href={resource.url}
-                        className="grid w-full items-start gap-4 border-b border-black/8 px-[clamp(1.5rem,5vw,6rem)] py-5 text-left transition-colors hover:bg-white md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                        className="grid w-full items-start gap-4 rounded-[1.5rem] p-5 text-left shadow-[0_14px_42px_rgba(17,17,17,0.08)] transition-transform hover:-translate-y-0.5 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                        style={softPanelStyle}
                         previewLabel={resource.name}
                       >
                         <div>
-                          <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-black">
+                          <p className="text-[1.08rem] font-black leading-[1.05] tracking-[0]" style={{ color: homeTheme.ink }}>
                             {resource.name}
                           </p>
-                          <p className="mt-2 text-[0.82rem] leading-5 text-black/38">
+                          <p className="mt-2 text-[0.82rem] font-medium leading-5" style={mutedStyle}>
                             {group.name}
                           </p>
                         </div>
 
-                        <p className="max-w-2xl text-[0.96rem] leading-7 text-black/58">
+                        <p className="max-w-2xl text-[0.96rem] font-medium leading-7" style={mutedStyle}>
                           {resource.description}
                         </p>
 
-                        <div className="inline-flex items-center gap-2 text-[0.84rem] font-medium text-black/48">
+                        <div className="inline-flex items-center gap-2 text-[0.84rem] font-black uppercase tracking-[0.04em]" style={mutedStyle}>
                           <span>Open</span>
                           <ExternalLink className="h-3.5 w-3.5" />
                         </div>
@@ -266,7 +300,7 @@ export default function StudioDirectory() {
               ))}
             </div>
           ) : (
-            <div className="border-t border-black/10">
+            <div className="mx-auto grid max-w-[76rem] gap-4">
               {filteredResources.map((resource: any) => {
                 const category = categories.find((entry) => entry.slug === resource.category_slug);
 
@@ -274,23 +308,24 @@ export default function StudioDirectory() {
                   <ExternalLinkPreview
                     key={resource.id}
                     href={resource.url}
-                    className="grid w-full items-start gap-4 border-b border-black/8 px-[clamp(1.5rem,5vw,6rem)] py-5 text-left transition-colors hover:bg-white md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                    className="grid w-full items-start gap-4 rounded-[1.5rem] p-5 text-left shadow-[0_14px_42px_rgba(17,17,17,0.08)] transition-transform hover:-translate-y-0.5 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                    style={softPanelStyle}
                     previewLabel={resource.name}
                   >
                     <div>
-                      <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-black">
+                      <p className="text-[1.08rem] font-black leading-[1.05] tracking-[0]" style={{ color: homeTheme.ink }}>
                         {resource.name}
                       </p>
-                      <p className="mt-2 text-[0.82rem] leading-5 text-black/38">
+                      <p className="mt-2 text-[0.82rem] font-medium leading-5" style={mutedStyle}>
                         {category?.name || "Resource"}
                       </p>
                     </div>
 
-                    <p className="max-w-2xl text-[0.96rem] leading-7 text-black/58">
+                    <p className="max-w-2xl text-[0.96rem] font-medium leading-7" style={mutedStyle}>
                       {resource.description}
                     </p>
 
-                    <div className="inline-flex items-center gap-2 text-[0.84rem] font-medium text-black/48">
+                    <div className="inline-flex items-center gap-2 text-[0.84rem] font-black uppercase tracking-[0.04em]" style={mutedStyle}>
                       <span>Open</span>
                       <ExternalLink className="h-3.5 w-3.5" />
                     </div>
@@ -302,13 +337,13 @@ export default function StudioDirectory() {
 
           {!isLoading && filteredResources.length === 0 && (
             <div className="px-6 py-24 text-center">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center border border-black/10 bg-black/[0.035]">
-                <Search className="h-6 w-6 text-black/42" />
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full" style={softPanelStyle}>
+                <Search className="h-6 w-6 opacity-50" />
               </div>
-              <h3 className="mt-6 font-sans text-[1.5rem] font-medium tracking-[-0.04em] text-black">
+              <h3 className="mt-6 text-[1.5rem] font-black tracking-[0]" style={displayStyle}>
                 No resources found
               </h3>
-              <p className="mx-auto mt-3 max-w-md text-[0.98rem] leading-7 text-black/56">
+              <p className="mx-auto mt-3 max-w-md text-[0.98rem] font-medium leading-7" style={mutedStyle}>
                 Try a different category or search term. Nothing in the directory matched the
                 current filters.
               </p>
@@ -317,7 +352,8 @@ export default function StudioDirectory() {
                   setSelectedCategory(null);
                   setSearchQuery("");
                 }}
-                className="mt-6 text-[0.92rem] font-medium text-black/72 transition-colors hover:text-black"
+                className="mt-6 text-[0.92rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                style={{ color: homeTheme.ink }}
               >
                 Clear filters
               </button>
@@ -325,26 +361,38 @@ export default function StudioDirectory() {
           )}
         </section>
 
-        <section className="border-t border-black/10 bg-[#f1f0ec] px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
-          <div className="max-w-4xl">
-            <h2 className="font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-black">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
+          <div
+            className="mx-auto max-w-[76rem] rounded-[2rem] p-7 shadow-[0_18px_54px_rgba(17,17,17,0.08)] md:p-10"
+            style={softPanelStyle}
+          >
+            <h2
+              className="max-w-[16ch] text-[clamp(2.2rem,4.5vw,4.6rem)] font-black uppercase leading-[0.86] tracking-[0]"
+              style={displayStyle}
+            >
               Know a scenic design resource that belongs in the directory?
             </h2>
-            <p className="mt-6 max-w-2xl text-[1rem] leading-8 text-black/58">
+            <p className="mt-6 max-w-2xl text-[1rem] font-medium leading-8" style={mutedStyle}>
               Suggest an organization, archive, supplier, or tool that should be part of this
               working list.
             </p>
             <a
               href="/contact"
-              className="mt-10 inline-flex h-11 items-center justify-center rounded-full bg-black px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-black/80"
+              className="mt-10 inline-flex h-11 items-center justify-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+              style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
             >
-              <span style={{ color: "#f1f0ec" }}>Submit Suggestion</span>
+              Submit Suggestion
             </a>
           </div>
         </section>
       </main>
 
-      <Footer tone="light" />
+      <Footer
+        tone="light"
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+      />
     </div>
   );
 }

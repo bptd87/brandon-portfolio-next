@@ -1,19 +1,14 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  FileText,
-  GraduationCap,
-  Mail,
-  PenLine,
-} from "lucide-react";
+import type { CSSProperties } from "react";
+import { ArrowUpRight } from "lucide-react";
 import AboutNav from "@/components/AboutNav";
 import AboutModelViewer from "@/components/AboutModelViewer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 
 const ABOUT_PORTRAIT_URL =
@@ -71,6 +66,14 @@ const afterArticleImages = [
   aboutImages[5],
   aboutImages[6],
   aboutImages[7],
+] as const;
+
+const aboutRelatedLinks = [
+  { href: "/resume", label: "Resume" },
+  { href: "/creative-statement", label: "Creative statement" },
+  { href: "/about/teaching", label: "Teaching philosophy" },
+  { href: "/projects", label: "Portfolio" },
+  { href: "mailto:info@brandonptdavis.com", label: "Email" },
 ] as const;
 
 const introParagraphs = [
@@ -146,8 +149,22 @@ const aboutStoryBlocks = [
 ] as const;
 
 export default function About() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+
   return (
-    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--foreground:#111111]">
+    <div
+      className="about-profile-light min-h-screen transition-colors duration-500"
+      style={
+        {
+          "--background": homeTheme.bg,
+          "--foreground": homeTheme.ink,
+          backgroundColor: homeTheme.bg,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+        } as CSSProperties
+      }
+    >
       <SEO
         title="About Brandon PT Davis"
         description="About Brandon PT Davis, a Southern California scenic designer and United Scenic Artists Local 829 member working across theatre, rendering, live events, and experiential design."
@@ -165,78 +182,48 @@ export default function About() {
         imageSrc={ABOUT_PORTRAIT_URL}
         showImage={false}
         title="About Brandon PT Davis"
-        titleClassName="!max-w-[16ch] !text-[clamp(3rem,5.4vw,5.65rem)] !leading-[0.94] !tracking-[-0.068em]"
+        lightBackgroundColor={homeTheme.bg}
+        lightInkColor={homeTheme.ink}
+        lightMutedColor={homeTheme.muted}
         titleContent={
           <>
             About
+            {" "}
             <br />
             Brandon PT Davis
           </>
         }
-        updatedAt="July 2, 2026"
+        updatedAt="July 5, 2026"
       />
 
-      <main className="bg-[#f1f0ec] px-[clamp(1rem,5vw,6rem)] pb-20 pt-12 md:pb-28 md:pt-16">
+      <main
+        className="px-[clamp(1.25rem,5vw,6rem)] pb-20 pt-10 transition-colors duration-500 md:pb-28 md:pt-14"
+        style={{ backgroundColor: homeTheme.bg }}
+      >
         <article className="mx-auto max-w-[76rem]">
-          <div className="grid gap-10 md:grid-cols-[minmax(0,11rem)_minmax(0,1fr)] md:gap-12">
-            <aside className="space-y-8 md:sticky md:top-28 md:self-start md:pt-1">
+          <div className="grid gap-10 md:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] md:gap-12">
+            <aside className="space-y-8 md:self-start md:pt-1">
               <nav
                 aria-label="About related links"
-                className="space-y-3.5 text-[0.98rem] font-semibold leading-6 tracking-[-0.015em] text-black"
+                className="flex flex-wrap gap-2 md:flex-col"
+                style={{ fontFamily: HOME_DISPLAY_FONT }}
               >
-                <a
-                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
-                  href="/resume"
-                >
-                  <FileText
-                    className="h-4 w-4 flex-none stroke-[2.1]"
-                    aria-hidden="true"
-                  />
-                  Resume
-                </a>
-                <a
-                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
-                  href="/creative-statement"
-                >
-                  <PenLine
-                    className="h-4 w-4 flex-none stroke-[2.1]"
-                    aria-hidden="true"
-                  />
-                  Creative statement
-                </a>
-                <a
-                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
-                  href="/about/teaching"
-                >
-                  <GraduationCap
-                    className="h-4 w-4 flex-none stroke-[2.1]"
-                    aria-hidden="true"
-                  />
-                  Teaching philosophy
-                </a>
-                <a
-                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
-                  href="/projects"
-                >
-                  <BriefcaseBusiness
-                    className="h-4 w-4 flex-none stroke-[2.1]"
-                    aria-hidden="true"
-                  />
-                  Portfolio
-                </a>
-                <a
-                  className="flex items-center gap-2.5 underline-offset-4 hover:underline"
-                  href="mailto:info@brandonptdavis.com"
-                >
-                  <Mail
-                    className="h-4 w-4 flex-none stroke-[2.1]"
-                    aria-hidden="true"
-                  />
-                  Email
-                </a>
+                {aboutRelatedLinks.map(link => (
+                  <a
+                    key={link.href}
+                    className="inline-flex min-h-10 w-fit items-center rounded-full px-4 text-[0.75rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5"
+                    href={link.href}
+                    style={{
+                      backgroundColor: homeTheme.accentSoft,
+                      color: homeTheme.muted,
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </nav>
 
-              <div className="pt-64">
+              <div className="pt-24 md:pt-48">
                 <AboutModelViewer
                   src={ABOUT_MODEL_URL}
                   downloadName="brandon-pt-davis-3d-model.glb"
@@ -244,16 +231,26 @@ export default function About() {
               </div>
             </aside>
 
-            <div className="space-y-7 text-[1.12rem] font-medium leading-8 tracking-[-0.015em] text-black/78 md:text-[1.22rem] md:leading-9">
+            <div
+              className="space-y-7 text-[1.06rem] font-medium leading-8 tracking-[-0.01em] md:text-[1.16rem] md:leading-9"
+              style={{ color: homeTheme.ink }}
+            >
               <figure className="my-8 md:float-right md:mb-6 md:ml-10 md:mt-1 md:w-[min(42%,24rem)]">
                 <img
                   src={ABOUT_PORTRAIT_URL}
                   alt="Brandon PT Davis"
                   loading="lazy"
                   decoding="async"
-                  className="h-auto w-full bg-black/[0.04]"
+                  className="h-auto w-full rounded-[1.65rem] bg-black/[0.04]"
                 />
-                <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
+                <figcaption
+                  className="mt-3 text-[0.82rem] font-black uppercase leading-none tracking-[0.04em]"
+                  style={{
+                    color: homeTheme.muted,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
+                >
                   Brandon PT Davis.
                 </figcaption>
               </figure>
@@ -263,9 +260,10 @@ export default function About() {
                   key={paragraph.text}
                   className={
                     index === 0
-                      ? "first-letter:float-left first-letter:mr-3 first-letter:font-sans first-letter:text-[4.75rem] first-letter:font-medium first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-black"
+                      ? "first-letter:float-left first-letter:mr-3 first-letter:text-[4.75rem] first-letter:font-black first-letter:uppercase first-letter:leading-[0.78] first-letter:tracking-[0]"
                       : undefined
                   }
+                  style={index === 0 ? { fontFamily: HOME_BODY_FONT } : undefined}
                 >
                   {paragraph.text}
                 </p>
@@ -276,7 +274,8 @@ export default function About() {
                   return (
                     <p
                       key={`${block.kind}-${index}`}
-                      className="my-9 max-w-[34rem] border-l border-black/16 pl-5 font-sans text-[clamp(1.6rem,2.6vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.055em] text-black"
+                      className="my-10 max-w-[36rem] text-[clamp(1.7rem,3vw,2.65rem)] font-black uppercase leading-[0.92] tracking-[0]"
+                      style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT }}
                     >
                       {block.text}
                     </p>
@@ -294,9 +293,16 @@ export default function About() {
                           alt={image.alt}
                           loading="lazy"
                           decoding="async"
-                          className="h-auto w-full bg-black/[0.04]"
+                          className="h-auto w-full rounded-[1.65rem] bg-black/[0.04]"
                         />
-                        <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
+                        <figcaption
+                          className="mt-3 text-[0.82rem] font-black uppercase leading-none tracking-[0.04em]"
+                          style={{
+                            color: homeTheme.muted,
+                            fontFamily: HOME_DISPLAY_FONT,
+                            fontStretch: "condensed",
+                          }}
+                        >
                           {image.caption}
                         </figcaption>
                       </figure>
@@ -309,10 +315,13 @@ export default function About() {
 
               <section
                 aria-label="Profiles and related pages"
-                className="border-t border-black/12 pt-8 text-[0.98rem] leading-6 tracking-[-0.01em]"
+                className="pt-8 text-[0.98rem] leading-6 tracking-[-0.01em]"
               >
                 <div>
-                  <h2 className="font-sans text-[0.95rem] font-semibold leading-none tracking-[-0.01em] text-black/48">
+                  <h2
+                    className="text-[0.82rem] font-black uppercase leading-none tracking-[0.08em]"
+                    style={{ color: homeTheme.muted, fontFamily: HOME_DISPLAY_FONT }}
+                  >
                     Profiles
                   </h2>
                   <div className="mt-4 space-y-3">
@@ -322,7 +331,8 @@ export default function About() {
                         href={profileLink.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="group block font-semibold text-black underline-offset-4 hover:underline"
+                        className="group block font-semibold underline-offset-4 hover:underline"
+                        style={{ color: homeTheme.ink }}
                       >
                         {profileLink.title}
                         <ArrowUpRight
@@ -346,12 +356,19 @@ export default function About() {
             <figure key={image.src}>
               <img
                 src={image.src}
-                alt={image.alt}
-                loading="lazy"
-                decoding="async"
-                className="h-auto w-full bg-black/[0.04]"
+              alt={image.alt}
+              loading="lazy"
+              decoding="async"
+                className="h-auto w-full rounded-[1.65rem] bg-black/[0.04]"
               />
-              <figcaption className="mt-3 font-sans text-[0.9rem] font-medium leading-5 tracking-[-0.01em] text-black/42">
+              <figcaption
+                className="mt-3 text-[0.82rem] font-black uppercase leading-none tracking-[0.04em]"
+                style={{
+                  color: homeTheme.muted,
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
+              >
                 {image.caption}
               </figcaption>
             </figure>

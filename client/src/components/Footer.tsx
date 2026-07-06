@@ -1,92 +1,325 @@
 "use client";
 
-import { Instagram, Linkedin } from "lucide-react";
+import { type CSSProperties, type WheelEvent, useEffect, useRef } from "react";
 import { Link } from "wouter";
+
+import { useHomeTheme } from "@/lib/homeTheme";
 
 const SOCIAL_LINKS = [
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/brandonptdavis",
-    icon: Linkedin,
+    label: "INSTAGRAM",
+    href: "https://www.instagram.com/brandonptdavisdesign",
   },
   {
-    label: "Instagram",
-    href: "https://www.instagram.com/brandonptdavisdesign",
-    icon: Instagram,
+    label: "LINKEDIN",
+    href: "https://www.linkedin.com/in/brandonptdavis",
   },
 ] as const;
 
-const FOOTER_LINKS = [
-  { label: "Portfolio", href: "/projects" },
-  { label: "About", href: "/about" },
-  { label: "Studio", href: "/studio" },
-  { label: "Contact", href: "/contact" },
+const UTILITY_LINKS = [
+  { label: "PRIVACY", href: "/privacy" },
+  { label: "TERMS", href: "/terms" },
+  { label: "ACCESSIBILITY", href: "/accessibility" },
 ] as const;
 
 const COPYRIGHT_YEAR = 2026;
 
 export default function Footer({
+  backgroundColor,
   className = "",
+  displayTextColor,
+  textColor,
+  variant = "immersive",
 }: {
   tone?: "dark" | "light";
+  backgroundColor?: string;
   className?: string;
+  displayTextColor?: string;
+  textColor?: string;
+  variant?: "immersive" | "standard";
 }) {
-  const linkClassName =
-    "text-[0.92rem] font-semibold tracking-[-0.012em] text-black/56 transition-colors hover:text-black";
-  const socialClassName =
-    "inline-flex h-10 w-10 items-center justify-center border border-black/12 text-black/52 transition-colors hover:border-black/24 hover:bg-black/[0.05] hover:text-black";
+  const { homeTheme } = useHomeTheme();
+  const phantomRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLAnchorElement | null>(null);
+  const resolvedBackgroundColor = backgroundColor || homeTheme.footerBg;
+  const resolvedDisplayTextColor = displayTextColor || homeTheme.footerDisplay;
+  const resolvedTextColor = textColor || homeTheme.footerInk;
 
-  return (
-    <footer
-      className={`mt-auto border-t border-black/10 bg-white text-[#111111] ${className}`}
-    >
-      <div className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-12">
-        <div className="mx-auto flex max-w-[76rem] flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          <nav className="flex flex-wrap gap-x-5 gap-y-3 md:justify-start" aria-label="Footer navigation">
-            {FOOTER_LINKS.map(item => (
-              <Link key={item.href} href={item.href} className={linkClassName}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+  const handleFooterWheel = (event: WheelEvent<HTMLElement>) => {
+    if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
 
-          <div className="flex items-center gap-2 md:justify-end">
-            {SOCIAL_LINKS.map(item => {
-              const Icon = item.icon;
-              return (
+    const homeScrollRoot = document.querySelector<HTMLElement>("[data-home-scroll-root]");
+    if (!homeScrollRoot || homeScrollRoot.scrollHeight <= homeScrollRoot.clientHeight) return;
+
+    const previousScrollTop = homeScrollRoot.scrollTop;
+    homeScrollRoot.scrollTop += event.deltaY;
+
+    if (homeScrollRoot.scrollTop !== previousScrollTop) {
+      event.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    if (variant !== "immersive") return undefined;
+
+    const footer = footerRef.current;
+    const phantom = phantomRef.current;
+    const title = titleRef.current;
+    if (!footer || !phantom || !title) return undefined;
+
+    const coverLayers: Array<{
+      element: HTMLElement;
+      position: string;
+      zIndex: string;
+    }> = [];
+
+    let coverLayer = phantom.previousElementSibling;
+    while (coverLayer) {
+      if (coverLayer instanceof HTMLElement) {
+        const coverStyle = window.getComputedStyle(coverLayer);
+        coverLayers.push({
+          element: coverLayer,
+          position: coverLayer.style.position,
+          zIndex: coverLayer.style.zIndex,
+        });
+        if (coverStyle.position === "static") coverLayer.style.position = "relative";
+        if (coverStyle.zIndex === "auto") coverLayer.style.zIndex = "1";
+      }
+      coverLayer = coverLayer.previousElementSibling;
+    }
+
+    let animationFrame = 0;
+    const updateFooterProgress = () => {
+      animationFrame = 0;
+
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+      const scrollTop = homeScrollRoot
+        ? homeScrollRoot.scrollTop
+        : window.scrollY || document.documentElement.scrollTop;
+      const phantomTop = phantom.offsetTop;
+      const start = phantomTop - viewportHeight;
+      const end = phantomTop;
+      const progress = Math.min(Math.max((scrollTop - start) / (end - start), 0), 1);
+      const titleBottom = title.offsetTop + title.clientHeight;
+      const offsetY = (1 - progress) * Math.max(viewportHeight - titleBottom, 0);
+
+      footer.style.setProperty("--footer-scale-y", progress.toFixed(4));
+      footer.style.setProperty("--footer-offset-y", offsetY.toFixed(2));
+    };
+
+    const requestUpdate = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(updateFooterProgress);
+    };
+
+    const homeScrollRoot = document.querySelector<HTMLElement>("[data-home-scroll-root]");
+    const scrollTargets: Array<Window | HTMLElement> = [window];
+
+    if (homeScrollRoot) scrollTargets.push(homeScrollRoot);
+
+    scrollTargets.forEach(target => {
+      target.addEventListener("scroll", requestUpdate, { passive: true });
+    });
+    window.addEventListener("resize", requestUpdate);
+
+    updateFooterProgress();
+
+    return () => {
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      scrollTargets.forEach(target => target.removeEventListener("scroll", requestUpdate));
+      window.removeEventListener("resize", requestUpdate);
+      coverLayers.forEach(({ element, position, zIndex }) => {
+        element.style.position = position;
+        element.style.zIndex = zIndex;
+      });
+    };
+  }, [variant]);
+
+  if (variant !== "immersive") {
+    return (
+      <footer
+        className={`footer relative left-1/2 ml-[-50vw] flex min-h-[clamp(24rem,48vw,38rem)] w-screen flex-col items-center justify-end gap-7 overflow-hidden px-6 pb-12 pt-[clamp(7rem,14vw,11rem)] text-center transition-[background-color,color] duration-500 ${className}`}
+        style={{
+          backgroundColor: resolvedBackgroundColor,
+          color: resolvedTextColor,
+          fontFamily:
+            '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
+          fontStretch: "condensed",
+        }}
+      >
+        <a
+          href="/contact"
+          className="m-0 block select-none whitespace-nowrap uppercase no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35"
+          aria-label="Open contact form"
+          style={{
+            color: resolvedDisplayTextColor,
+            fontFamily:
+              '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
+            fontSize: "clamp(5.5rem, 24vw, 23rem)",
+            fontWeight: 900,
+            fontStretch: "condensed",
+            letterSpacing: "-0.012em",
+            lineHeight: 0.78,
+            textTransform: "uppercase",
+          }}
+        >
+          CONTACT
+        </a>
+
+        <div className="relative z-10 flex flex-col items-center gap-4">
+          <ul className="m-0 flex list-none flex-col items-center gap-1 p-0">
+            <li>
+              <a
+                href="mailto:brandon@brandonptdavis.com"
+                aria-label="Email Brandon PT Davis"
+                className="block text-[clamp(0.78rem,1vw,1rem)] font-black uppercase leading-none tracking-[-0.02em] transition-[color,transform] duration-150 hover:scale-y-110 hover:opacity-75"
+              >
+                BRANDON@BRANDONPTDAVIS.COM
+              </a>
+            </li>
+          </ul>
+
+          <ul
+            className="m-0 flex list-none flex-col items-center gap-1 p-0 text-[clamp(0.72rem,0.86vw,0.88rem)] font-black uppercase leading-[0.95] tracking-[-0.015em]"
+            aria-label="Footer social links"
+          >
+            {SOCIAL_LINKS.map(item => (
+              <li key={item.label}>
                 <a
-                  key={item.label}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={socialClassName}
-                  aria-label={item.label}
-                  title={item.label}
+                  className="block origin-bottom transition-[color,transform,opacity] duration-150 hover:scale-y-110 hover:opacity-75"
                 >
-                  <Icon className="h-4 w-4" />
+                  {item.label}
                 </a>
-              );
-            })}
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div
-          className="mx-auto mt-8 flex max-w-[76rem] flex-col gap-3 border-t border-black/10 pt-5 text-[0.84rem] tracking-[-0.006em] text-black/46 md:flex-row md:items-center md:justify-between"
+        <nav
+          className="relative z-10 flex max-w-[min(26rem,82vw)] flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.58rem] font-black uppercase tracking-[0.18em] opacity-76"
+          aria-label="Footer utility links"
         >
-          <p>© {COPYRIGHT_YEAR} Brandon PT Davis.</p>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/privacy" className={linkClassName}>
-              Privacy
+          {UTILITY_LINKS.map(item => (
+            <Link key={item.href} href={item.href} className="transition-opacity hover:opacity-70">
+              {item.label}
             </Link>
-            <Link href="/terms" className={linkClassName}>
-              Terms
-            </Link>
-            <Link href="/accessibility" className={linkClassName}>
-              Accessibility
-            </Link>
-          </div>
+          ))}
+        </nav>
+
+        <p
+          className="relative z-10 text-[0.6rem] font-bold uppercase tracking-[0.24em] opacity-70"
+          style={{ color: resolvedDisplayTextColor }}
+        >
+          ALL RIGHTS RESERVED {COPYRIGHT_YEAR} BRANDON PT DAVIS
+        </p>
+      </footer>
+    );
+  }
+
+  return (
+    <>
+      <div
+        ref={phantomRef}
+        aria-hidden="true"
+        className={`intersection-phantom pointer-events-none relative left-1/2 ml-[-50vw] min-h-[100dvh] w-screen ${className}`}
+        style={{ backgroundColor: resolvedBackgroundColor }}
+      />
+
+      <footer
+        ref={footerRef}
+        onWheelCapture={handleFooterWheel}
+        className={`footer pointer-events-none fixed inset-x-0 bottom-0 z-0 flex min-h-[100dvh] w-full flex-col items-center justify-end gap-8 overflow-hidden px-0 py-16 text-center transition-[background-color,color,opacity] duration-500 ${className}`}
+        style={
+          {
+            backgroundColor: resolvedBackgroundColor,
+            color: resolvedTextColor,
+            container: "footer / inline-size",
+            fontFamily:
+              '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
+            fontStretch: "condensed",
+            transform: "translateY(calc(var(--footer-offset-y) * 1px))",
+            "--footer-scale-y": 0,
+            "--footer-offset-y": 120,
+          } as CSSProperties
+        }
+      >
+        <a
+          href="/contact"
+          ref={titleRef}
+          className="footer__title pointer-events-auto m-0 block select-none whitespace-nowrap uppercase no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35"
+          aria-label="Open contact form"
+          style={{
+            color: resolvedDisplayTextColor,
+            fontFamily:
+              '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
+            fontSize: "clamp(8rem, 26cqi, 28rem)",
+            fontWeight: 900,
+            fontStretch: "condensed",
+            letterSpacing: "-0.012em",
+            lineHeight: 0.8,
+            marginLeft: "-0.05em",
+            textTransform: "uppercase",
+            transform: "scaleY(var(--footer-scale-y))",
+            transformOrigin: "bottom",
+          }}
+        >
+          <span className="relative top-[-0.1em]">CONTACT</span>
+        </a>
+
+        <div className="footer__links pointer-events-auto relative z-10 flex flex-col items-center gap-4 px-6">
+          <ul className="footer__links__list m-0 flex list-none flex-col items-center gap-1 p-0">
+            <li>
+              <a
+                href="mailto:brandon@brandonptdavis.com"
+                aria-label="Email Brandon PT Davis"
+                className="block text-[clamp(0.78rem,1vw,1rem)] font-black uppercase leading-none tracking-[-0.02em] transition-[color,transform] duration-150 hover:scale-y-110 hover:opacity-75"
+              >
+                BRANDON@BRANDONPTDAVIS.COM
+              </a>
+            </li>
+          </ul>
+
+          <ul
+            className="footer__links__list m-0 flex list-none flex-col items-center gap-1 p-0 text-[clamp(0.72rem,0.86vw,0.88rem)] font-black uppercase leading-[0.95] tracking-[-0.015em]"
+            aria-label="Footer social links"
+          >
+            {SOCIAL_LINKS.map(item => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block origin-bottom transition-[color,transform,opacity] duration-150 hover:scale-y-110 hover:opacity-75"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </footer>
+
+        <nav
+          className="pointer-events-auto relative z-10 flex max-w-[min(26rem,82vw)] flex-wrap items-center justify-center gap-x-5 gap-y-2 px-6 text-[0.58rem] font-black uppercase tracking-[0.18em] opacity-76"
+          aria-label="Footer utility links"
+        >
+          {UTILITY_LINKS.map(item => (
+            <Link key={item.href} href={item.href} className="transition-opacity hover:opacity-70">
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <p
+          className="relative z-10 text-[0.6rem] font-bold uppercase tracking-[0.24em] opacity-70"
+          style={{ color: resolvedDisplayTextColor }}
+        >
+          ALL RIGHTS RESERVED {COPYRIGHT_YEAR} BRANDON PT DAVIS
+        </p>
+      </footer>
+    </>
   );
 }

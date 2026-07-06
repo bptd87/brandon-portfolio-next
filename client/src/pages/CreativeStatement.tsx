@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { Link } from "wouter";
 import { Download } from "lucide-react";
-import { motion } from "framer-motion";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -14,6 +13,12 @@ import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 
 const STATEMENT_PDF_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/site/brandon-pt-davis-creative-statement-93eb8f2125.pdf";
@@ -58,14 +63,6 @@ const statementChapters = [
   },
 ] as const;
 
-const chapterTextPositions = [
-  "md:items-start md:justify-end md:text-left",
-  "md:items-end md:justify-end md:text-right",
-  "md:items-start md:justify-center md:text-left",
-  "md:items-end md:justify-center md:text-right",
-  "md:items-center md:justify-end md:text-center",
-] as const;
-
 const getProjectTimestamp = (project: any) => {
   if (project.year) {
     const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
@@ -77,6 +74,8 @@ const getProjectTimestamp = (project: any) => {
 };
 
 export default function CreativeStatement() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
   const scenicDesignProjects = useMemo(
     () =>
       [...getLocalScenicProjects()].sort((a, b) => {
@@ -120,7 +119,19 @@ export default function CreativeStatement() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white [--background:#000000] [--border:rgba(255,255,255,0.14)] [--foreground:#ffffff]">
+    <div
+      className="about-profile-light min-h-screen transition-colors duration-500"
+      style={
+        {
+          backgroundColor: homeTheme.bg,
+          color: homeTheme.ink,
+          fontFamily: HOME_BODY_FONT,
+          "--background": homeTheme.bg,
+          "--foreground": homeTheme.ink,
+          "--border": homeTheme.ghost,
+        } as CSSProperties
+      }
+    >
       <SEO
         title="Creative Design Statement | Scenic Design Philosophy"
         description="A downloadable creative statement by Brandon PT Davis on scenic design, architecture, history, collaboration, and story-led theatrical environments."
@@ -180,30 +191,29 @@ export default function CreativeStatement() {
       />
 
       <Header />
-      <AboutNav tone="dark" />
+      <AboutNav />
 
       <main>
         <ProfileSectionHero
           canonicalPath="/creative-statement"
-          description="A statement on scenic design as spatial storytelling, collaboration, architecture, history, and theatrical memory."
+          description="A statement on scenic design as spatial storytelling, collaboration, architecture, history, and practical theatrical memory."
           imageAlt="Notebook icon for creative statement"
           imageSrc="/images/about/icons/creative-statement-icon.png"
           showImage={false}
           title="Creative Statement"
-          updatedAt="May 22, 2026"
-          tone="dark"
+          updatedAt="July 5, 2026"
         />
 
-        <section className="bg-black px-5 py-5 sm:px-8 md:px-[clamp(3rem,7vw,7rem)]">
-          <div className="mx-auto flex max-w-[88rem] flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <p className="max-w-[42rem] text-[0.98rem] leading-7 tracking-[-0.018em] text-white/54">
-              Start with the formal statement, then move through the visual version below as each
-              idea becomes space, process, and performance.
-            </p>
+        <section
+          className="px-5 py-5 sm:px-8 md:px-[clamp(3rem,7vw,7rem)]"
+          style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+        >
+          <div className="mx-auto flex max-w-[88rem] justify-center">
             <a
               href={STATEMENT_PDF_URL}
               download
-              className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-white px-5 text-[0.92rem] font-medium tracking-[-0.015em] text-black transition-colors hover:bg-[color-mix(in_oklch,var(--accent-articles)_28%,white)]"
+              className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-5 text-[0.92rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+              style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
             >
               <Download className="h-4 w-4" />
               Download statement
@@ -211,113 +221,114 @@ export default function CreativeStatement() {
           </div>
         </section>
 
-        <article id="statement">
-          {statementChapters.map((chapter, index) => {
-            const visual =
-              index === 3
-                ? renderingChapterVisual
-                : index === 4
-                  ? revealChapterVisual
-                  : statementVisuals[index] || openingVisual;
-            const positionClass = chapterTextPositions[index] || chapterTextPositions[0];
+        <article
+          id="statement"
+          className="px-[clamp(1.5rem,5vw,6rem)] py-[clamp(4rem,8vw,7rem)]"
+          style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+        >
+          <AnimatedSection className="mx-auto max-w-[74rem]">
+            <div className="space-y-[clamp(3rem,7vw,6rem)]">
+              {statementChapters.map((chapter, index) => {
+                const visual =
+                  index === 3
+                    ? renderingChapterVisual
+                    : index === 4
+                      ? revealChapterVisual
+                      : statementVisuals[index] || openingVisual;
+                const shouldFlip = index % 2 === 1;
 
-            return (
-              <section
-                key={chapter.label}
-                className="relative isolate overflow-hidden bg-black text-white md:min-h-[100svh]"
-              >
-                {visual?.coverImageUrl ? (
-                  <motion.div
-                    className="relative h-[46svh] min-h-[20rem] overflow-hidden bg-black md:absolute md:inset-0 md:h-auto md:min-h-0"
-                    initial={{ scale: 1.06, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: false, amount: 0.45 }}
-                    transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
+                return (
+                  <section
+                    key={chapter.label}
+                    className={`grid gap-7 md:grid-cols-[minmax(0,0.92fr)_minmax(18rem,0.72fr)] md:items-center md:gap-[clamp(2.5rem,5vw,5rem)] ${
+                      shouldFlip ? "md:[&>*:first-child]:order-2" : ""
+                    }`}
                   >
-                    <Image
-                      src={visual.coverImageUrl}
-                      alt={visual.title}
-                      fill
-                      priority={index === 0}
-                      quality={86}
-                      sizes="100vw"
-                      className="object-cover md:object-contain"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.34)_18%,rgba(0,0,0,0.08)_48%,rgba(0,0,0,0.4)_78%,rgba(0,0,0,0.92)_100%)] md:bg-[linear-gradient(180deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.2)_18%,rgba(0,0,0,0.06)_48%,rgba(0,0,0,0.34)_78%,rgba(0,0,0,0.9)_100%)]" />
-                  </motion.div>
-                ) : null}
-
-                <div className="absolute inset-0 hidden bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.12),rgba(0,0,0,0.78))] md:block" />
-                <div className="absolute inset-x-0 bottom-0 hidden h-2/3 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.92))] md:block" />
-                <div className="absolute inset-x-0 top-0 hidden h-1/3 bg-[linear-gradient(180deg,rgba(0,0,0,0.42),transparent)] md:block" />
-
-                <div className={`relative z-10 flex px-5 py-9 sm:px-8 md:min-h-[100svh] md:px-[clamp(3rem,7vw,7rem)] md:py-20 ${positionClass}`}>
-                  <motion.div
-                    className="max-w-[46rem]"
-                    initial={{ opacity: 0, y: 36 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.55 }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <p className="font-mono text-[0.68rem] uppercase leading-5 tracking-[0.2em] text-white/46 md:text-[0.78rem] md:tracking-[0.24em] md:text-white/58">
-                      0{index + 1} · {chapter.label}
-                    </p>
-                    <h2 className="mt-4 font-sans text-[clamp(2.15rem,11vw,3.1rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-white md:mt-5 md:text-[clamp(3rem,8vw,8.9rem)] md:leading-[0.86] md:tracking-[-0.08em]">
-                      {chapter.title}
-                    </h2>
-                    <p className="mt-5 text-[1.02rem] leading-8 tracking-[-0.024em] text-white/72 md:mt-7 md:text-[clamp(1.08rem,1.65vw,1.36rem)] md:leading-[1.68] md:tracking-[-0.03em] md:text-white/78">
-                      {chapter.body}
-                    </p>
-                    {visual?.slug ? (
-                      <Link
-                        href={getProjectHref(visual)}
-                        className="mt-7 inline-flex text-[0.95rem] font-medium tracking-[-0.02em] text-white/68 transition-colors hover:text-white"
+                    <div className="mx-auto max-w-[40rem] md:mx-0">
+                      <h3
+                        className="text-balance text-[clamp(1.9rem,3.5vw,3.2rem)] font-black uppercase leading-[0.92] tracking-[0]"
+                        style={{
+                          color: homeTheme.ink,
+                          fontFamily: HOME_DISPLAY_FONT,
+                          fontStretch: "condensed",
+                        }}
                       >
-                        {visual.title}
-                      </Link>
-                    ) : visual ? (
-                      <p className="mt-7 inline-flex text-[0.95rem] font-medium tracking-[-0.02em] text-white/52">
-                        {visual.title}
+                        {chapter.title}
+                      </h3>
+                      <p
+                        className="mt-5 text-[1rem] font-medium leading-8 tracking-[-0.02em] md:text-[1.08rem]"
+                        style={{ color: homeTheme.muted }}
+                      >
+                        {chapter.body}
                       </p>
-                    ) : null}
-                  </motion.div>
-                </div>
-              </section>
-            );
-          })}
-        </article>
+                      {visual?.slug ? (
+                        <Link
+                          href={getProjectHref(visual)}
+                          className="mt-6 inline-flex text-[0.86rem] font-black uppercase tracking-[0.05em] transition-transform hover:-translate-y-0.5"
+                          style={{ color: homeTheme.ink }}
+                        >
+                          {visual.title}
+                        </Link>
+                      ) : null}
+                    </div>
 
-        <section className="bg-black px-5 py-16 sm:px-8 md:px-[clamp(3rem,7vw,7rem)] md:py-24">
-          <AnimatedSection className="mx-auto flex min-h-[68svh] max-w-[88rem] py-14 md:py-20">
-            <div className="grid w-full gap-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.3fr)] lg:items-center">
-              <div>
-                <p className="font-mono text-[0.8rem] uppercase tracking-[0.22em] text-white/34">
-                  Brandon PT Davis
-                </p>
-                <h2 className="mt-5 max-w-[14.5ch] bg-[linear-gradient(115deg,#ffffff_0%,color-mix(in_oklch,var(--accent-articles)_88%,white)_36%,var(--accent-articles)_68%,#ffffff_100%)] bg-clip-text font-sans text-[3rem] font-semibold leading-[0.96] tracking-[0] text-transparent sm:text-[4.7rem] lg:text-[6.25rem]">
-                  Scenic design as a world that could not be any other way.
-                </h2>
-              </div>
-              <div className="max-w-[26rem] space-y-6 lg:justify-self-end">
-                <p className="text-[1.08rem] leading-[1.75] tracking-[0] text-white/58 sm:text-[1.18rem]">
-                  Read the formal statement as a PDF, then return to the visual sequence as the
-                  ideas move from text to rooms, revisions, and reveal.
-                </p>
-                <a
-                  href={STATEMENT_PDF_URL}
-                  download
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.92rem] font-medium tracking-[0] text-black transition-colors hover:bg-[color-mix(in_oklch,var(--accent-articles)_28%,white)]"
-                >
-                  <Download className="h-4 w-4" />
-                  Download statement
-                </a>
-              </div>
+                    {visual?.coverImageUrl ? (
+                      <Link
+                        href={visual.slug ? getProjectHref(visual) : "#statement"}
+                        className="site-media-square group relative block aspect-[4/3] overflow-hidden rounded-[1.65rem] shadow-[0_26px_70px_rgba(0,0,0,0.16)]"
+                        aria-label={visual.slug ? `Open ${visual.title}` : visual.title}
+                      >
+                        <Image
+                          src={visual.coverImageUrl}
+                          alt={visual.title}
+                          fill
+                          quality={86}
+                          sizes="(min-width: 1024px) 34rem, 92vw"
+                          className="site-media-square object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                        />
+                      </Link>
+                    ) : null}
+                  </section>
+                );
+              })}
+            </div>
+
+            <div
+              className="mx-auto mt-[clamp(4rem,8vw,7rem)] flex max-w-[44rem] flex-col items-center px-6 py-8 text-center sm:px-10"
+              style={{ color: homeTheme.ink }}
+            >
+              <h2
+                className="text-balance text-[clamp(1.9rem,3.5vw,3.2rem)] font-black uppercase leading-[0.92] tracking-[0]"
+                style={{
+                  color: homeTheme.ink,
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
+              >
+                Scenic design as a world that could not be any other way.
+              </h2>
+              <p
+                className="mt-5 max-w-[32rem] text-[1rem] font-medium leading-7 tracking-[-0.02em]"
+                style={{ color: homeTheme.muted }}
+              >
+                Read the formal PDF, then return to the work as the ideas move from text to rooms,
+                revisions, and reveal.
+              </p>
+              <a
+                href={STATEMENT_PDF_URL}
+                download
+                className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.84rem] font-black uppercase tracking-[0.02em] transition-transform hover:-translate-y-0.5"
+                style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
+              >
+                <Download className="h-4 w-4" />
+                Download statement
+              </a>
             </div>
           </AnimatedSection>
-        </section>
+        </article>
       </main>
 
-      <Footer tone="dark" />
+      <Footer tone="light" />
     </div>
   );
 }

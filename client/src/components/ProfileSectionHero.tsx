@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { Check, Facebook, Link2, Linkedin, Mail } from "lucide-react";
 
 import { copyTextToClipboard } from "@/lib/clipboard";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeTheme } from "@/lib/homeTheme";
 
 type ProfileSectionHeroProps = {
   canonicalPath: string;
@@ -21,6 +22,9 @@ type ProfileSectionHeroProps = {
   showImage?: boolean;
   tone?: "light" | "dark";
   lightBackgroundClassName?: string;
+  lightBackgroundColor?: string;
+  lightInkColor?: string;
+  lightMutedColor?: string;
 };
 
 const SITE_URL = "https://www.brandonptdavis.com";
@@ -38,10 +42,17 @@ export default function ProfileSectionHero({
   label = "Update",
   showImage = true,
   tone = "light",
-  lightBackgroundClassName = "bg-[#f1f0ec]",
+  lightBackgroundClassName = "bg-background",
+  lightBackgroundColor,
+  lightInkColor,
+  lightMutedColor,
 }: ProfileSectionHeroProps) {
+  const { homeTheme } = useHomeTheme();
   const [linkCopied, setLinkCopied] = useState(false);
   const isDark = tone === "dark";
+  const resolvedBackgroundColor = lightBackgroundColor || homeTheme.bg;
+  const resolvedInkColor = lightInkColor || homeTheme.ink;
+  const resolvedMutedColor = lightMutedColor || homeTheme.muted;
 
   const safeCanonicalPath = canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`;
   const pageUrl = `${SITE_URL}${safeCanonicalPath}`;
@@ -63,30 +74,57 @@ export default function ProfileSectionHero({
 
   return (
     <section
-      className={`relative overflow-hidden px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-10 md:pb-14 md:pt-14 ${
-        isDark ? "bg-black text-white" : `${lightBackgroundClassName} text-[#111111]`
+      className={`relative overflow-visible px-[clamp(1.5rem,5vw,6rem)] pb-[clamp(3rem,6vw,5rem)] pt-[clamp(6.75rem,11vw,9rem)] ${
+        isDark ? "bg-black text-white" : `${lightBackgroundClassName} text-foreground`
       }`}
+      style={
+        !isDark
+          ? {
+              backgroundColor: resolvedBackgroundColor,
+              color: resolvedInkColor,
+              fontFamily: HOME_BODY_FONT,
+            }
+          : { fontFamily: HOME_BODY_FONT }
+      }
     >
       <div className="mx-auto flex w-full max-w-[74rem] flex-col items-center text-center">
-        <p className={`text-[0.82rem] font-semibold uppercase tracking-[0.08em] ${isDark ? "text-white/46" : "text-black/46"}`}>
+        <p
+          className={`text-[0.72rem] font-black uppercase leading-none tracking-[0.09em] ${isDark ? "text-white/46" : ""}`}
+          style={
+            !isDark
+              ? { color: resolvedMutedColor, fontFamily: HOME_DISPLAY_FONT }
+              : { fontFamily: HOME_DISPLAY_FONT }
+          }
+        >
           {label}
-          <span className={`px-2 ${isDark ? "text-white/28" : "text-black/28"}`}>•</span>
+          <span className={`px-2 ${isDark ? "text-white/28" : ""}`}>•</span>
           <time>{updatedAt}</time>
         </p>
 
-        <h1 className={`mt-5 max-w-[10.5ch] text-balance font-sans text-[clamp(2.75rem,6.4vw,6.25rem)] font-medium leading-[0.9] tracking-[-0.078em] ${isDark ? "text-white" : "text-[#111111]"} ${titleClassName}`}>
+        <h1
+          className={`mt-5 max-w-[12em] text-balance text-[clamp(3.2rem,5.7vw,6.85rem)] font-black uppercase leading-[0.82] tracking-[0] ${isDark ? "text-white" : ""} ${titleClassName}`}
+          style={
+            !isDark
+              ? { color: resolvedInkColor, fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }
+              : { fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }
+          }
+        >
           {titleContent || title}
         </h1>
 
         <p
-          className={`mt-4 max-w-[42rem] text-balance text-[clamp(1.02rem,1.45vw,1.34rem)] font-medium leading-[1.12] tracking-[-0.04em] ${
-            isDark ? "text-white/72" : "text-black/72"
+          className={`mt-4 max-w-[39rem] text-balance text-[clamp(0.98rem,1.18vw,1.1rem)] font-semibold leading-[1.35] tracking-[-0.01em] ${
+            isDark ? "text-white/72" : ""
           } ${descriptionClassName}`}
+          style={!isDark ? { color: resolvedMutedColor } : undefined}
         >
           {description}
         </p>
 
-        <div className={`mt-6 flex w-full max-w-[44rem] items-center justify-center gap-2.5 ${isDark ? "text-white/48" : "text-black/48"}`}>
+        <div
+          className={`mt-6 flex w-full max-w-[44rem] items-center justify-center gap-2.5 ${isDark ? "text-white/48" : ""}`}
+          style={!isDark ? { color: resolvedMutedColor } : undefined}
+        >
           <button
             type="button"
             onClick={handleCopy}
@@ -131,7 +169,7 @@ export default function ProfileSectionHero({
         </div>
 
         {showImage ? (
-          <div className="site-media-square relative isolate mt-8 h-[min(45vw,27rem)] min-h-[14rem] w-[min(76vw,40rem)]">
+          <div className="site-media-square relative isolate mt-8 h-[min(45vw,27rem)] min-h-[14rem] w-[min(76vw,40rem)] overflow-hidden rounded-[1.65rem]">
             <div
               className={`pointer-events-none absolute inset-[18%] -z-10 rounded-full blur-3xl ${
                 isDark
@@ -146,7 +184,7 @@ export default function ProfileSectionHero({
               fill
               priority
               sizes="(min-width: 1024px) 40rem, 76vw"
-              className={`site-media-square object-contain ${
+              className={`site-media-square rounded-[1.65rem] object-contain ${
                 isDark
                   ? "drop-shadow-[0_28px_80px_color-mix(in_oklch,var(--accent-articles)_34%,transparent)]"
                   : "mix-blend-multiply"
