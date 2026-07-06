@@ -25,7 +25,6 @@ import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import {
   HOME_BODY_FONT,
   HOME_DISPLAY_FONT,
-  HOME_SCENIC_DESIGN_BLUE,
   type HomeColorTheme,
   useHomeTheme,
 } from "@/lib/homeTheme";
@@ -819,6 +818,17 @@ function HomeIdentityCard({
           -webkit-user-drag: none;
         }
 
+        @media (max-width: 767px) {
+          .home-stack-stage {
+            height: clamp(8.75rem, 34vw, 10.75rem) !important;
+            width: min(88vw, 26rem) !important;
+          }
+
+          .home-stack-card {
+            width: clamp(6.85rem, 27vw, 8.6rem) !important;
+          }
+        }
+
         [data-home-mounted="true"] .home-stack-card {
           animation: home-stack-enter 900ms cubic-bezier(0.18, 0.98, 0.28, 1.18) forwards;
           animation-delay: var(--home-card-delay);
@@ -950,7 +960,12 @@ function HomeIdentityCard({
                   const rotation =
                     ["-1.6deg", "-3.6deg", "4.8deg", "-0.9deg"][index] || "0deg";
                   const translateX =
-                    ["-18rem", "-6.4rem", "5.5rem", "17.2rem"][index] || "0rem";
+                    [
+                      "clamp(-18rem, -24vw, -5.75rem)",
+                      "clamp(-6.4rem, -8vw, -2.35rem)",
+                      "clamp(2.35rem, 8vw, 5.5rem)",
+                      "clamp(5.75rem, 24vw, 17.2rem)",
+                    ][index] || "0rem";
                   const translateY =
                     ["1.45rem", "-1.65rem", "0.9rem", "-0.75rem"][index] || "0rem";
                   const restScale =
@@ -958,7 +973,12 @@ function HomeIdentityCard({
                   const layerOrder =
                     [1, 2, 3, 4][index] || index + 1;
                   const hoverX =
-                    ["-22.8rem", "-9.2rem", "8.6rem", "22.5rem"][index] ||
+                    [
+                      "clamp(-22.8rem, -29vw, -6.55rem)",
+                      "clamp(-9.2rem, -11vw, -2.9rem)",
+                      "clamp(3rem, 11vw, 8.6rem)",
+                      "clamp(6.6rem, 29vw, 22.5rem)",
+                    ][index] ||
                     "0rem";
                   const hoverY =
                     ["2.65rem", "-3.1rem", "2.2rem", "-2rem"][index] ||
@@ -1084,6 +1104,8 @@ function HomeMinimalGallery({
   const [activePortfolioProject, setActivePortfolioProject] =
     useState<ScenicProjectSummary | null>(null);
   const [isPortfolioLightboxOpen, setIsPortfolioLightboxOpen] = useState(false);
+  const [isPortfolioFrameLoaded, setIsPortfolioFrameLoaded] = useState(false);
+  const portfolioFrameReadyTimerRef = useRef<number | null>(null);
   const galleryProjects = projects
     .filter(project => project.coverImageUrl);
   const carouselProjects = galleryProjects.slice(0, 8);
@@ -1178,6 +1200,11 @@ function HomeMinimalGallery({
       startX = event.clientX;
       startY = event.clientY;
       startOffset = offset;
+      try {
+        carousel.setPointerCapture?.(event.pointerId);
+      } catch {
+        // Pointer capture is best-effort for touch drag.
+      }
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -1201,10 +1228,15 @@ function HomeMinimalGallery({
       renderCarousel();
     };
 
-    const handlePointerUp = () => {
+    const handlePointerUp = (event: PointerEvent) => {
       if (!isDragging) return;
       isDragging = false;
       lockDrag = false;
+      try {
+        carousel.releasePointerCapture?.(event.pointerId);
+      } catch {
+        // The browser may already release capture after touch cancellation.
+      }
     };
 
     const handleClick = (event: MouseEvent) => {
@@ -1370,7 +1402,17 @@ function HomeMinimalGallery({
   useEffect(() => {
     if (!activePortfolioProject) {
       setIsPortfolioLightboxOpen(false);
+      setIsPortfolioFrameLoaded(false);
+      if (portfolioFrameReadyTimerRef.current) {
+        window.clearTimeout(portfolioFrameReadyTimerRef.current);
+        portfolioFrameReadyTimerRef.current = null;
+      }
       return;
+    }
+    setIsPortfolioFrameLoaded(false);
+    if (portfolioFrameReadyTimerRef.current) {
+      window.clearTimeout(portfolioFrameReadyTimerRef.current);
+      portfolioFrameReadyTimerRef.current = null;
     }
 
     const handleMessage = (event: MessageEvent) => {
@@ -1383,9 +1425,24 @@ function HomeMinimalGallery({
 
     return () => {
       window.removeEventListener("message", handleMessage);
+      if (portfolioFrameReadyTimerRef.current) {
+        window.clearTimeout(portfolioFrameReadyTimerRef.current);
+        portfolioFrameReadyTimerRef.current = null;
+      }
       setIsPortfolioLightboxOpen(false);
     };
   }, [activePortfolioProject]);
+
+  const handlePortfolioFrameLoad = () => {
+    if (portfolioFrameReadyTimerRef.current) {
+      window.clearTimeout(portfolioFrameReadyTimerRef.current);
+    }
+
+    portfolioFrameReadyTimerRef.current = window.setTimeout(() => {
+      setIsPortfolioFrameLoaded(true);
+      portfolioFrameReadyTimerRef.current = null;
+    }, 520);
+  };
 
   if (!galleryProjects.length) return null;
 
@@ -1458,7 +1515,19 @@ function HomeMinimalGallery({
 
         .home-featured-strip-card {
           transform-origin: 50% 70vw;
+          touch-action: pan-y;
           will-change: transform;
+        }
+
+        .home-featured-carousel,
+        .home-featured-strip-track {
+          touch-action: pan-y;
+          user-select: none;
+        }
+
+        .home-featured-carousel img {
+          user-select: none;
+          -webkit-user-drag: none;
         }
 
         .home-featured-title,
@@ -1743,10 +1812,10 @@ function HomeMinimalGallery({
                         objectPosition: project.coverImagePosition || "center",
                       }}
                     />
-                    <div className="pointer-events-none absolute inset-0 hidden items-end bg-black/0 p-5 opacity-0 transition-[background-color,opacity] duration-500 group-hover:bg-black/18 group-hover:opacity-100 md:flex">
-                      <div className="translate-y-3 opacity-0 transition-[opacity,transform] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                    <div className="pointer-events-none absolute inset-0 flex items-end bg-black/18 p-4 opacity-100 transition-[background-color,opacity] duration-500 md:bg-black/0 md:p-5 md:opacity-0 md:group-hover:bg-black/18 md:group-hover:opacity-100">
+                      <div className="translate-y-0 opacity-100 transition-[opacity,transform] duration-500 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                         <h2
-                          className="text-[clamp(1.45rem,2.3vw,2.55rem)] font-black uppercase leading-[0.86] tracking-[-0.04em] text-white"
+                          className="text-[clamp(1.35rem,7vw,2.55rem)] font-black uppercase leading-[0.86] tracking-[0] text-white md:text-[clamp(1.45rem,2.3vw,2.55rem)]"
                           style={{ fontFamily: HOME_DISPLAY_FONT }}
                         >
                           {project.title}
@@ -1802,7 +1871,7 @@ function HomeMinimalGallery({
         >
           <div
             className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-[clamp(1.5rem,3vw,2.8rem)] shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
-            style={{ backgroundColor: HOME_SCENIC_DESIGN_BLUE }}
+            style={{ backgroundColor: theme.bg }}
             onClick={event => event.stopPropagation()}
           >
             <h2
@@ -1813,10 +1882,37 @@ function HomeMinimalGallery({
             </h2>
 
             <iframe
+              key={activePortfolioProject.slug}
               src={`${getProjectPath(activePortfolioProject)}?quickView=1`}
               title={`${activePortfolioProject.title} portfolio project`}
-              className="absolute inset-0 h-full w-full border-0"
+              className="absolute inset-0 h-full w-full border-0 transition-opacity duration-200"
+              style={{
+                backgroundColor: theme.bg,
+                opacity: isPortfolioFrameLoaded ? 1 : 0,
+              }}
+              onLoad={handlePortfolioFrameLoad}
             />
+
+            <div
+              aria-hidden="true"
+              className={`absolute inset-0 z-[3] transition-opacity duration-200 ${
+                isPortfolioFrameLoaded ? "pointer-events-none opacity-0" : "opacity-100"
+              }`}
+              style={{ backgroundColor: theme.bg }}
+            >
+              {activePortfolioProject.coverImageUrl ? (
+                <img
+                  src={activePortfolioProject.coverImageUrl}
+                  alt=""
+                  draggable={false}
+                  className="h-full w-full select-none object-cover opacity-90"
+                  style={{
+                    objectPosition: activePortfolioProject.coverImagePosition || "center",
+                  }}
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-black/34" />
+            </div>
 
             <button
               type="button"
