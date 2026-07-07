@@ -15,7 +15,7 @@ export default function Header() {
   const pathname = usePathname() || "/";
   const { homeTheme, homeThemeIndex, setHomeThemeIndex } = useHomeTheme();
   const [paletteOpen, setPaletteOpen] = useState(false);
-  const [isPortfolioQuickView, setIsPortfolioQuickView] = useState(false);
+  const [isPortfolioQuickView, setIsPortfolioQuickView] = useState<boolean | null>(null);
   const isNavigationRoute = pathname === "/navigation";
   const targetHref = isNavigationRoute ? "/" : "/navigation";
   const label = isNavigationRoute ? "Return home" : "Open navigation";
@@ -28,7 +28,7 @@ export default function Header() {
     );
   }, []);
 
-  if (isPortfolioQuickView) return null;
+  if (isPortfolioQuickView !== false) return null;
 
   return (
     <>

@@ -7,9 +7,9 @@ export const HOME_REFERENCE_WHITE = "#ffffff";
 export const HOME_REFERENCE_BLACK = "#2c2c2c";
 export const HOME_REFERENCE_GREY = "#cbcbcb";
 export const HOME_DISPLAY_FONT =
-  '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif';
+  '"League Gothic", "Bebas Neue", Anton, "Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif';
 export const HOME_BODY_FONT =
-  'Inter, "Inter Tight", "Avenir Next", Avenir, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  '"Space Grotesk", Inter, "Inter Tight", "Avenir Next", Avenir, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
 export type HomeColorTheme = {
   name: string;
@@ -31,7 +31,7 @@ export const HOME_COLOR_THEMES: HomeColorTheme[] = [
     name: "White",
     bg: HOME_REFERENCE_WHITE,
     ink: HOME_REFERENCE_BLACK,
-    muted: "rgba(44,44,44,0.62)",
+    muted: "rgba(44,44,44,0.48)",
     ghost: HOME_REFERENCE_GREY,
     accent: HOME_REFERENCE_BLACK,
     accentSoft: "rgba(44,44,44,0.08)",
@@ -42,46 +42,60 @@ export const HOME_COLOR_THEMES: HomeColorTheme[] = [
     footerInk: HOME_REFERENCE_BLACK,
   },
   {
-    name: "Blue",
-    bg: HOME_SCENIC_DESIGN_BLUE,
-    ink: "#f7f7f2",
-    muted: "rgba(247,247,242,0.58)",
-    ghost: "rgba(247,247,242,0.22)",
-    accent: "#f7f7f2",
-    accentSoft: "rgba(247,247,242,0.16)",
-    controlBg: "#063f95",
-    controlInk: "#88e7ff",
-    footerBg: "#334f68",
-    footerDisplay: "rgba(247,247,242,0.68)",
-    footerInk: "#f7f7f2",
+    name: "Cream",
+    bg: "#e9e1cf",
+    ink: HOME_REFERENCE_BLACK,
+    muted: "rgba(255,111,0,0.78)",
+    ghost: "#ff6f00",
+    accent: "#ff6f00",
+    accentSoft: "rgba(255,111,0,0.12)",
+    controlBg: "#ff6f00",
+    controlInk: "#20180f",
+    footerBg: "#ded4bf",
+    footerDisplay: "#ff6f00",
+    footerInk: HOME_REFERENCE_BLACK,
   },
   {
-    name: "Yellow",
-    bg: "#d39a24",
-    ink: "#17120a",
-    muted: "rgba(23,18,10,0.58)",
-    ghost: "rgba(23,18,10,0.18)",
-    accent: "#17120a",
-    accentSoft: "rgba(23,18,10,0.12)",
-    controlBg: "#17120a",
-    controlInk: "#f2b427",
-    footerBg: "#b47b14",
-    footerDisplay: "rgba(255,244,216,0.66)",
-    footerInk: "#17120a",
+    name: "Blue",
+    bg: "#1385f6",
+    ink: "#a8f4ff",
+    muted: "rgba(3,41,118,0.72)",
+    ghost: "#052f8b",
+    accent: "#a8f4ff",
+    accentSoft: "rgba(168,244,255,0.14)",
+    controlBg: "#052f8b",
+    controlInk: "#a8f4ff",
+    footerBg: "#0d6ed5",
+    footerDisplay: "#052f8b",
+    footerInk: "#a8f4ff",
   },
   {
     name: "Green",
-    bg: "#6f7d59",
-    ink: "#f4f0e5",
-    muted: "rgba(244,240,229,0.62)",
-    ghost: "rgba(244,240,229,0.24)",
-    accent: "#f4f0e5",
-    accentSoft: "rgba(244,240,229,0.16)",
-    controlBg: "#0c5f2e",
-    controlInk: "#d9ff00",
-    footerBg: "#566541",
-    footerDisplay: "rgba(244,240,229,0.66)",
-    footerInk: "#f4f0e5",
+    bg: "#35ad62",
+    ink: "#baff00",
+    muted: "rgba(0,87,37,0.72)",
+    ghost: "#005725",
+    accent: "#baff00",
+    accentSoft: "rgba(186,255,0,0.14)",
+    controlBg: "#003f1c",
+    controlInk: "#baff00",
+    footerBg: "#2d9655",
+    footerDisplay: "#baff00",
+    footerInk: "#003f1c",
+  },
+  {
+    name: "Purple",
+    bg: "#3f0050",
+    ink: "#ffe3ff",
+    muted: "rgba(222,48,255,0.78)",
+    ghost: "#dc30ff",
+    accent: "#dc30ff",
+    accentSoft: "rgba(220,48,255,0.16)",
+    controlBg: "#dc30ff",
+    controlInk: "#ffe3ff",
+    footerBg: "#2f003e",
+    footerDisplay: "#dc30ff",
+    footerInk: "#ffe3ff",
   },
 ];
 
@@ -101,6 +115,8 @@ const HOME_CSS_THEME: HomeColorTheme = {
 };
 
 const HOME_THEME_STORAGE_KEY = "brandon-home-theme-index";
+const HOME_THEME_VERSION_KEY = "brandon-home-theme-version";
+const HOME_THEME_VERSION = "2";
 const HOME_THEME_CHANGE_EVENT = "brandon-home-theme-change";
 
 type HomeThemeChangeEvent = CustomEvent<{ themeIndex: number }>;
@@ -109,9 +125,16 @@ function getStoredHomeThemeIndex() {
   if (typeof window === "undefined") return 0;
 
   const storedValue = window.localStorage.getItem(HOME_THEME_STORAGE_KEY);
-  const parsedValue = storedValue ? Number.parseInt(storedValue, 10) : 0;
+  let parsedValue = storedValue ? Number.parseInt(storedValue, 10) : 0;
 
   if (Number.isNaN(parsedValue)) return 0;
+
+  if (window.localStorage.getItem(HOME_THEME_VERSION_KEY) !== HOME_THEME_VERSION) {
+    const legacyThemeMap = [0, 2, 1, 3, 4];
+    parsedValue = legacyThemeMap[parsedValue] ?? 0;
+    window.localStorage.setItem(HOME_THEME_STORAGE_KEY, String(parsedValue));
+    window.localStorage.setItem(HOME_THEME_VERSION_KEY, HOME_THEME_VERSION);
+  }
 
   return Math.min(Math.max(parsedValue, 0), HOME_COLOR_THEMES.length - 1);
 }
@@ -128,6 +151,7 @@ export function useHomeTheme() {
   useEffect(() => {
     if (!hasLoadedStoredTheme || typeof window === "undefined") return;
     window.localStorage.setItem(HOME_THEME_STORAGE_KEY, String(homeThemeIndex));
+    window.localStorage.setItem(HOME_THEME_VERSION_KEY, HOME_THEME_VERSION);
     window.dispatchEvent(
       new CustomEvent(HOME_THEME_CHANGE_EVENT, {
         detail: { themeIndex: homeThemeIndex },

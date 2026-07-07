@@ -12,6 +12,7 @@ type DeferredYouTubeEmbedProps = {
   eagerPoster?: boolean;
   playbackMode?: "inline" | "dialog";
   showLabel?: boolean;
+  squareFrame?: boolean;
 };
 
 export default function DeferredYouTubeEmbed({
@@ -21,6 +22,7 @@ export default function DeferredYouTubeEmbed({
   eagerPoster = false,
   playbackMode = "inline",
   showLabel = true,
+  squareFrame = false,
 }: DeferredYouTubeEmbedProps) {
   const [isActivated, setIsActivated] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -70,11 +72,13 @@ export default function DeferredYouTubeEmbed({
         {posterButton}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent
-            className="max-w-[min(94vw,72rem)] border-white/10 bg-black p-0 shadow-[0_32px_90px_rgba(0,0,0,0.45)] sm:max-w-[min(94vw,72rem)]"
+            className={`max-w-[min(94vw,72rem)] border-white/10 bg-black p-0 shadow-[0_32px_90px_rgba(0,0,0,0.45)] sm:max-w-[min(94vw,72rem)] ${
+              squareFrame ? "!rounded-none" : ""
+            }`}
             overlayClassName="bg-black/82 backdrop-blur-md"
           >
             <DialogTitle className="sr-only">{title}</DialogTitle>
-            <div className="aspect-video w-full overflow-hidden rounded-lg bg-black">
+            <div className={`aspect-video w-full overflow-hidden bg-black ${squareFrame ? "" : "rounded-lg"}`}>
               {isDialogOpen ? (
                 <iframe
                   width="100%"

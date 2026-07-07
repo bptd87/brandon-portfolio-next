@@ -111,48 +111,67 @@ export default function RootLayout({
             footerInk: "#2c2c2c"
           },
           {
-            bg: "#496784",
-            ink: "#f7f7f2",
-            muted: "rgba(247,247,242,0.58)",
-            ghost: "rgba(247,247,242,0.22)",
-            accent: "#f7f7f2",
-            accentSoft: "rgba(247,247,242,0.16)",
-            controlBg: "#063f95",
-            controlInk: "#88e7ff",
-            footerBg: "#334f68",
-            footerDisplay: "rgba(247,247,242,0.68)",
-            footerInk: "#f7f7f2"
+            bg: "#e9e1cf",
+            ink: "#2c2c2c",
+            muted: "rgba(255,111,0,0.78)",
+            ghost: "#ff6f00",
+            accent: "#ff6f00",
+            accentSoft: "rgba(255,111,0,0.12)",
+            controlBg: "#ff6f00",
+            controlInk: "#20180f",
+            footerBg: "#ded4bf",
+            footerDisplay: "#ff6f00",
+            footerInk: "#2c2c2c"
           },
           {
-            bg: "#d39a24",
-            ink: "#17120a",
-            muted: "rgba(23,18,10,0.58)",
-            ghost: "rgba(23,18,10,0.18)",
-            accent: "#17120a",
-            accentSoft: "rgba(23,18,10,0.12)",
-            controlBg: "#17120a",
-            controlInk: "#f2b427",
-            footerBg: "#b47b14",
-            footerDisplay: "rgba(255,244,216,0.66)",
-            footerInk: "#17120a"
+            bg: "#1385f6",
+            ink: "#a8f4ff",
+            muted: "rgba(3,41,118,0.72)",
+            ghost: "#052f8b",
+            accent: "#a8f4ff",
+            accentSoft: "rgba(168,244,255,0.14)",
+            controlBg: "#052f8b",
+            controlInk: "#a8f4ff",
+            footerBg: "#0d6ed5",
+            footerDisplay: "#052f8b",
+            footerInk: "#a8f4ff"
           },
           {
-            bg: "#6f7d59",
-            ink: "#f4f0e5",
-            muted: "rgba(244,240,229,0.62)",
-            ghost: "rgba(244,240,229,0.24)",
-            accent: "#f4f0e5",
-            accentSoft: "rgba(244,240,229,0.16)",
-            controlBg: "#0c5f2e",
-            controlInk: "#d9ff00",
-            footerBg: "#566541",
-            footerDisplay: "rgba(244,240,229,0.66)",
-            footerInk: "#f4f0e5"
+            bg: "#35ad62",
+            ink: "#baff00",
+            muted: "rgba(0,87,37,0.72)",
+            ghost: "#005725",
+            accent: "#baff00",
+            accentSoft: "rgba(186,255,0,0.14)",
+            controlBg: "#003f1c",
+            controlInk: "#baff00",
+            footerBg: "#2d9655",
+            footerDisplay: "#baff00",
+            footerInk: "#003f1c"
+          },
+          {
+            bg: "#3f0050",
+            ink: "#ffe3ff",
+            muted: "rgba(222,48,255,0.78)",
+            ghost: "#dc30ff",
+            accent: "#dc30ff",
+            accentSoft: "rgba(220,48,255,0.16)",
+            controlBg: "#dc30ff",
+            controlInk: "#ffe3ff",
+            footerBg: "#2f003e",
+            footerDisplay: "#dc30ff",
+            footerInk: "#ffe3ff"
           }
         ];
         var stored = window.localStorage.getItem("brandon-home-theme-index");
         var index = Number.parseInt(stored || "0", 10);
         if (!Number.isFinite(index) || index < 0 || index >= themes.length) index = 0;
+        if (window.localStorage.getItem("brandon-home-theme-version") !== "2") {
+          var legacyThemeMap = [0, 2, 1, 3, 4];
+          index = legacyThemeMap[index] || 0;
+          window.localStorage.setItem("brandon-home-theme-index", String(index));
+          window.localStorage.setItem("brandon-home-theme-version", "2");
+        }
         var theme = themes[index];
         document.documentElement.style.setProperty("--home-theme-bg", theme.bg);
         document.documentElement.style.setProperty("--home-theme-ink", theme.ink);

@@ -5,7 +5,6 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import MotionReveal from "@/components/MotionReveal";
 import { SEO } from "@/components/SEO";
@@ -20,7 +19,6 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   getLocalScenicProjectBySlug,
-  getLocalScenicProjects,
   type LocalScenicProjectMedia,
 } from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
@@ -267,7 +265,6 @@ export default function ScenicProjectDetail({
     null
   );
   const lightboxScrollRef = useRef<HTMLDivElement | null>(null);
-  const allScenicProjects = getLocalScenicProjects();
 
   if (!project) {
     return (
@@ -313,26 +310,6 @@ export default function ScenicProjectDetail({
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()),
     [project.slug]
   );
-  const moreScenicProjects = useMemo(() => {
-    const getProjectTimestamp = (item: any) => {
-      if (item.year) {
-        const month = item.month && item.month >= 1 && item.month <= 12 ? item.month - 1 : 0;
-        return new Date(item.year, month, 1).getTime();
-      }
-      const explicitDate = item.updatedAt || item.publishedAt || item.createdAt;
-      if (explicitDate) return new Date(explicitDate).getTime();
-      return 0;
-    };
-
-    return (allScenicProjects || [])
-      .filter((item) => item.slug !== project.slug && item.title !== project.title)
-      .sort((a, b) => {
-        const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
-        if (timeCompare !== 0) return timeCompare;
-        return a.title.localeCompare(b.title);
-      })
-      .slice(0, 6);
-  }, [allScenicProjects, project.slug, project.title]);
   const scenicSeoTitle =
     project.seoTitle ||
     `${project.title} Scenic Design${project.client ? ` | ${project.client}` : ""} | Brandon PT Davis`;
@@ -552,6 +529,8 @@ export default function ScenicProjectDetail({
         {
           "--background": homeTheme.bg,
           "--foreground": homeTheme.ink,
+          "--project-page-pad": "clamp(2rem, 5vw, 5rem)",
+          "--project-hero-bottom-pad": "clamp(0.75rem, 2vw, 1.5rem)",
           backgroundColor: homeTheme.bg,
           color: homeTheme.ink,
           fontFamily: HOME_BODY_FONT,
@@ -580,6 +559,7 @@ export default function ScenicProjectDetail({
             height: 0;
             width: 0;
           }
+
         `}
       </style>
       <Header />
@@ -589,18 +569,16 @@ export default function ScenicProjectDetail({
           className="flex min-h-[100svh] items-center justify-center"
           style={
             {
-              "--project-hero-pad": "clamp(2rem, 5vw, 5rem)",
-              "--project-hero-bottom-pad": "clamp(0.75rem, 2vw, 1.5rem)",
               backgroundColor: homeTheme.bg,
               order: 1,
-              padding: "var(--project-hero-pad) var(--project-hero-pad) var(--project-hero-bottom-pad)",
+              padding: "var(--project-page-pad) var(--project-page-pad) var(--project-hero-bottom-pad)",
             } as CSSProperties
           }
         >
           <div
             className="relative mx-auto flex w-full max-w-[86rem] overflow-hidden rounded-[1.75rem]"
             style={{
-              minHeight: "calc(100svh - var(--project-hero-pad) - var(--project-hero-bottom-pad))",
+              minHeight: "calc(100svh - var(--project-page-pad) - var(--project-hero-bottom-pad))",
             }}
           >
             {project.coverImageUrl ? (
@@ -680,7 +658,7 @@ export default function ScenicProjectDetail({
         </section>
 
         <section
-          className="px-[clamp(1.5rem,7vw,8rem)]"
+          className="px-[var(--project-page-pad)]"
           style={{
             backgroundColor: homeTheme.bg,
             color: homeTheme.ink,
@@ -855,10 +833,10 @@ export default function ScenicProjectDetail({
 
         <section
           id="project-process"
-          className="scroll-mt-28 [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
+          className="scroll-mt-28 px-[var(--project-page-pad)] [contain-intrinsic-size:1px_2400px] [content-visibility:auto]"
           style={{ backgroundColor: homeTheme.bg, order: 2 }}
         >
-          <div className="mx-auto w-full max-w-[86rem] px-[clamp(1rem,3vw,1.5rem)] pb-[clamp(2rem,5vw,4rem)] pt-[clamp(0.75rem,2vw,1.25rem)] md:px-0">
+          <div className="mx-auto w-full max-w-[86rem] pb-[clamp(2rem,5vw,4rem)] pt-[clamp(0.75rem,2vw,1.25rem)]">
             <div className="grid w-full grid-flow-dense grid-cols-1 gap-[clamp(1rem,2vw,1.6rem)] md:grid-cols-12">
               {visualMediaItems.map((item, index) => {
                 const isFullWidth =
@@ -945,84 +923,7 @@ export default function ScenicProjectDetail({
           </div>
         </section>
 
-        {moreScenicProjects.length > 0 ? (
-          <section
-            className="pt-16 [contain-intrinsic-size:1px_960px] [content-visibility:auto] md:pt-24"
-            style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink, order: 4 }}
-          >
-            <AnimatedSection>
-              <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                  <h2
-                    className="max-w-[14ch] text-[clamp(2.6rem,5.2vw,5.4rem)] font-black uppercase leading-[0.86] tracking-[0]"
-                    style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT }}
-                  >
-                    More scenic design.
-                  </h2>
-                  <Link
-                    href="/projects"
-                    className="inline-flex h-11 w-fit items-center justify-center rounded-full px-5 text-[0.82rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5"
-                    style={{
-                      backgroundColor: homeTheme.controlBg,
-                      color: homeTheme.controlInk,
-                      fontFamily: HOME_DISPLAY_FONT,
-                    }}
-                  >
-                    Portfolio index
-                  </Link>
-                </div>
-              </div>
-
-              <div className="mx-auto grid w-full max-w-[86rem] grid-cols-1 gap-[clamp(1rem,2vw,1.5rem)] px-[clamp(1.5rem,5vw,6rem)] pb-[clamp(4rem,7vw,7rem)] md:grid-cols-4">
-                  {moreScenicProjects.map((item, index) => (
-                    <MotionReveal
-                      key={item.slug}
-                      className={index % 6 < 2 ? "md:col-span-2" : ""}
-                      delay={(index % 4) * 80}
-                    >
-                    <Link
-                      href={`/project/${item.slug}`}
-                      className="group block h-full text-current no-underline"
-                    >
-                      <article className="h-full">
-                        <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] shadow-[0_1.2rem_3.6rem_rgba(0,0,0,0.14)]">
-                          {item.coverImageUrl ? (
-                            <img
-                              src={item.coverImageUrl}
-                              alt={`${item.title} scenic design cover image`}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          ) : null}
-                          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/64 via-black/24 to-transparent px-5 pb-5 pt-16 text-white">
-                          <h3
-                            className="max-w-[18ch] text-[clamp(1.25rem,2vw,2.1rem)] font-black uppercase leading-[0.9] tracking-[0]"
-                            style={{ fontFamily: HOME_DISPLAY_FONT }}
-                          >
-                            {item.title}
-                          </h3>
-                          {item.client ? (
-                            <p
-                              className="mt-2 max-w-[20ch] text-[0.94rem] font-medium leading-tight tracking-[-0.025em] text-white/72"
-                            >
-                              {item.client}
-                            </p>
-                          ) : null}
-                          </div>
-                        </div>
-                      </article>
-                    </Link>
-                    </MotionReveal>
-                  ))}
-                </div>
-            </AnimatedSection>
-          </section>
-        ) : null}
-
       </main>
-
-      <Footer />
 
       {selectedVisualImage ? (
         <div

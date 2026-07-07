@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 import {
   ArrowUpDown,
   ArrowDownAZ,
@@ -16,10 +16,10 @@ import {
   List,
   Rows3,
   SlidersHorizontal,
+  X,
   type LucideIcon,
 } from "lucide-react";
 
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MotionReveal from "@/components/MotionReveal";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
@@ -50,6 +50,7 @@ import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
+const SCENIC_PORTFOLIO_PATH = "/projects";
 const SORT_OPTIONS: Array<{ key: SortKey; label: string; icon: LucideIcon }> = [
   { key: "newest", label: "Newest first", icon: CalendarArrowDown },
   { key: "oldest", label: "Oldest first", icon: CalendarArrowUp },
@@ -95,7 +96,7 @@ function ProjectCard({
 }: {
   href: string;
   layoutClass?: string;
-  onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
+  onNavigate: (event: MouseEvent<HTMLAnchorElement>, project: ScenicProjectSummary) => void;
   project: any;
   scenicAlt: (title: string) => string;
   eager?: boolean;
@@ -108,7 +109,7 @@ function ProjectCard({
     <div className={`${layoutClass || ""} h-full`}>
       <a
         href={href}
-        onClick={(event) => onNavigate(event, href)}
+        onClick={(event) => onNavigate(event, project)}
         data-project-landing-card
         data-inview="false"
         className="project-landing-card portfolio-focus-card group block h-full"
@@ -190,7 +191,6 @@ export default function Projects({
 }: {
   initialProjects: ScenicProjectSummary[];
 }) {
-  const router = useRouter();
   const { homeTheme } = useHomeTheme();
   useHomeDocumentTheme(homeTheme);
   const isDesktopViewport = useIsDesktopViewport();
@@ -198,6 +198,8 @@ export default function Projects({
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
   const [sortKey, setSortKey] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [activePortfolioProject, setActivePortfolioProject] = useState<ScenicProjectSummary | null>(null);
+  const [isPortfolioLightboxOpen, setIsPortfolioLightboxOpen] = useState(false);
 
   const mergedProjects = useMemo(() => initialProjects, [initialProjects]);
   const isLoading = false;
@@ -319,26 +321,35 @@ export default function Projects({
       : `Explore scenic design productions by Brandon PT Davis. ${pageDescription}`;
   const scenicCollectionName =
     selectedCategoryLabel ? `${selectedCategoryLabel} Scenic Design` : "Scenic Design Portfolio";
-  const animateCardDeparture = async (target: HTMLElement) => {
-    const card = target.querySelector(".transition-card") as HTMLElement | null;
-    if (!card || typeof card.animate !== "function") return;
-
-    const animation = card.animate(
-      [
-        { transform: "scale(1)", filter: "brightness(1)" },
-        { transform: "scale(0.975)", filter: "brightness(1.08)" },
-      ],
-      { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+  const getProjectFromCurrentUrl = () => {
+    if (typeof window === "undefined") return null;
+    const currentPath = window.location.pathname.replace(/\/$/, "");
+    return (
+      mergedProjects.find((project) => getProjectPath(project) === currentPath) ||
+      null
     );
+  };
 
-    try {
-      await animation.finished;
-    } catch {
-      // Ignore interrupted animation.
+  const closeProjectQuickView = (updateUrl = true) => {
+    setActivePortfolioProject(null);
+
+    if (!updateUrl || typeof window === "undefined") return;
+
+    const historyState = window.history.state as { scenicPortfolioModal?: string } | null;
+    if (historyState?.scenicPortfolioModal) {
+      window.history.back();
+      return;
+    }
+
+    if (window.location.pathname.replace(/\/$/, "") !== SCENIC_PORTFOLIO_PATH) {
+      window.history.replaceState(null, "", SCENIC_PORTFOLIO_PATH);
     }
   };
 
-  const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+  const openProjectQuickView = (
+    event: MouseEvent<HTMLAnchorElement>,
+    project: ScenicProjectSummary
+  ) => {
     if (
       event.defaultPrevented ||
       event.button !== 0 ||
@@ -351,13 +362,18 @@ export default function Projects({
     }
 
     event.preventDefault();
-    const anchor = event.currentTarget;
-    const navigate = () => router.push(href);
-    const performNavigation = async () => {
-      await animateCardDeparture(anchor);
-      navigate();
-    };
-    void performNavigation();
+    setActivePortfolioProject(project);
+
+    if (typeof window !== "undefined") {
+      const projectHref = getProjectPath(project);
+      if (window.location.pathname.replace(/\/$/, "") !== projectHref) {
+        window.history.pushState(
+          { scenicPortfolioModal: project.slug },
+          "",
+          projectHref
+        );
+      }
+    }
   };
 
   const themedButtonStyle = (active: boolean): CSSProperties => ({
@@ -366,6 +382,57 @@ export default function Projects({
     borderColor: active ? homeTheme.controlBg : homeTheme.accentSoft,
     fontFamily: HOME_DISPLAY_FONT,
   });
+
+  useEffect(() => {
+    if (!activePortfolioProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeProjectQuickView();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activePortfolioProject]);
+
+  useEffect(() => {
+    const syncModalFromUrl = () => {
+      setActivePortfolioProject(getProjectFromCurrentUrl());
+    };
+
+    syncModalFromUrl();
+    window.addEventListener("popstate", syncModalFromUrl);
+
+    return () => {
+      window.removeEventListener("popstate", syncModalFromUrl);
+    };
+  }, [mergedProjects]);
+
+  useEffect(() => {
+    if (!activePortfolioProject) {
+      setIsPortfolioLightboxOpen(false);
+      return;
+    }
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type !== "portfolioQuickViewLightbox") return;
+      setIsPortfolioLightboxOpen(Boolean(event.data.open));
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      setIsPortfolioLightboxOpen(false);
+    };
+  }, [activePortfolioProject]);
 
   return (
     <div
@@ -731,7 +798,7 @@ export default function Projects({
                       homeTheme={homeTheme}
                       aspectClassName={getProjectAspectClass(index)}
                       layoutClass={getProjectPanelClass(index)}
-                      onNavigate={navigateWithTransition}
+                      onNavigate={openProjectQuickView}
                       project={project}
                       revealDelay={(index % 10) * 70}
                       scenicAlt={scenicAlt}
@@ -750,7 +817,7 @@ export default function Projects({
                     <a
                       key={`${project.slug}-${index}`}
                       href={href}
-                      onClick={(event) => navigateWithTransition(event, href)}
+                      onClick={(event) => openProjectQuickView(event, project)}
                       className="group grid gap-4 rounded-[1.15rem] px-4 py-5 transition-colors md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
                       style={{ backgroundColor: index % 2 === 0 ? homeTheme.accentSoft : "transparent" }}
                     >
@@ -795,7 +862,52 @@ export default function Projects({
 
       </main>
 
-      <Footer tone="light" />
+      {activePortfolioProject && typeof document !== "undefined" ? createPortal(
+        <div
+          className="fixed inset-0 z-[2147483646] overflow-hidden bg-black/42 p-[clamp(0.55rem,1.5vw,1.25rem)] backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={`scenic-portfolio-modal-${activePortfolioProject.slug}`}
+          onClick={() => closeProjectQuickView()}
+        >
+          <div
+            className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-[clamp(1.5rem,3vw,2.8rem)] shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
+            style={{ backgroundColor: homeTheme.bg }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2
+              id={`scenic-portfolio-modal-${activePortfolioProject.slug}`}
+              className="sr-only"
+            >
+              {activePortfolioProject.title}
+            </h2>
+
+            <iframe
+              key={activePortfolioProject.slug}
+              src={`${getProjectPath(activePortfolioProject)}?quickView=1`}
+              title={`${activePortfolioProject.title} scenic design portfolio project`}
+              className="absolute inset-0 h-full w-full border-0"
+              style={{ backgroundColor: homeTheme.bg }}
+            />
+
+            <button
+              type="button"
+              aria-label="Close scenic portfolio project"
+              className={`absolute right-[clamp(0.75rem,1.6vw,1.15rem)] top-[clamp(0.75rem,1.6vw,1.15rem)] z-[5] grid h-12 w-12 place-items-center rounded-full shadow-[0_1rem_2.5rem_rgba(0,0,0,0.22)] transition-[opacity,transform] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 ${
+                isPortfolioLightboxOpen ? "pointer-events-none opacity-0" : "opacity-100"
+              }`}
+              style={{
+                backgroundColor: homeTheme.controlBg,
+                color: homeTheme.controlInk,
+              }}
+              onClick={() => closeProjectQuickView()}
+            >
+              <X className="h-6 w-6" strokeWidth={2} />
+            </button>
+          </div>
+        </div>,
+        document.body
+      ) : null}
     </div>
   );
 }

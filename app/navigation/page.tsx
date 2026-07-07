@@ -8,10 +8,10 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "Navigation | Brandon PT Davis",
   description:
-    "Navigate Brandon PT Davis scenic design portfolio, studio tools, about page, and recent scenic design work.",
+    "Navigate Brandon PT Davis scenic design portfolio, theatre design articles, studio tools, project galleries, and about pages.",
   pathname: "/navigation",
   keywords:
-    "Brandon PT Davis navigation, scenic design portfolio, studio tools, scenic designer",
+    "Brandon PT Davis navigation, scenic design portfolio, theatre design articles, scenic design tools, scenic designer, theatre rendering, Vectorworks tutorials",
 });
 
 export default function Page() {

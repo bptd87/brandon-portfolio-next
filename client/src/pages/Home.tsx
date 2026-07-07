@@ -927,140 +927,143 @@ function HomeIdentityCard({
             BRANDON PT DAVIS
           </h1>
 
-          <div className="relative flex w-full max-w-[74rem] items-center justify-center">
-            <div
-              className="home-stack-stage h-[clamp(11.25rem,25vw,19.5rem)] w-[min(96vw,66rem)]"
-              role="group"
-              aria-label="Featured scenic design image stack"
-              data-peeking={isHeroStackHovered ? "true" : "false"}
-              onContextMenu={event => event.preventDefault()}
-              onMouseEnter={() => setIsHeroStackHovered(true)}
-              onMouseLeave={() => {
-                setIsHeroStackHovered(false);
-                setHeroStackMotion({ x: 0, y: 0 });
-              }}
-              onPointerEnter={() => setIsHeroStackHovered(true)}
-              onPointerMove={event => {
-                const rect = event.currentTarget.getBoundingClientRect();
-                const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-                const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-                setIsHeroStackHovered(true);
-                setHeroStackMotion({
-                  x: Math.max(-1, Math.min(1, x)),
-                  y: Math.max(-1, Math.min(1, y)),
-                });
-              }}
-              onPointerLeave={() => {
-                setIsHeroStackHovered(false);
-                setHeroStackMotion({ x: 0, y: 0 });
-              }}
-            >
-              <div className="home-stack-float">
-                {stackCards.map((card, index) => {
-                  const rotation =
-                    ["-1.6deg", "-3.6deg", "4.8deg", "-0.9deg"][index] || "0deg";
-                  const translateX =
-                    [
-                      "clamp(-18rem, -24vw, -5.75rem)",
-                      "clamp(-6.4rem, -8vw, -2.35rem)",
-                      "clamp(2.35rem, 8vw, 5.5rem)",
-                      "clamp(5.75rem, 24vw, 17.2rem)",
-                    ][index] || "0rem";
-                  const translateY =
-                    ["1.45rem", "-1.65rem", "0.9rem", "-0.75rem"][index] || "0rem";
-                  const restScale =
-                    ["0.98", "1.04", "1.02", "1.03"][index] || "1";
-                  const layerOrder =
-                    [1, 2, 3, 4][index] || index + 1;
-                  const hoverX =
-                    [
-                      "clamp(-22.8rem, -29vw, -6.55rem)",
-                      "clamp(-9.2rem, -11vw, -2.9rem)",
-                      "clamp(3rem, 11vw, 8.6rem)",
-                      "clamp(6.6rem, 29vw, 22.5rem)",
-                    ][index] ||
-                    "0rem";
-                  const hoverY =
-                    ["2.65rem", "-3.1rem", "2.2rem", "-2rem"][index] ||
-                    "0rem";
-                  const hoverRotation =
-                    ["-5.5deg", "-5.2deg", "8deg", "-2deg"][index] || rotation;
-                  const hoverScale =
-                    ["1.045", "1.08", "1.065", "1.07"][index] || "1.06";
-                  const motionXStrength =
-                    [-22, -10, 13, 24][index] || 0;
-                  const motionYStrength =
-                    [14, -18, 16, -12][index] || 0;
-                  const motionX = `${heroStackMotion.x * motionXStrength}px`;
-                  const motionY = `${heroStackMotion.y * motionYStrength}px`;
-                  const shadowX = `${heroStackMotion.x * motionXStrength * -0.18}px`;
-                  const shadowY = `${heroStackMotion.y * motionYStrength * 0.16}px`;
+          <div className="relative flex min-h-[clamp(18.5rem,38vw,33rem)] w-full max-w-[74rem] flex-col items-center justify-center gap-[clamp(1.15rem,2.5vw,2rem)]">
+            <div className="relative z-10 flex w-full items-center justify-center">
+              <div
+                className="home-stack-stage h-[clamp(11.25rem,25vw,19.5rem)] w-[min(96vw,66rem)]"
+                role="group"
+                aria-label="Featured scenic design image stack"
+                data-peeking={isHeroStackHovered ? "true" : "false"}
+                onContextMenu={event => event.preventDefault()}
+                onMouseEnter={() => setIsHeroStackHovered(true)}
+                onMouseLeave={() => {
+                  setIsHeroStackHovered(false);
+                  setHeroStackMotion({ x: 0, y: 0 });
+                }}
+                onPointerEnter={() => setIsHeroStackHovered(true)}
+                onPointerMove={event => {
+                  const rect = event.currentTarget.getBoundingClientRect();
+                  const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+                  const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+                  setIsHeroStackHovered(true);
+                  setHeroStackMotion({
+                    x: Math.max(-1, Math.min(1, x)),
+                    y: Math.max(-1, Math.min(1, y)),
+                  });
+                }}
+                onPointerLeave={() => {
+                  setIsHeroStackHovered(false);
+                  setHeroStackMotion({ x: 0, y: 0 });
+                }}
+              >
+                <div className="home-stack-float">
+                  {stackCards.map((card, index) => {
+                    const rotation =
+                      ["-1.6deg", "-3.6deg", "4.8deg", "-0.9deg"][index] || "0deg";
+                    const translateX =
+                      [
+                        "clamp(-18rem, -24vw, -5.75rem)",
+                        "clamp(-6.4rem, -8vw, -2.35rem)",
+                        "clamp(2.35rem, 8vw, 5.5rem)",
+                        "clamp(5.75rem, 24vw, 17.2rem)",
+                      ][index] || "0rem";
+                    const translateY =
+                      ["1.45rem", "-1.65rem", "0.9rem", "-0.75rem"][index] || "0rem";
+                    const restScale =
+                      ["0.98", "1.04", "1.02", "1.03"][index] || "1";
+                    const layerOrder =
+                      [1, 2, 3, 4][index] || index + 1;
+                    const hoverX =
+                      [
+                        "clamp(-22.8rem, -29vw, -6.55rem)",
+                        "clamp(-9.2rem, -11vw, -2.9rem)",
+                        "clamp(3rem, 11vw, 8.6rem)",
+                        "clamp(6.6rem, 29vw, 22.5rem)",
+                      ][index] ||
+                      "0rem";
+                    const hoverY =
+                      ["2.65rem", "-3.1rem", "2.2rem", "-2rem"][index] ||
+                      "0rem";
+                    const hoverRotation =
+                      ["-5.5deg", "-5.2deg", "8deg", "-2deg"][index] || rotation;
+                    const hoverScale =
+                      ["1.045", "1.08", "1.065", "1.07"][index] || "1.06";
+                    const motionXStrength =
+                      [-22, -10, 13, 24][index] || 0;
+                    const motionYStrength =
+                      [14, -18, 16, -12][index] || 0;
+                    const motionX = `${heroStackMotion.x * motionXStrength}px`;
+                    const motionY = `${heroStackMotion.y * motionYStrength}px`;
+                    const shadowX = `${heroStackMotion.x * motionXStrength * -0.18}px`;
+                    const shadowY = `${heroStackMotion.y * motionYStrength * 0.16}px`;
 
-                  return (
-                    <div
-                      key={card.title}
-                      role="img"
-                      aria-label={`${card.title} scenic design by Brandon PT Davis`}
-                      className="home-stack-card group absolute grid aspect-square w-[clamp(9rem,19vw,18.5rem)] select-none overflow-hidden rounded-[1.15rem] shadow-[0_2.2rem_5rem_rgba(0,0,0,0.2)] ring-1 ring-black/5 transition-[filter,transform] duration-500 hover:brightness-105"
-                      style={
-                        {
-                          zIndex: layerOrder,
-                          "--home-card-rotate": rotation,
-                          "--home-card-scale": restScale,
-                          "--home-card-x": translateX,
-                          "--home-card-y": translateY,
-                          "--home-card-wobble": `${index % 2 === 0 ? "-" : ""}1.2deg`,
-                          "--home-card-rise": `${-5 - index}px`,
-                          "--home-card-duration": `${5.2 + index * 0.45}s`,
-                          "--home-card-delay": `${180 + index * 100}ms`,
-                          "--home-card-offset-x": "0rem",
-                          "--home-card-offset-y": "1rem",
-                          "--home-card-hover-x": hoverX,
-                          "--home-card-hover-y": hoverY,
-                          "--home-card-hover-rotate": hoverRotation,
-                          "--home-card-hover-scale": hoverScale,
-                          "--home-card-motion-x": motionX,
-                          "--home-card-motion-y": motionY,
-                          "--home-card-shadow-x": shadowX,
-                          "--home-card-shadow-y": shadowY,
-                          borderColor: theme.accent,
-                          backgroundColor: theme.accentSoft,
-                        } as CSSProperties
-                      }
-                    >
-                      <span className="home-stack-card-shadow" aria-hidden="true" />
-                      <Image
-                        src={card.image || ""}
-                        alt={`${card.title} scenic design by Brandon PT Davis`}
-                        fill
-                        priority={index < 4}
-                        loading={index < 4 ? "eager" : "lazy"}
-                        fetchPriority={index < 4 ? "high" : "auto"}
-                        sizes="(max-width: 768px) 48vw, 16rem"
-                        draggable={false}
-                        onDragStart={event => event.preventDefault()}
-                        className="site-media-square pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
-                      />
-                      <span className="sr-only">
-                        {card.title}
-                      </span>
-                    </div>
-                  );
-                })}
+                    return (
+                      <div
+                        key={card.title}
+                        role="img"
+                        aria-label={`${card.title} scenic design by Brandon PT Davis`}
+                        className="home-stack-card group absolute grid aspect-square w-[clamp(9rem,19vw,18.5rem)] select-none overflow-hidden rounded-[1.15rem] shadow-[0_2.2rem_5rem_rgba(0,0,0,0.2)] ring-1 ring-black/5 transition-[filter,transform] duration-500 hover:brightness-105"
+                        style={
+                          {
+                            zIndex: layerOrder,
+                            "--home-card-rotate": rotation,
+                            "--home-card-scale": restScale,
+                            "--home-card-x": translateX,
+                            "--home-card-y": translateY,
+                            "--home-card-wobble": `${index % 2 === 0 ? "-" : ""}1.2deg`,
+                            "--home-card-rise": `${-5 - index}px`,
+                            "--home-card-duration": `${5.2 + index * 0.45}s`,
+                            "--home-card-delay": `${180 + index * 100}ms`,
+                            "--home-card-offset-x": "0rem",
+                            "--home-card-offset-y": "1rem",
+                            "--home-card-hover-x": hoverX,
+                            "--home-card-hover-y": hoverY,
+                            "--home-card-hover-rotate": hoverRotation,
+                            "--home-card-hover-scale": hoverScale,
+                            "--home-card-motion-x": motionX,
+                            "--home-card-motion-y": motionY,
+                            "--home-card-shadow-x": shadowX,
+                            "--home-card-shadow-y": shadowY,
+                            borderColor: theme.accent,
+                            backgroundColor: theme.accentSoft,
+                          } as CSSProperties
+                        }
+                      >
+                        <span className="home-stack-card-shadow" aria-hidden="true" />
+                        <Image
+                          src={card.image || ""}
+                          alt={`${card.title} scenic design by Brandon PT Davis`}
+                          fill
+                          priority={index < 4}
+                          loading={index < 4 ? "eager" : "lazy"}
+                          fetchPriority={index < 4 ? "high" : "auto"}
+                          sizes="(max-width: 768px) 48vw, 16rem"
+                          draggable={false}
+                          onDragStart={event => event.preventDefault()}
+                          className="site-media-square pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
+                        <span className="sr-only">
+                          {card.title}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
 
-          <p
-            className="home-hero-role max-w-[12em] text-[clamp(3.2rem,5.7vw,6.85rem)] font-black uppercase leading-[0.82] tracking-[0] text-balance"
-            style={{
-              color: theme.ghost,
-              fontFamily: "var(--home-display-font)",
-              fontStretch: "condensed",
-            }}
-          >
-            SCENIC DESIGNER
-          </p>
+            <p
+              className="home-hero-role relative z-0 mx-auto max-w-[12em] text-[clamp(3.2rem,5.7vw,6.85rem)] font-black uppercase leading-[0.82] tracking-[0] text-balance"
+              style={{
+                color: theme.ghost,
+                fontFamily: "var(--home-display-font)",
+                fontStretch: "condensed",
+              }}
+            >
+              <span className="block">SCENIC</span>
+              <span className="block">DESIGNER</span>
+            </p>
+          </div>
         </div>
 
         <div className="home-hero-bottom pb-[calc(5.25rem+env(safe-area-inset-bottom))] md:pb-[clamp(1.2rem,2vw,1.8rem)]">
@@ -1104,8 +1107,6 @@ function HomeMinimalGallery({
   const [activePortfolioProject, setActivePortfolioProject] =
     useState<ScenicProjectSummary | null>(null);
   const [isPortfolioLightboxOpen, setIsPortfolioLightboxOpen] = useState(false);
-  const [isPortfolioFrameLoaded, setIsPortfolioFrameLoaded] = useState(false);
-  const portfolioFrameReadyTimerRef = useRef<number | null>(null);
   const galleryProjects = projects
     .filter(project => project.coverImageUrl);
   const carouselProjects = galleryProjects.slice(0, 8);
@@ -1402,17 +1403,7 @@ function HomeMinimalGallery({
   useEffect(() => {
     if (!activePortfolioProject) {
       setIsPortfolioLightboxOpen(false);
-      setIsPortfolioFrameLoaded(false);
-      if (portfolioFrameReadyTimerRef.current) {
-        window.clearTimeout(portfolioFrameReadyTimerRef.current);
-        portfolioFrameReadyTimerRef.current = null;
-      }
       return;
-    }
-    setIsPortfolioFrameLoaded(false);
-    if (portfolioFrameReadyTimerRef.current) {
-      window.clearTimeout(portfolioFrameReadyTimerRef.current);
-      portfolioFrameReadyTimerRef.current = null;
     }
 
     const handleMessage = (event: MessageEvent) => {
@@ -1425,24 +1416,9 @@ function HomeMinimalGallery({
 
     return () => {
       window.removeEventListener("message", handleMessage);
-      if (portfolioFrameReadyTimerRef.current) {
-        window.clearTimeout(portfolioFrameReadyTimerRef.current);
-        portfolioFrameReadyTimerRef.current = null;
-      }
       setIsPortfolioLightboxOpen(false);
     };
   }, [activePortfolioProject]);
-
-  const handlePortfolioFrameLoad = () => {
-    if (portfolioFrameReadyTimerRef.current) {
-      window.clearTimeout(portfolioFrameReadyTimerRef.current);
-    }
-
-    portfolioFrameReadyTimerRef.current = window.setTimeout(() => {
-      setIsPortfolioFrameLoaded(true);
-      portfolioFrameReadyTimerRef.current = null;
-    }, 520);
-  };
 
   if (!galleryProjects.length) return null;
 
@@ -1885,34 +1861,11 @@ function HomeMinimalGallery({
               key={activePortfolioProject.slug}
               src={`${getProjectPath(activePortfolioProject)}?quickView=1`}
               title={`${activePortfolioProject.title} portfolio project`}
-              className="absolute inset-0 h-full w-full border-0 transition-opacity duration-200"
+              className="absolute inset-0 h-full w-full border-0"
               style={{
                 backgroundColor: theme.bg,
-                opacity: isPortfolioFrameLoaded ? 1 : 0,
               }}
-              onLoad={handlePortfolioFrameLoad}
             />
-
-            <div
-              aria-hidden="true"
-              className={`absolute inset-0 z-[3] transition-opacity duration-200 ${
-                isPortfolioFrameLoaded ? "pointer-events-none opacity-0" : "opacity-100"
-              }`}
-              style={{ backgroundColor: theme.bg }}
-            >
-              {activePortfolioProject.coverImageUrl ? (
-                <img
-                  src={activePortfolioProject.coverImageUrl}
-                  alt=""
-                  draggable={false}
-                  className="h-full w-full select-none object-cover opacity-90"
-                  style={{
-                    objectPosition: activePortfolioProject.coverImagePosition || "center",
-                  }}
-                />
-              ) : null}
-              <div className="absolute inset-0 bg-black/34" />
-            </div>
 
             <button
               type="button"

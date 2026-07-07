@@ -1,12 +1,14 @@
 "use client";
 
-import { type CSSProperties, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { ExternalLink, X } from "lucide-react";
 import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import {
+  HOME_BODY_FONT,
   HOME_DISPLAY_FONT,
   type HomeColorTheme,
   useHomeTheme,
@@ -38,6 +40,125 @@ type NavFloatingImage = {
   url: string;
   alt: string;
 };
+
+type NavigationFeatureItem = {
+  title: string;
+  href: string;
+  label: string;
+  description: string;
+  image?: string;
+  color?: string;
+  textColor?: string;
+  mutedColor?: string;
+  shortTitle?: string;
+  accentColor?: string;
+  accentTextColor?: string;
+};
+
+const featuredArticleLinks: NavigationFeatureItem[] = [
+  {
+    title: "What Does a Scenic Designer Do?",
+    href: "/articles/what-does-a-scenic-designer-do",
+    label: "Scenic Design",
+    image:
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp",
+    color: "#496784",
+    textColor: "#f7f7f2",
+    mutedColor: "rgba(247,247,242,0.74)",
+    description:
+      "A clear guide to the scenic designer's role, process, and relationship to the full production team.",
+  },
+  {
+    title: "What Theatre Designers Get Paid",
+    href: "/articles/what-theatre-designers-get-paid",
+    label: "Career Development",
+    image: "/images/articles/what-theatre-designers-get-paid/hero.png",
+    color: "#b2633f",
+    textColor: "#fff8e7",
+    mutedColor: "rgba(255,248,231,0.72)",
+    description:
+      "A practical article about value, labor, sustainability, and the financial reality of theatre design.",
+  },
+  {
+    title: "Understanding Design Layers",
+    href: "/articles/understanding-design-layers",
+    label: "Vectorworks Tutorial",
+    image: "https://img.youtube.com/vi/CXBfG2L3ZmI/maxresdefault.jpg",
+    color: "#62764c",
+    textColor: "#fff8e7",
+    mutedColor: "rgba(255,248,231,0.72)",
+    description:
+      "A beginner-friendly tutorial for keeping drafting files readable, organized, and useful.",
+  },
+];
+
+const studioAppLinks: NavigationFeatureItem[] = [
+  {
+    title: "Scale Calculator",
+    href: "/studio/apps/scale-calculator",
+    label: "Drafting",
+    shortTitle: "Scale",
+    color: "#b7653f",
+    textColor: "#ffffff",
+    mutedColor: "rgba(255,255,255,0.74)",
+    accentColor: "#d06934",
+    accentTextColor: "#17120b",
+    description:
+      "Convert real-world dimensions into common scenic design and architectural drafting scales.",
+  },
+  {
+    title: "Dimension Reference",
+    href: "/studio/apps/dimension-reference",
+    label: "Reference",
+    shortTitle: "Dims",
+    color: "#c98f24",
+    textColor: "#17120b",
+    mutedColor: "rgba(23,18,11,0.68)",
+    accentColor: "#c9891d",
+    accentTextColor: "#17120b",
+    description:
+      "Quick checks for common theatre, drafting, furniture, and scenic construction dimensions.",
+  },
+  {
+    title: "Rosco Paint Calculator",
+    href: "/studio/apps/rosco-paint-calculator",
+    label: "Paint Shop",
+    shortTitle: "Rosco",
+    color: "#be6241",
+    textColor: "#ffffff",
+    mutedColor: "rgba(255,255,255,0.74)",
+    accentColor: "#3f5d62",
+    accentTextColor: "#ffffff",
+    description:
+      "Calculate Rosco scenic paint mixes and color matching workflows.",
+  },
+  {
+    title: "Commercial Paint Matcher",
+    href: "/studio/apps/commercial-paint-matcher",
+    label: "Paint Library",
+    shortTitle: "Paint Match",
+    color: "#758967",
+    textColor: "#ffffff",
+    mutedColor: "rgba(255,255,255,0.74)",
+    accentColor: "#758967",
+    accentTextColor: "#ffffff",
+    description:
+      "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries.",
+  },
+  {
+    title: "Design History Timeline",
+    href: "/studio/apps/design-history-timeline",
+    label: "Research",
+    shortTitle: "History",
+    color: "#8a5432",
+    textColor: "#ffffff",
+    mutedColor: "rgba(255,255,255,0.74)",
+    accentColor: "#8a5432",
+    accentTextColor: "#ffffff",
+    description:
+      "Explore major design periods with visual references, palettes, and historical context.",
+  },
+];
 
 const floatingImageFrames: Array<{
   className: string;
@@ -113,7 +234,7 @@ function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
       label: "STUDIO",
       href: "/studio",
       image: "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
-      items: ["Articles", "Apps"],
+      items: ["Articles", "Tutorials", "Apps"],
       background: "#62764c",
       text: "#fff8e7",
       accent: "#c8dca8",
@@ -125,9 +246,9 @@ function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
       items: [],
       note: "@brandonptdavisdesign",
       external: true,
-      background: "#d39a24",
-      text: "#17120a",
-      accent: "#f7df9f",
+      background: "#ff6f00",
+      text: "#20180f",
+      accent: "#ffe0bf",
     },
   ];
 }
@@ -237,7 +358,8 @@ function RecentScenicDesign({
   return (
     <section
       id="recent-scenic-design"
-      className="relative mx-auto flex w-full max-w-[96rem] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(5rem,8vw,7rem)] pt-[clamp(4rem,7vw,6rem)] text-center md:px-8"
+      className="nav-load-item relative mx-auto flex w-full max-w-[96rem] flex-col items-center justify-center overflow-hidden px-5 pb-[clamp(5rem,8vw,7rem)] pt-[clamp(4rem,7vw,6rem)] text-center md:px-8"
+      style={{ "--nav-load-delay": "460ms" } as CSSProperties}
     >
       <div className="relative min-h-[clamp(34rem,58vw,45rem)] w-full">
         <div className="pointer-events-none absolute inset-0 z-10 hidden md:block">
@@ -292,7 +414,8 @@ function RecentScenicDesign({
             className="mb-8 text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
             style={{ color: theme.ink }}
           >
-            DESIGN
+            <span className="block">SCENIC</span>
+            <span className="block">DESIGN</span>
           </h2>
 
           {projects.map((project, index) => {
@@ -326,6 +449,167 @@ function RecentScenicDesign({
   );
 }
 
+function NavigationArticleCards({ theme }: { theme: HomeColorTheme }) {
+  return (
+    <section
+      className="nav-load-item mx-auto flex w-full max-w-[84rem] items-center justify-center px-5 py-[clamp(4.5rem,8vw,7.5rem)] text-center md:px-8"
+      style={{ "--nav-load-delay": "580ms" } as CSSProperties}
+      aria-labelledby="navigation-articles"
+    >
+      <div className="mx-auto w-full">
+        <p
+          className="mb-7 text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
+          style={{ color: theme.ink }}
+        >
+          ARTICLES
+        </p>
+
+        <div className="mx-auto grid max-w-[70rem] gap-4 md:grid-cols-3">
+          {featuredArticleLinks.map((item, index) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="group flex min-h-[22rem] flex-col overflow-hidden rounded-[1.25rem] text-left shadow-[0_1.4rem_3rem_rgba(0,0,0,0.11)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:rotate-[-0.45deg] hover:shadow-[0_2rem_4rem_rgba(0,0,0,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+              style={{
+                backgroundColor: item.color,
+                color: item.textColor,
+              }}
+            >
+              <span className="relative block aspect-[1.25/1] overflow-hidden">
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt=""
+                    draggable={false}
+                    className="h-full w-full select-none object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                ) : null}
+                <span className="absolute inset-0 bg-black/18" />
+              </span>
+              <span className="flex flex-1 flex-col justify-between p-5">
+                <span
+                  className="text-[0.66rem] font-black uppercase leading-none tracking-[0.1em]"
+                  style={{ color: item.mutedColor, fontFamily: HOME_BODY_FONT }}
+                >
+                  {item.label}
+                </span>
+                <span>
+                  <span
+                    className="block text-[clamp(1.5rem,2.6vw,2.55rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                    style={{ fontFamily: HOME_DISPLAY_FONT }}
+                  >
+                    {item.title}
+                  </span>
+                  <span
+                    className="mt-4 block text-[0.88rem] font-medium leading-[1.28]"
+                    style={{ color: item.mutedColor, fontFamily: HOME_BODY_FONT }}
+                  >
+                    {item.description}
+                  </span>
+                </span>
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <Link
+          href="/articles"
+          className="mt-8 inline-flex rounded-full px-6 py-3 text-[0.78rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+          style={{
+            backgroundColor: theme.controlBg,
+            color: theme.controlInk,
+            fontFamily: HOME_BODY_FONT,
+          }}
+        >
+          READ ARTICLES
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+function NavigationStudioApps({
+  theme,
+  onOpenApp,
+}: {
+  theme: HomeColorTheme;
+  onOpenApp: (app: NavigationFeatureItem) => void;
+}) {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  return (
+    <section
+      className="nav-load-item mx-auto flex w-full max-w-[74rem] items-center justify-center px-5 py-[clamp(4.5rem,8vw,7.5rem)] text-center md:px-8"
+      style={{ "--nav-load-delay": "700ms" } as CSSProperties}
+      aria-labelledby="navigation-studio-apps"
+    >
+      <div
+        className="mx-auto flex min-h-[clamp(28rem,46vw,36rem)] max-w-[58rem] flex-col items-center justify-center"
+        onMouseLeave={() => setActiveIndex(null)}
+        onPointerLeave={() => setActiveIndex(null)}
+      >
+        <h2
+          id="navigation-studio-apps"
+          className="mb-7 text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
+          style={{ color: theme.ink }}
+        >
+          STUDIO APPS
+        </h2>
+
+        <div className="flex flex-col items-center">
+          {studioAppLinks.map((item, index) => {
+            const isActive = index === activeIndex;
+
+            return (
+              <button
+                key={item.href}
+                type="button"
+                onClick={() => onOpenApp(item)}
+                onMouseEnter={() => setActiveIndex(index)}
+                onMouseOver={() => setActiveIndex(index)}
+                onPointerEnter={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
+                className="group py-1 text-center md:py-2"
+                style={{
+                  color: activeIndex === null || isActive ? theme.ink : theme.muted,
+                }}
+              >
+                <span
+                  className="block text-[clamp(1.65rem,3.1vw,3.15rem)] font-black uppercase leading-[0.82] tracking-[0.01em] transition-[opacity,transform] duration-300 group-hover:scale-[1.025]"
+                  style={{ fontFamily: HOME_DISPLAY_FONT }}
+                >
+                  {item.title}
+                </span>
+                <span
+                  className={`mx-auto mt-3 block max-w-[32rem] text-[0.86rem] font-medium leading-[1.3] transition-[max-height,opacity] duration-300 ${
+                    isActive ? "max-h-24 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                  style={{ color: theme.muted, fontFamily: HOME_BODY_FONT }}
+                >
+                  {item.description}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <Link
+          href="/studio/apps"
+          className="mt-8 inline-flex rounded-full px-6 py-3 text-[0.78rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+          style={{
+            backgroundColor: theme.controlBg,
+            color: theme.controlInk,
+            fontFamily: HOME_BODY_FONT,
+          }}
+        >
+          ALL APPS
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 function NavigationAbout({ theme }: { theme: HomeColorTheme }) {
   const [activeParagraph, setActiveParagraph] = useState<number | null>(null);
   const paragraphs = [
@@ -337,7 +621,8 @@ function NavigationAbout({ theme }: { theme: HomeColorTheme }) {
   return (
     <section
       id="about"
-      className="mx-auto flex w-full max-w-[74rem] items-center justify-center px-5 pb-[clamp(6rem,10vw,9rem)] pt-[clamp(3rem,6vw,5rem)] text-center md:px-8"
+      className="nav-load-item mx-auto flex w-full max-w-[74rem] items-center justify-center px-5 pb-[clamp(6rem,10vw,9rem)] pt-[clamp(3rem,6vw,5rem)] text-center md:px-8"
+      style={{ "--nav-load-delay": "340ms" } as CSSProperties}
     >
       <div className="mx-auto max-w-[56rem] space-y-7">
         <h2
@@ -368,13 +653,97 @@ function NavigationAbout({ theme }: { theme: HomeColorTheme }) {
             </p>
           ))}
         </div>
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
+          {[
+            { label: "Profile", href: "/about" },
+            { label: "Resume", href: "/resume" },
+            { label: "Creative", href: "/creative-statement" },
+            { label: "Teaching", href: "/about/teaching" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-full px-5 py-3 text-[0.74rem] font-black uppercase leading-none tracking-[0.06em] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+              style={{
+                backgroundColor: theme.controlBg,
+                color: theme.controlInk,
+                fontFamily: HOME_BODY_FONT,
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
+function NavigationAppScreen({
+  app,
+  onBack,
+}: {
+  app: NavigationFeatureItem | null;
+  onBack: () => void;
+}) {
+  if (!app) return null;
+
+  const frameSrc = `${app.href}?studioFrame=1`;
+
+  return (
+    <div
+      className="fixed inset-0 z-[2147483646] flex flex-col overflow-hidden bg-[#f3eee4] text-black md:grid md:place-items-center md:bg-black/72 md:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${app.title} app screen`}
+    >
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-[#f3eee4] md:h-[min(54rem,88vh)] md:w-full md:max-w-[28rem] md:flex-none md:rounded-[2.4rem] md:border md:border-black/12 md:shadow-[0_34px_140px_rgba(0,0,0,0.42)]">
+        <div className="grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-black/10 bg-[#fbf7ef] px-4 shadow-[inset_0_1px_rgba(255,255,255,0.68)]">
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex h-7 w-7 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            style={{
+              backgroundColor: app.accentColor || app.color || "#2b2b2b",
+              color: app.accentTextColor || app.textColor || "#ffffff",
+            }}
+            aria-label="Back to navigation"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+          <div className="text-center">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-black/54">
+              {app.shortTitle || app.title}
+            </p>
+          </div>
+          <a
+            href={app.href}
+            className="ml-auto flex h-8 w-8 items-center justify-center rounded-full text-black/46 transition-colors hover:bg-black/6 hover:text-black"
+            aria-label={`Open ${app.title} as full page`}
+          >
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+
+        <div className="min-h-0 flex-1 bg-[#f3eee4]">
+          <iframe
+            key={app.href}
+            title={app.title}
+            src={frameSrc}
+            className="h-full w-full border-0 bg-[#f3eee4]"
+            loading="lazy"
+            allow="clipboard-write"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Navigation({ initialProjects }: NavigationProps) {
   const { homeTheme } = useHomeTheme();
+  const [activeStudioApp, setActiveStudioApp] = useState<NavigationFeatureItem | null>(null);
+  const [navigationMounted, setNavigationMounted] = useState(false);
 
   const recentProjects = useMemo(
     () =>
@@ -385,9 +754,34 @@ export default function Navigation({ initialProjects }: NavigationProps) {
   );
   const sectionCards = useMemo(() => getSectionCards(recentProjects), [recentProjects]);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setNavigationMounted(true));
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (!activeStudioApp) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveStudioApp(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeStudioApp]);
+
   return (
     <div
       data-page-shell="navigation"
+      data-navigation-mounted={navigationMounted ? "true" : "false"}
       className="min-h-screen transition-colors duration-500"
       style={{
         backgroundColor: homeTheme.bg,
@@ -408,6 +802,33 @@ export default function Navigation({ initialProjects }: NavigationProps) {
           62% { opacity: 1; transform: scale(1.06) translateY(-8px) rotate(2deg); }
           100% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
         }
+
+        @keyframes nav-load-in {
+          0% { opacity: 0; transform: translateY(0.75rem) scaleY(0.94); filter: blur(8px); }
+          64% { opacity: 1; transform: translateY(-0.16rem) scaleY(1.02); filter: blur(0); }
+          100% { opacity: 1; transform: translateY(0) scaleY(1); filter: blur(0); }
+        }
+
+        .nav-load-item {
+          opacity: 0;
+          transform: translateY(0.75rem) scaleY(0.94);
+          transform-origin: bottom;
+          will-change: opacity, transform, filter;
+        }
+
+        [data-navigation-mounted="true"] .nav-load-item {
+          animation: nav-load-in 820ms cubic-bezier(0.16, 1.22, 0.32, 1) both;
+          animation-delay: var(--nav-load-delay, 0ms);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .nav-load-item {
+            animation: none !important;
+            filter: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        }
       `}</style>
 
       <main className="relative z-10">
@@ -418,23 +839,38 @@ export default function Navigation({ initialProjects }: NavigationProps) {
           >
             <div className="mx-auto w-full max-w-[70rem] text-center">
               <h1
-                className="mx-auto max-w-full text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
-                style={{ color: homeTheme.ink }}
+                className="nav-load-item mx-auto max-w-full text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
+                style={
+                  {
+                    color: homeTheme.ink,
+                    "--nav-load-delay": "120ms",
+                  } as CSSProperties
+                }
               >
                 NAVIGATION
               </h1>
             </div>
 
-            <div className="mx-auto mt-12 grid w-full max-w-[62rem] gap-5 md:grid-cols-2">
+            <div
+              className="nav-load-item mx-auto mt-12 grid w-full max-w-[62rem] gap-5 md:grid-cols-2"
+              style={{ "--nav-load-delay": "220ms" } as CSSProperties}
+            >
               {sectionCards.map((card) => (
                 <NavigationCard key={card.label} card={card} />
               ))}
             </div>
           </section>
 
+          <NavigationAbout theme={homeTheme} />
+
           <RecentScenicDesign projects={recentProjects} theme={homeTheme} />
 
-          <NavigationAbout theme={homeTheme} />
+          <NavigationArticleCards theme={homeTheme} />
+
+          <NavigationStudioApps
+            theme={homeTheme}
+            onOpenApp={setActiveStudioApp}
+          />
         </div>
 
         <Footer
@@ -442,6 +878,11 @@ export default function Navigation({ initialProjects }: NavigationProps) {
           variant="immersive"
         />
       </main>
+
+      <NavigationAppScreen
+        app={activeStudioApp}
+        onBack={() => setActiveStudioApp(null)}
+      />
     </div>
   );
 }

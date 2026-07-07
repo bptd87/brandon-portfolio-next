@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
-import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MotionReveal from "@/components/MotionReveal";
 import PortfolioTopBar from "@/components/PortfolioTopBar";
@@ -23,6 +24,7 @@ import {
 import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const EXPERIENTIAL_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/experiential";
+const EXPERIENTIAL_PORTFOLIO_PATH = "/projects/experiential";
 const EXPERIENTIAL_PORTFOLIO_TITLE = "Experiential Design Portfolio | Brandon PT Davis";
 const EXPERIENTIAL_PORTFOLIO_DESCRIPTION =
   "Experiential design portfolio by Brandon PT Davis, extending scenic design methods into immersive environments, brand activations, renderings, drafting, and finished work.";
@@ -68,7 +70,7 @@ function sortExperientialProjectsChronologically(projects: LocalExperientialProj
 
 function getProjectCardAspect(project: LocalExperientialProject) {
   void project;
-  return "aspect-[4/3]";
+  return "aspect-square";
 }
 
 function getProjectImageTreatment(project: LocalExperientialProject) {
@@ -93,58 +95,148 @@ function getYoutubePosterUrl(url: string) {
   return videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : "";
 }
 
+function getAutoplayPreviewUrl(url: string) {
+  const videoId = getYoutubeId(url);
+  if (!videoId) return url;
+
+  const params = new URLSearchParams({
+    autoplay: "1",
+    cc_load_policy: "0",
+    controls: "0",
+    disablekb: "1",
+    fs: "0",
+    iv_load_policy: "3",
+    loop: "1",
+    modestbranding: "1",
+    mute: "1",
+    origin: SITE_URL,
+    playsinline: "1",
+    playlist: videoId,
+    rel: "0",
+    showinfo: "0",
+  });
+
+  return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+}
+
 export default function ExperientialPortfolio() {
   const { homeTheme } = useHomeTheme();
   const isDesktopViewport = useIsDesktopViewport();
-  const router = useRouter();
   const projects = sortExperientialProjectsChronologically(getLocalExperientialProjects());
   const eagerProjectCount = isDesktopViewport ? 3 : 1;
   const featuredProject = projects[0];
+  const [activePortfolioProject, setActivePortfolioProject] = useState<LocalExperientialProject | null>(null);
+  const [isPortfolioLightboxOpen, setIsPortfolioLightboxOpen] = useState(false);
   const experientialAlt = (title: string) => `${title} experiential design by Brandon PT Davis`;
-  const latestProjectUpdateDate = projects
-    .map((project) => project.updatedAt)
-    .filter((value): value is string => Boolean(value))
-    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0]
-    ?.split("T")[0];
-  const animateCardDeparture = async (target: HTMLElement) => {
-    const card = target.querySelector(".transition-card") as HTMLElement | null;
-    if (!card || typeof card.animate !== "function") return;
-    const animation = card.animate(
-      [
-        { transform: "scale(1)", filter: "brightness(1)" },
-        { transform: "scale(0.975)", filter: "brightness(1.08)" },
-      ],
-      { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
-    );
+  const getProjectFromCurrentUrl = () => {
+    if (typeof window === "undefined") return null;
 
-    try {
-      await animation.finished;
-    } catch {
-      // Ignore interrupted animation.
+    const currentPath = window.location.pathname.replace(/\/$/, "");
+    return (
+      projects.find((project) => getLocalExperientialProjectHref(project) === currentPath) ||
+      null
+    );
+  };
+  const closeProjectQuickView = (updateUrl = true) => {
+    setActivePortfolioProject(null);
+
+    if (!updateUrl || typeof window === "undefined") return;
+
+    const historyState = window.history.state as { experientialPortfolioModal?: string } | null;
+    if (historyState?.experientialPortfolioModal) {
+      window.history.back();
+      return;
+    }
+
+    if (window.location.pathname.replace(/\/$/, "") !== EXPERIENTIAL_PORTFOLIO_PATH) {
+      window.history.replaceState(null, "", EXPERIENTIAL_PORTFOLIO_PATH);
     }
   };
-
-  const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+  const openProjectQuickView = (
+    event: MouseEvent<HTMLAnchorElement>,
+    project: LocalExperientialProject
+  ) => {
     if (
       event.defaultPrevented ||
       event.button !== 0 ||
       event.metaKey ||
+      event.altKey ||
       event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
+      event.shiftKey
     ) {
       return;
     }
 
     event.preventDefault();
-    const anchor = event.currentTarget;
-    const navigate = () => router.push(href);
-    const performNavigation = async () => {
-      await animateCardDeparture(anchor);
-      navigate();
-    };
-    void performNavigation();
+    setActivePortfolioProject(project);
+
+    if (typeof window !== "undefined") {
+      const projectHref = getLocalExperientialProjectHref(project);
+      if (window.location.pathname.replace(/\/$/, "") !== projectHref) {
+        window.history.pushState(
+          { experientialPortfolioModal: project.slug },
+          "",
+          projectHref
+        );
+      }
+    }
   };
+  const latestProjectUpdateDate = projects
+    .map((project) => project.updatedAt)
+    .filter((value): value is string => Boolean(value))
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0]
+    ?.split("T")[0];
+
+  useEffect(() => {
+    if (!activePortfolioProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeProjectQuickView();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activePortfolioProject]);
+
+  useEffect(() => {
+    const syncModalFromUrl = () => {
+      setActivePortfolioProject(getProjectFromCurrentUrl());
+    };
+
+    syncModalFromUrl();
+    window.addEventListener("popstate", syncModalFromUrl);
+
+    return () => {
+      window.removeEventListener("popstate", syncModalFromUrl);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!activePortfolioProject) {
+      setIsPortfolioLightboxOpen(false);
+      return;
+    }
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type !== "portfolioQuickViewLightbox") return;
+      setIsPortfolioLightboxOpen(Boolean(event.data.open));
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      setIsPortfolioLightboxOpen(false);
+    };
+  }, [activePortfolioProject]);
 
   return (
     <div
@@ -231,14 +323,6 @@ export default function ExperientialPortfolio() {
 
       <Header />
       <PortfolioTopBar />
-      <style jsx global>{`
-        .experiential-landing-media,
-        .experiential-landing-media:has(> img),
-        .experiential-landing-media img,
-        img.experiential-landing-image {
-          border-radius: 1.65rem !important;
-        }
-      `}</style>
 
       <main className="relative z-10 flex-1" style={{ backgroundColor: homeTheme.bg }}>
         <section
@@ -274,36 +358,55 @@ export default function ExperientialPortfolio() {
             className="px-[clamp(1.5rem,7vw,8rem)] pb-[clamp(4rem,8vw,7rem)]"
             style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
           >
-            <div className="mx-auto grid w-full max-w-[86rem] grid-cols-1 gap-[clamp(1rem,2vw,1.6rem)] md:grid-cols-6">
+            <div className="mx-auto grid w-full max-w-[64rem] grid-cols-1 gap-[clamp(2.25rem,5vw,4.25rem)] px-[clamp(1rem,3vw,2rem)] sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => {
-                const href = getLocalExperientialProjectHref(project);
-                const isFeatureCard = index % 5 < 2;
                 const imageTreatment = getProjectImageTreatment(project);
+                const projectHref = getLocalExperientialProjectHref(project);
 
                 return (
                   <MotionReveal
                     key={project.slug}
-                    className={`${isFeatureCard ? "md:col-span-3" : "md:col-span-2"} h-full`}
                     delay={(index % 4) * 70}
                   >
                     <a
-                      href={href}
-                      onClick={(event) => navigateWithTransition(event, href)}
-                      className="portfolio-focus-card group block h-full text-current no-underline"
+                      href={projectHref}
+                      className="home-portfolio-card group grid w-full place-items-center text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+                      style={
+                        {
+                          color: homeTheme.ink,
+                          "--home-portfolio-delay": `${(index % 3) * 95}ms`,
+                        } as CSSProperties
+                      }
+                      aria-label={`${project.title} experiential design by Brandon PT Davis`}
+                      onClick={(event) => openProjectQuickView(event, project)}
                     >
-                      <article className="h-full">
+                      <article className="w-full">
                         <div
-                          className={`portfolio-focus-media transition-card experiential-landing-media relative overflow-hidden rounded-[1.65rem] shadow-[0_1.2rem_3.6rem_rgba(0,0,0,0.14)] ring-1 ring-black/5 ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
+                          className={`portfolio-focus-media experiential-landing-media relative overflow-hidden rounded-[0.85rem] shadow-[0_1rem_2.4rem_rgba(0,0,0,0.12)] ring-1 ring-black/5 ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
                           style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
                         >
                           {project.coverVideoUrl ? (
-                            <img
-                              src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
-                              alt={`${project.title} video preview poster`}
-                              className="experiential-landing-image h-full w-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018]"
-                              loading={index < eagerProjectCount ? "eager" : "lazy"}
-                              fetchPriority={index < eagerProjectCount ? "high" : "auto"}
-                            />
+                            <>
+                              {project.coverImageUrl ? (
+                                <img
+                                  src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
+                                  alt={`${project.title} video preview poster`}
+                                  className="experiential-landing-image absolute inset-0 h-full w-full object-cover object-center"
+                                  loading={index < eagerProjectCount ? "eager" : "lazy"}
+                                  fetchPriority={index < eagerProjectCount ? "high" : "auto"}
+                                />
+                              ) : null}
+                              <iframe
+                                src={getAutoplayPreviewUrl(project.coverVideoUrl)}
+                                title={`${project.title} video preview`}
+                                className="pointer-events-none absolute left-1/2 top-1/2 h-[115%] w-[205%] -translate-x-1/2 -translate-y-1/2 scale-[1.08]"
+                                allow="autoplay; encrypted-media; picture-in-picture"
+                                frameBorder="0"
+                                loading={index < eagerProjectCount ? "eager" : "lazy"}
+                                tabIndex={-1}
+                                aria-hidden="true"
+                              />
+                            </>
                           ) : project.coverImageUrl ? (
                             <img
                               src={project.coverImageUrl}
@@ -320,19 +423,21 @@ export default function ExperientialPortfolio() {
                               Image unavailable
                             </div>
                           )}
-                          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/66 via-black/24 to-transparent px-5 pb-5 pt-16 text-white">
-                            <h2
-                              className="max-w-[18ch] text-[clamp(1.35rem,2.2vw,2.35rem)] font-black uppercase leading-[0.9] tracking-[0]"
-                              style={{ fontFamily: HOME_DISPLAY_FONT }}
-                            >
-                              {project.title}
-                            </h2>
-                            {project.year ? (
-                              <p className="mt-2 text-[0.88rem] font-medium leading-tight tracking-[-0.015em] text-white/70">
-                                {project.year}
-                              </p>
-                            ) : null}
+                          <div className="pointer-events-none absolute inset-0 flex items-end bg-black/18 p-4 opacity-100 transition-[background-color,opacity] duration-500 md:bg-black/0 md:p-5 md:opacity-0 md:group-hover:bg-black/18 md:group-hover:opacity-100">
+                            <div className="translate-y-0 opacity-100 transition-[opacity,transform] duration-500 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                              <h2
+                                className="text-[clamp(1.35rem,7vw,2.55rem)] font-black uppercase leading-[0.86] tracking-[0] text-white md:text-[clamp(1.45rem,2.3vw,2.55rem)]"
+                                style={{ fontFamily: HOME_DISPLAY_FONT }}
+                              >
+                                {project.title.toUpperCase()}
+                              </h2>
+                            </div>
                           </div>
+                        </div>
+                        <div className="sr-only">
+                          <h2 className="font-sans text-[1.1rem] font-medium leading-tight">
+                            {project.title}
+                          </h2>
                         </div>
                       </article>
                     </a>
@@ -343,7 +448,52 @@ export default function ExperientialPortfolio() {
           </section>
         ) : null}
 
-        <Footer tone="light" />
+        {activePortfolioProject && typeof document !== "undefined" ? createPortal(
+          <div
+            className="fixed inset-0 z-[2147483646] overflow-hidden bg-black/42 p-[clamp(0.55rem,1.5vw,1.25rem)] backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={`experiential-portfolio-modal-${activePortfolioProject.slug}`}
+            onClick={() => closeProjectQuickView()}
+          >
+            <div
+              className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-[clamp(1.5rem,3vw,2.8rem)] shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
+              style={{ backgroundColor: homeTheme.bg }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <h2
+                id={`experiential-portfolio-modal-${activePortfolioProject.slug}`}
+                className="sr-only"
+              >
+                {activePortfolioProject.title}
+              </h2>
+
+              <iframe
+                key={activePortfolioProject.slug}
+                src={`${getLocalExperientialProjectHref(activePortfolioProject)}?quickView=1`}
+                title={`${activePortfolioProject.title} experiential portfolio project`}
+                className="absolute inset-0 h-full w-full border-0"
+                style={{ backgroundColor: homeTheme.bg }}
+              />
+
+              <button
+                type="button"
+                aria-label="Close experiential portfolio project"
+                className={`absolute right-[clamp(0.75rem,1.6vw,1.15rem)] top-[clamp(0.75rem,1.6vw,1.15rem)] z-[5] grid h-12 w-12 place-items-center rounded-full shadow-[0_1rem_2.5rem_rgba(0,0,0,0.22)] transition-[opacity,transform] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 ${
+                  isPortfolioLightboxOpen ? "pointer-events-none opacity-0" : "opacity-100"
+                }`}
+                style={{
+                  backgroundColor: homeTheme.controlBg,
+                  color: homeTheme.controlInk,
+                }}
+                onClick={() => closeProjectQuickView()}
+              >
+                <X className="h-6 w-6" strokeWidth={2} />
+              </button>
+            </div>
+          </div>,
+          document.body
+        ) : null}
       </main>
     </div>
   );
