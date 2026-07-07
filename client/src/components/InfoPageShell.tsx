@@ -1,9 +1,15 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 
 const infoPages = [
   { name: "Privacy", href: "/privacy" },
@@ -29,9 +35,22 @@ export default function InfoPageShell({
   children,
 }: InfoPageShellProps) {
   const canonicalUrl = `https://www.brandonptdavis.com${currentPath}`;
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+  const rootStyle = {
+    "--background": homeTheme.bg,
+    "--foreground": homeTheme.ink,
+    "--border": `color-mix(in srgb, ${homeTheme.ink} 16%, transparent)`,
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
 
   return (
-    <div className="about-profile-light min-h-screen bg-white text-[#111111] [--background:#ffffff] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
+    <div
+      className="about-profile-light min-h-screen transition-[background-color,color] duration-500"
+      style={rootStyle}
+    >
       <SEO
         title={`${title} | Brandon PT Davis`}
         description={intro}
@@ -41,21 +60,23 @@ export default function InfoPageShell({
       <Header />
 
       <main>
-        <div className="relative z-10 bg-white">
+        <div className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
           <nav
             aria-label="Site information navigation"
-            className="sticky top-[72px] z-30 border-b border-black/[0.06] bg-white/90 backdrop-blur-xl"
+            className="sticky top-[72px] z-30 border-b border-border backdrop-blur-xl"
+            style={{ backgroundColor: `color-mix(in srgb, ${homeTheme.bg} 90%, transparent)` }}
           >
-            <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
+            <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col items-center justify-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-center md:gap-4">
               <Link
                 href="/privacy"
-                className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]"
+                className="text-[clamp(1.55rem,2.4vw,2.2rem)] font-black uppercase leading-none tracking-[0]"
+                style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}
               >
                 Information
               </Link>
 
-              <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <div className="flex min-w-max items-center gap-6 md:gap-8">
+              <div className="max-w-full overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex min-w-max items-center gap-2">
                   {infoPages.map((item) => {
                     const isCurrent = item.href === currentPath;
 
@@ -63,9 +84,11 @@ export default function InfoPageShell({
                       <Link
                         key={item.href}
                         href={item.href}
-                        className={`text-[0.95rem] tracking-[-0.025em] transition-colors ${
-                          isCurrent ? "text-[#111111]" : "text-[#777169] hover:text-[#111111]"
-                        }`}
+                        className="inline-flex h-10 items-center justify-center rounded-full px-4 text-[0.74rem] font-black uppercase tracking-[0.04em] transition-transform hover:scale-[1.02]"
+                        style={{
+                          backgroundColor: isCurrent ? homeTheme.controlBg : homeTheme.accentSoft,
+                          color: isCurrent ? homeTheme.controlInk : homeTheme.ink,
+                        }}
                       >
                         {item.name}
                       </Link>
@@ -76,20 +99,32 @@ export default function InfoPageShell({
             </div>
           </nav>
 
-          <section className="border-b border-black/10">
+          <section className="border-b border-border">
             <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
-              <div className="max-w-4xl">
-                <p className="mb-4 section-kicker text-foreground/42">
+              <div className="mx-auto max-w-4xl text-center">
+                <p
+                  className="mb-4 text-[0.72rem] font-black uppercase tracking-[0.18em]"
+                  style={{ color: homeTheme.muted }}
+                >
                   Site Information
                 </p>
-                <h1 className="max-w-[12ch] font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.92] tracking-[-0.07em] text-foreground">
+                <h1
+                  className="mx-auto max-w-[12ch] text-[clamp(4.25rem,9vw,8.8rem)] font-black uppercase leading-[0.82] tracking-[0]"
+                  style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}
+                >
                   {title}
                 </h1>
-                <p className="mt-6 max-w-[43rem] text-[clamp(1rem,1.35vw,1.18rem)] leading-[1.7] tracking-[-0.015em] text-foreground/64">
+                <p
+                  className="mx-auto mt-6 max-w-[43rem] text-[clamp(1.06rem,1.35vw,1.22rem)] font-semibold leading-[1.55] tracking-[-0.025em]"
+                  style={{ color: homeTheme.muted }}
+                >
                   {intro}
                 </p>
                 {metaLabel ? (
-                  <p className="mt-4 text-[0.94rem] leading-[1.65] tracking-[-0.01em] text-foreground/46">
+                  <p
+                    className="mt-4 text-[0.86rem] font-black uppercase tracking-[0.08em]"
+                    style={{ color: homeTheme.muted }}
+                  >
                     {metaLabel}
                   </p>
                 ) : null}
@@ -103,7 +138,11 @@ export default function InfoPageShell({
         </div>
       </main>
 
-      <Footer tone="light" />
+      <Footer
+        backgroundColor={homeTheme.footerBg}
+        displayTextColor={homeTheme.footerDisplay}
+        textColor={homeTheme.footerInk}
+      />
     </div>
   );
 }

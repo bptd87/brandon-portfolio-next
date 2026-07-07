@@ -79,21 +79,21 @@ export default function Privacy() {
       >
         <div className="max-w-4xl">
           {sections.map((section) => (
-            <section key={section.title} className="border-t border-black/10 py-8 first:pt-0">
-              <h2 className="mb-4 font-sans text-[clamp(1.55rem,2.3vw,2.2rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
+            <section key={section.title} className="border-t border-border py-8 first:pt-0">
+              <h2 className="mb-4 font-display text-[clamp(2.35rem,4vw,3.8rem)] font-black uppercase leading-[0.88] tracking-[0] text-foreground">
                 {section.title}
               </h2>
               {section.body?.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="mt-3 max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68"
+                    className="mt-3 max-w-[46rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70"
                   >
                     {paragraph.includes("info@brandonptdavis.com") ? (
                       <>
                         For privacy-related questions, contact{" "}
                         <a
                           href="mailto:info@brandonptdavis.com"
-                          className="text-foreground underline decoration-black/20 underline-offset-4 hover:decoration-black/50"
+                          className="text-foreground underline decoration-current/30 underline-offset-4 hover:decoration-current"
                         >
                           info@brandonptdavis.com
                         </a>
@@ -105,11 +105,11 @@ export default function Privacy() {
                   </p>
                 ))}
               {section.items ? (
-                <ul className="mt-4 space-y-3">
+                <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-foreground/35">
                   {section.items.map((item) => (
                     <li
                       key={item}
-                      className="max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68"
+                      className="max-w-[46rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70"
                     >
                       {item}
                     </li>
@@ -148,26 +148,26 @@ function AnalyticsPreferenceControl() {
   }
 
   return (
-    <section className="border-t border-black/10 py-8">
-      <h2 className="mb-4 font-sans text-[clamp(1.55rem,2.3vw,2.2rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
+    <section className="border-t border-border py-8">
+      <h2 className="mb-4 font-display text-[clamp(2.35rem,4vw,3.8rem)] font-black uppercase leading-[0.88] tracking-[0] text-foreground">
         Analytics Preference
       </h2>
-      <p className="max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68">
+      <p className="max-w-[46rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70">
         Current setting:{" "}
-        <span className="font-medium text-foreground">{status}</span>.
+        <span className="font-black text-foreground">{status}</span>.
       </p>
       <div className="mt-5 flex flex-wrap gap-3">
         <button
           type="button"
           onClick={() => chooseConsent("accepted")}
-          className="inline-flex h-11 items-center justify-center rounded-full bg-[#111111] px-5 text-[0.92rem] font-medium tracking-[-0.02em] text-white transition-opacity hover:opacity-90"
+          className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--home-theme-control-bg)] px-5 text-[0.78rem] font-black uppercase tracking-[0.04em] text-[var(--home-theme-control-ink)] transition-transform hover:scale-[1.02]"
         >
           Accept analytics
         </button>
         <button
           type="button"
           onClick={() => chooseConsent("declined")}
-          className="inline-flex h-11 items-center justify-center rounded-full border border-black/14 px-5 text-[0.92rem] font-medium tracking-[-0.02em] text-foreground/68 transition-colors hover:border-black/30 hover:text-foreground"
+          className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-[var(--home-theme-accent-soft)] px-5 text-[0.78rem] font-black uppercase tracking-[0.04em] text-foreground transition-transform hover:scale-[1.02]"
         >
           Decline analytics
         </button>

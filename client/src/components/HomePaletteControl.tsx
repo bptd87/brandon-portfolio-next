@@ -58,12 +58,11 @@ export default function HomePaletteControl({
                   onThemeChange(index);
                   onOpenChange(false);
                 }}
-                className={`home-palette-swatch pointer-events-auto absolute left-1/2 top-1/2 h-7 w-7 rounded-full border shadow-[0_0.5rem_1.1rem_rgba(0,0,0,0.16)] transition-[opacity,transform] duration-300 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 ${
+                className={`home-palette-swatch pointer-events-auto absolute left-1/2 top-1/2 h-7 w-7 rounded-full shadow-[0_0.5rem_1.1rem_rgba(0,0,0,0.16)] transition-[opacity,transform] duration-300 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/45 ${
                   isOpen ? "opacity-100" : "pointer-events-none opacity-0"
                 }`}
                 style={{
                   backgroundColor: theme.bg,
-                  borderColor: "rgba(0,0,0,0.18)",
                   transform: isOpen
                     ? `translate(calc(-50% + ${swatchX}px), calc(-50% + ${swatchY}px)) scale(1)`
                     : "translate(-50%, -50%) scale(0.2)",
@@ -79,12 +78,11 @@ export default function HomePaletteControl({
           aria-label="Change site colors"
           aria-expanded={isOpen}
           onClick={() => onOpenChange(!isOpen)}
-          className="pointer-events-auto absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full border shadow-[0_0.8rem_2rem_rgba(0,0,0,0.2)] transition-transform motion-safe:animate-[home-palette-idle_2.4s_cubic-bezier(0.45,0,0.2,1)_infinite] hover:scale-105 hover:[animation-play-state:paused] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+          className="pointer-events-auto absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full shadow-[0_0.8rem_2rem_rgba(0,0,0,0.2)] transition-transform motion-safe:animate-[home-palette-idle_2.4s_cubic-bezier(0.45,0,0.2,1)_infinite] hover:scale-105 hover:[animation-play-state:paused] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/45"
           style={{
-            backgroundColor: activeTheme.bg,
-            borderColor: activeTheme.controlBg,
-            color: activeTheme.ink,
-            boxShadow: `0 0.8rem 2rem rgba(0,0,0,0.2), inset 0 0 0 2px ${activeTheme.controlBg}`,
+            backgroundColor: activeTheme.controlBg,
+            color: activeTheme.controlInk,
+            boxShadow: "0 0.8rem 2rem rgba(0,0,0,0.2)",
           }}
         >
           <Palette

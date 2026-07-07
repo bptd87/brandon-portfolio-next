@@ -17,49 +17,49 @@ const ABOUT_MODEL_URL = "/assets/about/3d/brandon-pt-davis-3d-model.glb";
 
 const aboutImages = [
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-behind-scenes-56903846.webp",
-    alt: "Brandon PT Davis working in the scene shop at The Great American Melodrama",
-    caption: "Scene shop work at The Great American Melodrama.",
+    src: "/images/about/page/about-favorite-08.jpeg",
+    alt: "Brandon PT Davis holding a scenic model during a design presentation at South Coast Repertory.",
+    caption: "Design presentation at South Coast Rep, fall 2025.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teaching-8566b656.webp",
-    alt: "Brandon PT Davis teaching scenic design to Stephens College students during a production strike",
-    caption: "Teaching scenic design through the work of production.",
+    src: "/images/about/page/about-favorite-07.jpeg",
+    alt: "Brandon PT Davis scenic painting in a shop during winter 2025.",
+    caption: "Scenic painting, winter 2025.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp",
-    alt: "Brandon PT Davis and Gretchen at Apple Park during UC Irvine graduate school years",
-    caption: "Graduate school years in California.",
+    src: "/images/about/page/about-favorite-06.jpeg",
+    alt: "Scenic designers Tom Buderwitz, Brandon PT Davis, and Gretchen Ugalde.",
+    caption: "Scenic designers Tom Buderwitz, Brandon PT Davis, and Gretchen Ugalde.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-mentors-de7b3237.webp",
-    alt: "Brandon PT Davis with Gretchen and scenic and production designer Alan Muraoka at South Coast Rep",
-    caption: "With Gretchen and Alan Muraoka at South Coast Rep.",
+    src: "/images/about/page/about-favorite-05.jpeg",
+    alt: "Brandon PT Davis and Gretchen Ugalde with lighting designer Lonnie Alcaraz.",
+    caption: "Brandon and Gretchen with lighting designer Lonnie Alcaraz.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teams-ee0e5092.webp",
-    alt: "Brandon PT Davis with Gretchen and lighting designer Lonnie Alcaraz in Costa Mesa",
-    caption: "With Gretchen and Lonnie Alcaraz in Costa Mesa.",
+    src: "/images/about/page/about-favorite-04.jpeg",
+    alt: "Brandon PT Davis, Gretchen Ugalde, Katie Cohen, Ruth Ann Burke, and Michael Burke at Okoboji Summer Theatre.",
+    caption: "Brandon, Gretchen, Katie Cohen, Ruth Ann Burke, and Michael Burke at Okoboji Summer Theatre.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-collaborations-3a11416a.webp",
-    alt: "Brandon PT Davis with Gretchen, Michael and Ruth Anne Burek, and Katie Cohen at the Okoboji Association Party",
-    caption: "Okoboji Summer Theatre community and collaborators.",
+    src: "/images/about/page/about-favorite-03.jpeg",
+    alt: "Brandon PT Davis and Gretchen Ugalde at Apple Park.",
+    caption: "Brandon and Gretchen at Apple Park.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-family-305c20d0.webp",
-    alt: "Brandon PT Davis with the Ugalde Burks family at Thanksgiving in 2023",
-    caption: "Family, place, and the life around the work.",
+    src: "/images/about/page/about-favorite-02.jpeg",
+    alt: "Brandon PT Davis at Lake Michigan in Chicago in 2012.",
+    caption: "Brandon at Lake Michigan in Chicago, 2012.",
   },
   {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-partnerships-081c8f6b.webp",
-    alt: "Brandon PT Davis with Gretchen and scenic designer Tom Buderwitz in Santa Monica",
-    caption: "With Gretchen and Tom Buderwitz in Santa Monica.",
+    src: "/images/about/page/about-favorite-01.jpeg",
+    alt: "Brandon PT Davis with his sister Megan at Christmas in the 1990s, holding cats Silvia and Christina.",
+    caption: "Brandon with his sister Megan at Christmas in the 1990s, holding cats Silvia and Christina.",
   },
 ] as const;
 
 const afterArticleImages = [
-  aboutImages[0],
+  aboutImages[1],
   aboutImages[2],
   aboutImages[3],
   aboutImages[4],
@@ -104,7 +104,7 @@ const aboutStoryBlocks = [
   },
   {
     kind: "imageFull",
-    imageIndex: 1,
+    imageIndex: 0,
   },
   {
     kind: "paragraph",
@@ -287,7 +287,7 @@ export default function About() {
 
                   return (
                     <div key={`${block.kind}-${index}`} className="clear-both">
-                      <figure className="my-11">
+                      <figure className="my-11 w-full">
                         <img
                           src={image.src}
                           alt={image.alt}
@@ -356,9 +356,9 @@ export default function About() {
             <figure key={image.src}>
               <img
                 src={image.src}
-              alt={image.alt}
-              loading="lazy"
-              decoding="async"
+                alt={image.alt}
+                loading="lazy"
+                decoding="async"
                 className="h-auto w-full rounded-[1.65rem] bg-black/[0.04]"
               />
               <figcaption

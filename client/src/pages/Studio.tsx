@@ -140,9 +140,9 @@ const STUDIO_HEADER_TOP_GRAPHIC =
 const STUDIO_HEADER_BOTTOM_GRAPHIC = "/images/publish/article-bottom.png";
 
 const articleSwatches = [
-  { background: "#a33f24", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-  { background: "#496784", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-  { background: "#c4932f", text: "#17120b", muted: "rgba(23,18,11,0.7)" },
+  { background: "#ff6f00", text: "#20180f", muted: "rgba(32,24,15,0.72)" },
+  { background: "#1385f6", text: "#a8f4ff", muted: "rgba(5,47,139,0.78)" },
+  { background: "#35ad62", text: "#003f1c", muted: "rgba(0,63,28,0.76)" },
 ] as const;
 
 const appSwatches = [

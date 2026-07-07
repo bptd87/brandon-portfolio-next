@@ -103,28 +103,28 @@ export default function FAQ() {
         currentPath="/faq"
       >
         <div className="max-w-4xl">
-          <div className="border-t border-black/10">
+          <div className="border-t border-border">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (
-                <div key={faq.question} className="border-b border-black/10">
+                <div key={faq.question} className="border-b border-border">
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     className="flex w-full items-start justify-between gap-6 py-5 text-left"
                   >
-                    <span className="max-w-[44rem] font-sans text-[1.18rem] font-medium leading-[1.14] tracking-[-0.03em] text-foreground">
+                    <span className="max-w-[44rem] font-display text-[clamp(1.9rem,3.1vw,3rem)] font-black uppercase leading-[0.9] tracking-[0] text-foreground">
                       {faq.question}
                     </span>
                     <ChevronDown
-                      className={`mt-1 h-5 w-5 shrink-0 text-foreground/44 transition-transform ${
+                      className={`mt-1 h-7 w-7 shrink-0 text-foreground/60 transition-transform ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {isOpen ? (
-                    <div className="pb-5 pr-10 text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68">
+                    <div className="pb-6 pr-10 text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70">
                       {faq.answer}
                     </div>
                   ) : null}
@@ -133,14 +133,14 @@ export default function FAQ() {
             })}
           </div>
 
-          <div className="mt-12 border-t border-black/10 pt-8">
-            <p className="max-w-[38rem] text-[1rem] leading-[1.78] tracking-[-0.01em] text-foreground/62">
+          <div className="mt-12 rounded-[1.75rem] border border-border bg-card p-6 shadow-[0_1rem_3rem_rgba(0,0,0,0.08)] md:p-8">
+            <p className="max-w-[38rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70">
               Ready to discuss a production? Share the title, venue, and timeline to start a scenic
               design conversation.
             </p>
             <Link
               href="/contact"
-              className="mt-5 inline-flex items-center justify-center rounded-full border border-black/14 px-5 py-3 text-[0.88rem] font-medium tracking-[-0.01em] text-foreground transition-colors hover:border-black/24 hover:bg-black/[0.04]"
+              className="mt-5 inline-flex h-11 items-center justify-center rounded-full bg-[var(--home-theme-control-bg)] px-5 text-[0.78rem] font-black uppercase tracking-[0.04em] text-[var(--home-theme-control-ink)] transition-transform hover:scale-[1.02]"
             >
               Contact
             </Link>

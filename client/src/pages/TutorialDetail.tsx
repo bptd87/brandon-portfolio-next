@@ -13,10 +13,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getTutorialArticleBlueprint } from "@/data/tutorialArticleBlueprints";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
-import { HOME_BODY_FONT, HOME_DISPLAY_FONT } from "@/lib/homeTheme";
+import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 import { getYouTubeThumbnail } from "@/lib/videoUtils";
 import { getLocalTutorialBySlug, getLocalTutorials } from "@shared/localStudio";
 import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
+import type { CSSProperties } from "react";
 import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 
@@ -34,10 +35,10 @@ const difficulties = [
 ];
 
 const articlePillTabsListClass =
-  "mx-auto inline-flex h-auto w-fit max-w-full flex-wrap items-center justify-center gap-1 rounded-full border border-white/14 bg-transparent p-1";
+  "tutorial-segmented-control mx-auto inline-flex h-auto w-fit max-w-full flex-wrap items-center justify-center gap-1 rounded-full border p-1";
 
 const articlePillTabsTriggerClass =
-  "h-auto flex-none rounded-full border-0 bg-transparent px-5 py-2.5 text-[0.95rem] font-normal tracking-[-0.018em] text-white/66 shadow-none transition-colors hover:text-white data-[state=active]:bg-white/[0.1] data-[state=active]:text-white data-[state=active]:shadow-none";
+  "tutorial-segmented-trigger h-auto flex-none rounded-full border-0 bg-transparent px-5 py-2.5 text-[0.95rem] font-semibold tracking-[0] shadow-none transition-[background-color,color,transform] hover:-translate-y-0.5 data-[state=active]:shadow-none";
 
 const TUTORIAL_COVER_VARIANTS = {
   "getting-started": [
@@ -1336,6 +1337,22 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   const [linkCopied, setLinkCopied] = useState(false);
   const [activeExamQuestion, setActiveExamQuestion] = useState(0);
   const relatedTutorialRailRef = useRef<HTMLDivElement | null>(null);
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+
+  const tutorialPageStyle = {
+    "--tutorial-bg": homeTheme.bg,
+    "--tutorial-ink": homeTheme.ink,
+    "--tutorial-muted": homeTheme.muted,
+    "--tutorial-ghost": homeTheme.ghost,
+    "--tutorial-accent": homeTheme.accent,
+    "--tutorial-accent-soft": homeTheme.accentSoft,
+    "--tutorial-control-bg": homeTheme.controlBg,
+    "--tutorial-control-ink": homeTheme.controlInk,
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
 
   const articleBlueprint = tutorial ? getTutorialArticleBlueprint(tutorial.slug) : null;
   const overviewParagraphs = tutorial
@@ -1345,7 +1362,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
   if (error || !tutorial) {
     return (
-      <div className="publish-editorial publish-editorial-dark min-h-screen bg-[#030303] text-white">
+      <div className="tutorial-detail-page min-h-screen transition-colors duration-500" style={tutorialPageStyle}>
         <Header />
         <div className="flex min-h-[70vh] items-center justify-center px-6">
           <div className="text-center">
@@ -1471,8 +1488,8 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
   return (
     <div
-      className="tutorial-detail-page publish-editorial publish-editorial-dark min-h-screen bg-[#030303] text-white"
-      style={{ fontFamily: HOME_BODY_FONT }}
+      className="tutorial-detail-page min-h-screen transition-colors duration-500"
+      style={tutorialPageStyle}
     >
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
@@ -1529,19 +1546,85 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
       />
 
       <Header />
-      <PublishingTopBar active="articles" tone="dark" />
+      <PublishingTopBar active="articles" tone="light" />
 
       <style>{`
+        .tutorial-detail-page {
+          background: var(--tutorial-bg);
+          color: var(--tutorial-ink);
+          font-family: ${HOME_BODY_FONT};
+        }
+
+        .tutorial-detail-page [class*="text-white"] {
+          color: var(--tutorial-muted) !important;
+        }
+
         .tutorial-detail-page h1,
         .tutorial-detail-page h2,
         .tutorial-detail-page h3,
         .tutorial-detail-page h4 {
           font-family: ${HOME_DISPLAY_FONT};
-          letter-spacing: 0;
+          letter-spacing: 0 !important;
+          text-transform: uppercase;
+          color: var(--tutorial-ink) !important;
+        }
+
+        .tutorial-detail-page strong,
+        .tutorial-detail-page b {
+          color: var(--tutorial-ink);
+        }
+
+        .tutorial-detail-page p,
+        .tutorial-detail-page li,
+        .tutorial-detail-page dd {
+          letter-spacing: 0 !important;
+        }
+
+        .tutorial-detail-page [class*="border-white"] {
+          border-color: color-mix(in srgb, var(--tutorial-ghost) 42%, transparent) !important;
+        }
+
+        .tutorial-detail-page [class*="bg-white"] {
+          background-color: var(--tutorial-accent-soft) !important;
+        }
+
+        .tutorial-detail-page .tutorial-video-shell {
+          background: var(--tutorial-accent-soft);
+          border-color: color-mix(in srgb, var(--tutorial-ghost) 48%, transparent);
+        }
+
+        .tutorial-detail-page .tutorial-segmented-control {
+          background: color-mix(in srgb, var(--tutorial-accent-soft) 78%, transparent);
+          border-color: color-mix(in srgb, var(--tutorial-ghost) 46%, transparent) !important;
+          box-shadow: 0 16px 38px rgba(0, 0, 0, 0.08);
+        }
+
+        .tutorial-detail-page .tutorial-segmented-trigger {
+          color: var(--tutorial-muted) !important;
+          font-family: ${HOME_BODY_FONT};
+        }
+
+        .tutorial-detail-page .tutorial-segmented-trigger[data-state="active"] {
+          background: var(--tutorial-control-bg) !important;
+          color: var(--tutorial-control-ink) !important;
+        }
+
+        .tutorial-detail-page .tutorial-related-card {
+          background: var(--tutorial-control-bg);
+          border-color: color-mix(in srgb, var(--tutorial-control-ink) 22%, transparent) !important;
+          color: var(--tutorial-control-ink);
+        }
+
+        .tutorial-detail-page .tutorial-related-card [class*="text-white"] {
+          color: var(--tutorial-control-ink) !important;
+        }
+
+        .tutorial-detail-page .tutorial-related-card .tutorial-related-meta {
+          color: color-mix(in srgb, var(--tutorial-control-ink) 62%, transparent) !important;
         }
       `}</style>
 
-      <article className="overflow-hidden bg-[#030303] pb-16 text-white md:pb-24">
+      <article className="overflow-hidden pb-16 md:pb-24" style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}>
         <div className="mx-auto w-full max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-24 lg:px-10">
           <AnimatedSection>
             <header className="mx-auto max-w-[48rem] text-left">
@@ -1552,11 +1635,17 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                 </time>
               </div>
 
-              <h1 className="mt-8 max-w-[13ch] font-sans text-[2.7rem] font-semibold leading-[0.96] tracking-[0] text-white sm:text-[4rem] lg:text-[5.7rem]">
+              <h1
+                className="mt-8 max-w-[13ch] text-[2.7rem] font-black uppercase leading-[0.9] tracking-[0] sm:text-[4rem] lg:text-[5.7rem]"
+                style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT }}
+              >
                 {tutorialDisplayTitle}
               </h1>
 
-              <p className="mt-7 max-w-[43rem] text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.16] tracking-[-0.046em] text-white/82">
+              <p
+                className="mt-7 max-w-[43rem] text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.2] tracking-[0]"
+                style={{ color: homeTheme.muted }}
+              >
                 {tutorialSummary}
               </p>
 
@@ -1617,7 +1706,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
           <AnimatedSection
             delay={140}
-            className="mx-auto mt-16 max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-black shadow-[0_24px_70px_rgba(0,0,0,0.34)]"
+            className="tutorial-video-shell mx-auto mt-16 max-w-[68rem] overflow-hidden rounded-[1.7rem] border shadow-[0_24px_70px_rgba(0,0,0,0.18)]"
           >
             {videoId ? (
               <DeferredYouTubeEmbed
@@ -2042,16 +2131,28 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
               <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-5 sm:px-8 lg:px-10">
                 <MotionReveal className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
                   <div className="max-w-3xl">
-                    <p className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] text-white/62">
+                    <p
+                      className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-semibold leading-none tracking-[0]"
+                      style={{ color: homeTheme.muted }}
+                    >
                       Scenic design articles
                     </p>
-                    <h2 className="max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em] text-white">
+                    <h2
+                      className="max-w-[12ch] text-[clamp(2.2rem,4.6vw,4.7rem)] font-black uppercase leading-[0.88] tracking-[0]"
+                      style={{ color: homeTheme.ink, fontFamily: HOME_DISPLAY_FONT }}
+                    >
                       Keep learning.
                     </h2>
                   </div>
                   <Link
                     href="/articles"
-                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-white/18 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/76 transition-colors hover:border-white/36 hover:text-white md:justify-self-end"
+                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border px-5 text-sm font-semibold tracking-[0] transition-transform hover:-translate-y-0.5 md:justify-self-end"
+                    style={{
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.controlInk,
+                      backgroundColor: homeTheme.controlBg,
+                      fontFamily: HOME_BODY_FONT,
+                    }}
                   >
                     View articles
                   </Link>
@@ -2079,9 +2180,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                       >
                         <Link
                           href={card.href}
-                          className="publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border border-white/10 bg-[#0b0b0b] no-underline shadow-[0_18px_42px_rgba(0,0,0,0.28)] transition-transform duration-300 hover:-translate-y-0.5 hover:border-white/20"
+                          className="tutorial-related-card publish-motion-card group block h-full overflow-hidden rounded-[1.15rem] border no-underline shadow-[0_18px_42px_rgba(0,0,0,0.18)] transition-transform duration-300 hover:-translate-y-0.5"
+                          style={{
+                            "--tutorial-control-bg": homeTheme.controlBg,
+                            "--tutorial-control-ink": homeTheme.controlInk,
+                          } as CSSProperties}
                         >
-                          <div className="learning-card-media relative aspect-video overflow-hidden bg-white/[0.04]">
+                          <div className="learning-card-media relative aspect-video overflow-hidden" style={{ backgroundColor: homeTheme.accentSoft }}>
                             <Image
                               src={card.cover.src}
                               alt={card.cover.alt}
@@ -2094,10 +2199,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                           </div>
 
                           <div className="learning-card-copy flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
-                            <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-white transition-colors group-hover:text-white/82">
+                            <p
+                              className="line-clamp-2 max-w-[20rem] text-[clamp(1.55rem,2.25vw,2.2rem)] font-black uppercase leading-[0.9] tracking-[0] transition-opacity group-hover:opacity-80"
+                              style={{ color: homeTheme.controlInk, fontFamily: HOME_DISPLAY_FONT }}
+                            >
                               {card.title}
                             </p>
-                            <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-white/54">{metadata}</p>
+                            <p className="tutorial-related-meta mt-5 text-[0.88rem] font-semibold tracking-[0]">{metadata}</p>
                           </div>
                         </Link>
                       </MotionReveal>
@@ -2110,7 +2218,12 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   <button
                     type="button"
                     onClick={() => scrollRelatedTutorials("previous")}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/72 transition-colors hover:border-white/24 hover:bg-white/[0.12] hover:text-white"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-transform hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: homeTheme.controlBg,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.controlInk,
+                    }}
                     aria-label="Previous tutorial cards"
                   >
                     <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
@@ -2118,7 +2231,12 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                   <button
                     type="button"
                     onClick={() => scrollRelatedTutorials("next")}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] text-white/82 transition-colors hover:border-white/24 hover:bg-white/[0.14] hover:text-white"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-transform hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: homeTheme.controlBg,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.controlInk,
+                    }}
                     aria-label="Next tutorial cards"
                   >
                     <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
@@ -2130,7 +2248,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         </div>
       </article>
 
-      <Footer tone="dark" variant="standard" />
+      <Footer tone="light" variant="standard" />
     </div>
   );
 }

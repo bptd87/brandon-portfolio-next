@@ -603,9 +603,20 @@ const EXPERIENTIAL_CATEGORY_LABELS: Record<LocalExperientialCategory, string> = 
   "live-events": "Live Events",
 };
 
+const FIRST_BANK_LOLLIPOPS_BLOB_IMAGES = {
+  kidsRunning:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/first-bank-lollipops/kids-running-to-lollipops-60b6dc4f57.jpeg",
+  guestWithLollipop:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/first-bank-lollipops/guest-with-first-bank-lollipop-621993faf2.jpeg",
+  kidsWithLollipop:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/first-bank-lollipops/kids-with-first-bank-lollipop-1996c02e34.jpeg",
+  wall:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/first-bank-lollipops/first-bank-lollipops-wall-924b9b8a78.jpeg",
+} as const;
+
 const EXPERIENTIAL_SAMPLE_OVERRIDES: Record<
   string,
-  Partial<Pick<LocalExperientialSample, "description" | "altText">>
+  Partial<Pick<LocalExperientialSample, "description" | "altText" | "imageUrl" | "videoUrl" | "images">>
 > = {
   "red-line-cafe": {
     description:
@@ -630,6 +641,55 @@ const EXPERIENTIAL_SAMPLE_OVERRIDES: Record<
   "first-bank-lollipops": {
     description:
       "Promotional concept imagery for First Bank Lollipops, designed to translate a campaign idea into a clear visual moment.",
+  },
+  "first-bank-lollipops-commercial": {
+    imageUrl: FIRST_BANK_LOLLIPOPS_BLOB_IMAGES.wall,
+    videoUrl: null,
+    altText: "First Bank Lollipops live activation wall with branded oversized lollipops.",
+    description:
+      "Live event documentation for First Bank Lollipops, showing the oversized branded lollipops and campaign wall in use with guests.",
+    images: [
+      {
+        id: 190301,
+        imageUrl: FIRST_BANK_LOLLIPOPS_BLOB_IMAGES.kidsRunning,
+        videoUrl: null,
+        altText: "Children running toward oversized First Bank branded lollipops at an outdoor activation.",
+        caption: "Guests discovering the First Bank Lollipops activation.",
+        title: "Kids Running to Lollipops",
+        sortOrder: 1,
+        imageType: "photo",
+      },
+      {
+        id: 190302,
+        imageUrl: FIRST_BANK_LOLLIPOPS_BLOB_IMAGES.guestWithLollipop,
+        videoUrl: null,
+        altText: "Guest smiling with an oversized black First Bank branded lollipop.",
+        caption: "Oversized branded lollipops as a guest-facing campaign object.",
+        title: "Guest With First Bank Lollipop",
+        sortOrder: 2,
+        imageType: "photo",
+      },
+      {
+        id: 190303,
+        imageUrl: FIRST_BANK_LOLLIPOPS_BLOB_IMAGES.kidsWithLollipop,
+        videoUrl: null,
+        altText: "Two children holding an oversized yellow First Bank branded lollipop.",
+        caption: "The activation translated the campaign into a playful public interaction.",
+        title: "Kids With First Bank Lollipop",
+        sortOrder: 3,
+        imageType: "photo",
+      },
+      {
+        id: 190304,
+        imageUrl: FIRST_BANK_LOLLIPOPS_BLOB_IMAGES.wall,
+        videoUrl: null,
+        altText: "First Bank campaign wall reading Like normal banking, but better beside oversized branded lollipops.",
+        caption: "Campaign wall and giveaway moment for First Bank Lollipops.",
+        title: "First Bank Lollipops Wall",
+        sortOrder: 4,
+        imageType: "photo",
+      },
+    ],
   },
   "the-industrial-walkthrough-1": {
     description:
@@ -686,6 +746,8 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
     slug: "first-bank-lollipops",
     title: "First Bank Lollipops",
     sampleSlugs: ["first-bank-lollipops-commercial", "first-bank-lollipops"],
+    coverImageUrl: FIRST_BANK_LOLLIPOPS_BLOB_IMAGES.wall,
+    coverAltText: "First Bank Lollipops campaign wall with oversized branded lollipops.",
     summary:
       "A campaign-focused experiential project that pairs concept visualization with live documentation, framing how the First Bank Lollipops idea moves from pitch asset to on-site experience.",
     seoTitle: "First Bank Experiential Design",

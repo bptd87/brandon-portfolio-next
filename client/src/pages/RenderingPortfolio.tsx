@@ -349,9 +349,9 @@ export default function RenderingPortfolio() {
         {allRenderingItems.length > 0 && (
           <section
             id="rendering"
-            className="scroll-mt-24 px-[clamp(2rem,8vw,9rem)] py-[clamp(2.5rem,5vw,4.5rem)]"
+            className="scroll-mt-24 px-[clamp(1.5rem,7vw,8rem)] pb-[clamp(4rem,8vw,7rem)]"
           >
-            <div className="mx-auto grid w-full max-w-[68rem] grid-cols-1 gap-[clamp(1.25rem,2.5vw,2rem)] sm:grid-cols-2">
+            <div className="mx-auto grid w-full max-w-[64rem] grid-cols-1 gap-[clamp(2.25rem,5vw,4.25rem)] px-[clamp(1rem,3vw,2rem)] sm:grid-cols-2 lg:grid-cols-3">
               {allRenderingItems.map((item, index) => (
                 <button
                   key={item.id}
@@ -359,9 +359,7 @@ export default function RenderingPortfolio() {
                   id={item.slug}
                   aria-label={`Open ${item.title} rendering gallery`}
                   onClick={() => openRenderingLightbox(index)}
-                  className={`portfolio-focus-card group relative block w-full overflow-hidden rounded-[1.15rem] bg-neutral-100 text-left focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/70 ${
-                    index % 3 === 2 ? "aspect-[3/2] sm:col-span-2" : "aspect-square"
-                  }`}
+                  className="portfolio-focus-card group relative block aspect-square w-full overflow-hidden rounded-[0.85rem] bg-neutral-100 text-left shadow-[0_1rem_2.4rem_rgba(0,0,0,0.12)] ring-1 ring-black/5 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/70"
                 >
                   {item.imageUrl ? (
                     <ProgressiveImage
@@ -393,7 +391,10 @@ export default function RenderingPortfolio() {
 
       {selectedItem && selectedImage ? (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/62 p-2 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-2 backdrop-blur-sm"
+          style={{
+            backgroundColor: "color-mix(in srgb, var(--foreground) 42%, transparent)",
+          }}
           role="dialog"
           aria-modal="true"
           aria-label={`${selectedItem.title} rendering gallery`}
@@ -401,7 +402,11 @@ export default function RenderingPortfolio() {
         >
           <button
             type="button"
-            className="absolute right-5 top-5 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#d9d9d9] text-[#111111] transition hover:bg-[#cfcfcf] focus:outline-none focus-visible:ring-2 focus-visible:ring-black/50 md:right-8 md:top-8"
+            className="absolute right-5 top-5 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full shadow-[0_1rem_2.5rem_rgba(0,0,0,0.18)] transition hover:scale-[1.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-black/50 md:right-8 md:top-8"
+            style={{
+              backgroundColor: homeTheme.controlBg,
+              color: homeTheme.controlInk,
+            }}
             aria-label="Close rendering gallery"
             onClick={closeRenderingLightbox}
           >
@@ -409,7 +414,11 @@ export default function RenderingPortfolio() {
           </button>
 
           <div
-            className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[1.5rem] bg-white py-[clamp(4.5rem,7vw,6rem)]"
+            className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[1.5rem] py-[clamp(4.5rem,7vw,6rem)]"
+            style={{
+              backgroundColor: homeTheme.bg,
+              color: homeTheme.ink,
+            }}
             onClick={(event) => event.stopPropagation()}
           >
             <div
@@ -436,8 +445,11 @@ export default function RenderingPortfolio() {
                 </div>
               ))}
             </div>
-            <div className="mt-5 w-full px-6 text-center text-[#111111]">
-              <p className="mx-auto max-w-[42rem] text-[0.95rem] font-medium leading-6 tracking-[-0.02em] text-black/62">
+            <div className="mt-5 w-full px-6 text-center">
+              <p
+                className="mx-auto max-w-[42rem] text-[0.95rem] font-medium leading-6 tracking-[-0.02em]"
+                style={{ color: homeTheme.muted }}
+              >
                 {selectedImage.caption || selectedItem.title}
               </p>
             </div>

@@ -54,21 +54,21 @@ export default function Accessibility() {
       >
         <div className="max-w-4xl">
           {sections.map((section) => (
-            <section key={section.title} className="border-t border-black/10 py-8 first:pt-0">
-              <h2 className="mb-4 font-sans text-[clamp(1.55rem,2.3vw,2.2rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
+            <section key={section.title} className="border-t border-border py-8 first:pt-0">
+              <h2 className="mb-4 font-display text-[clamp(2.35rem,4vw,3.8rem)] font-black uppercase leading-[0.88] tracking-[0] text-foreground">
                 {section.title}
               </h2>
               {section.body?.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="mt-3 max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68"
+                    className="mt-3 max-w-[46rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70"
                   >
                     {paragraph.includes("info@brandonptdavis.com") ? (
                       <>
                         If you encounter an accessibility issue, contact{" "}
                         <a
                           href="mailto:info@brandonptdavis.com"
-                          className="text-foreground underline decoration-black/20 underline-offset-4 hover:decoration-black/50"
+                          className="text-foreground underline decoration-current/30 underline-offset-4 hover:decoration-current"
                         >
                           info@brandonptdavis.com
                         </a>{" "}
@@ -80,11 +80,11 @@ export default function Accessibility() {
                   </p>
                 ))}
               {section.items ? (
-                <ul className="mt-4 space-y-3">
+                <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-foreground/35">
                   {section.items.map((item) => (
                     <li
                       key={item}
-                      className="max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68"
+                      className="max-w-[46rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70"
                     >
                       {item}
                     </li>

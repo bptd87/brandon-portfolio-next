@@ -109,10 +109,13 @@ export default function Sitemap() {
         intro="A current navigation map of the portfolio, profile, publishing, studio tool, and information pages."
         currentPath="/sitemap"
       >
-        <div className="grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {sections.map((section) => (
-            <section key={section.title} className="border-t border-black/10 pt-5">
-              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-black/42">
+            <section
+              key={section.title}
+              className="rounded-[1.75rem] border border-border bg-card p-6 shadow-[0_1rem_3rem_rgba(0,0,0,0.08)]"
+            >
+              <h2 className="mb-5 font-display text-[clamp(2.3rem,4vw,3.7rem)] font-black uppercase leading-[0.88] tracking-[0] text-foreground">
                 {section.title}
               </h2>
               <ul className="space-y-3">
@@ -121,14 +124,14 @@ export default function Sitemap() {
                     {section.title === "Feeds & XML Sitemaps" ? (
                       <a
                         href={link.href}
-                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-black/68 transition-colors hover:text-black"
+                        className="text-[1rem] font-semibold leading-[1.45] tracking-[-0.02em] text-foreground/70 transition-colors hover:text-foreground"
                       >
                         {link.name}
                       </a>
                     ) : (
                       <Link
                         href={link.href}
-                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-black/68 transition-colors hover:text-black"
+                        className="text-[1rem] font-semibold leading-[1.45] tracking-[-0.02em] text-foreground/70 transition-colors hover:text-foreground"
                       >
                         {link.name}
                       </Link>

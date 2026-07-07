@@ -38,9 +38,9 @@ export const recentExperientialPreview = {
   title: "First Bank Lollipops",
   href: "/projects/experiential/first-bank-lollipops",
   meta: "Experiential · Case Study",
-  imageAlt: "First Bank Lollipops experiential design by Brandon PT Davis",
+  imageAlt: "First Bank Lollipops campaign wall with oversized branded lollipops",
   imageUrl:
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771839325696-first_bank_lollipops-b3b5a475.png",
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/first-bank-lollipops/first-bank-lollipops-wall-924b9b8a78.jpeg",
 } as const;
 
 export const recentArticlePreview = {

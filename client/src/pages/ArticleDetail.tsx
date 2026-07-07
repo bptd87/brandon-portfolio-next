@@ -1295,7 +1295,7 @@ function ArticleDetailContent({
         className={
           isNarrativeArticle
             ? "article-editorial article-editorial-article overflow-hidden pb-16 md:pb-24"
-            : "article-editorial article-editorial-light article-editorial-learning overflow-hidden pb-16 md:pb-24"
+            : "article-editorial article-editorial-light article-editorial-learning overflow-visible pb-24 md:pb-32"
         }
       >
         {isNarrativeArticle ? (
@@ -1403,11 +1403,17 @@ function ArticleDetailContent({
             </div>
           </section>
         ) : isLearningPortalArticle ? (
-          <section className="px-5 pb-6 pt-16 sm:px-8 md:pt-24 lg:px-10">
+          <section
+            className="px-5 pb-10 pt-16 transition-colors duration-500 sm:px-8 md:pt-24 lg:px-10"
+            style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+          >
             <AnimatedSection>
-              <header className="mx-auto max-w-[48rem] text-left">
-                <div className="text-[1rem] font-medium leading-6 tracking-[-0.02em] text-[#6e6e73]">
-                  <p className="text-[0.92rem] tracking-[-0.02em] text-[#6e6e73]/82">
+              <header className="mx-auto max-w-[58rem] text-center">
+                <div
+                  className="text-[0.95rem] font-semibold leading-6 tracking-[0]"
+                  style={{ color: homeTheme.muted }}
+                >
+                  <p className="text-[0.82rem] font-black uppercase tracking-[0]">
                     Updated
                   </p>
                   <time
@@ -1418,24 +1424,42 @@ function ArticleDetailContent({
                   </time>
                 </div>
 
-                <h1 className="mt-8 max-w-[14ch] text-balance font-sans text-[clamp(2.7rem,5.2vw,5.2rem)] font-semibold leading-[0.98] tracking-[-0.058em] text-[#1d1d1f]">
+                <h1
+                  className="mx-auto mt-8 max-w-[12ch] text-balance text-[clamp(3rem,7.6vw,7.8rem)] font-black uppercase leading-[0.86] tracking-[0]"
+                  style={{
+                    color: homeTheme.ink,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
+                >
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
                 {article.excerpt && (
-                  <p className="mt-7 max-w-[43rem] text-balance text-[clamp(1.18rem,1.85vw,1.56rem)] font-medium leading-[1.28] tracking-[-0.034em] text-[#35312c]">
+                  <p
+                    className="mx-auto mt-7 max-w-[48rem] text-balance text-[clamp(1.1rem,1.75vw,1.48rem)] font-semibold leading-[1.28] tracking-[0]"
+                    style={{ color: homeTheme.muted }}
+                  >
                     {decodeHTMLEntities(article.excerpt)}
                   </p>
                 )}
 
-                <div className="mt-10 flex flex-wrap items-center gap-3 text-[#6e6e73]">
+                <div
+                  className="mt-10 flex flex-wrap items-center justify-center gap-3"
+                  style={{ color: homeTheme.ink }}
+                >
                   <button
                     type="button"
                     onClick={handleShare}
                     aria-label={
                       linkCopied ? "Article link copied" : "Copy article link"
                     }
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-black"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
+                    style={{
+                      backgroundColor: homeTheme.accentSoft,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.ink,
+                    }}
                   >
                     {linkCopied ? (
                       <Check className="h-4 w-4" />
@@ -1446,7 +1470,12 @@ function ArticleDetailContent({
                   <a
                     href={emailShareUrl}
                     aria-label="Share article by email"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-black"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border no-underline transition-opacity hover:opacity-75"
+                    style={{
+                      backgroundColor: homeTheme.accentSoft,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.ink,
+                    }}
                   >
                     <Mail className="h-4 w-4" />
                   </a>
@@ -1455,7 +1484,12 @@ function ArticleDetailContent({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Share article on LinkedIn"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-black"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border no-underline transition-opacity hover:opacity-75"
+                    style={{
+                      backgroundColor: homeTheme.accentSoft,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.ink,
+                    }}
                   >
                     <Linkedin className="h-4 w-4" />
                   </a>
@@ -1464,7 +1498,12 @@ function ArticleDetailContent({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Share article on Facebook"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-black"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border text-[1rem] font-black leading-none no-underline transition-opacity hover:opacity-75"
+                    style={{
+                      backgroundColor: homeTheme.accentSoft,
+                      borderColor: homeTheme.ghost,
+                      color: homeTheme.ink,
+                    }}
                   >
                     f
                   </a>
@@ -1477,8 +1516,12 @@ function ArticleDetailContent({
                 <button
                   type="button"
                   aria-label="Open tutorial article image"
-                  className="group relative mx-auto mt-16 block aspect-video w-full max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-[#e5e3dc] shadow-[0_24px_70px_rgba(29,29,31,0.08)]"
+                  className="group relative mx-auto mt-16 block aspect-video w-full max-w-[76rem] overflow-hidden rounded-[1.75rem] border shadow-[0_1.5rem_5rem_rgba(0,0,0,0.14)]"
                   onClick={() => openArticleLightboxAt("cover")}
+                  style={{
+                    backgroundColor: homeTheme.accentSoft,
+                    borderColor: homeTheme.ghost,
+                  }}
                 >
                   <Image
                     src={article.coverImageUrl}
@@ -1503,7 +1546,14 @@ function ArticleDetailContent({
                   Tutorial
                 </div>
 
-                <h1 className="mx-auto max-w-[15ch] text-balance font-sans text-[clamp(2.45rem,5.1vw,5.35rem)] font-semibold leading-[0.94] tracking-[-0.074em] text-[#111111]">
+                <h1
+                  className="mx-auto max-w-[15ch] text-balance text-[clamp(2.45rem,5.1vw,5.35rem)] font-black uppercase leading-[0.9] tracking-[0]"
+                  style={{
+                    color: homeTheme.ink,
+                    fontFamily: HOME_DISPLAY_FONT,
+                    fontStretch: "condensed",
+                  }}
+                >
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
@@ -1661,7 +1711,7 @@ function ArticleDetailContent({
         ) : null}
 
         <div
-          className={`mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8 ${isLearningPortalArticle ? "mt-14" : ""}`}
+          className={`mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8 ${isLearningPortalArticle ? "mt-14 pb-10 md:pb-16" : ""}`}
         >
           <AnimatedSection delay={120} className="mx-auto max-w-[44rem]">
             <div>
@@ -1669,14 +1719,14 @@ function ArticleDetailContent({
                 <div className="relative">
                   <style>{`
                   .article-content-${article.id} ul li::marker {
-                    color: rgba(255,255,255,0.55);
+                    color: var(--article-copy-muted);
                   }
                   .article-content-${article.id} ol li::marker {
-                    color: rgba(255,255,255,0.55);
+                    color: var(--article-copy-muted);
                   }
                   .article-content-${article.id} strong {
-                    color: rgba(255,255,255,0.96);
-                    font-weight: 700;
+                    color: var(--article-copy-strong);
+                    font-weight: 800;
                   }
                 `}</style>
 
@@ -1750,11 +1800,11 @@ function ArticleDetailContent({
                                     isGhibliShowcaseHeading
                                       ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-white"
                                       : isLearningPortalArticle && level === 2
-                                        ? "mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
+                                        ? "mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[0] text-[color:var(--article-ink)]"
                                         : isLearningPortalArticle && level === 3
-                                          ? "mt-12 mb-4 font-sans text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-[#24211f]"
+                                          ? "mt-12 mb-4 font-sans text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.1] tracking-[0] text-[color:var(--article-ink)]"
                                           : isLearningPortalArticle
-                                            ? "mt-9 mb-3 font-sans text-[1.08rem] font-medium leading-[1.28] tracking-[-0.025em] text-[#3d3832]"
+                                            ? "mt-9 mb-3 font-sans text-[1.08rem] font-medium leading-[1.28] tracking-[0] text-[color:var(--article-muted)]"
                                             : level === 2
                                               ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-white"
                                               : level === 3
@@ -1787,7 +1837,7 @@ function ArticleDetailContent({
                                           <h2
                                             key={index}
                                             id={headingId}
-                                            className="article-learning-numbered-heading mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-[#1d1d1f]"
+                                            className="article-learning-numbered-heading mt-20 mb-6 font-sans text-[clamp(1.95rem,2.55vw,2.75rem)] font-semibold leading-[1.04] tracking-[0] text-[color:var(--article-ink)]"
                                           >
                                             {headingText}
                                           </h2>
@@ -1801,13 +1851,13 @@ function ArticleDetailContent({
                                         >
                                           <div className="flex items-end gap-4 md:gap-5">
                                             <span
-                                              className={`shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] ${isLearningPortalArticle ? "text-black/24" : "text-white/34"}`}
+                                              className={`shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[0] ${isLearningPortalArticle ? "text-[color:var(--article-ghost)]" : "text-white/34"}`}
                                             >
                                               {numberedHeadingMatch[1]}
                                             </span>
                                             <h3
                                               id={headingId}
-                                              className={`font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isLearningPortalArticle ? "text-[#1d1d1f]" : "text-white"}`}
+                                              className={`font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.98] tracking-[0] ${isLearningPortalArticle ? "text-[color:var(--article-ink)]" : "text-white"}`}
                                             >
                                               {numberedHeadingMatch[2]}
                                             </h3>
@@ -1851,7 +1901,7 @@ function ArticleDetailContent({
                                   return (
                                     <p
                                       key={index}
-                                      className={isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[-0.015em] text-[#38342f] [&_a]:text-[#111111] [&_a]:underline [&_a]:decoration-black/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-black/62 [&_strong]:font-semibold [&_strong]:text-[#111111]" : "mb-7 text-[1.07rem] leading-[1.78] tracking-[0] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"}
+                                      className={isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[0] text-[color:var(--article-copy)] [&_a]:text-[color:var(--article-ink)] [&_a]:underline [&_a]:underline-offset-4 [&_strong]:font-bold [&_strong]:text-[color:var(--article-ink)]" : "mb-7 text-[1.07rem] leading-[1.78] tracking-[0] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"}
                                       dangerouslySetInnerHTML={{
                                         __html: decodeHTMLEntities(
                                           section.text || section.content || ""
@@ -2977,23 +3027,23 @@ function ArticleDetailContent({
         .article-editorial-light .article-content p,
         .article-editorial-light .article-content li,
         .article-editorial-light .article-content figcaption {
-          color: rgba(17, 17, 17, 0.72) !important;
+          color: var(--article-copy) !important;
         }
 
         .article-editorial-light .article-content h2,
         .article-editorial-light .article-content h3,
         .article-editorial-light .article-content h4,
         .article-editorial-light .article-content strong {
-          color: #111111 !important;
+          color: var(--article-copy-strong) !important;
         }
 
         .article-editorial-light .article-content a {
-          color: #111111 !important;
-          text-decoration-color: rgba(17, 17, 17, 0.32) !important;
+          color: var(--article-copy-strong) !important;
+          text-decoration-color: var(--article-copy-muted) !important;
         }
 
         .article-editorial-light .article-content p::first-letter {
-          color: #111111 !important;
+          color: var(--article-copy-strong) !important;
         }
 
         .article-editorial-learning .article-content {
@@ -3003,69 +3053,69 @@ function ArticleDetailContent({
         .article-editorial-learning .article-content h2 {
           margin-top: 5rem !important;
           margin-bottom: 1.5rem !important;
-          color: #1d1d1f !important;
+          color: var(--article-ink) !important;
           font-size: clamp(1.5rem, 2.15vw, 1.95rem) !important;
           font-weight: 650 !important;
           line-height: 1.04 !important;
-          letter-spacing: -0.045em !important;
+          letter-spacing: 0 !important;
           text-wrap: balance;
         }
 
         .article-editorial-learning .article-content h3 {
           margin-top: 3rem !important;
           margin-bottom: 1rem !important;
-          color: #24211f !important;
+          color: var(--article-ink) !important;
           font-size: clamp(1.35rem, 1.75vw, 1.7rem) !important;
           font-weight: 620 !important;
           line-height: 1.1 !important;
-          letter-spacing: -0.035em !important;
+          letter-spacing: 0 !important;
           text-wrap: balance;
         }
 
         .article-editorial-learning .article-content .article-learning-numbered-heading {
           margin-top: 5rem !important;
           margin-bottom: 1.5rem !important;
-          color: #1d1d1f !important;
+          color: var(--article-ink) !important;
           font-size: clamp(1.5rem, 2.15vw, 1.95rem) !important;
           font-weight: 650 !important;
           line-height: 1.04 !important;
-          letter-spacing: -0.045em !important;
+          letter-spacing: 0 !important;
           text-wrap: balance;
         }
 
         .article-editorial-learning .article-content h4 {
           margin-top: 2.25rem !important;
           margin-bottom: 0.75rem !important;
-          color: rgba(17, 17, 17, 0.72) !important;
+          color: var(--article-muted) !important;
           font-size: 1.08rem !important;
           font-weight: 540 !important;
           line-height: 1.28 !important;
-          letter-spacing: -0.025em !important;
+          letter-spacing: 0 !important;
           text-transform: none !important;
         }
 
         .article-editorial-learning .article-content p,
         .article-editorial-learning .article-content li {
-          color: rgba(17, 17, 17, 0.74) !important;
+          color: var(--article-copy) !important;
           font-size: 1.06rem !important;
           font-weight: 400 !important;
           line-height: 1.82 !important;
-          letter-spacing: -0.015em !important;
+          letter-spacing: 0 !important;
         }
 
         .article-editorial-learning .article-content blockquote p {
-          color: #111111 !important;
+          color: var(--article-ink) !important;
           font-size: clamp(1.28rem, 1.85vw, 1.72rem) !important;
           font-weight: 560 !important;
           line-height: 1.22 !important;
-          letter-spacing: -0.04em !important;
+          letter-spacing: 0 !important;
         }
 
         .article-editorial-learning .article-content figcaption {
-          color: rgba(17, 17, 17, 0.58) !important;
+          color: var(--article-muted) !important;
           font-size: 0.92rem !important;
           line-height: 1.55 !important;
-          letter-spacing: -0.01em !important;
+          letter-spacing: 0 !important;
         }
 
         .article-editorial-learning .article-content p::first-letter {
@@ -3079,7 +3129,7 @@ function ArticleDetailContent({
 
         .article-editorial-learning .uppercase {
           text-transform: none !important;
-          letter-spacing: -0.018em !important;
+          letter-spacing: 0 !important;
         }
 
         .article-editorial .article-content ul,

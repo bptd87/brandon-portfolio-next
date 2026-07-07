@@ -20,6 +20,33 @@ import type { LocalScenicProject } from "@shared/localScenicProjects";
 const ABOUT_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 
+const SITE_CARD_COLORS = {
+  blue: {
+    background: "#1385f6",
+    text: "#a8f4ff",
+    accent: "#052f8b",
+    muted: "rgba(5,47,139,0.78)",
+  },
+  green: {
+    background: "#35ad62",
+    text: "#baff00",
+    accent: "#003f1c",
+    muted: "rgba(0,63,28,0.76)",
+  },
+  orange: {
+    background: "#ff6f00",
+    text: "#20180f",
+    accent: "#e9e1cf",
+    muted: "rgba(32,24,15,0.72)",
+  },
+  purple: {
+    background: "#3f0050",
+    text: "#ffe3ff",
+    accent: "#dc30ff",
+    muted: "rgba(220,48,255,0.78)",
+  },
+};
+
 type NavigationProps = {
   initialProjects: LocalScenicProject[];
 };
@@ -62,9 +89,9 @@ const featuredArticleLinks: NavigationFeatureItem[] = [
     label: "Scenic Design",
     image:
       "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp",
-    color: "#496784",
-    textColor: "#f7f7f2",
-    mutedColor: "rgba(247,247,242,0.74)",
+    color: SITE_CARD_COLORS.blue.background,
+    textColor: SITE_CARD_COLORS.blue.text,
+    mutedColor: SITE_CARD_COLORS.blue.accent,
     description:
       "A clear guide to the scenic designer's role, process, and relationship to the full production team.",
   },
@@ -73,9 +100,9 @@ const featuredArticleLinks: NavigationFeatureItem[] = [
     href: "/articles/what-theatre-designers-get-paid",
     label: "Career Development",
     image: "/images/articles/what-theatre-designers-get-paid/hero.png",
-    color: "#b2633f",
-    textColor: "#fff8e7",
-    mutedColor: "rgba(255,248,231,0.72)",
+    color: SITE_CARD_COLORS.purple.background,
+    textColor: SITE_CARD_COLORS.purple.text,
+    mutedColor: SITE_CARD_COLORS.purple.accent,
     description:
       "A practical article about value, labor, sustainability, and the financial reality of theatre design.",
   },
@@ -84,9 +111,9 @@ const featuredArticleLinks: NavigationFeatureItem[] = [
     href: "/articles/understanding-design-layers",
     label: "Vectorworks Tutorial",
     image: "https://img.youtube.com/vi/CXBfG2L3ZmI/maxresdefault.jpg",
-    color: "#62764c",
-    textColor: "#fff8e7",
-    mutedColor: "rgba(255,248,231,0.72)",
+    color: SITE_CARD_COLORS.green.background,
+    textColor: SITE_CARD_COLORS.green.accent,
+    mutedColor: SITE_CARD_COLORS.green.muted,
     description:
       "A beginner-friendly tutorial for keeping drafting files readable, organized, and useful.",
   },
@@ -217,27 +244,27 @@ function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
       href: "/projects",
       image: portfolioImage,
       items: ["Scenic", "Experiential", "Rendering", "Photography"],
-      background: "#496784",
-      text: "#f7f7f2",
-      accent: "#b9d8ef",
+      background: SITE_CARD_COLORS.blue.background,
+      text: SITE_CARD_COLORS.blue.text,
+      accent: SITE_CARD_COLORS.blue.accent,
     },
     {
       label: "ABOUT",
       href: "/about",
       image: ABOUT_IMAGE_URL,
       items: ["Resume", "Creative Statement", "Teaching"],
-      background: "#b2633f",
-      text: "#fff8e7",
-      accent: "#efbd9b",
+      background: SITE_CARD_COLORS.purple.background,
+      text: SITE_CARD_COLORS.purple.text,
+      accent: SITE_CARD_COLORS.purple.accent,
     },
     {
       label: "STUDIO",
       href: "/studio",
       image: "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
       items: ["Articles", "Tutorials", "Apps"],
-      background: "#62764c",
-      text: "#fff8e7",
-      accent: "#c8dca8",
+      background: SITE_CARD_COLORS.green.background,
+      text: SITE_CARD_COLORS.green.text,
+      accent: SITE_CARD_COLORS.green.accent,
     },
     {
       label: "INSTAGRAM",
@@ -246,9 +273,9 @@ function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
       items: [],
       note: "@brandonptdavisdesign",
       external: true,
-      background: "#ff6f00",
-      text: "#20180f",
-      accent: "#ffe0bf",
+      background: SITE_CARD_COLORS.orange.background,
+      text: SITE_CARD_COLORS.orange.text,
+      accent: SITE_CARD_COLORS.orange.accent,
     },
   ];
 }

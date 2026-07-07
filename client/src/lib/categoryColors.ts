@@ -13,56 +13,56 @@ export interface CategoryColor {
 
 export const categoryColors: Record<string, CategoryColor> = {
   'Profiles & Interviews': {
-    badge: 'bg-orange-500/90 backdrop-blur-sm',
-    text: 'text-orange-500',
-    hover: 'hover:bg-orange-500/20 hover:border-orange-500',
-    rgb: '249, 115, 22',
-    hex: '#F97316',
+    badge: 'bg-[#e9e1cf]/90 backdrop-blur-sm',
+    text: 'text-[#ff6f00]',
+    hover: 'hover:bg-[#ff6f00]/20 hover:border-[#ff6f00]',
+    rgb: '255, 111, 0',
+    hex: '#FF6F00',
   },
   'Scenic Design': {
-    badge: 'bg-purple-500/90 backdrop-blur-sm',
-    text: 'text-purple-500',
-    hover: 'hover:bg-purple-500/20 hover:border-purple-500',
-    rgb: '168, 85, 247', // Purple
-    hex: '#A855F7',
+    badge: 'bg-[#1385f6]/90 backdrop-blur-sm',
+    text: 'text-[#1385f6]',
+    hover: 'hover:bg-[#1385f6]/20 hover:border-[#1385f6]',
+    rgb: '19, 133, 246',
+    hex: '#1385F6',
   },
   'Performance History & Culture': {
-    badge: 'bg-rose-500/90 backdrop-blur-sm',
-    text: 'text-rose-500',
-    hover: 'hover:bg-rose-500/20 hover:border-rose-500',
-    rgb: '244, 63, 94', // Rose
-    hex: '#F43F5E',
+    badge: 'bg-[#ff6f00]/90 backdrop-blur-sm',
+    text: 'text-[#ff6f00]',
+    hover: 'hover:bg-[#ff6f00]/20 hover:border-[#ff6f00]',
+    rgb: '255, 111, 0',
+    hex: '#FF6F00',
   },
   'Design Process': {
-    badge: 'bg-yellow-500/90 backdrop-blur-sm',
-    text: 'text-yellow-500',
-    hover: 'hover:bg-yellow-500/20 hover:border-yellow-500',
-    rgb: '234, 179, 8', // Yellow
-    hex: '#EAB308',
+    badge: 'bg-[#3f0050]/90 backdrop-blur-sm',
+    text: 'text-[#dc30ff]',
+    hover: 'hover:bg-[#dc30ff]/20 hover:border-[#dc30ff]',
+    rgb: '220, 48, 255',
+    hex: '#DC30FF',
   },
   'Tools & Technology': {
-    badge: 'bg-cyan-500/90 backdrop-blur-sm',
-    text: 'text-cyan-500',
-    hover: 'hover:bg-cyan-500/20 hover:border-cyan-500',
-    rgb: '6, 182, 212', // Cyan
-    hex: '#06B6D4',
+    badge: 'bg-[#35ad62]/90 backdrop-blur-sm',
+    text: 'text-[#35ad62]',
+    hover: 'hover:bg-[#35ad62]/20 hover:border-[#35ad62]',
+    rgb: '53, 173, 98',
+    hex: '#35AD62',
   },
   'Themed Entertainment': {
-    badge: 'bg-emerald-500/90 backdrop-blur-sm',
-    text: 'text-emerald-500',
-    hover: 'hover:bg-emerald-500/20 hover:border-emerald-500',
-    rgb: '16, 185, 129', // Emerald
-    hex: '#10B981',
+    badge: 'bg-[#ff6f00]/90 backdrop-blur-sm',
+    text: 'text-[#ff6f00]',
+    hover: 'hover:bg-[#ff6f00]/20 hover:border-[#ff6f00]',
+    rgb: '255, 111, 0',
+    hex: '#FF6F00',
   },
 };
 
 // Default color for uncategorized articles
 export const defaultCategoryColor: CategoryColor = {
-  badge: 'bg-slate-500/90 backdrop-blur-sm',
-  text: 'text-slate-400',
-  hover: 'hover:bg-slate-500/20 hover:border-slate-500',
-  rgb: '100, 116, 139', // Slate
-  hex: '#64748B',
+  badge: 'bg-[#ff6f00]/90 backdrop-blur-sm',
+  text: 'text-[#ff6f00]',
+  hover: 'hover:bg-[#ff6f00]/20 hover:border-[#ff6f00]',
+  rgb: '255, 111, 0',
+  hex: '#FF6F00',
 };
 
 /**

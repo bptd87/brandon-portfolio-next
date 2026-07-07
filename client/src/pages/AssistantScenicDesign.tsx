@@ -1,20 +1,25 @@
 "use client";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
-import { useState } from "react";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
+import type { CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   ASSISTANT_SCENIC_DESIGN_PATH,
   ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
   ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
   assistantScenicDesignEntries,
 } from "@shared/localAssistantScenic";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { Link } from "wouter";
 
 const HIGHLIGHT_SLUGS = [
@@ -60,18 +65,12 @@ function buildEntryMap() {
   return map;
 }
 
-const GALLERY_FRAMES = [
-  { aspect: "aspect-[4/3]", spacing: "mb-[clamp(1.75rem,4vw,4rem)]" },
-  { aspect: "aspect-[16/10]", spacing: "mb-[clamp(1.75rem,3vw,3rem)]" },
-  { aspect: "aspect-[3/4]", spacing: "mb-[clamp(2rem,5vw,5rem)]" },
-  { aspect: "aspect-[1/1]", spacing: "mb-[clamp(1.75rem,3.5vw,3.8rem)]" },
-  { aspect: "aspect-[5/7]", spacing: "mb-[clamp(2rem,4.5vw,4.5rem)]" },
-  { aspect: "aspect-[16/9]", spacing: "mb-[clamp(1.75rem,3vw,3rem)]" },
-] as const;
-
 export default function AssistantScenicDesign() {
+  const { homeTheme } = useHomeTheme();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const lightboxScrollRef = useRef<HTMLDivElement | null>(null);
   const entryBySlug = buildEntryMap();
+  useHomeDocumentTheme(homeTheme);
 
   const highlightEntries = HIGHLIGHT_SLUGS.map(slug =>
     entryBySlug.get(slug)
@@ -100,6 +99,48 @@ export default function AssistantScenicDesign() {
     altText: entry.coverImageAlt,
     caption: `${entry.title} at ${entry.organization}. Scenic Design by ${entry.collaborator}. ${formatDate(entry.date)}.`,
   }));
+  const selectedLightboxImage = lightboxIndex === null ? null : lightboxImages[lightboxIndex] || null;
+
+  useEffect(() => {
+    if (!selectedLightboxImage) return;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [selectedLightboxImage]);
+
+  useEffect(() => {
+    if (!selectedLightboxImage) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightboxIndex(null);
+      if (event.key === "ArrowRight") {
+        setLightboxIndex(current =>
+          current === null ? 0 : Math.min(current + 1, lightboxImages.length - 1)
+        );
+      }
+      if (event.key === "ArrowLeft") {
+        setLightboxIndex(current =>
+          current === null ? 0 : Math.max(current - 1, 0)
+        );
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxImages.length, selectedLightboxImage]);
+
+  useLayoutEffect(() => {
+    if (lightboxIndex === null) return;
+    const selectedImage = lightboxScrollRef.current?.querySelector<HTMLElement>(
+      `[data-lightbox-index="${lightboxIndex}"]`
+    );
+    selectedImage?.scrollIntoView({ behavior: "auto", block: "nearest", inline: "center" });
+  }, [lightboxIndex]);
+
   const assistantScenicUpdatedDate = assistantScenicDesignEntries.reduce(
     (latest, entry) => {
       return entry.date > latest ? entry.date : latest;
@@ -120,7 +161,16 @@ export default function AssistantScenicDesign() {
     )
   );
   return (
-    <div className="min-h-screen bg-white text-[#111111]">
+    <div
+      className="min-h-screen [--border:rgba(17,17,17,0.14)]"
+      style={{
+        "--background": homeTheme.bg,
+        "--foreground": homeTheme.ink,
+        backgroundColor: homeTheme.bg,
+        color: homeTheme.ink,
+        fontFamily: HOME_BODY_FONT,
+      } as CSSProperties}
+    >
       <SEO
         title={ASSISTANT_SCENIC_DESIGN_SEO_TITLE}
         description={ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION}
@@ -194,62 +244,80 @@ export default function AssistantScenicDesign() {
       <main>
         <section
           id="assistant-credits"
-          className="scroll-mt-24 bg-white px-[clamp(1rem,3vw,2.8rem)] pb-[clamp(3rem,7vw,6rem)] pt-[clamp(1rem,2.4vw,1.8rem)] text-black"
+          className="scroll-mt-24 px-[clamp(1.5rem,7vw,8rem)] pb-[clamp(4rem,8vw,7rem)] pt-[clamp(8rem,12vw,11rem)]"
         >
-          <div className="mx-auto w-full max-w-[1500px]">
-            <AnimatedSection className="mb-[clamp(1.8rem,4vw,4.5rem)]">
-              <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-                <div className="max-w-[42rem]">
-                  <h1 className="font-sans text-[clamp(2.1rem,4.4vw,4.9rem)] font-medium leading-[0.9] tracking-[-0.078em] text-[#111111]">
+          <div className="mx-auto w-full max-w-[64rem]">
+            <AnimatedSection className="mb-[clamp(2.75rem,6vw,5rem)] text-center">
+              <div>
+                <div className="mx-auto max-w-[42rem]">
+                  <h1
+                    className="mx-auto max-w-[11ch] text-balance text-[clamp(3.1rem,7vw,6.8rem)] font-black uppercase leading-[0.84] tracking-[0]"
+                    style={{
+                      color: homeTheme.ink,
+                      fontFamily: HOME_DISPLAY_FONT,
+                      fontStretch: "condensed",
+                    }}
+                  >
                     Assistant Scenic Design
                   </h1>
-                  <p className="mt-4 max-w-[34rem] text-[0.98rem] leading-6 tracking-[-0.018em] text-black/52">
-                    Production images from assistant scenic design collaborations.
-                    Select an image for the production title, venue, designer, and year.
+                  <p
+                    className="mx-auto mt-5 max-w-[31rem] text-[clamp(0.98rem,1.2vw,1.12rem)] font-medium leading-7 tracking-[-0.02em]"
+                    style={{ color: homeTheme.muted }}
+                  >
+                    Selected assistant scenic design collaborations with
+                    production images, venues, scenic designers, and seasons.
                   </p>
                 </div>
-                <div>
+                <div className="mt-8 flex justify-center">
                   <Link
                     href="/resume"
-                    className="inline-flex h-10 w-fit items-center gap-2 border border-black/14 px-4 text-[0.9rem] font-medium tracking-[-0.02em] text-black/72 transition-colors hover:border-black/28 hover:bg-black/[0.035] hover:text-black"
+                    className="inline-flex h-11 w-fit items-center gap-2 rounded-full px-5 text-[0.9rem] font-bold uppercase tracking-[0.04em] shadow-[0_1rem_2.5rem_rgba(0,0,0,0.12)] transition hover:scale-[1.02]"
+                    style={{
+                      backgroundColor: homeTheme.controlBg,
+                      color: homeTheme.controlInk,
+                    }}
                   >
                     <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                    Back to resume
+                    Resume
                   </Link>
                 </div>
               </div>
             </AnimatedSection>
 
             <AnimatedSection>
-              <div className="columns-2 gap-[clamp(0.8rem,2.6vw,3rem)] md:columns-2 lg:columns-3">
+              <div className="grid grid-cols-1 gap-[clamp(2.25rem,5vw,4.25rem)] px-[clamp(1rem,3vw,2rem)] sm:grid-cols-2 lg:grid-cols-3">
                 {portfolioEntries.map((entry, index) => {
-                  const frame = GALLERY_FRAMES[index % GALLERY_FRAMES.length];
-
                   return (
                     <figure
                       key={entry.anchorId}
                       id={entry.anchorId}
-                      className={`break-inside-avoid scroll-mt-28 ${frame.spacing}`}
+                      className="group scroll-mt-28"
                     >
                       <button
                         type="button"
                         onClick={() => setLightboxIndex(index)}
-                        className={`group relative block w-full overflow-hidden bg-white text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white ${frame.aspect}`}
+                        className="portfolio-focus-card relative block aspect-square w-full overflow-hidden rounded-[0.85rem] bg-neutral-100 text-left shadow-[0_1rem_2.4rem_rgba(0,0,0,0.12)] ring-1 ring-black/5 focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/70"
                         aria-label={`Open ${entry.title} image`}
                       >
                         <img
                           src={entry.coverImageUrl}
                           alt={entry.coverImageAlt}
-                          className="h-full w-full object-cover transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-hover:brightness-[0.72]"
+                          className="portfolio-focus-media h-full w-full object-cover transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-hover:brightness-[0.72]"
                           loading={index < 3 ? "eager" : "lazy"}
                           decoding={index < 3 ? "sync" : "async"}
                         />
-                        <div className="pointer-events-none absolute inset-0 hidden items-end bg-black/0 p-5 opacity-0 transition-[background-color,opacity] duration-500 group-hover:bg-black/24 group-hover:opacity-100 md:flex">
-                          <div className="translate-y-3 opacity-0 transition-[opacity,transform] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                            <p className="font-sans text-[clamp(1.25rem,1.7vw,1.9rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white">
+                        <div className="pointer-events-none absolute inset-0 flex items-end bg-black/18 p-5 opacity-100 transition-[background-color,opacity] duration-500 md:opacity-0 md:group-hover:bg-black/30 md:group-hover:opacity-100">
+                          <div className="translate-y-0 opacity-100 transition-[opacity,transform] duration-500 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                            <p
+                              className="text-[clamp(1.4rem,2vw,2.4rem)] font-black uppercase leading-[0.9] tracking-[0] text-white"
+                              style={{
+                                fontFamily: HOME_DISPLAY_FONT,
+                                fontStretch: "condensed",
+                              }}
+                            >
                               {entry.title}
                             </p>
-                            <p className="mt-2 max-w-[18rem] text-[0.82rem] font-medium leading-tight tracking-[-0.018em] text-white/74">
+                            <p className="mt-2 max-w-[18rem] text-[0.82rem] font-bold uppercase leading-tight tracking-[0.04em] text-white/78">
                               {entry.organization} / {formatDate(entry.date)}
                             </p>
                           </div>
@@ -268,25 +336,73 @@ export default function AssistantScenicDesign() {
         </section>
       </main>
 
-      {lightboxIndex !== null ? (
-        <Lightbox
-          images={lightboxImages}
-          currentIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onNext={() =>
-            setLightboxIndex(current =>
-              current === null ? 0 : Math.min(current + 1, lightboxImages.length - 1)
-            )
-          }
-          onPrev={() =>
-            setLightboxIndex(current =>
-              current === null ? 0 : Math.max(current - 1, 0)
-            )
-          }
-        />
+      {selectedLightboxImage ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-[clamp(0.75rem,2vw,1.5rem)] backdrop-blur-sm"
+          style={{
+            backgroundColor: `color-mix(in srgb, ${homeTheme.ink} 42%, transparent)`,
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Assistant scenic design gallery"
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-[clamp(1rem,2.6vw,2rem)] top-[clamp(1rem,2.6vw,2rem)] z-[102] inline-flex h-11 w-11 items-center justify-center rounded-full text-[1.45rem] font-normal leading-none shadow-[0_1rem_2.5rem_rgba(0,0,0,0.18)] transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            style={{
+              backgroundColor: homeTheme.controlBg,
+              color: homeTheme.controlInk,
+            }}
+            onClick={() => setLightboxIndex(null)}
+            aria-label="Close assistant scenic design gallery"
+          >
+            <X className="h-5 w-5" aria-hidden="true" strokeWidth={2.4} />
+          </button>
+          <div
+            className="relative h-full w-full overflow-hidden rounded-[1.65rem] shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
+            style={{ backgroundColor: homeTheme.bg }}
+            onClick={event => event.stopPropagation()}
+          >
+            <div
+              ref={lightboxScrollRef}
+              className="flex h-full snap-x snap-mandatory items-center gap-[clamp(1.25rem,4vw,4rem)] overflow-x-auto overflow-y-hidden px-[clamp(1.5rem,7vw,8rem)] py-[clamp(3.5rem,7vh,6rem)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {lightboxImages.map((item, index) => (
+                <figure
+                  key={`${item.imageUrl}-${index}`}
+                  data-lightbox-index={index}
+                  className="flex h-full min-w-[min(82vw,46rem)] snap-center flex-col items-center justify-center"
+                >
+                  <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+                    <img
+                      src={item.imageUrl}
+                      alt={
+                        item.altText ||
+                        item.caption ||
+                        "Assistant scenic design image"
+                      }
+                      className="max-h-full w-auto max-w-full rounded-[1.1rem] object-contain shadow-[0_1rem_3rem_rgba(0,0,0,0.18)]"
+                      draggable={false}
+                    />
+                  </div>
+                  {item.caption || item.altText ? (
+                    <figcaption
+                      className="mt-4 max-w-[38rem] text-center text-[0.82rem] font-medium leading-snug tracking-[-0.015em]"
+                      style={{
+                        color: homeTheme.ink,
+                        fontFamily: HOME_BODY_FONT,
+                      }}
+                    >
+                      {item.caption || item.altText}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : null}
-
-      <Footer tone="light" />
     </div>
   );
 }
