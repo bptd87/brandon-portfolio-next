@@ -5,6 +5,7 @@ import { ArrowLeft, Camera, Check, Copy, Palette, Sliders, X } from "lucide-reac
 import { Link } from "wouter";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
+import { useStudioToolTheme } from "@/hooks/useStudioToolTheme";
 
 interface RoscoPaint {
   id: string;
@@ -281,6 +282,10 @@ function calculateRecipe(targetHex: string, paintSet: RoscoPaint[] = ROSCO_PAINT
 }
 
 export default function RoscoPaintCalculator() {
+  const { studioToolStyle } = useStudioToolTheme({
+    accent: "#dc30ff",
+    accentInk: "#ffe3ff",
+  });
   const photoInputRef = useRef<HTMLInputElement | null>(null);
   const [targetColor, setTargetColor] = useState("#8B4789");
   const [result, setResult] = useState<RecipeResult | null>(null);
@@ -419,7 +424,10 @@ export default function RoscoPaintCalculator() {
     mixTextColor === "#000000" ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.22)";
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
+    <div
+      className="studio-tool-page h-[100dvh] overflow-hidden bg-[#f3eee4] text-black"
+      style={studioToolStyle}
+    >
       <SEO title="Rosco Paint Calculator" description="Professional scenic paint calculator and Rosco color mixing tool." />
 
       <main className="studio-app-main box-border h-full overflow-hidden px-3 pb-3 pt-[calc(env(safe-area-inset-top)+0.55rem)] sm:px-4 md:px-5">
@@ -427,7 +435,7 @@ export default function RoscoPaintCalculator() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f1bd84] text-[#55301b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(77,49,36,0.22)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--studio-tool-control-bg)] text-[var(--studio-tool-control-ink)] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(0,0,0,0.18)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -466,7 +474,7 @@ export default function RoscoPaintCalculator() {
                   <button
                     type="button"
                     onClick={() => setPanelOpen("directions")}
-                    className="h-8 border border-[#31484d] bg-[#3f5d62] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-white shadow-none"
+                    className="h-8 border border-[var(--studio-tool-border)] bg-[var(--studio-tool-accent)] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-[var(--studio-tool-accent-ink)] shadow-none"
                   >
                     Directions
                   </button>
@@ -565,7 +573,7 @@ export default function RoscoPaintCalculator() {
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck={false}
-                  className="h-12 rounded-[0.18rem] border border-black/10 bg-[#ece5d7] px-4 text-center font-mono text-[1.25rem] font-semibold uppercase tracking-normal text-black placeholder:text-black/22 focus:outline-none focus:ring-2 focus:ring-[#3f5d62]/70"
+                  className="h-12 rounded-[0.18rem] border border-black/10 bg-[#ece5d7] px-4 text-center font-mono text-[1.25rem] font-semibold uppercase tracking-normal text-black placeholder:text-black/22 focus:outline-none focus:ring-2 focus:ring-[var(--studio-tool-accent)]"
                   placeholder="#000000"
                   aria-label="Target color hex"
                 />
@@ -581,7 +589,7 @@ export default function RoscoPaintCalculator() {
                 <button
                   type="button"
                   onClick={openPhotoPicker}
-                  className="flex h-12 items-center justify-center rounded-[0.18rem] bg-[#f1bd84] text-[#55301b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)] transition-opacity hover:opacity-88"
+                  className="flex h-12 items-center justify-center rounded-[0.18rem] bg-[var(--studio-tool-accent)] text-[var(--studio-tool-accent-ink)] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)] transition-opacity hover:opacity-88"
                   aria-label="Take or upload a color photo"
                 >
                   <Camera className="h-4 w-4" />
@@ -672,7 +680,7 @@ export default function RoscoPaintCalculator() {
               <section className="flex max-h-[86%] w-full flex-col border border-black/12 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.22)]">
                 <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-3">
                   <div>
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#3f5d62]">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--studio-tool-accent)]">
                       {panelOpen === "directions"
                         ? "Directions"
                         : panelOpen === "library"
@@ -757,7 +765,7 @@ export default function RoscoPaintCalculator() {
                             aria-pressed={selected}
                             className={`grid grid-cols-[1.35rem_minmax(0,1fr)] items-center gap-2 border p-2 text-left ${
                               selected
-                                ? "border-[#3f5d62] bg-[#3f5d62] text-white"
+                                ? "border-[var(--studio-tool-accent)] bg-[var(--studio-tool-accent)] text-[var(--studio-tool-accent-ink)]"
                                 : "border-black/10 bg-[#ece5d7] text-black"
                             }`}
                           >
@@ -823,7 +831,7 @@ export default function RoscoPaintCalculator() {
                   <button
                     type="button"
                     onClick={openPhotoPicker}
-                    className="h-9 bg-[#3f5d62] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white"
+                    className="h-9 bg-[var(--studio-tool-accent)] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[var(--studio-tool-accent-ink)]"
                   >
                     Retake
                   </button>

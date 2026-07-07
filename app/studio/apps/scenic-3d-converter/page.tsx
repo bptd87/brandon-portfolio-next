@@ -10,7 +10,7 @@ export const metadata = {
     description:
       "Download a Mac or Windows utility that keeps Vectorworks files lighter by converting 3D handoffs locally into USD, USDZ, and 3DM formats.",
     pathname: "/studio/apps/scenic-3d-converter",
-    image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter.jpg",
   }),
   appleWebApp: {
     capable: true,
@@ -20,7 +20,7 @@ export const metadata = {
   icons: {
     apple: [
       {
-        url: "/assets/studio-apps/icons/scenic-3d-converter-touch.png",
+        url: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-touch.png",
         sizes: "180x180",
         type: "image/png",
       },

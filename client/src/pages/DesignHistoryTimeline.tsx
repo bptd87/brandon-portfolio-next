@@ -5,6 +5,7 @@ import { ArrowLeft, Check, Copy, MapPin, Palette, Search, Shuffle } from 'lucide
 import { SEO } from '@/components/SEO';
 import { copyTextToClipboard } from '@/lib/clipboard';
 import { Link } from 'wouter';
+import { useStudioToolTheme } from '@/hooks/useStudioToolTheme';
 
 interface DesignPeriod {
   id: string;
@@ -462,6 +463,10 @@ const ERA_OPTIONS: Array<{ id: EraFilter; label: string; matches: (period: Desig
 
 
 export default function DesignHistoryTimeline() {
+  const { studioToolStyle } = useStudioToolTheme({
+    accent: "#dc30ff",
+    accentInk: "#ffe3ff",
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEra, setSelectedEra] = useState<EraFilter>('all');
   const [selectedPeriodId, setSelectedPeriodId] = useState(DESIGN_PERIODS[0]?.id ?? '');
@@ -529,7 +534,10 @@ export default function DesignHistoryTimeline() {
   };
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
+    <div
+      className="studio-tool-page h-[100dvh] overflow-hidden bg-[#f3eee4] text-black"
+      style={studioToolStyle}
+    >
       <SEO
         title="Design History Timeline"
         description="A mobile studio reference for design periods, palettes, regions, figures, and historical context."
@@ -540,7 +548,7 @@ export default function DesignHistoryTimeline() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#efd0a0] text-[#4f2d18] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(72,42,22,0.22)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--studio-tool-control-bg)] text-[var(--studio-tool-control-ink)] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(0,0,0,0.18)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -571,10 +579,10 @@ export default function DesignHistoryTimeline() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#8a5432]">
+                      <div className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[var(--studio-tool-accent)]">
                         {yearRange}
                       </div>
-                      <h1 className="mt-2 font-sans text-[clamp(1.8rem,7vw,3.15rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-black">
+                      <h1 className="studio-fluid-title mt-2 font-sans text-[clamp(1.55rem,5.8vw,2.55rem)] font-semibold leading-[0.98] text-black">
                         {selectedPeriod.name}
                       </h1>
                       <div className="mt-2 flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[-0.02em] text-black/46">
@@ -620,30 +628,31 @@ export default function DesignHistoryTimeline() {
               )}
             </section>
 
-            <section className="shrink-0 border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
-              <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
-                <label className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border border-black/10 bg-[#f3eee4] px-3">
-                  <Search className="h-4 w-4 text-black/46" />
+            <section className="shrink-0 overflow-hidden border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+              <div className="grid grid-cols-[minmax(0,1fr)_2.75rem] gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
+                <label className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border border-black/10 bg-[#f3eee4] px-3">
+                  <Search className="h-4 w-4 shrink-0 text-black/46" />
                   <input
                     type="search"
                     value={searchQuery}
                     onChange={(event) => setSearchQuery(event.target.value)}
-                    placeholder="Search period, region, figure"
-                    className="h-11 min-w-0 bg-transparent text-[0.92rem] font-medium tracking-[-0.02em] text-black outline-none placeholder:text-black/34"
+                    placeholder="Search history"
+                    className="h-11 min-w-0 bg-transparent text-[0.82rem] font-medium tracking-[-0.01em] text-black outline-none placeholder:text-black/34 sm:text-[0.92rem]"
                     aria-label="Search design history"
                   />
                 </label>
                 <button
                   type="button"
                   onClick={openRandomPeriod}
-                  className="flex h-11 items-center gap-2 bg-[#8a5432] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-88"
+                  className="flex h-11 min-w-0 items-center justify-center gap-2 bg-[var(--studio-tool-accent)] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[var(--studio-tool-accent-ink)] transition-opacity hover:opacity-88 sm:min-w-[5.75rem]"
+                  aria-label="Pick a random design period"
                 >
                   <Shuffle className="h-4 w-4" />
-                  Pick
+                  <span className="hidden sm:inline">Pick</span>
                 </button>
               </div>
 
-              <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+              <div className="mt-2 flex max-w-full gap-2 overflow-x-auto pb-1 pr-3">
                 {ERA_OPTIONS.map((option) => (
                   <button
                     key={option.id}
@@ -652,7 +661,7 @@ export default function DesignHistoryTimeline() {
                       setSelectedEra(option.id);
                       setSelectedPeriodId('');
                     }}
-                    className={`h-8 shrink-0 border px-3 text-[0.58rem] font-semibold uppercase tracking-[0.13em] transition-colors ${
+                    className={`h-8 shrink-0 whitespace-nowrap border px-3 text-[0.55rem] font-semibold uppercase tracking-[0.1em] transition-colors sm:text-[0.58rem] sm:tracking-[0.13em] ${
                       selectedEra === option.id
                         ? 'border-black bg-black text-white'
                         : 'border-black/10 bg-[#ebe5d8] text-black/48 hover:bg-[#f3eee4]'
@@ -711,7 +720,7 @@ export default function DesignHistoryTimeline() {
                         />
                       </div>
                       <span className="min-w-0">
-                        <span className="block truncate text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[#8a5432]">
+                        <span className="block truncate text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[var(--studio-tool-accent)]">
                           {range}
                         </span>
                         <span className="mt-1 block truncate text-[1.02rem] font-semibold leading-none tracking-[-0.04em] text-black">

@@ -1,15 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import InfoPageShell from "@/components/InfoPageShell";
 import StructuredData from "@/components/StructuredData";
-import {
-  getStoredAnalyticsConsent,
-  setStoredAnalyticsConsent,
-  subscribeToAnalyticsConsent,
-  type AnalyticsConsent,
-} from "../../../lib/analytics/consent";
 
 const sections = [
   {
@@ -23,7 +15,7 @@ const sections = [
     title: "Information We Collect",
     items: [
       "Contact details submitted voluntarily through forms or email.",
-      "Basic analytics and usage information, such as browser, pages visited, approximate location, and interaction events collected through Vercel Analytics and, when accepted, PostHog.",
+      "Basic analytics and usage information, such as browser, pages visited, approximate location, and interaction events collected through Vercel Analytics.",
       "Technical data needed for site security, spam prevention, and performance monitoring.",
     ],
   },
@@ -39,8 +31,7 @@ const sections = [
   {
     title: "Analytics Choices",
     body: [
-      "PostHog analytics are optional and are only enabled after a visitor accepts analytics in the site notice.",
-      "A local preference is stored in the browser so the choice can be remembered on future visits.",
+      "This site uses Vercel Analytics and Speed Insights to understand aggregate site performance and usage.",
     ],
   },
   {
@@ -118,60 +109,8 @@ export default function Privacy() {
               ) : null}
             </section>
           ))}
-          <AnalyticsPreferenceControl />
         </div>
       </InfoPageShell>
     </>
-  );
-}
-
-function AnalyticsPreferenceControl() {
-  const [consent, setConsent] = useState<AnalyticsConsent | null | undefined>(
-    undefined
-  );
-
-  useEffect(() => {
-    setConsent(getStoredAnalyticsConsent());
-    return subscribeToAnalyticsConsent(setConsent);
-  }, []);
-
-  const status =
-    consent === "accepted"
-      ? "Analytics accepted"
-      : consent === "declined"
-        ? "Analytics declined"
-        : "No analytics choice saved";
-
-  function chooseConsent(nextConsent: AnalyticsConsent) {
-    setStoredAnalyticsConsent(nextConsent);
-    setConsent(nextConsent);
-  }
-
-  return (
-    <section className="border-t border-border py-8">
-      <h2 className="mb-4 font-display text-[clamp(2.35rem,4vw,3.8rem)] font-black uppercase leading-[0.88] tracking-[0] text-foreground">
-        Analytics Preference
-      </h2>
-      <p className="max-w-[46rem] text-[1rem] font-semibold leading-[1.72] tracking-[-0.02em] text-foreground/70">
-        Current setting:{" "}
-        <span className="font-black text-foreground">{status}</span>.
-      </p>
-      <div className="mt-5 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={() => chooseConsent("accepted")}
-          className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--home-theme-control-bg)] px-5 text-[0.78rem] font-black uppercase tracking-[0.04em] text-[var(--home-theme-control-ink)] transition-transform hover:scale-[1.02]"
-        >
-          Accept analytics
-        </button>
-        <button
-          type="button"
-          onClick={() => chooseConsent("declined")}
-          className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-[var(--home-theme-accent-soft)] px-5 text-[0.78rem] font-black uppercase tracking-[0.04em] text-foreground transition-transform hover:scale-[1.02]"
-        >
-          Decline analytics
-        </button>
-      </div>
-    </section>
   );
 }

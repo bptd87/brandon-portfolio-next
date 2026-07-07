@@ -1,9 +1,9 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
 import AboutNav from "@/components/AboutNav";
-import AboutModelViewer from "@/components/AboutModelViewer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ProfileSectionHero from "@/components/ProfileSectionHero";
@@ -13,7 +13,11 @@ import { PROFILE_ARTICLE_LINKS } from "@shared/publicContent";
 
 const ABOUT_PORTRAIT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
-const ABOUT_MODEL_URL = "/assets/about/3d/brandon-pt-davis-3d-model.glb";
+const ABOUT_MODEL_URL =
+  "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/files/site-assets/assets/about/3d/brandon-pt-davis-3d-model.glb";
+const AboutModelViewer = dynamic(() => import("@/components/AboutModelViewer"), {
+  ssr: false,
+});
 
 const aboutImages = [
   {

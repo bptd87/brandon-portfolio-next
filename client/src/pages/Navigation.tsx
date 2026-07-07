@@ -260,7 +260,7 @@ function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
     {
       label: "STUDIO",
       href: "/studio",
-      image: "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
+      image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
       items: ["Articles", "Tutorials", "Apps"],
       background: SITE_CARD_COLORS.green.background,
       text: SITE_CARD_COLORS.green.text,

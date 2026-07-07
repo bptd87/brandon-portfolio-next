@@ -28,7 +28,7 @@ const apps = [
     shortTitle: "3D Convert",
     description:
       "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
-    image: "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
     href: "/studio/apps/scenic-3d-converter",
     category: "Mac Tool",
     tone: "Download",
@@ -42,7 +42,7 @@ const apps = [
     shortTitle: "Scale",
     description:
       "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
-    image: "/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     tone: "Mobile tool",
@@ -56,7 +56,7 @@ const apps = [
     shortTitle: "Dims",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
     tone: "Shop reference",
@@ -70,7 +70,7 @@ const apps = [
     shortTitle: "Rosco",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
     tone: "Paint shop",
@@ -84,7 +84,7 @@ const apps = [
     shortTitle: "Paint Match",
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
-    image: "/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
     href: "/studio/apps/commercial-paint-matcher",
     category: "Matcher",
     tone: "Paint library",
@@ -98,7 +98,7 @@ const apps = [
     shortTitle: "History",
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
     tone: "Research",

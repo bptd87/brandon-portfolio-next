@@ -15,6 +15,7 @@ import { copyTextToClipboard } from "@/lib/clipboard";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
+import { useStudioToolTheme } from "@/hooks/useStudioToolTheme";
 
 interface ScaleOption {
   label: string;
@@ -63,6 +64,10 @@ const cleanDecimalInput = (value: string) => {
 const restoreZero = (value: string) => (value.trim() === "" ? "0" : value);
 
 export default function ScaleCalculator() {
+  const { studioToolStyle } = useStudioToolTheme({
+    accent: "#ff6f00",
+    accentInk: "#20180f",
+  });
   const [activeTab, setActiveTab] = useState<"real-to-scale" | "scale-to-real">("real-to-scale");
   const [realFeet, setRealFeet] = useState("10");
   const [realInches, setRealInches] = useState("0");
@@ -153,7 +158,10 @@ export default function ScaleCalculator() {
   };
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
+    <div
+      className="studio-tool-page h-[100dvh] overflow-hidden bg-[#f3eee4] text-black"
+      style={studioToolStyle}
+    >
       <SEO
         title="Architectural Scale Calculator for 3D Printing"
         description="Convert full-size architectural and scenic dimensions into model scale millimeters for 3D printing, drafting, and physical model making."
@@ -177,7 +185,7 @@ export default function ScaleCalculator() {
           </header>
 
           <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden pt-1">
-            <section className="relative flex min-h-[9rem] flex-[0.78] flex-col overflow-hidden rounded-[0.45rem] border border-black/10 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.16),inset_0_1px_rgba(255,255,255,0.75)]">
+            <section className="studio-tool-result-panel relative flex min-h-[9rem] flex-[0.78] flex-col overflow-hidden rounded-[0.45rem] border border-black/10 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.16),inset_0_1px_rgba(255,255,255,0.75)]">
               <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-white/80" />
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-black/8" />
               <div className="flex items-start justify-between gap-4">
@@ -190,7 +198,7 @@ export default function ScaleCalculator() {
                   <button
                     type="button"
                     onClick={() => setDirectionsOpen(true)}
-                    className="h-8 border border-[#a94b23] bg-[#d06934] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-black shadow-none"
+                    className="h-8 border border-[var(--studio-tool-border)] bg-[var(--studio-tool-accent)] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-[var(--studio-tool-accent-ink)] shadow-none"
                   >
                     Directions
                   </button>
@@ -276,7 +284,7 @@ export default function ScaleCalculator() {
                       autoCorrect="off"
                       spellCheck={false}
                       aria-label="Full-size feet"
-                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#d06934]/70"
+                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[var(--studio-tool-accent)]"
                       placeholder="0"
                     />
                   </div>
@@ -297,7 +305,7 @@ export default function ScaleCalculator() {
                       autoCorrect="off"
                       spellCheck={false}
                       aria-label="Full-size inches"
-                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#d06934]/70"
+                      className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[var(--studio-tool-accent)]"
                       placeholder="0"
                     />
                   </div>
@@ -320,7 +328,7 @@ export default function ScaleCalculator() {
                     autoCorrect="off"
                     spellCheck={false}
                     aria-label="Model millimeters"
-                    className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[#d06934]/70"
+                    className="h-[3.25rem] rounded-[0.18rem] border-black/10 bg-[#ece5d7] px-4 text-center font-sans text-[1.75rem] font-semibold tracking-normal text-black tabular-nums placeholder:text-black/22 focus-visible:ring-[var(--studio-tool-accent)]"
                     placeholder="0"
                   />
                 </div>
@@ -343,7 +351,7 @@ export default function ScaleCalculator() {
                     aria-pressed={selectedScale === scale.ratio}
                     className={`h-9 rounded-[0.12rem] border px-1 text-[0.66rem] font-semibold tracking-normal transition-colors ${
                       selectedScale === scale.ratio
-                        ? "border-[#d06934] bg-[#d06934] text-black shadow-[0_10px_18px_rgba(82,48,18,0.16)]"
+                        ? "border-[var(--studio-tool-accent)] bg-[var(--studio-tool-accent)] text-[var(--studio-tool-accent-ink)] shadow-[0_10px_18px_rgba(82,48,18,0.16)]"
                         : "border-black bg-black text-[#f8f1e6]"
                     }`}
                   >
@@ -392,7 +400,7 @@ export default function ScaleCalculator() {
               <section className="w-full border border-black/12 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.22)]">
                 <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-3">
                   <div>
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#d06934]">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--studio-tool-accent)]">
                       Directions
                     </p>
                     <h2 className="mt-1 text-[1.25rem] font-semibold leading-none tracking-[-0.04em] text-black">

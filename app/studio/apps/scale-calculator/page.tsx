@@ -10,7 +10,7 @@ export const metadata = {
     description:
       "Convert architectural and scenic dimensions into model scale millimeters for 3D printing, physical models, drafting, and shop workflows.",
     pathname: "/studio/apps/scale-calculator",
-    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator.jpg",
   }),
   appleWebApp: {
     capable: true,
@@ -20,7 +20,7 @@ export const metadata = {
   icons: {
     apple: [
       {
-        url: "/assets/studio-apps/icons/scale-calculator-touch.png",
+        url: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-touch.png",
         sizes: "180x180",
         type: "image/png",
       },
@@ -65,7 +65,7 @@ export default function Page() {
               "A free web app that converts full-size architectural and scenic dimensions into model scale millimeters for 3D printing, drafting, and physical model making.",
             applicationCategory: "DesignApplication",
             operatingSystem: "Web",
-            image: "https://www.brandonptdavis.com/assets/studio-apps/icons/scale-calculator.jpg",
+            image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator.jpg",
             url: "https://www.brandonptdavis.com/studio/apps/scale-calculator",
             featureList: [
               "Convert full-size feet and inches to model scale millimeters",

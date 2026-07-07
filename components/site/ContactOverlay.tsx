@@ -11,10 +11,6 @@ import {
 import { Mail, Send, X } from "lucide-react";
 
 import {
-  capturePostHogEvent,
-  isPostHogConfigured,
-} from "../../lib/analytics/posthog-browser";
-import {
   HOME_BODY_FONT,
   HOME_DISPLAY_FONT,
   type HomeColorTheme,
@@ -130,13 +126,6 @@ function ContactOverlay({
     setErrorMessage("");
 
     try {
-      if (isPostHogConfigured()) {
-        capturePostHogEvent("contact_overlay_submitted", {
-          pathname: window.location.pathname,
-          subject: formData.subject,
-        });
-      }
-
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {

@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { type CSSProperties } from "react";
 import { Link } from "wouter";
 import {
   ArrowLeft,
@@ -17,19 +18,24 @@ import {
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import {
+  HOME_BODY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 
 const PAGE_URL =
   "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter";
 const PAGE_IMAGE =
-  "https://www.brandonptdavis.com/assets/studio-apps/icons/scenic-3d-converter.jpg";
+  "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg";
 const PAGE_HERO_IMAGE =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-hero.webp";
-const PAGE_TOOL_GRAPHIC =
-  "/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg";
 const WORKFLOW_GRAPHIC =
-  "/assets/studio-apps/scenic-3d-converter/workflow-human-card.jpg";
+  "/images/site-assets/studio-apps/scenic-3d-converter/convert-line-mask.png";
 const LOCAL_FILES_GRAPHIC =
-  "/assets/studio-apps/scenic-3d-converter/local-files-umbrella-card.jpg";
+  "/images/site-assets/studio-apps/scenic-3d-converter/no-cloud-line-mask.png";
+const CONVERTER_ICON =
+  "/images/site-assets/studio-apps/svg/3d-file-convert.svg";
 const MAC_DOWNLOAD_URL =
   "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/files/downloads/studio-apps/scenic-3d-converter/Scenic-3D-Converter-Stable.zip";
 const WINDOWS_DOWNLOAD_URL =
@@ -44,7 +50,6 @@ type DownloadOption = {
   title: string;
   description: string;
   platform: "mac" | "windows";
-  accentClass: string;
 };
 
 const downloads: DownloadOption[] = [
@@ -53,16 +58,12 @@ const downloads: DownloadOption[] = [
     title: "Download for Mac",
     description: "For local desktop handoff work on macOS.",
     platform: "mac",
-    accentClass:
-      "border-[#628faa] bg-[#628faa] hover:border-[#d7e7ef]/72 hover:bg-[#719db7]",
   },
   {
     href: WINDOWS_DOWNLOAD_URL,
     title: "Download for Windows",
     description: "For local desktop handoff work on Windows.",
     platform: "windows",
-    accentClass:
-      "border-[#bd6843] bg-[#bd6843] hover:border-[#f3b06c]/82 hover:bg-[#c97854]",
   },
 ];
 
@@ -164,51 +165,102 @@ function PlatformLogo({ platform }: { platform: "mac" | "windows" }) {
   );
 }
 
-function HeroGraphicPanel() {
+function LineDrawingPanel({
+  src,
+  label,
+  className = "aspect-square",
+  artClassName = "inset-[5%]",
+}: {
+  src: string;
+  label: string;
+  className?: string;
+  artClassName?: string;
+}) {
   return (
-    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#628faa]">
-      <img
-        src={PAGE_TOOL_GRAPHIC}
-        alt="Scenic 3D Converter app graphic showing file conversion"
-        className="h-full w-full object-cover"
-        loading="eager"
-        decoding="async"
+    <div className={`relative w-full overflow-visible ${className}`}>
+      <div
+        aria-label={label}
+        role="img"
+        className={`absolute bg-[var(--converter-art)] ${artClassName}`}
+        style={{
+          WebkitMaskImage: `url("${src}")`,
+          maskImage: `url("${src}")`,
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+        }}
       />
     </div>
+  );
+}
+
+function HeroIconMark() {
+  return (
+    <div
+      aria-label="Scenic 3D Converter file conversion icon"
+      role="img"
+      className="mx-auto h-[clamp(8.5rem,19vw,15rem)] w-[clamp(8.5rem,19vw,15rem)] bg-[var(--converter-art)] opacity-90"
+      style={{
+        WebkitMaskImage: `url("${CONVERTER_ICON}")`,
+        maskImage: `url("${CONVERTER_ICON}")`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+      }}
+    />
   );
 }
 
 function WorkflowGraphicBlock() {
   return (
-    <div className="overflow-hidden bg-[#bd6843]">
-      <img
-        src={WORKFLOW_GRAPHIC}
-        alt="Illustration of a scenic designer carrying a model toward organized handoff files"
-        className="aspect-square w-full object-cover"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+    <LineDrawingPanel
+      src={WORKFLOW_GRAPHIC}
+      label="Illustration of a scenic designer carrying a model toward organized handoff files"
+      className="aspect-[2770/1807]"
+      artClassName="inset-0"
+    />
   );
 }
 
 function InstallGraphicBlock() {
   return (
-    <div className="overflow-hidden bg-[#d09724]">
-      <img
-        src={LOCAL_FILES_GRAPHIC}
-        alt="Illustration of a scenic designer protecting local files under an umbrella beneath a raining cloud"
-        className="aspect-square w-full object-cover"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+    <LineDrawingPanel
+      src={LOCAL_FILES_GRAPHIC}
+      label="Illustration of a scenic designer keeping local files protected from cloud upload"
+      className="aspect-[2246/1899]"
+      artClassName="inset-0"
+    />
   );
 }
 
 export default function Scenic3DConverter() {
+  const { homeTheme } = useHomeTheme();
+  useHomeDocumentTheme(homeTheme);
+
+  const pageStyle = {
+    "--foreground": homeTheme.ink,
+    "--border": `color-mix(in srgb, ${homeTheme.ink} 16%, transparent)`,
+    "--converter-bg": homeTheme.bg,
+    "--converter-ink": homeTheme.ink,
+    "--converter-muted": homeTheme.muted,
+    "--converter-panel": `color-mix(in srgb, ${homeTheme.bg} 84%, ${homeTheme.ink})`,
+    "--converter-panel-soft": homeTheme.accentSoft,
+    "--converter-control": homeTheme.controlBg,
+    "--converter-control-ink": homeTheme.controlInk,
+    "--converter-art": homeTheme.controlBg,
+    backgroundColor: homeTheme.bg,
+    color: homeTheme.ink,
+    fontFamily: HOME_BODY_FONT,
+  } as CSSProperties;
+
   return (
-    <div className="min-h-screen bg-[#050505] text-foreground">
+    <div className="min-h-screen text-foreground" style={pageStyle}>
       <SEO
         title={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
@@ -354,86 +406,83 @@ export default function Scenic3DConverter() {
 
       <Header />
 
-      <main className="px-6 pb-24 pt-24 md:pt-28">
-        <section className="mx-auto max-w-6xl pb-16">
+      <main className="relative z-10 bg-[var(--converter-bg)] px-6 pb-24 pt-24 md:pt-28">
+        <section className="mx-auto max-w-6xl pb-14 text-center md:pb-20">
           <AnimatedSection>
             <Link
               href="/studio/apps"
-              className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/50 transition-colors hover:text-foreground"
+              className="inline-flex items-center justify-center gap-2 text-[0.95rem] font-medium text-foreground/50 transition-colors hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Studio Apps
             </Link>
 
-            <div className="mt-8 grid gap-10 xl:grid-cols-[minmax(0,0.92fr)_minmax(25rem,1.08fr)] xl:items-center">
-              <div className="max-w-[40rem]">
-                <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.25rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                  Scenic 3D Converter for Vectorworks.
-                </h1>
-                <p className="mt-6 max-w-3xl text-[1.06rem] leading-8 text-foreground/62 md:text-[1.14rem]">
-                  A local Mac and Windows download for keeping Vectorworks files
-                  lighter by turning model handoffs into practical USD, USDZ,
-                  and 3DM outputs.
-                </p>
+            <div className="mx-auto mt-12 max-w-4xl">
+              <HeroIconMark />
+              <h1 className="mx-auto mt-8 max-w-4xl font-sans text-[clamp(4rem,10vw,8.5rem)] font-medium leading-[0.86] tracking-[-0.06em] text-foreground">
+                Scenic 3D Converter for Vectorworks.
+              </h1>
+              <p className="mx-auto mt-7 max-w-3xl text-[clamp(1.18rem,2.2vw,1.55rem)] leading-[1.55] text-foreground/68">
+                A local Mac and Windows download for keeping Vectorworks files
+                lighter by turning model handoffs into practical USD, USDZ,
+                and 3DM outputs.
+              </p>
 
-                <div className="mt-9 grid max-w-[34rem] gap-3 sm:grid-cols-2">
-                  {downloads.map(download => (
-                    <a
-                      key={download.href}
-                      href={download.href}
-                      download
-                      className={`inline-flex min-h-14 items-center justify-center gap-2 border px-5 py-4 text-center text-white transition-colors ${download.accentClass}`}
-                    >
-                      <PlatformLogo platform={download.platform} />
-                      <span className="text-[0.95rem] font-medium">
-                        {download.title}
-                      </span>
-                    </a>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9rem] text-foreground/50">
-                  <span>Free local download.</span>
+              <div className="mx-auto mt-9 grid max-w-[42rem] gap-3 sm:grid-cols-2">
+                {downloads.map(download => (
                   <a
-                    href="#install"
-                    className="inline-flex items-center gap-2 text-foreground/74 transition-colors hover:text-foreground"
+                    key={download.href}
+                    href={download.href}
+                    download
+                    className="inline-flex min-h-16 items-center justify-center gap-2 rounded-full border border-[var(--converter-control)] bg-[var(--converter-control)] px-6 py-4 text-center text-[var(--converter-control-ink)] transition-transform hover:-translate-y-0.5"
                   >
-                    Install steps
-                    <ArrowRight className="h-4 w-4" />
+                    <PlatformLogo platform={download.platform} />
+                    <span className="text-[1.02rem] font-medium">
+                      {download.title}
+                    </span>
                   </a>
-                </div>
+                ))}
               </div>
 
-              <HeroGraphicPanel />
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[1rem] text-foreground/55">
+                <span>Free local download.</span>
+                <a
+                  href="#install"
+                  className="inline-flex items-center gap-2 text-foreground/76 transition-colors hover:text-foreground"
+                >
+                  Install steps
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
             </div>
           </AnimatedSection>
         </section>
 
-        <section className="mx-auto mt-16 max-w-6xl border-t border-white/12 pt-16">
+        <section className="mx-auto mt-10 max-w-6xl border-t border-border/60 pt-16 text-center">
           <AnimatedSection>
-            <div className="max-w-3xl">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="font-sans text-[0.84rem] font-semibold uppercase tracking-[0.24em] text-foreground/42">
                 What It Makes
               </p>
-              <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+              <h2 className="mt-5 font-sans text-[clamp(3rem,6vw,5.6rem)] font-medium leading-[0.88] tracking-[-0.05em] text-foreground">
                 A few useful outputs for the next handoff.
               </h2>
             </div>
           </AnimatedSection>
 
-          <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
+          <div className="mt-14 grid gap-x-12 gap-y-12 md:grid-cols-2">
             {conversionModes.map((mode, index) => {
               const Icon = mode.icon;
               return (
                 <AnimatedSection key={mode.name} delay={index * 70}>
-                  <div className="border-t border-border/16 pt-6">
-                    <div className="flex items-center gap-3 text-[#9dd6ff]">
-                      <Icon className="h-4 w-4" />
+                  <div className="border-t border-border/35 pt-7 text-center">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--converter-control)] text-[var(--converter-control-ink)]">
+                      <Icon className="h-7 w-7" />
                     </div>
-                    <h3 className="mt-4 font-sans text-[1.4rem] font-medium tracking-[-0.04em] text-foreground">
+                    <h3 className="mt-5 font-sans text-[clamp(1.85rem,3.2vw,2.45rem)] font-medium leading-[0.95] tracking-[-0.04em] text-foreground">
                       {mode.name}
                     </h3>
-                    <p className="mt-3 max-w-[32rem] text-[0.98rem] leading-7 text-foreground/62">
+                    <p className="mx-auto mt-4 max-w-[32rem] text-[1.12rem] leading-8 text-foreground/66">
                       {mode.use}
                     </p>
                   </div>
@@ -443,82 +492,87 @@ export default function Scenic3DConverter() {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-6xl border-t border-[#bd6843]/22 pt-16">
-          <div className="grid gap-12 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] xl:items-center">
-            <AnimatedSection>
-              <WorkflowGraphicBlock />
-            </AnimatedSection>
-
-            <AnimatedSection delay={80}>
+        <section className="mx-auto mt-20 max-w-6xl border-t border-border/60 pt-16 text-center">
+          <AnimatedSection>
+            <div className="grid gap-12 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] xl:items-center">
               <div>
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                <WorkflowGraphicBlock />
+              </div>
+
+              <div className="text-center">
+                <p className="font-sans text-[0.88rem] font-semibold uppercase tracking-[0.24em] text-foreground/44">
                   Workflow
                 </p>
-                <h2 className="mt-4 font-sans text-[clamp(2rem,3.8vw,3rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+                <h2 className="mt-5 font-sans text-[clamp(3rem,5.4vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em] text-foreground">
                   Built to stay out of the way.
                 </h2>
-                <div className="mt-7 space-y-5">
+                <p className="mx-auto mt-6 max-w-2xl text-[clamp(1.18rem,1.8vw,1.42rem)] leading-[1.55] text-foreground/68">
+                  The utility keeps the conversion work close to the desktop,
+                  next to the files designers are already handling.
+                </p>
+
+                <div className="mt-9 grid gap-x-8 gap-y-6 sm:grid-cols-2">
                   {workflowSteps.map((step, index) => (
                     <div
                       key={step}
-                      className="grid grid-cols-[28px_minmax(0,1fr)] gap-4"
+                      className="border-t border-border/50 pt-5"
                     >
-                      <div className="pt-0.5 font-mono text-[0.82rem] text-foreground/34">
+                      <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full border border-border/55 font-mono text-[1rem] text-foreground/52">
                         {index + 1}
                       </div>
-                      <p className="text-[1rem] leading-7 text-foreground/64">
+                      <p className="mx-auto mt-4 max-w-[19rem] text-[1.12rem] leading-8 text-foreground/68">
                         {step}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-8 max-w-xl">
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
+                <div className="mx-auto mt-11 max-w-2xl border-t border-border/50 pt-6">
+                  <p className="font-sans text-[0.84rem] font-semibold uppercase tracking-[0.22em] text-foreground/44">
                     Desktop First
                   </p>
-                  <p className="mt-3 text-[0.98rem] leading-7 text-foreground/62">
+                  <p className="mt-4 text-[1.16rem] leading-8 text-foreground/68">
                     Use the right-click actions when they are visible, or open
                     the guided converter when you need the slower, clearer path.
                   </p>
                 </div>
               </div>
-            </AnimatedSection>
-          </div>
+            </div>
+          </AnimatedSection>
         </section>
 
-        <section className="mx-auto mt-20 max-w-6xl border-t border-[#d09724]/22 pt-16">
-          <div className="grid gap-10 lg:grid-cols-2">
+        <section className="mx-auto mt-20 max-w-6xl border-t border-border/60 pt-16 text-center">
+          <div className="grid gap-10 text-center lg:grid-cols-2">
             <AnimatedSection>
               <div
                 id="supported-inputs"
-                className="border-t border-border/20 pt-6"
+                className="border-t border-border/28 pt-7"
               >
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                <p className="font-sans text-[0.88rem] font-semibold uppercase tracking-[0.24em] text-foreground/44">
                   Files It Can Meet
                 </p>
-                <div className="mt-6 space-y-6">
+                <div className="mt-8 space-y-8">
                   <div>
-                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-foreground/42">
+                    <p className="text-[1rem] uppercase tracking-[0.18em] text-foreground/52">
                       Direct USD family
                     </p>
-                    <p className="mt-3 text-[1rem] leading-7 text-foreground/66">
+                    <p className="mt-4 text-[1.18rem] leading-8 text-foreground/72">
                       {supportedInputs.direct.join(" · ")}
                     </p>
                   </div>
-                  <div className="border-t border-border/14 pt-5">
-                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-foreground/42">
+                  <div className="border-t border-border/18 pt-6">
+                    <p className="text-[1rem] uppercase tracking-[0.18em] text-foreground/52">
                       Via Blender pipeline
                     </p>
-                    <p className="mt-3 text-[1rem] leading-7 text-foreground/66">
+                    <p className="mt-4 text-[1.18rem] leading-8 text-foreground/72">
                       {supportedInputs.blender.join(" · ")}
                     </p>
                   </div>
-                  <div className="border-t border-border/14 pt-5">
-                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-foreground/42">
+                  <div className="border-t border-border/18 pt-6">
+                    <p className="text-[1rem] uppercase tracking-[0.18em] text-foreground/52">
                       Recommended output
                     </p>
-                    <p className="mt-3 text-[1rem] leading-7 text-foreground/66">
+                    <p className="mt-4 text-[1.18rem] leading-8 text-foreground/72">
                       {supportedInputs.output.join(" · ")}
                     </p>
                   </div>
@@ -527,18 +581,18 @@ export default function Scenic3DConverter() {
             </AnimatedSection>
 
             <AnimatedSection delay={80}>
-              <div className="border-t border-border/20 pt-6">
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+              <div className="border-t border-border/28 pt-7">
+                <p className="font-sans text-[0.88rem] font-semibold uppercase tracking-[0.24em] text-foreground/44">
                   Why Designers Like It
                 </p>
-                <div className="mt-6 space-y-4">
+                <div className="mt-8 space-y-6">
                   {reasons.map(reason => (
                     <div
                       key={reason}
-                      className="grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-t border-border/14 pt-4 first:border-t-0 first:pt-0"
+                      className="border-t border-border/18 pt-6 first:border-t-0 first:pt-0"
                     >
-                      <CheckCircle2 className="mt-1 h-4 w-4 text-foreground/56" />
-                      <p className="text-[0.98rem] leading-7 text-foreground/64">
+                      <CheckCircle2 className="mx-auto h-7 w-7 text-foreground/64" />
+                      <p className="mx-auto mt-4 max-w-[34rem] text-[1.18rem] leading-8 text-foreground/72">
                         {reason}
                       </p>
                     </div>
@@ -551,31 +605,31 @@ export default function Scenic3DConverter() {
 
         <section
           id="install"
-          className="mx-auto mt-20 max-w-6xl border-t border-[#dcecf4]/16 pt-16"
+          className="mx-auto mt-20 max-w-6xl border-t border-border/60 pt-16 text-center"
         >
-          <div className="grid gap-x-12 gap-y-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.88fr)] xl:grid-rows-[auto_auto] xl:items-start">
+          <div className="grid gap-x-12 gap-y-10 text-center xl:grid-cols-[minmax(0,1fr)_minmax(0,0.88fr)] xl:grid-rows-[auto_auto] xl:items-start">
             <AnimatedSection>
-              <div className="max-w-[42rem]">
-                <div className="flex items-center gap-3 text-foreground/60">
-                  <FolderOpen className="h-4 w-4" />
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+              <div className="mx-auto max-w-[42rem]">
+                <div className="flex items-center justify-center gap-3 text-foreground/60">
+                  <FolderOpen className="h-6 w-6" />
+                  <p className="font-sans text-[0.88rem] font-semibold uppercase tracking-[0.24em] text-foreground/44">
                     Install
                   </p>
                 </div>
-                <h2 className="mt-4 font-sans text-[clamp(2rem,3.8vw,3rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+                <h2 className="mt-5 font-sans text-[clamp(3rem,5.2vw,4.8rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground">
                   Download it, set it up, and get back to the model.
                 </h2>
 
-                <div className="mt-10 space-y-5">
+                <div className="mt-11 space-y-6">
                   {installSteps.map((step, index) => (
                     <div
                       key={step}
-                      className="grid grid-cols-[32px_minmax(0,1fr)] gap-4"
+                      className="border-t border-border/18 pt-6 first:border-t-0 first:pt-0"
                     >
-                      <div className="pt-1 font-mono text-[0.85rem] text-foreground/34">
+                      <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full border border-border/55 font-mono text-[1rem] text-foreground/52">
                         {index + 1}
                       </div>
-                      <p className="pt-1 text-[1rem] leading-7 text-foreground/64">
+                      <p className="mx-auto mt-4 max-w-[34rem] text-[1.14rem] leading-8 text-foreground/68">
                         {step}
                       </p>
                     </div>
@@ -593,20 +647,20 @@ export default function Scenic3DConverter() {
               delay={120}
             >
               <div className="border-t border-border/20 pt-6">
-                <div className="flex items-center gap-3 text-foreground/60">
-                  <TriangleAlert className="h-4 w-4" />
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                <div className="flex items-center justify-center gap-3 text-foreground/60">
+                  <TriangleAlert className="h-6 w-6" />
+                  <p className="font-sans text-[0.88rem] font-semibold uppercase tracking-[0.24em] text-foreground/44">
                     Troubleshooting
                   </p>
                 </div>
-                <div className="mt-5 space-y-4">
+                <div className="mt-6 space-y-5">
                   {troubleshooting.map(item => (
                     <div
                       key={item}
-                      className="grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-t border-border/14 pt-4 first:border-t-0 first:pt-0"
+                      className="border-t border-border/18 pt-5 first:border-t-0 first:pt-0"
                     >
-                      <span className="mt-1 text-foreground/52">•</span>
-                      <p className="text-[0.98rem] leading-7 text-foreground/64">
+                      <span className="block text-[1.4rem] leading-none text-foreground/52">•</span>
+                      <p className="mx-auto mt-3 max-w-[34rem] text-[1.12rem] leading-8 text-foreground/68">
                         {item}
                       </p>
                     </div>
@@ -617,13 +671,13 @@ export default function Scenic3DConverter() {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-6xl">
+        <section className="mx-auto mt-20 max-w-6xl text-center">
           <AnimatedSection>
-            <div className="bg-[#628faa] px-6 py-14 text-center text-white md:px-12 md:py-16">
-              <h2 className="mx-auto max-w-3xl font-sans text-[clamp(2.3rem,4.5vw,4rem)] font-medium leading-[1.02] tracking-[-0.055em] text-white">
+            <div className="rounded-[2rem] bg-[var(--converter-control)] px-6 py-14 text-center text-[var(--converter-control-ink)] shadow-[0_28px_90px_rgba(17,17,17,0.14)] md:px-12 md:py-16">
+              <h2 className="mx-auto max-w-3xl text-[clamp(2.3rem,4.5vw,4rem)] font-medium leading-[1.02] text-[var(--converter-control-ink)]">
                 Keep your 3D conversion workflow fast, local, and practical.
               </h2>
-              <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-8 text-white/74">
+              <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-8 opacity-75">
                 Built for scenic production handoff between modeling packages
                 and Vectorworks, without adding another complicated pipeline.
               </p>
@@ -632,7 +686,7 @@ export default function Scenic3DConverter() {
                 <a
                   href={MAC_DOWNLOAD_URL}
                   download
-                  className="inline-flex items-center gap-2 border border-white bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-[#dcecf4]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--converter-control-ink)] bg-[var(--converter-control-ink)] px-5 py-3 text-[0.95rem] font-medium text-[var(--converter-control)] transition-transform hover:-translate-y-0.5"
                 >
                   <PlatformLogo platform="mac" />
                   Download for Mac
@@ -640,14 +694,14 @@ export default function Scenic3DConverter() {
                 <a
                   href={WINDOWS_DOWNLOAD_URL}
                   download
-                  className="inline-flex items-center gap-2 border border-white bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-[#dcecf4]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--converter-control-ink)] bg-[var(--converter-control-ink)] px-5 py-3 text-[0.95rem] font-medium text-[var(--converter-control)] transition-transform hover:-translate-y-0.5"
                 >
                   <PlatformLogo platform="windows" />
                   Download for Windows
                 </a>
                 <Link
                   href="/studio/apps"
-                  className="inline-flex items-center gap-2 border border-white/35 bg-[#101010]/18 px-5 py-3 text-[0.95rem] font-medium text-white transition-colors hover:border-white/70 hover:bg-[#101010]/28"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--converter-control-ink)] bg-transparent px-5 py-3 text-[0.95rem] font-medium text-[var(--converter-control-ink)] opacity-80 transition-transform hover:-translate-y-0.5 hover:opacity-100"
                 >
                   All studio apps
                   <ArrowRight className="h-4 w-4" />

@@ -10,7 +10,7 @@ export const metadata = {
     description:
       "A searchable reference timeline for architectural and interior design history, organized by period, region, palette, and major figures.",
     pathname: "/studio/apps/design-history-timeline",
-    image: "/assets/studio-apps/icons/design-history-timeline.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline.jpg",
   }),
   appleWebApp: {
     capable: true,
@@ -20,7 +20,7 @@ export const metadata = {
   icons: {
     apple: [
       {
-        url: "/assets/studio-apps/icons/design-history-timeline-touch.png",
+        url: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-touch.png",
         sizes: "180x180",
         type: "image/png",
       },

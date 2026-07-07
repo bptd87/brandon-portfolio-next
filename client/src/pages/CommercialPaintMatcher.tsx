@@ -1,19 +1,20 @@
 "use client";
 
-import { useMemo, useRef, useState, type ChangeEvent, type MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type MouseEvent } from "react";
 import { ArrowLeft, Camera, Check, Copy, Info, Palette, Search, SlidersHorizontal, X } from "lucide-react";
 import { Link } from "wouter";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
+import { useStudioToolTheme } from "@/hooks/useStudioToolTheme";
 import {
   BRAND_FILTERS,
   COMMERCIAL_PAINT_COUNTS,
-  COMMERCIAL_PAINTS,
   type CommercialPaint,
   type PaintBrand,
 } from "../data/commercialPaints";
 
 const MAX_VISIBLE_RESULTS = 180;
+const COMMERCIAL_PAINTS_URL = "/data/commercial-paints.json";
 
 function hexToRgb(hex: string): [number, number, number] {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -110,6 +111,10 @@ function formatPaintInfo(
 }
 
 export default function CommercialPaintMatcher() {
+  const { studioToolStyle } = useStudioToolTheme({
+    accent: "#003f1c",
+    accentInk: "#baff00",
+  });
   const photoInputRef = useRef<HTMLInputElement | null>(null);
   const [targetColor, setTargetColor] = useState("#988234");
   const [selectedBrands, setSelectedBrands] = useState<PaintBrand[]>(BRAND_FILTERS);
@@ -122,15 +127,42 @@ export default function CommercialPaintMatcher() {
   const [photoOpen, setPhotoOpen] = useState(false);
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
   const [sampledPhotoColor, setSampledPhotoColor] = useState<string | null>(null);
+  const [commercialPaints, setCommercialPaints] = useState<CommercialPaint[]>([]);
+  const [paintLibraryStatus, setPaintLibraryStatus] = useState<"loading" | "ready" | "error">("loading");
 
   const displayTargetColor = normalizeHex(targetColor) ?? "#000000";
+
+  useEffect(() => {
+    let isActive = true;
+
+    fetch(COMMERCIAL_PAINTS_URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Paint library unavailable: ${response.status}`);
+        }
+        return response.json() as Promise<CommercialPaint[]>;
+      })
+      .then((paints) => {
+        if (!isActive) return;
+        setCommercialPaints(paints);
+        setPaintLibraryStatus("ready");
+      })
+      .catch(() => {
+        if (!isActive) return;
+        setPaintLibraryStatus("error");
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   const brandPaints = useMemo(
     () =>
       selectedBrands.length === BRAND_FILTERS.length
-        ? COMMERCIAL_PAINTS
-        : COMMERCIAL_PAINTS.filter((paint) => selectedBrands.includes(paint.brand)),
-    [selectedBrands]
+        ? commercialPaints
+        : commercialPaints.filter((paint) => selectedBrands.includes(paint.brand)),
+    [commercialPaints, selectedBrands]
   );
 
   const matches = useMemo(() => {
@@ -265,7 +297,10 @@ export default function CommercialPaintMatcher() {
   }
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
+    <div
+      className="studio-tool-page h-[100dvh] overflow-hidden bg-[#f3eee4] text-black"
+      style={studioToolStyle}
+    >
       <SEO
         title="Commercial Paint Matcher"
         description="Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR paint libraries with brand filters."
@@ -333,7 +368,7 @@ export default function CommercialPaintMatcher() {
               <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] opacity-64">
                 {selectedEntry ? "Selected match" : "Closest match"}
               </p>
-              <h1 className="mt-2 max-w-[9ch] font-sans text-[clamp(3.25rem,15vw,6.4rem)] font-semibold leading-[0.82] tracking-[-0.08em]">
+              <h1 className="studio-fluid-title mt-2 max-w-[11ch] font-sans text-[clamp(2.45rem,11vw,4.75rem)] font-semibold leading-[0.9]">
                 {selectedMatch?.paint.name ?? "Choose brands"}
               </h1>
               {selectedMatch ? (
@@ -383,7 +418,7 @@ export default function CommercialPaintMatcher() {
               <button
                 type="button"
                 onClick={() => setFiltersOpen((isOpen) => !isOpen)}
-                className="flex h-11 items-center gap-2 bg-[#758967] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-88"
+                className="flex h-11 items-center gap-2 bg-[var(--studio-tool-accent)] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[var(--studio-tool-accent-ink)] transition-opacity hover:opacity-88"
               >
                 <SlidersHorizontal className="h-4 w-4" />
                 Filter
@@ -407,7 +442,7 @@ export default function CommercialPaintMatcher() {
                       />
                       <span
                         className={`flex h-5 w-5 items-center justify-center border ${
-                          checked ? "border-[#758967] bg-[#758967]" : "border-black/24 bg-transparent"
+                          checked ? "border-[var(--studio-tool-accent)] bg-[var(--studio-tool-accent)]" : "border-black/24 bg-transparent"
                         }`}
                         aria-hidden="true"
                       >
@@ -453,8 +488,18 @@ export default function CommercialPaintMatcher() {
             </div>
 
             <div className="min-h-0 flex-1 overflow-y-auto">
-              {displayedMatches
-                .map(({ paint, delta }) => {
+              {paintLibraryStatus === "loading" ? (
+                <div className="grid min-h-40 place-items-center px-4 text-center text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-black/42">
+                  Loading paint library
+                </div>
+              ) : null}
+              {paintLibraryStatus === "error" ? (
+                <div className="grid min-h-40 place-items-center px-4 text-center text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-black/42">
+                  Paint library unavailable
+                </div>
+              ) : null}
+              {paintLibraryStatus === "ready"
+                ? displayedMatches.map(({ paint, delta }) => {
                   const score = scoreFromDelta(delta);
                   const isSelected = selectedMatch?.paint.id === paint.id;
                   return (
@@ -472,7 +517,7 @@ export default function CommercialPaintMatcher() {
                       >
                         <span
                           className={`block min-h-[4.6rem] border-r border-black/10 ${
-                            isSelected ? "shadow-[inset_0_0_0_3px_#758967]" : ""
+                            isSelected ? "shadow-[inset_0_0_0_3px_var(--studio-tool-accent)]" : ""
                           }`}
                           style={{ backgroundColor: paint.hex }}
                           aria-hidden="true"
@@ -497,7 +542,7 @@ export default function CommercialPaintMatcher() {
                             {score}
                           </span>
                           {copiedPaintId === paint.id ? (
-                            <Check className="h-4 w-4 text-[#758967]" />
+                            <Check className="h-4 w-4 text-[var(--studio-tool-accent)]" />
                           ) : (
                             <Copy className="h-4 w-4 text-black/44" />
                           )}
@@ -505,7 +550,8 @@ export default function CommercialPaintMatcher() {
                       </button>
                     </div>
                   );
-              })}
+                })
+                : null}
             </div>
             </section>
           </div>
@@ -585,7 +631,7 @@ export default function CommercialPaintMatcher() {
                   <button
                     type="button"
                     onClick={openPhotoPicker}
-                    className="h-9 bg-[#758967] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white"
+                    className="h-9 bg-[var(--studio-tool-accent)] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[var(--studio-tool-accent-ink)]"
                   >
                     Retake
                   </button>

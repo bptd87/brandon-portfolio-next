@@ -1,8 +1,8 @@
 "use client";
 
 import { type CSSProperties } from "react";
+import dynamic from "next/dynamic";
 
-import AboutModelViewer from "@/components/AboutModelViewer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
@@ -19,7 +19,11 @@ const notFoundLinks = [
   { href: "/studio", label: "Studio" },
   { href: "/search", label: "Search" },
 ] as const;
-const ABOUT_MODEL_URL = "/assets/about/3d/brandon-pt-davis-3d-model.glb";
+const ABOUT_MODEL_URL =
+  "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/files/site-assets/assets/about/3d/brandon-pt-davis-3d-model.glb";
+const AboutModelViewer = dynamic(() => import("@/components/AboutModelViewer"), {
+  ssr: false,
+});
 
 export default function NotFound() {
   const { homeTheme } = useHomeTheme();

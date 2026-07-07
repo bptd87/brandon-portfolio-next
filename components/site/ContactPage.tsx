@@ -3,7 +3,6 @@
 import { type CSSProperties, useState } from "react";
 import { Instagram, Linkedin, Mail, Send, X } from "lucide-react";
 
-import { capturePostHogEvent, isPostHogConfigured } from "../../lib/analytics/posthog-browser";
 import { Button } from "../../client/src/components/ui/button";
 import { Input } from "../../client/src/components/ui/input";
 import { Label } from "../../client/src/components/ui/label";
@@ -46,13 +45,6 @@ export function ContactPage() {
     setErrorMessage("");
 
     try {
-      if (isPostHogConfigured()) {
-        capturePostHogEvent("contact_form_submitted", {
-          pathname: "/contact",
-          subject: formData.subject,
-        });
-      }
-
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -68,22 +60,10 @@ export function ContactPage() {
 
       setStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
-      if (isPostHogConfigured()) {
-        capturePostHogEvent("contact_form_submit_succeeded", {
-          pathname: "/contact",
-          subject: formData.subject,
-        });
-      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Failed to send message.");
-      if (isPostHogConfigured()) {
-        capturePostHogEvent("contact_form_submit_failed", {
-          pathname: "/contact",
-          subject: formData.subject,
-        });
-      }
     } finally {
       setIsSubmitting(false);
     }

@@ -820,6 +820,20 @@ function ArticleDetailContent({
   const article = initialArticle || getLocalArticleRecordBySlug(slug);
   const { homeTheme } = useHomeTheme();
   useHomeDocumentTheme(homeTheme);
+  const articleSlug = article?.slug || "";
+  const isLearningPortalArticle =
+    variant === "tutorial" ||
+    LEARNING_PORTAL_ARTICLE_SLUG_SET.has(articleSlug);
+  const isNarrativeArticle = !isLearningPortalArticle;
+  const articleReadingInk = isLearningPortalArticle
+    ? homeTheme.name === "Green"
+      ? homeTheme.controlBg
+      : homeTheme.name === "Blue"
+        ? homeTheme.ghost
+        : homeTheme.name === "Purple"
+          ? homeTheme.accent
+          : homeTheme.ink
+    : "var(--article-ink)";
   const articleThemeStyle = {
     "--article-bg": homeTheme.bg,
     "--article-ink": homeTheme.ink,
@@ -827,6 +841,21 @@ function ArticleDetailContent({
     "--article-ghost": homeTheme.ghost,
     "--article-accent": homeTheme.accent,
     "--article-accent-soft": homeTheme.accentSoft,
+    "--article-control-bg": homeTheme.controlBg,
+    "--article-control-ink": homeTheme.controlInk,
+    "--article-reading-ink": articleReadingInk,
+    "--article-copy": isLearningPortalArticle
+      ? "color-mix(in srgb, var(--article-reading-ink) 86%, transparent)"
+      : "color-mix(in srgb, var(--article-ink) 84%, transparent)",
+    "--article-copy-strong": isLearningPortalArticle
+      ? "var(--article-reading-ink)"
+      : "var(--article-ink)",
+    "--article-copy-muted": isLearningPortalArticle
+      ? "color-mix(in srgb, var(--article-reading-ink) 58%, transparent)"
+      : "var(--article-muted)",
+    "--article-link": isLearningPortalArticle
+      ? "var(--article-reading-ink)"
+      : "var(--article-ink)",
     backgroundColor: homeTheme.bg,
     color: homeTheme.ink,
     fontFamily: HOME_BODY_FONT,
@@ -1244,10 +1273,6 @@ function ArticleDetailContent({
   const articleDescription =
     article.excerpt ||
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
-  const isLearningPortalArticle =
-    variant === "tutorial" ||
-    LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
-  const isNarrativeArticle = !isLearningPortalArticle;
   const articleBasePath = "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
   const articleDisplayUpdatedAt = getDisplayUpdatedDate(
@@ -1262,9 +1287,7 @@ function ArticleDetailContent({
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedArticleUrl}`;
   return (
     <div
-      className={`article-detail-page min-h-screen transition-colors duration-500 ${
-        isNarrativeArticle ? "" : "publish-editorial"
-      }`}
+      className="article-detail-page min-h-screen transition-colors duration-500"
       style={articleThemeStyle}
     >
       <SEO
@@ -1711,9 +1734,24 @@ function ArticleDetailContent({
         ) : null}
 
         <div
-          className={`mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8 ${isLearningPortalArticle ? "mt-14 pb-10 md:pb-16" : ""}`}
+          className={
+            isLearningPortalArticle
+              ? "article-reading-shell w-full px-5 pb-10 pt-14 sm:px-6 md:pb-16 md:pt-16 lg:px-8"
+              : "article-reading-shell mx-auto w-full max-w-[960px] px-5 sm:px-6 lg:px-8"
+          }
+          style={
+            isLearningPortalArticle
+              ? {
+                  backgroundColor: homeTheme.bg,
+                  color: "var(--article-copy-strong)",
+                }
+              : undefined
+          }
         >
-          <AnimatedSection delay={120} className="mx-auto max-w-[44rem]">
+          <AnimatedSection
+            delay={120}
+            className={`mx-auto ${isLearningPortalArticle ? "max-w-[48rem]" : "max-w-[44rem]"}`}
+          >
             <div>
               <div className="min-w-0">
                 <div className="relative">
@@ -1901,7 +1939,7 @@ function ArticleDetailContent({
                                   return (
                                     <p
                                       key={index}
-                                      className={isLearningPortalArticle ? "mb-7 text-[1.06rem] leading-[1.82] tracking-[0] text-[color:var(--article-copy)] [&_a]:text-[color:var(--article-ink)] [&_a]:underline [&_a]:underline-offset-4 [&_strong]:font-bold [&_strong]:text-[color:var(--article-ink)]" : "mb-7 text-[1.07rem] leading-[1.78] tracking-[0] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"}
+                                      className={isLearningPortalArticle ? "mb-7 text-[1.08rem] leading-[1.82] tracking-[0] text-[color:var(--article-copy)] [&_a]:text-[color:var(--article-link)] [&_a]:underline [&_a]:decoration-[color:var(--article-copy-muted)] [&_a]:underline-offset-4 [&_strong]:font-bold [&_strong]:text-[color:var(--article-copy-strong)]" : "mb-7 text-[1.07rem] leading-[1.78] tracking-[0] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"}
                                       dangerouslySetInnerHTML={{
                                         __html: decodeHTMLEntities(
                                           section.text || section.content || ""
@@ -2353,7 +2391,7 @@ function ArticleDetailContent({
                                   return (
                                     <div
                                       key={index}
-                                      className="article-html-content [&_p]:mb-7 [&_p]:text-[1.07rem] [&_p]:leading-[1.78] [&_p]:tracking-[0]"
+                                      className="article-html-content [&_p]:mb-7 [&_p]:text-[1.08rem] [&_p]:leading-[1.82] [&_p]:tracking-[0]"
                                       dangerouslySetInnerHTML={{
                                         __html: processHTMLImages(
                                           decodeHTMLEntities(section.content)
@@ -2366,7 +2404,7 @@ function ArticleDetailContent({
                                   return (
                                     <div
                                       key={index}
-                                      className="[&_p]:mb-7 [&_p]:text-[1.07rem] [&_p]:leading-[1.78] [&_p]:tracking-[0]"
+                                      className="[&_p]:mb-7 [&_p]:text-[1.08rem] [&_p]:leading-[1.82] [&_p]:tracking-[0]"
                                       dangerouslySetInnerHTML={{
                                         __html: processHTMLImages(
                                           section.content
@@ -2715,7 +2753,13 @@ function ArticleDetailContent({
       )}
 
       {related.length > 0 && (
-        <section className="article-editorial article-editorial-light pb-20">
+        <section
+          className="article-editorial article-editorial-light article-related-reading-section pb-20"
+          style={{
+            backgroundColor: homeTheme.bg,
+            color: "var(--article-copy-strong)",
+          }}
+        >
           <div className="w-full px-[clamp(1.5rem,5vw,6rem)]">
             <div
               className="border-t pt-12 md:pt-14"
@@ -2724,17 +2768,15 @@ function ArticleDetailContent({
               <MotionReveal className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <div className="max-w-3xl">
                   <p
-                    className="mb-4 text-[clamp(1rem,1.25vw,1.12rem)] font-medium leading-[1.08] tracking-[0]"
-                    style={{ color: homeTheme.muted }}
+                    className="article-related-kicker mb-4 text-[clamp(1rem,1.25vw,1.12rem)] font-medium leading-[1.08] tracking-[0]"
                   >
                     {isLearningPortalArticle
                       ? "Scenic design archive"
                       : "Scenic design writing"}
                   </p>
                   <h2
-                    className="max-w-[12ch] text-[clamp(2.25rem,4.2vw,4.2rem)] font-semibold leading-[0.92] tracking-[0]"
+                    className="article-related-heading max-w-[12ch] text-[clamp(2.25rem,4.2vw,4.2rem)] font-semibold leading-[0.92] tracking-[0]"
                     style={{
-                      color: homeTheme.ink,
                       fontFamily: HOME_DISPLAY_FONT,
                       fontStretch: "condensed",
                     }}
@@ -2854,12 +2896,7 @@ function ArticleDetailContent({
                 <button
                   type="button"
                   onClick={() => scrollRelatedArticles("previous")}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
-                  style={{
-                    backgroundColor: homeTheme.accentSoft,
-                    borderColor: homeTheme.ghost,
-                    color: homeTheme.ink,
-                  }}
+                  className="article-related-control inline-flex h-11 w-11 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
                   aria-label="Previous related article cards"
                 >
                   <ChevronLeft
@@ -2871,12 +2908,7 @@ function ArticleDetailContent({
                 <button
                   type="button"
                   onClick={() => scrollRelatedArticles("next")}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
-                  style={{
-                    backgroundColor: homeTheme.controlBg,
-                    borderColor: homeTheme.controlBg,
-                    color: homeTheme.controlInk,
-                  }}
+                  className="article-related-control article-related-control-primary inline-flex h-11 w-11 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
                   aria-label="Next related article cards"
                 >
                   <ChevronRight
@@ -2905,6 +2937,7 @@ function ArticleDetailContent({
           --article-copy: color-mix(in srgb, var(--article-ink) 84%, transparent);
           --article-copy-strong: var(--article-ink);
           --article-copy-muted: var(--article-muted);
+          --article-link: var(--article-copy-strong);
           --article-rule: var(--article-ghost);
         }
 
@@ -3038,7 +3071,7 @@ function ArticleDetailContent({
         }
 
         .article-editorial-light .article-content a {
-          color: var(--article-copy-strong) !important;
+          color: var(--article-link) !important;
           text-decoration-color: var(--article-copy-muted) !important;
         }
 
@@ -3051,34 +3084,37 @@ function ArticleDetailContent({
         }
 
         .article-editorial-learning .article-content h2 {
-          margin-top: 5rem !important;
-          margin-bottom: 1.5rem !important;
-          color: var(--article-ink) !important;
-          font-size: clamp(1.5rem, 2.15vw, 1.95rem) !important;
-          font-weight: 650 !important;
-          line-height: 1.04 !important;
+          margin-top: 4.75rem !important;
+          margin-bottom: 1.1rem !important;
+          color: var(--article-copy-strong) !important;
+          font-family: var(--article-body-font) !important;
+          font-size: clamp(1.42rem, 1.85vw, 1.82rem) !important;
+          font-weight: 720 !important;
+          line-height: 1.16 !important;
           letter-spacing: 0 !important;
           text-wrap: balance;
         }
 
         .article-editorial-learning .article-content h3 {
-          margin-top: 3rem !important;
+          margin-top: 2.75rem !important;
           margin-bottom: 1rem !important;
-          color: var(--article-ink) !important;
-          font-size: clamp(1.35rem, 1.75vw, 1.7rem) !important;
-          font-weight: 620 !important;
-          line-height: 1.1 !important;
+          color: var(--article-copy-strong) !important;
+          font-family: var(--article-body-font) !important;
+          font-size: clamp(1.24rem, 1.58vw, 1.54rem) !important;
+          font-weight: 680 !important;
+          line-height: 1.2 !important;
           letter-spacing: 0 !important;
           text-wrap: balance;
         }
 
         .article-editorial-learning .article-content .article-learning-numbered-heading {
-          margin-top: 5rem !important;
-          margin-bottom: 1.5rem !important;
-          color: var(--article-ink) !important;
-          font-size: clamp(1.5rem, 2.15vw, 1.95rem) !important;
-          font-weight: 650 !important;
-          line-height: 1.04 !important;
+          margin-top: 4.75rem !important;
+          margin-bottom: 1.1rem !important;
+          color: var(--article-copy-strong) !important;
+          font-family: var(--article-body-font) !important;
+          font-size: clamp(1.42rem, 1.85vw, 1.82rem) !important;
+          font-weight: 720 !important;
+          line-height: 1.16 !important;
           letter-spacing: 0 !important;
           text-wrap: balance;
         }
@@ -3097,9 +3133,9 @@ function ArticleDetailContent({
         .article-editorial-learning .article-content p,
         .article-editorial-learning .article-content li {
           color: var(--article-copy) !important;
-          font-size: 1.06rem !important;
-          font-weight: 400 !important;
-          line-height: 1.82 !important;
+          font-size: clamp(1.04rem, 1.06vw, 1.09rem) !important;
+          font-weight: 430 !important;
+          line-height: 1.78 !important;
           letter-spacing: 0 !important;
         }
 
@@ -3130,6 +3166,31 @@ function ArticleDetailContent({
         .article-editorial-learning .uppercase {
           text-transform: none !important;
           letter-spacing: 0 !important;
+        }
+
+        .article-related-reading-section {
+          background-color: var(--article-bg) !important;
+          color: var(--article-copy-strong) !important;
+        }
+
+        .article-related-reading-section .article-related-kicker {
+          color: var(--article-copy-muted) !important;
+        }
+
+        .article-related-reading-section .article-related-heading {
+          color: var(--article-copy-strong) !important;
+        }
+
+        .article-related-reading-section .article-related-control {
+          background-color: var(--article-accent-soft) !important;
+          border-color: var(--article-ghost) !important;
+          color: var(--article-copy-strong) !important;
+        }
+
+        .article-related-reading-section .article-related-control-primary {
+          background-color: var(--article-control-bg, var(--article-copy-strong)) !important;
+          border-color: var(--article-control-bg, var(--article-copy-strong)) !important;
+          color: var(--article-control-ink, var(--article-bg)) !important;
         }
 
         .article-editorial .article-content ul,

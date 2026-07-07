@@ -9,6 +9,7 @@ import {
 import { SEO } from "@/components/SEO";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { Link } from "wouter";
+import { useStudioToolTheme } from "@/hooks/useStudioToolTheme";
 
 interface DimensionItem {
   name: string;
@@ -467,6 +468,10 @@ function formatCategoryFilterLabel(selectedCategories: CategoryKey[]) {
 }
 
 export default function DimensionReference() {
+  const { studioToolStyle } = useStudioToolTheme({
+    accent: "#052f8b",
+    accentInk: "#a8f4ff",
+  });
   const [selectedCategories, setSelectedCategories] =
     useState<CategoryKey[]>(CATEGORY_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -535,7 +540,10 @@ export default function DimensionReference() {
   }
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
+    <div
+      className="studio-tool-page h-[100dvh] overflow-hidden bg-[#f3eee4] text-black"
+      style={studioToolStyle}
+    >
       <SEO
         title="Dimension Reference | Scenic Design Standards"
         description="Reference dimensions for furniture, theatre, experiential design, events, and architecture in a mobile studio lookup tool."
@@ -546,7 +554,7 @@ export default function DimensionReference() {
           <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f2bf66] text-[#56360b] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(128,79,16,0.22)]"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--studio-tool-control-bg)] text-[var(--studio-tool-control-ink)] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(0,0,0,0.18)]"
               aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -577,7 +585,7 @@ export default function DimensionReference() {
                     Dimension Reference
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <p className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[#c9891d]">
+                    <p className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[var(--studio-tool-accent)]">
                       {selectedDimension
                         ? getCategoryLabel(selectedDimension.category as CategoryKey)
                         : "No result"}
@@ -587,13 +595,13 @@ export default function DimensionReference() {
                     </span>
                   </div>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center bg-black text-white shadow-[0_12px_28px_rgba(0,0,0,0.14)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--studio-tool-control-bg)] text-[var(--studio-tool-control-ink)] shadow-[0_12px_28px_rgba(0,0,0,0.14)]">
                   <Ruler className="h-5 w-5" />
                 </div>
               </div>
 
               <div>
-                <h1 className="max-w-[12ch] font-sans text-[clamp(2rem,8vw,3.45rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-black">
+                <h1 className="studio-fluid-title max-w-[15ch] font-sans text-[clamp(1.7rem,6.4vw,2.8rem)] font-semibold leading-[0.96] text-black">
                   {selectedDimension?.name ?? "No dimensions"}
                 </h1>
                 {selectedDimension ? (
@@ -640,7 +648,7 @@ export default function DimensionReference() {
                 <button
                   type="button"
                   onClick={() => setFiltersOpen((isOpen) => !isOpen)}
-                  className="flex h-11 items-center gap-2 bg-[#c9891d] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
+                  className="flex h-11 items-center gap-2 bg-[var(--studio-tool-accent)] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[var(--studio-tool-accent-ink)] transition-opacity hover:opacity-88"
                 >
                   <SlidersHorizontal className="h-4 w-4" />
                   Filter
@@ -713,7 +721,7 @@ export default function DimensionReference() {
                           <span
                             className={`flex h-5 w-5 items-center justify-center border ${
                               checked
-                                ? "border-[#c9891d] bg-[#c9891d]"
+                                ? "border-[var(--studio-tool-accent)] bg-[var(--studio-tool-accent)]"
                                 : "border-black/24 bg-transparent"
                             }`}
                             aria-hidden="true"
@@ -773,7 +781,7 @@ export default function DimensionReference() {
                         <div className="flex items-start gap-3">
                           <span
                             className={`mt-1 h-3 w-3 shrink-0 ${
-                              isSelected ? "bg-[#c9891d]" : "bg-black"
+                              isSelected ? "bg-[var(--studio-tool-accent)]" : "bg-black"
                             }`}
                             aria-hidden="true"
                           />
@@ -797,7 +805,7 @@ export default function DimensionReference() {
                         aria-label={`Copy ${item.name} dimensions`}
                       >
                         {copiedItem === itemKey ? (
-                          <Check className="h-4 w-4 text-[#c9891d]" />
+                          <Check className="h-4 w-4 text-[var(--studio-tool-accent)]" />
                         ) : (
                           <Copy className="h-4 w-4 text-black/44" />
                         )}

@@ -10,7 +10,7 @@ export const metadata = {
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR paint libraries with brand filters.",
     pathname: "/studio/apps/commercial-paint-matcher",
-    image: "/assets/studio-apps/icons/commercial-paint-matcher.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher.jpg",
   }),
   appleWebApp: {
     capable: true,
@@ -20,7 +20,7 @@ export const metadata = {
   icons: {
     apple: [
       {
-        url: "/assets/studio-apps/icons/commercial-paint-matcher-touch.png",
+        url: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-touch.png",
         sizes: "180x180",
         type: "image/png",
       },

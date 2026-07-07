@@ -5,10 +5,8 @@ import "./globals.css";
 
 import { LegacyProviders } from "../components/legacy/Providers";
 import { JsonLdScript } from "../components/seo/JsonLdScript";
-import { AnalyticsConsentBanner } from "../components/site/AnalyticsConsentBanner";
 import { ContactOverlayProvider } from "../components/site/ContactOverlay";
 import { LegacyClientCleanup } from "../components/site/LegacyClientCleanup";
-import { PostHogAnalytics } from "../components/site/PostHogAnalytics";
 import { StudioFrameMode } from "../components/site/StudioFrameMode";
 import { absoluteUrl, siteMetadata } from "../lib/metadata";
 import {
@@ -228,11 +226,9 @@ export default function RootLayout({
       >
         <StudioFrameMode />
         <LegacyClientCleanup />
-        {isProduction ? <PostHogAnalytics /> : null}
         <LegacyProviders>
           <ContactOverlayProvider>{children}</ContactOverlayProvider>
         </LegacyProviders>
-        {isProduction ? <AnalyticsConsentBanner /> : null}
         {isProduction ? <Analytics /> : null}
         {isProduction ? <SpeedInsights /> : null}
       </body>

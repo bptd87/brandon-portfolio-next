@@ -338,6 +338,13 @@
     font-stretch: condensed;
   }
 
+  .studio-fluid-title {
+    font-family: var(--font-display) !important;
+    font-stretch: normal;
+    letter-spacing: 0 !important;
+    text-wrap: balance;
+  }
+
   p {
     font-size: 1rem;
     line-height: 1.68;
@@ -1027,14 +1034,124 @@ html[data-studio-frame="true"] {
 
 html[data-studio-frame="true"] header,
 html[data-studio-frame="true"] footer,
-html[data-studio-frame="true"] .studio-app-mobile-topbar,
-html[data-studio-frame="true"] [aria-label="Analytics consent"] {
+html[data-studio-frame="true"] .studio-app-mobile-topbar {
   display: none !important;
 }
 
 html[data-studio-frame="true"] main {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
+}
+
+.studio-tool-page {
+  background: var(--studio-tool-bg) !important;
+  color: var(--studio-tool-ink) !important;
+  font-family: var(--font-sans);
+}
+
+.studio-tool-page .studio-app-main {
+  background: var(--studio-tool-bg) !important;
+  color: var(--studio-tool-ink) !important;
+}
+
+.studio-tool-page .studio-app-mobile-topbar,
+.studio-tool-page .studio-app-frame-topbar {
+  background-color: var(--studio-tool-bg) !important;
+  border-color: var(--studio-tool-border) !important;
+  color: var(--studio-tool-ink) !important;
+}
+
+.studio-tool-page .studio-app-frame-topbar {
+  box-shadow: 0 1px 0 var(--studio-tool-border);
+}
+
+.studio-tool-page .studio-app-frame-title,
+.studio-tool-page .studio-app-mobile-topbar p {
+  color: var(--studio-tool-muted) !important;
+}
+
+.studio-tool-page [class*="bg-[#f3eee4]"],
+.studio-tool-page [class*="bg-[#fbf7ef]"],
+.studio-tool-page [class*="bg-[#ece5d7]"],
+.studio-tool-page [class*="bg-[#e7dfd0]"],
+.studio-tool-page [class*="bg-[#ebe5d8]"] {
+  background-color: var(--studio-tool-panel) !important;
+}
+
+.studio-tool-page .studio-app-main section[class*="border"] {
+  border-radius: 1.15rem !important;
+}
+
+.studio-tool-page .studio-app-main section[class*="overflow-hidden"][class*="border"] {
+  border-radius: 1.35rem !important;
+}
+
+.studio-tool-page .studio-app-main label[class*="border"],
+.studio-tool-page .studio-app-main div[class*="border"][class*="bg-[#f3eee4]"],
+.studio-tool-page .studio-app-main div[class*="border"][class*="bg-[#ebe5d8]"] {
+  border-radius: 0.9rem !important;
+}
+
+.studio-tool-page [class*="border-black"] {
+  border-color: var(--studio-tool-border) !important;
+}
+
+.studio-tool-page [class*="text-black/"],
+.studio-tool-page [class*="placeholder:text-black/"]::placeholder {
+  color: var(--studio-tool-muted) !important;
+}
+
+.studio-tool-page [class*="text-black"],
+.studio-tool-page input,
+.studio-tool-page textarea,
+.studio-tool-page label {
+  color: var(--studio-tool-ink);
+}
+
+.studio-tool-page input,
+.studio-tool-page textarea,
+.studio-tool-page [role="combobox"] {
+  background-color: color-mix(in srgb, var(--studio-tool-bg) 82%, var(--studio-tool-ink) 18%) !important;
+  border-color: var(--studio-tool-border) !important;
+  color: var(--studio-tool-ink) !important;
+  border-radius: 0.85rem;
+}
+
+.studio-tool-page .studio-app-mobile-topbar a,
+.studio-tool-page .studio-app-mobile-topbar button,
+.studio-tool-page .studio-app-frame-topbar a,
+.studio-tool-page .studio-app-frame-topbar button,
+.studio-tool-page .studio-tool-accent-button {
+  background-color: var(--studio-tool-control-bg) !important;
+  color: var(--studio-tool-control-ink) !important;
+  border-radius: 999px !important;
+}
+
+.studio-tool-page .studio-tool-secondary-button {
+  background-color: var(--studio-tool-panel) !important;
+  color: var(--studio-tool-ink) !important;
+  border-color: var(--studio-tool-border) !important;
+}
+
+.studio-tool-page .studio-app-main button[class*="h-8"],
+.studio-tool-page .studio-app-main button[class*="h-9"],
+.studio-tool-page .studio-app-main button[class*="h-10"],
+.studio-tool-page .studio-app-main button[class*="h-11"],
+.studio-tool-page .studio-app-main a[class*="h-8"],
+.studio-tool-page .studio-app-main a[class*="h-9"],
+.studio-tool-page .studio-app-main a[class*="h-10"],
+.studio-tool-page .studio-app-main a[class*="h-11"] {
+  border-radius: 999px !important;
+}
+
+.studio-tool-page .studio-tool-result-panel {
+  background-color: var(--studio-tool-panel) !important;
+  color: var(--studio-tool-ink) !important;
+  border-color: var(--studio-tool-border) !important;
+}
+
+.studio-tool-page .studio-tool-kicker {
+  color: var(--studio-tool-muted) !important;
 }
 
 html[data-studio-frame="true"] main.studio-app-main {

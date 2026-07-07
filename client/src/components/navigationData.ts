@@ -57,5 +57,5 @@ export const studioAppPreview = {
   href: "/studio/apps/scale-calculator",
   meta: "App · Mobile Tool",
   imageAlt: "Scale Calculator scenic design app card",
-  imageUrl: "/assets/studio-apps/icons/scale-calculator.jpg",
+  imageUrl: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator.jpg",
 } as const;

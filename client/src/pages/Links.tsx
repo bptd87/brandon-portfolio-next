@@ -24,21 +24,21 @@ const STUDIO_APP_TILES: FeedTile[] = [
     title: "Scale Calculator",
     label: "Scenic Tool",
     href: "/studio/apps/scale-calculator",
-    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator.jpg",
   },
   {
     id: "app-dimension-reference",
     title: "Dimension Reference",
     label: "Scenic Tool",
     href: "/studio/apps/dimension-reference",
-    image: "/assets/studio-apps/icons/dimension-reference.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference.jpg",
   },
   {
     id: "app-rosco-paint-calculator",
     title: "Rosco Paint Calculator",
     label: "Paint Shop",
     href: "/studio/apps/rosco-paint-calculator",
-    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
+    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator.jpg",
   },
 ];
 

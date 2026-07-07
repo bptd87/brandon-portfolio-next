@@ -48,6 +48,15 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/data/:path*\\.json",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
     ];
   },
   async redirects() {
