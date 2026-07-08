@@ -98,8 +98,8 @@ export default function RootLayout({
           {
             bg: "#ffffff",
             ink: "#2c2c2c",
-            muted: "rgba(44,44,44,0.62)",
-            ghost: "#cbcbcb",
+            muted: "rgba(44,44,44,0.68)",
+            ghost: "#737373",
             accent: "#2c2c2c",
             accentSoft: "rgba(44,44,44,0.08)",
             controlBg: "#2c2c2c",
@@ -116,7 +116,7 @@ export default function RootLayout({
             accent: "#ff6f00",
             accentSoft: "rgba(255,111,0,0.12)",
             controlBg: "#ff6f00",
-            controlInk: "#20180f",
+            controlInk: "#171008",
             footerBg: "#ded4bf",
             footerDisplay: "#ff6f00",
             footerInk: "#2c2c2c"
@@ -124,7 +124,7 @@ export default function RootLayout({
           {
             bg: "#1385f6",
             ink: "#a8f4ff",
-            muted: "rgba(3,41,118,0.72)",
+            muted: "rgba(3,41,118,0.88)",
             ghost: "#052f8b",
             accent: "#a8f4ff",
             accentSoft: "rgba(168,244,255,0.14)",
@@ -155,7 +155,7 @@ export default function RootLayout({
             accent: "#dc30ff",
             accentSoft: "rgba(220,48,255,0.16)",
             controlBg: "#dc30ff",
-            controlInk: "#ffe3ff",
+            controlInk: "#2f003e",
             footerBg: "#2f003e",
             footerDisplay: "#dc30ff",
             footerInk: "#ffe3ff"

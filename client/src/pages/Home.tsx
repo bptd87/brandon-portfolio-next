@@ -1034,9 +1034,10 @@ function HomeIdentityCard({
                           src={card.image || ""}
                           alt={`${card.title} scenic design by Brandon PT Davis`}
                           fill
-                          priority={index < 4}
-                          loading={index < 4 ? "eager" : "lazy"}
-                          fetchPriority={index < 4 ? "high" : "auto"}
+                          quality={index < 2 ? 76 : 70}
+                          priority={index < 2}
+                          loading={index < 2 ? "eager" : "lazy"}
+                          fetchPriority={index < 2 ? "high" : "auto"}
                           sizes="(max-width: 768px) 48vw, 16rem"
                           draggable={false}
                           onDragStart={event => event.preventDefault()}
@@ -1133,15 +1134,22 @@ function HomeMinimalGallery({
     let didDrag = false;
     let slideWidth = 0;
     let trackPaddingLeft = 0;
+    let slides: HTMLElement[] = [];
+    let slideButtons: Array<HTMLElement | null> = [];
 
     const normalizeOffset = (value: number) => {
       if (!cycle) return 0;
       return ((value - cycle) % cycle + cycle) % cycle + cycle;
     };
 
+    const settle = (value: number) => Math.round(value * 100) / 100;
+
     const measureCarousel = () => {
-      const slides = Array.from(
+      slides = Array.from(
         track.querySelectorAll<HTMLElement>("[data-home-feature-slide]")
+      );
+      slideButtons = slides.map(slide =>
+        slide.querySelector<HTMLElement>("[data-home-feature-button]")
       );
       const firstSlide = slides[0];
       if (!firstSlide) return slides;
@@ -1169,13 +1177,13 @@ function HomeMinimalGallery({
     };
 
     const renderCarousel = () => {
-      const slides = measureCarousel();
+      if (!slides.length) measureCarousel();
       if (!slides.length || !cycle) return;
 
       const center = carousel.clientWidth / 2;
 
       offset = normalizeOffset(offset);
-      track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+      track.style.transform = `translate3d(${settle(-offset)}px, 0, 0)`;
 
       slides.forEach((slide, index) => {
         const slideCenter = trackPaddingLeft + index * step + slideWidth / 2 - offset;
@@ -1186,9 +1194,9 @@ function HomeMinimalGallery({
           0.18,
           Math.min(1, Math.cos(distanceFromCenter * (Math.PI / 600)))
         );
-        const button = slide.querySelector<HTMLElement>("[data-home-feature-button]");
+        const button = slideButtons[index];
 
-        slide.style.transform = `translateY(${curveY}px) rotate(${rotate}deg)`;
+        slide.style.transform = `translate3d(0, ${settle(curveY)}px, 0) rotate(${settle(rotate)}deg)`;
         if (button) button.style.opacity = opacity.toString();
       });
     };
@@ -1262,7 +1270,12 @@ function HomeMinimalGallery({
     carousel.addEventListener("pointercancel", handlePointerUp);
     carousel.addEventListener("click", handleClick, true);
     carousel.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("resize", renderCarousel);
+    const handleResize = () => {
+      measureCarousel();
+      renderCarousel();
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       carousel.removeEventListener("pointerdown", handlePointerDown);
@@ -1271,7 +1284,7 @@ function HomeMinimalGallery({
       carousel.removeEventListener("pointercancel", handlePointerUp);
       carousel.removeEventListener("click", handleClick, true);
       carousel.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("resize", renderCarousel);
+      window.removeEventListener("resize", handleResize);
     };
   }, [carouselProjects.length]);
 
@@ -1461,47 +1474,45 @@ function HomeMinimalGallery({
         @keyframes home-featured-media-in {
           0% {
             opacity: 0;
-            transform: translateY(24%) scale(0.8);
-          }
-          52% {
-            opacity: 1;
-            transform: translateY(-0.9rem) scale(1.045);
-          }
-          72% {
-            opacity: 1;
-            transform: translateY(0.22rem) scale(0.988);
+            transform: translate3d(0, 1.8rem, 0) scale(0.94);
           }
           100% {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate3d(0, 0, 0) scale(1);
           }
         }
 
         @keyframes home-featured-button-in {
           0% {
-            transform: translateY(0.75rem) scale(0.94);
-          }
-          58% {
-            transform: translateY(-0.25rem) scale(1.04);
+            opacity: 0;
+            transform: translate3d(0, 0.65rem, 0) scale(0.97);
           }
           100% {
-            transform: translateY(0) scale(1);
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
           }
         }
 
         .home-featured-strip-card {
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
           transform-origin: 50% 70vw;
+          transform-style: preserve-3d;
           touch-action: pan-y;
           will-change: transform;
         }
 
         .home-featured-carousel,
         .home-featured-strip-track {
+          -webkit-backface-visibility: hidden;
           touch-action: pan-y;
           user-select: none;
         }
 
         .home-featured-carousel img {
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          transform: translateZ(0);
           user-select: none;
           -webkit-user-drag: none;
         }
@@ -1528,32 +1539,37 @@ function HomeMinimalGallery({
 
         .home-featured-media {
           opacity: 1;
-          transform: translateY(0) scale(1);
+          transform: translate3d(0, 0, 0) scale(1);
           transform-origin: 50% 70%;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          contain: paint;
+          isolation: isolate;
           will-change: transform, opacity;
         }
 
         [data-featured-inview="true"] .home-featured-media {
-          animation: home-featured-media-in 1080ms cubic-bezier(0.18, 1.42, 0.24, 1) both;
+          animation: home-featured-media-in 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
           animation-delay: calc(var(--home-feature-delay, 0) * 80ms + 220ms);
         }
 
         .home-featured-button {
-          transform: translateY(0) scale(1);
+          transform: translate3d(0, 0, 0) scale(1);
           transform-origin: center;
+          will-change: transform, opacity;
         }
 
         [data-featured-inview="true"] .home-featured-button {
-          animation: home-featured-button-in 880ms cubic-bezier(0.18, 1.42, 0.24, 1) both;
+          animation: home-featured-button-in 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
           animation-delay: calc(var(--home-feature-delay, 0) * 80ms + 340ms);
         }
 
         .home-portfolio-card {
           opacity: 0;
-          transform: translate3d(0, 2.4rem, 0) scale(0.84);
+          transform: translate3d(0, 1.6rem, 0) scale(0.94);
           transition:
-            opacity 520ms ease,
-            transform 980ms cubic-bezier(0.18, 1.42, 0.24, 1);
+            opacity 420ms ease,
+            transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
           transition-delay: var(--home-portfolio-delay, 0ms);
           will-change: opacity, transform;
         }
@@ -1564,10 +1580,10 @@ function HomeMinimalGallery({
         }
 
         .home-portfolio-media {
-          transform: scale(0.72);
+          transform: scale(0.92);
           transition:
-            box-shadow 520ms ease,
-            transform 980ms cubic-bezier(0.18, 1.42, 0.24, 1);
+            box-shadow 420ms ease,
+            transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
           transition-delay: var(--home-portfolio-delay, 0ms);
           will-change: transform;
         }
@@ -1583,14 +1599,14 @@ function HomeMinimalGallery({
             0 1.2rem 2.8rem rgba(0, 0, 0, 0.08),
             0 4.5rem 5.5rem rgba(0, 0, 0, 0.07),
             0 8rem 7rem rgba(0, 0, 0, 0.035);
-          filter: blur(18px);
+          filter: blur(14px);
           inset: 5% 4% -3%;
           opacity: 0;
           position: absolute;
-          transform: translate3d(0, 1.25rem, 0) scale(0.76);
+          transform: translate3d(0, 1rem, 0) scale(0.9);
           transition:
-            opacity 620ms ease,
-            transform 980ms cubic-bezier(0.18, 1.42, 0.24, 1);
+            opacity 520ms ease,
+            transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
           transition-delay: var(--home-portfolio-delay, 0ms);
         }
 
@@ -1684,10 +1700,10 @@ function HomeMinimalGallery({
                       src={project.coverImageUrl || ""}
                       alt={`${project.title} scenic design by Brandon PT Davis`}
                       fill
-                      quality={index < 8 ? 86 : 78}
-                      priority={index < 3}
-                      loading={index < 3 ? "eager" : "lazy"}
-                      fetchPriority={index < 3 ? "high" : "auto"}
+                      quality={index < carouselProjects.length ? 76 : 68}
+                      priority={false}
+                      loading="lazy"
+                      fetchPriority="auto"
                       sizes="(max-width: 768px) 76vw, 28rem"
                       draggable={false}
                       onContextMenu={event => event.preventDefault()}
@@ -1778,10 +1794,10 @@ function HomeMinimalGallery({
                       src={project.coverImageUrl || ""}
                       alt={`${project.title} scenic design by Brandon PT Davis`}
                       fill
-                      quality={index < 4 ? 86 : 78}
-                      priority={index < 3}
-                      loading={index < 3 ? "eager" : "lazy"}
-                      fetchPriority={index < 3 ? "high" : "auto"}
+                      quality={index < 3 ? 78 : 70}
+                      priority={false}
+                      loading="lazy"
+                      fetchPriority="auto"
                       sizes="(max-width: 768px) 100vw, (max-width: 1280px) 44vw, 23rem"
                       className="site-media-square object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018]"
                       style={{
