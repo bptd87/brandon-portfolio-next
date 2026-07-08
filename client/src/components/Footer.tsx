@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, type WheelEvent, useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef } from "react";
 import { Link } from "wouter";
 
 import { useHomeTheme } from "@/lib/homeTheme";
@@ -46,20 +46,6 @@ export default function Footer({
   const resolvedDisplayTextColor = displayTextColor || homeTheme.footerDisplay;
   const resolvedTextColor = textColor || homeTheme.footerInk;
 
-  const handleFooterWheel = (event: WheelEvent<HTMLElement>) => {
-    if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
-
-    const homeScrollRoot = document.querySelector<HTMLElement>("[data-home-scroll-root]");
-    if (!homeScrollRoot || homeScrollRoot.scrollHeight <= homeScrollRoot.clientHeight) return;
-
-    const previousScrollTop = homeScrollRoot.scrollTop;
-    homeScrollRoot.scrollTop += event.deltaY;
-
-    if (homeScrollRoot.scrollTop !== previousScrollTop) {
-      event.preventDefault();
-    }
-  };
-
   useEffect(() => {
     if (variant !== "immersive") return undefined;
 
@@ -104,8 +90,8 @@ export default function Footer({
       const titleBottom = title.offsetTop + title.clientHeight;
       const offsetY = (1 - progress) * Math.max(viewportHeight - titleBottom, 0);
 
-      footer.style.setProperty("--footer-scale-y", progress.toFixed(4));
-      footer.style.setProperty("--footer-offset-y", offsetY.toFixed(2));
+      footer.style.setProperty("--footer-scale-y", progress.toFixed(3));
+      footer.style.setProperty("--footer-offset-y", String(Math.round(offsetY)));
     };
 
     const requestUpdate = () => {
@@ -231,17 +217,20 @@ export default function Footer({
 
       <footer
         ref={footerRef}
-        onWheelCapture={handleFooterWheel}
-        className={`footer pointer-events-none fixed inset-x-0 bottom-0 z-0 flex min-h-[100dvh] w-full flex-col items-center justify-end gap-8 overflow-hidden px-0 py-16 text-center transition-[background-color,color,opacity] duration-500 ${className}`}
+        className={`footer pointer-events-none fixed inset-x-0 bottom-0 z-0 flex min-h-[100dvh] w-full flex-col items-center justify-end gap-8 overflow-hidden px-0 py-16 text-center transition-opacity duration-300 ${className}`}
         style={
           {
+            backfaceVisibility: "hidden",
             backgroundColor: resolvedBackgroundColor,
             color: resolvedTextColor,
             container: "footer / inline-size",
+            contain: "paint",
             fontFamily:
               '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
             fontStretch: "condensed",
-            transform: "translateY(calc(var(--footer-offset-y) * 1px))",
+            isolation: "isolate",
+            transform: "translate3d(0, calc(var(--footer-offset-y) * 1px), 0)",
+            willChange: "transform",
             "--footer-scale-y": 0,
             "--footer-offset-y": 120,
           } as CSSProperties
@@ -263,8 +252,10 @@ export default function Footer({
             lineHeight: 0.8,
             marginLeft: "-0.05em",
             textTransform: "uppercase",
-            transform: "scaleY(var(--footer-scale-y))",
+            backfaceVisibility: "hidden",
+            transform: "translate3d(0, 0, 0) scaleY(var(--footer-scale-y))",
             transformOrigin: "bottom",
+            willChange: "transform",
           }}
         >
           <span className="relative top-[-0.1em]">CONTACT</span>

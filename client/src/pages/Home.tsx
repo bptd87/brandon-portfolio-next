@@ -1034,7 +1034,7 @@ function HomeIdentityCard({
                           src={card.image || ""}
                           alt={`${card.title} scenic design by Brandon PT Davis`}
                           fill
-                          quality={index < 2 ? 76 : 70}
+                          quality={index < 2 ? 75 : 70}
                           priority={index < 2}
                           loading={index < 2 ? "eager" : "lazy"}
                           fetchPriority={index < 2 ? "high" : "auto"}
@@ -1700,7 +1700,7 @@ function HomeMinimalGallery({
                       src={project.coverImageUrl || ""}
                       alt={`${project.title} scenic design by Brandon PT Davis`}
                       fill
-                      quality={index < carouselProjects.length ? 76 : 68}
+                      quality={index < carouselProjects.length ? 75 : 70}
                       priority={false}
                       loading="lazy"
                       fetchPriority="auto"
