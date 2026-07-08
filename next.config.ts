@@ -72,6 +72,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/news/:path*",
+        destination: "/articles",
+        permanent: true,
+      },
+      {
+        source: "/upcoming-productions/:path*",
+        destination: "/projects/scenic-design",
+        permanent: true,
+      },
+      {
         source: "/portfolio",
         destination: "/projects",
         permanent: true,

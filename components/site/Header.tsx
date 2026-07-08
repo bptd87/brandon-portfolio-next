@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import {
   Blocks,
   BookOpen,
-  CalendarDays,
   ChevronDown,
   FileImage,
   FileText,
@@ -289,12 +288,6 @@ export default function Header() {
           icon: <UserRound className="h-4 w-4" />,
         },
         {
-          name: "Upcoming Productions",
-          path: "/upcoming-productions",
-          description: "Public production windows and scenic design commitments currently on the calendar.",
-          icon: <CalendarDays className="h-4 w-4" />,
-        },
-        {
           name: "Resume / CV",
           path: "/resume",
           description: "Production credits, teaching, training, and linked portfolio references.",
@@ -367,10 +360,7 @@ export default function Header() {
   const isPortfolioActive =
     isActive("/projects") || isActive("/assistant-scenic-design") || pathname.startsWith("/project/");
   const isAboutActive =
-    isActive("/about") ||
-    isActive("/upcoming-productions") ||
-    isActive("/resume") ||
-    isActive("/creative-statement");
+    isActive("/about") || isActive("/resume") || isActive("/creative-statement");
   const isStudioActive = isActive("/studio") || isActive("/articles");
 
   return (

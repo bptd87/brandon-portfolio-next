@@ -11,6 +11,10 @@ dist
 build
 .cache
 
+# Retired public assets that should not be uploaded by local Vercel deploys
+client/public/upcoming-productions
+public/upcoming-productions
+
 # Dependencies and tool state
 node_modules
 .pnpm-store

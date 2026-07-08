@@ -21,7 +21,6 @@ const PORTFOLIO_LINKS = [
 
 const ABOUT_LINKS = [
   { label: "About", href: "/about" },
-  { label: "Upcoming Productions", href: "/upcoming-productions" },
   { label: "Resume / CV", href: "/resume" },
   { label: "Creative Statement", href: "/creative-statement" },
   { label: "Teaching Philosophy", href: "/about/teaching" },
@@ -114,7 +113,6 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
     setWorkOpen(pathname.startsWith("/projects") || pathname.startsWith("/assistant-scenic-design"));
     setAboutOpen(
       pathname.startsWith("/about") ||
-        pathname.startsWith("/upcoming-productions") ||
         pathname.startsWith("/resume") ||
         pathname.startsWith("/creative-statement")
     );
