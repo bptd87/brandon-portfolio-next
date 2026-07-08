@@ -60,7 +60,7 @@ const aboutImages = [
     alt: "Brandon PT Davis with his sister Megan at Christmas in the 1990s, holding cats Silvia and Christina.",
     caption: "Brandon with his sister Megan at Christmas in the 1990s, holding cats Silvia and Christina.",
   },
-] as const;
+];
 
 const afterArticleImages = [
   aboutImages[1],
@@ -82,29 +82,23 @@ const aboutRelatedLinks = [
 
 const introParagraphs = [
   {
-    text: "Brandon PT Davis is a scenic designer interested in how spaces tell stories.",
-  },
-  {
-    text: "His work is grounded in research, dramaturgy, collaboration, and a practical understanding of how scenery supports the people who use it: actors, directors, technicians, and audiences. Rather than treating a set as a backdrop, Brandon approaches each design as a working environment—something that shapes movement, frames attention, and helps clarify the emotional life of a production.",
+    text: "Brandon PT Davis is a scenic designer whose work explores how space, architecture, and visual storytelling shape the experience of live performance. His designs are grounded in research, collaboration, and the belief that scenery should do more than create a setting—it should reveal character, clarify dramatic action, and give performers a world that evolves with the story. His portfolio spans dramas, comedies, Shakespeare, musicals, and new work for regional theatres, festivals, and universities across the United States.",
   },
 ] as const;
 
-const aboutStoryBlocks = [
+type AboutStoryBlock =
+  | { kind: "paragraph"; text: string }
+  | { kind: "statement"; text: string }
+  | { kind: "imageFull"; imageIndex: number };
+
+const aboutStoryBlocks: AboutStoryBlock[] = [
   {
     kind: "paragraph",
-    text: "I try not to arrive. The useful work usually starts somewhere past certainty, a little further out than feels comfortable.",
+    text: "Professional collaborations include South Coast Repertory, Maples Repertory Theatre, Theatre SilCo, New Swan Shakespeare Festival, Okoboji Summer Theatre, the University of Missouri, and numerous academic and professional productions. Beyond the stage, Brandon spent several years as a designer and Senior Scenic & Experiential Designer at Adaptive Design Services, where he developed environments for live events, branded experiences, and immersive installations. That work expanded his practice into architectural visualization, digital rendering, fabrication workflows, and large-scale experiential design, perspectives that continue to inform his theatrical work.",
   },
   {
     kind: "paragraph",
-    text: "That balance between clarity and uncertainty has shaped a career that has rarely moved in a straight line. Brandon grew up in Columbia, Missouri, a college town where the arts were part of the surrounding culture. His mother was involved in community theatre, and he was around rehearsals and performances early enough that theatre felt like a natural part of everyday life.",
-  },
-  {
-    kind: "paragraph",
-    text: "At Stephens College, where he attended on an apprenticeship scholarship, Brandon immersed himself in hands-on production work while studying the fundamentals of scenic design. After graduating, he spent several years moving between Kansas City, Chicago, and New York, building experience and trying to find his footing professionally. In 2016, he moved to California to work at The Great American Melodrama on the Central Coast, an experience that became a turning point and eventually led him to pursue his Master of Fine Arts in scenic design at the University of California, Irvine.",
-  },
-  {
-    kind: "paragraph",
-    text: "Graduate school gave Brandon the space to clarify his design voice while exploring both traditional scenic practice and emerging digital workflows. After completing his degree, he returned to the Midwest during the pandemic years and later joined the faculty at Stephens College, where he taught scenic design, rendering, drafting, and visual communication. Teaching became an extension of his professional practice: a way of helping emerging designers develop clearer process, stronger taste, and practical tools for collaboration.",
+    text: "Alongside his professional practice, Brandon is a Lecturer in the School of Theatre, Television, and Film at San Diego State University. He has previously taught at the University of California, Irvine, the University of Texas at El Paso, and Stephens College, mentoring emerging designers in scenic design, rendering, drafting, digital visualization, and collaborative production. His teaching reflects the same values that guide his design work: curiosity, rigorous research, technical precision, and an ongoing commitment to storytelling through space.",
   },
   {
     kind: "imageFull",
@@ -112,45 +106,9 @@ const aboutStoryBlocks = [
   },
   {
     kind: "paragraph",
-    text: "Today, Brandon is based in Southern California and works across theatre, live events, and experiential design. He is a member of United Scenic Artists Local 829 and serves as a Senior Experiential Designer at Adaptive Design Services. His work has been seen at South Coast Repertory, Maples Repertory Theatre, Okoboji Summer Theatre, New Swan Shakespeare Festival, Utah Shakespeare Festival, Stephens College, the University of Missouri, and other regional, festival, and academic theatres across the United States.",
+    text: "Brandon received his MFA in Scenic Design from the University of California, Irvine and his BFA in Theatre Arts from Stephens College. He has designed more than 130 productions and assisted on over 40 productions at regional theatres and Off-Broadway. He is a member of United Scenic Artists, Local USA 829, and the United States Institute for Theatre Technology (USITT).",
   },
-  {
-    kind: "paragraph",
-    text: "His portfolio includes intimate dramas, musicals, Shakespeare, comedies, new work, and productions that move between realism, memory, and theatrical abstraction. Recent projects include co-designing Million Dollar Quartet at South Coast Repertory with Efren Delgadillo Jr., designing The Glass Menagerie at Maples Repertory Theatre, and creating the scenic environment for Romero at the University of Missouri. He has also continued work with New Swan Shakespeare Festival in Irvine, designing outdoor productions that require adaptability, clarity, and a strong relationship between performer, audience, and environment.",
-  },
-  {
-    kind: "paragraph",
-    text: "One of the clearest examples of Brandon’s evolving process is his relationship with The Glass Menagerie, a play he has designed three separate times. Each version was shaped by different tools, resources, and production realities. An early design used green scenic tones, pink rose imagery, and scrim walls that could dissolve to reveal the streets of St. Louis. A later production required a more restrained approach, using subtle rose patterns to suggest Laura’s inner world. Most recently, at Maples Repertory Theatre, Brandon explored Tennessee Williams’ original projection ideas through large-scale printed fabric “memory walls,” creating collaged fragments of Tom and Laura’s past.",
-  },
-  {
-    kind: "statement",
-    text: "The play stayed the same. The designer did not.",
-  },
-  {
-    kind: "paragraph",
-    text: "That willingness to revisit, revise, and keep learning is central to Brandon’s work. He is drawn to scenic design because it makes room for many kinds of thinking at once: art, history, engineering, architecture, technology, performance, and human behavior. A “jack-of-all-trades” curiosity becomes useful in a field where every project asks a different set of questions.",
-  },
-  {
-    kind: "paragraph",
-    text: "That interdisciplinary approach also informs his work in experiential design, where narrative, audience movement, spatial logic, and technical execution come together in physical environments. For Brandon, theatre and experiential design are connected by the same core question: how do people understand a story by moving through space?",
-  },
-  {
-    kind: "paragraph",
-    text: "Technology has become an important part of his practice, but not the center of it. Brandon uses 3D modeling, rendering, real-time visualization, and digital workflows as communication tools, helping directors, collaborators, and production teams understand spatial ideas earlier and more clearly. He is also interested in how artificial intelligence, automation, and new visualization platforms can support creative practice without replacing the fundamentals of design.",
-  },
-  {
-    kind: "statement",
-    text: "The goal is not to make the process more complicated. The goal is to make the storytelling clearer.",
-  },
-  {
-    kind: "paragraph",
-    text: "For Brandon, the strongest scenic designs are not always the loudest ones. They are the designs that help performers move with confidence, give directors useful choices, support the technical team, and allow the audience to enter the world of the production without resistance. Sometimes that means a bold visual gesture. Sometimes it means restraint. Often, it means knowing the difference.",
-  },
-  {
-    kind: "paragraph",
-    text: "Scenic design, at its best, builds trust. Brandon’s work aims for that kind of cohesion: environments that feel purposeful, evocative, and alive, while remaining grounded in the real needs of the production and the people making it.",
-  },
-] as const;
+];
 
 export default function About() {
   const { homeTheme } = useHomeTheme();

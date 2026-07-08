@@ -8,6 +8,7 @@ import {
   getLocalRenderingProjects,
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
+import { getProjectArtifactCollections } from "../../shared/projectArtifacts";
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
 
@@ -23,6 +24,7 @@ const STATIC_ROUTES: Array<{
   { pathname: "/creative-statement", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/assistant-scenic-design", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/projects", priority: 0.9, changeFrequency: "weekly" },
+  { pathname: "/projects/artifacts", priority: 0.7, changeFrequency: "monthly" },
   { pathname: "/projects/rendering", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/projects/experiential", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/articles", priority: 0.8, changeFrequency: "weekly" },
@@ -93,6 +95,15 @@ function getSitemapEntries(): MetadataRoute.Sitemap {
     }),
   );
 
+  const artifactEntries: MetadataRoute.Sitemap = getProjectArtifactCollections().map(
+    (collection) => ({
+      url: absoluteUrl(`/projects/artifacts/${collection.slug}`),
+      lastModified: toLastModified(collection.year ? `${collection.year}-01-01` : null),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }),
+  );
+
   const articleEntries: MetadataRoute.Sitemap = getLocalArticles()
     .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
     .map((article) => ({
@@ -107,6 +118,7 @@ function getSitemapEntries(): MetadataRoute.Sitemap {
     ...scenicEntries,
     ...renderingEntries,
     ...experientialProjectEntries,
+    ...artifactEntries,
     ...articleEntries,
   ];
 }

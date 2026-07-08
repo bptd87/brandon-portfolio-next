@@ -168,6 +168,7 @@ function getExperientialMediaAspectClass(category: LocalExperientialCategory, is
 
 function getExperientialMediaBlockClass(imageIndex: number, imageCount: number) {
   if (imageCount <= 2 || imageIndex === 0) return "md:col-span-12";
+  if (imageIndex > 0 && imageIndex % 5 === 0) return "md:col-span-12";
 
   const afterLeadCount = imageCount - 1;
   if (afterLeadCount % 2 === 1 && imageIndex === imageCount - 1) return "md:col-span-12";
@@ -186,6 +187,7 @@ type ProjectMediaTile =
       key: string;
       imageUrl: string;
       altText: string;
+      caption: string;
       category: LocalExperientialCategory;
     };
 
@@ -206,6 +208,7 @@ function buildProjectMediaTiles(samples: LocalExperientialSample[]): ProjectMedi
       key: `${sample.id}-${index}`,
       imageUrl: image.imageUrl,
       altText: image.altText,
+      caption: image.caption,
       category: sample.category,
     }));
 
@@ -248,11 +251,11 @@ function ProjectMediaBlock({
 
   return (
     <div className="grid w-full grid-flow-dense grid-cols-1 gap-[clamp(1rem,2vw,1.6rem)] md:grid-cols-12">
-      {tiles.map((tile) => {
+      {tiles.map((tile, tileIndex) => {
         if (tile.type === "video") {
           return (
-            <div key={tile.key} className="md:col-span-12">
-              <div className="overflow-hidden rounded-[1.15rem] shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)]">
+            <MotionReveal key={tile.key} className="md:col-span-12" delay={(tileIndex % 4) * 60}>
+              <div className="overflow-hidden rounded-[1.35rem] shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)]">
                 <DeferredYouTubeEmbed
                   videoId={getYoutubeId(tile.videoUrl)}
                   title={tile.title}
@@ -262,7 +265,7 @@ function ProjectMediaBlock({
                   squareFrame
                 />
               </div>
-            </div>
+            </MotionReveal>
           );
         }
 
@@ -275,23 +278,25 @@ function ProjectMediaBlock({
         const frameClass = isTechnicalDrawing ? "bg-white p-[clamp(0.35rem,0.8vw,0.7rem)]" : "bg-black";
 
         return (
-          <figure key={tile.key} className={blockClass}>
-            <button
-              type="button"
-              onClick={() => onOpenImage(tile.key)}
-              className={`block w-full overflow-hidden rounded-[1.15rem] text-left shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/40 ${getExperientialMediaAspectClass(tile.category, isFullWidth)}`}
-            >
-              <div className={`h-full w-full overflow-hidden ${frameClass}`}>
-                <img
-                  src={tile.imageUrl}
-                  alt={tile.altText}
-                  className={`block h-full w-full transition-opacity duration-500 hover:opacity-90 ${objectClass}`}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </button>
-          </figure>
+          <MotionReveal key={tile.key} className={blockClass} delay={(tileIndex % 4) * 60}>
+            <figure>
+              <button
+                type="button"
+                onClick={() => onOpenImage(tile.key)}
+                className={`block w-full overflow-hidden rounded-[1.35rem] text-left shadow-[0_1.4rem_4rem_rgba(0,0,0,0.16)] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-black/40 ${getExperientialMediaAspectClass(tile.category, isFullWidth)}`}
+              >
+                <div className={`h-full w-full overflow-hidden ${frameClass}`}>
+                  <img
+                    src={tile.imageUrl}
+                    alt={tile.altText}
+                    className={`block h-full w-full transition-opacity duration-500 hover:opacity-90 ${objectClass}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </button>
+            </figure>
+          </MotionReveal>
         );
       })}
     </div>
@@ -522,7 +527,7 @@ export default function ExperientialProjectDetail({
           className="scroll-mt-28 px-[var(--project-page-pad)] [contain-intrinsic-size:1px_1800px] [content-visibility:auto]"
           style={{ backgroundColor: homeTheme.bg, order: 2 }}
         >
-          <div className="mx-auto w-full max-w-[64rem] pb-[clamp(2rem,5vw,4rem)] pt-[clamp(0.75rem,2vw,1.25rem)]">
+          <div className="mx-auto w-full max-w-[86rem] pb-[clamp(2rem,5vw,4rem)] pt-[clamp(0.75rem,2vw,1.25rem)]">
             <ProjectMediaBlock samples={project.samples} onOpenImage={openImageByKey} />
           </div>
         </section>
@@ -549,7 +554,7 @@ export default function ExperientialProjectDetail({
             ×
           </button>
           <div
-            className="relative h-full w-full overflow-hidden shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
+            className="relative h-full w-full overflow-hidden rounded-[1.65rem] shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
             style={{ backgroundColor: homeTheme.bg }}
             onClick={(event) => event.stopPropagation()}
           >
@@ -567,18 +572,10 @@ export default function ExperientialProjectDetail({
                     <img
                       src={item.imageUrl}
                       alt={item.altText}
-                      className="max-h-full w-auto max-w-full object-contain"
+                      className="max-h-full w-auto max-w-full rounded-[1.1rem] object-contain"
                       draggable={false}
                     />
                   </div>
-                  {item.caption || item.altText ? (
-                    <figcaption
-                      className="mt-4 max-w-[38rem] text-center text-[0.82rem] font-medium leading-snug tracking-[-0.015em]"
-                      style={{ color: homeTheme.ink, fontFamily: HOME_BODY_FONT }}
-                    >
-                      {item.caption || item.altText}
-                    </figcaption>
-                  ) : null}
                 </figure>
               ))}
             </div>

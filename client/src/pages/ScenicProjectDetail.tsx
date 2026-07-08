@@ -22,6 +22,7 @@ import {
   type LocalScenicProjectMedia,
 } from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
+import { getProjectArtifactCollectionByProjectSlug } from "@shared/projectArtifacts";
 import { Check, ChevronDown, ChevronUp, Link2, Linkedin, Mail } from "lucide-react";
 
 type ScenicProjectDetailProps = {
@@ -310,6 +311,7 @@ export default function ScenicProjectDetail({
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()),
     [project.slug]
   );
+  const artifactCollection = getProjectArtifactCollectionByProjectSlug(project.slug);
   const scenicSeoTitle =
     project.seoTitle ||
     `${project.title} Scenic Design${project.client ? ` | ${project.client}` : ""} | Brandon PT Davis`;
@@ -345,6 +347,14 @@ export default function ScenicProjectDetail({
       kind: "Link",
       external: true,
     })),
+    artifactCollection
+      ? {
+          label: "Artifacts",
+          href: `/projects/artifacts/${artifactCollection.slug}?embedded=1`,
+          kind: "Artifacts",
+          external: false,
+        }
+      : null,
     ...relatedArticles.slice(0, 2).map((article) => ({
       label: article.title,
       href: `/articles/${article.slug}`,
@@ -811,6 +821,16 @@ export default function ScenicProjectDetail({
                         >
                           {link.label}
                         </ExternalLinkPreview>
+                      ) : link.kind === "Artifacts" ? (
+                        <a
+                          key={`${link.kind}-${link.href}`}
+                          href={link.href}
+                          target="_top"
+                          className="block no-underline transition-opacity hover:opacity-70"
+                          style={{ color: homeTheme.ink }}
+                        >
+                          {link.label}
+                        </a>
                       ) : (
                         <Link
                           key={`${link.kind}-${link.href}`}
@@ -968,14 +988,6 @@ export default function ScenicProjectDetail({
                       draggable={false}
                     />
                   </div>
-                  {item.caption || item.altText ? (
-                    <figcaption
-                      className="mt-4 max-w-[38rem] text-center text-[0.82rem] font-medium leading-snug tracking-[-0.015em]"
-                      style={{ color: homeTheme.ink, fontFamily: HOME_BODY_FONT }}
-                    >
-                      {item.caption || item.altText}
-                    </figcaption>
-                  ) : null}
                 </figure>
               ))}
             </div>

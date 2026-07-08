@@ -1870,7 +1870,7 @@ function HomeMinimalGallery({
             <button
               type="button"
               aria-label="Close portfolio project"
-              className={`absolute right-[clamp(0.75rem,1.6vw,1.15rem)] top-[clamp(0.75rem,1.6vw,1.15rem)] z-[5] grid h-12 w-12 place-items-center rounded-full shadow-[0_1rem_2.5rem_rgba(0,0,0,0.22)] transition-[opacity,transform] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 ${
+              className={`absolute right-[clamp(2rem,3.4vw,3.2rem)] top-[clamp(1.35rem,2.6vw,2.4rem)] z-[5] grid h-12 w-12 place-items-center rounded-full shadow-[0_1rem_2.5rem_rgba(0,0,0,0.22)] transition-[opacity,transform] hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 ${
                 isPortfolioLightboxOpen ? "pointer-events-none opacity-0" : "opacity-100"
               }`}
               style={{

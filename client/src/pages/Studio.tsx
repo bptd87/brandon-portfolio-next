@@ -29,6 +29,7 @@ const apps = [
     description:
       "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
     image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
+    icon: "/images/site-assets/studio-apps/svg/3d-file-convert.svg",
     href: "/studio/apps/scenic-3d-converter",
     category: "Mac Tool",
     tone: "Download",
@@ -36,6 +37,9 @@ const apps = [
     launchMode: "page",
     accentColor: "#5f88a8",
     accentTextColor: "#ffffff",
+    cardColor: "#5f88a8",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Scale Calculator",
@@ -43,13 +47,17 @@ const apps = [
     description:
       "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
     image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
+    icon: "/images/site-assets/studio-apps/svg/scale-calculator.svg",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     tone: "Mobile tool",
     cta: "Launch app",
     launchMode: "app",
-    accentColor: "#d06934",
-    accentTextColor: "#17120b",
+    accentColor: "#ff6f00",
+    accentTextColor: "#20180f",
+    cardColor: "#b7653f",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Dimension Reference",
@@ -57,13 +65,17 @@ const apps = [
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
     image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
+    icon: "/images/site-assets/studio-apps/svg/dimensions.svg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
     tone: "Shop reference",
     cta: "Open reference",
     launchMode: "app",
-    accentColor: "#c9891d",
-    accentTextColor: "#17120b",
+    accentColor: "#052f8b",
+    accentTextColor: "#a8f4ff",
+    cardColor: "#c98f24",
+    cardTextColor: "#17120b",
+    cardMutedColor: "rgba(23,18,11,0.68)",
   },
   {
     title: "Rosco Paint Calculator",
@@ -71,13 +83,17 @@ const apps = [
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
     image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
+    icon: "/images/site-assets/studio-apps/svg/rosco-paint.svg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
     tone: "Paint shop",
     cta: "Launch app",
     launchMode: "app",
-    accentColor: "#3f5d62",
-    accentTextColor: "#ffffff",
+    accentColor: "#dc30ff",
+    accentTextColor: "#ffe3ff",
+    cardColor: "#be6241",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Commercial Paint Matcher",
@@ -85,13 +101,17 @@ const apps = [
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
     image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
+    icon: "/images/site-assets/studio-apps/svg/commercial-paint.svg",
     href: "/studio/apps/commercial-paint-matcher",
     category: "Matcher",
     tone: "Paint library",
     cta: "Launch app",
     launchMode: "app",
-    accentColor: "#758967",
-    accentTextColor: "#ffffff",
+    accentColor: "#003f1c",
+    accentTextColor: "#baff00",
+    cardColor: "#003f1c",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
   {
     title: "Design History Timeline",
@@ -99,20 +119,24 @@ const apps = [
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
     image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
+    icon: "/images/site-assets/studio-apps/svg/timeline.svg",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
     tone: "Research",
     cta: "Open timeline",
     launchMode: "app",
-    accentColor: "#8a5432",
-    accentTextColor: "#ffffff",
+    accentColor: "#dc30ff",
+    accentTextColor: "#ffe3ff",
+    cardColor: "#dc30ff",
+    cardTextColor: "#ffffff",
+    cardMutedColor: "rgba(255,255,255,0.74)",
   },
 ] as const;
 
 type StudioTool = (typeof apps)[number];
 
 const studioToolCardClass =
-  "group flex h-full min-h-[28rem] w-full flex-col overflow-hidden rounded-[1.75rem] p-0 text-left shadow-[0_18px_54px_rgba(17,17,17,0.12)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)]";
+  "group flex h-full min-h-[28rem] w-full flex-col overflow-hidden rounded-[1.75rem] border bg-[var(--studio-app-card)] p-5 text-left text-[var(--studio-app-card-text)] shadow-[0_18px_54px_rgba(17,17,17,0.12)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)] md:min-h-[30rem] md:p-6";
 
 const studioLinks = [
   {
@@ -145,19 +169,22 @@ const articleSwatches = [
   { background: "#35ad62", text: "#003f1c", muted: "rgba(0,63,28,0.76)" },
 ] as const;
 
-const appSwatches = [
-  { background: "#5f88a8", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-  { background: "#b7653f", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-  { background: "#c98f24", text: "#17120b", muted: "rgba(23,18,11,0.68)" },
-  { background: "#be6241", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-  { background: "#758967", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-  { background: "#8a5432", text: "#ffffff", muted: "rgba(255,255,255,0.74)" },
-] as const;
-
 function getArticleTimestamp(value?: string | Date | null) {
   if (!value) return 0;
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
+function getStudioAppCardStyle(app: StudioTool) {
+  return {
+    "--studio-app-card": `color-mix(in srgb, ${app.accentColor} 86%, black)`,
+    "--studio-app-card-text": app.accentTextColor,
+    "--studio-app-card-muted": `color-mix(in srgb, ${app.accentTextColor} 72%, transparent)`,
+    "--studio-app-accent": app.accentTextColor,
+    "--studio-app-accent-text": app.accentColor,
+    "--studio-app-icon-color": `color-mix(in srgb, ${app.accentColor} 18%, white)`,
+    borderColor: `color-mix(in srgb, ${app.accentColor} 72%, black)`,
+  } as CSSProperties;
 }
 
 export default function Studio() {
@@ -489,16 +516,17 @@ export default function Studio() {
             {apps.map((app, index) => (
               <AnimatedSection key={app.href} className="h-full">
                 {app.launchMode === "page" ? (
-                  <Link href={app.href} className={studioToolCardClass}>
-                    <StudioToolCardContent app={app} index={index} />
+                  <Link href={app.href} className={studioToolCardClass} style={getStudioAppCardStyle(app)}>
+                    <StudioToolCardContent app={app} />
                   </Link>
                 ) : (
                   <button
                     type="button"
                     onClick={() => openStudioApp(app)}
                     className={studioToolCardClass}
+                    style={getStudioAppCardStyle(app)}
                   >
-                    <StudioToolCardContent app={app} index={index} />
+                    <StudioToolCardContent app={app} />
                   </button>
                 )}
               </AnimatedSection>
@@ -522,55 +550,67 @@ export default function Studio() {
   );
 }
 
-function StudioToolCardContent({
-  app,
-  index,
-}: {
-  app: StudioTool;
-  index: number;
-}) {
-  const swatch = appSwatches[index % appSwatches.length];
-
+function StudioToolCardContent({ app }: { app: StudioTool }) {
   return (
     <>
-      <div className="site-media-square aspect-square w-full overflow-hidden rounded-none bg-black [border-radius:0]">
-        <img
-          src={app.image}
-          alt={app.title}
-          loading={index === 0 ? "eager" : "lazy"}
-          className="site-media-square h-full w-full rounded-none object-cover [border-radius:0]"
-        />
-      </div>
-
-      <div
-        className="flex h-[15rem] flex-col px-5 py-5 md:px-6 md:py-6"
-        style={{ backgroundColor: swatch.background, color: swatch.text }}
-      >
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <p className="text-[0.9rem] font-semibold leading-none tracking-[-0.02em]" style={{ color: swatch.muted }}>
+      <div>
+        <p className="flex flex-wrap items-center gap-2 text-[0.66rem] font-medium uppercase leading-4 tracking-[0.18em] text-[var(--studio-app-card-muted)]">
+          <span className="rounded-full bg-[var(--studio-app-accent)] px-2 py-1 text-[var(--studio-app-accent-text)]">
             {app.category}
-          </p>
-          <span className="text-[0.9rem] font-semibold leading-none tracking-[-0.02em]" style={{ color: swatch.muted }}>
-            {String(index + 1).padStart(2, "0")}
           </span>
-        </div>
-
-        <h3 className="max-w-[11ch] font-sans text-[clamp(1.45rem,2vw,2.05rem)] font-semibold leading-[0.94] tracking-[-0.065em]">
+          <span>{app.tone}</span>
+        </p>
+        <h3
+          className="mt-3 max-w-[10ch] text-[clamp(1.9rem,3.4vw,3rem)] font-black uppercase leading-[0.95] tracking-[0]"
+          style={{ fontFamily: HOME_DISPLAY_FONT }}
+        >
           {app.title}
         </h3>
-        <p className="mt-4 line-clamp-2 max-w-[28rem] text-[0.94rem] leading-6 tracking-[-0.015em]" style={{ color: swatch.muted }}>
-          {app.description}
-        </p>
+      </div>
 
-        <div className="mt-auto flex items-center justify-between gap-4 pt-6 text-[0.96rem] font-semibold tracking-[-0.025em]">
-          <span>{app.cta}</span>
-          <ArrowUpRight
-            className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            aria-hidden="true"
-          />
-        </div>
+      <StudioToolIcon app={app} />
+
+      <p className="mt-5 max-w-[28rem] text-[0.96rem] leading-6 tracking-[-0.015em] text-[var(--studio-app-card-muted)]">
+        {app.description}
+      </p>
+      <div className="mt-auto inline-flex items-center gap-2 pt-6 text-[0.95rem] font-medium tracking-[-0.02em] text-[var(--studio-app-card-text)]">
+        {app.cta}
+        <ArrowUpRight
+          className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
       </div>
     </>
+  );
+}
+
+function StudioToolIcon({ app }: { app: StudioTool }) {
+  return (
+    <div className="site-media-square relative my-5 flex aspect-square w-full items-center justify-center overflow-hidden text-[var(--studio-app-icon-color)]">
+      <StudioToolIconMark icon={app.icon} label={app.title} />
+    </div>
+  );
+}
+
+function StudioToolIconMark({ icon, label }: { icon: string; label: string }) {
+  const maskStyle = {
+    WebkitMaskImage: `url(${icon})`,
+    maskImage: `url(${icon})`,
+    WebkitMaskPosition: "center",
+    maskPosition: "center",
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+    WebkitMaskSize: "contain",
+    maskSize: "contain",
+  } as CSSProperties;
+
+  return (
+    <span
+      aria-label={`${label} icon`}
+      role="img"
+      className="block h-[74%] w-[74%] bg-current drop-shadow-[0_0_1px_currentColor] transition-transform duration-300 group-hover:scale-[1.04]"
+      style={maskStyle}
+    />
   );
 }
 

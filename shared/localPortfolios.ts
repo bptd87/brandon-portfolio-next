@@ -614,6 +614,161 @@ const FIRST_BANK_LOLLIPOPS_BLOB_IMAGES = {
     "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/first-bank-lollipops/first-bank-lollipops-wall-924b9b8a78.jpeg",
 } as const;
 
+const GLACE_ACTIVATION_BLOB_IMAGES = {
+  wideRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-wide-rendering.jpg",
+  frontRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-front-rendering.jpg",
+  backRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-back-rendering.jpg",
+  sideOneRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-side-one-rendering.jpg",
+  sideTwoRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-side-two-rendering.jpg",
+  treatmentRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-treatment-room-rendering.jpg",
+  hydrationRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-hydration-rendering.jpg",
+  surveyRendering:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-survey-swag-rendering.jpg",
+  whiteModelPlan:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-activation-white-model-plan.jpg",
+  liveExterior:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-tour-real-brigette-pheloung.jpg",
+  liveTreatment:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/projects/experiential/glace-activation/glace-tour-real-treatment-room.jpg",
+} as const;
+
+const LOCAL_EXPERIENTIAL_PROCESS_GALLERY: LocalExperientialProcessGalleryItem[] = [
+  {
+    id: 260701,
+    category: "rendering",
+    imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.wideRendering,
+    videoUrl: null,
+    altText: "Wide rendering of the Candela Glacē Tour activation in an urban plaza.",
+    displayTitle: "Glacē Activation Renderings",
+    description:
+      "Renderings for the Candela Glacē Tour activation, developed for Outerkind to communicate the exterior footprint, guest flow, treatment zones, hydration area, and branded interior touchpoints.",
+    sortOrder: 1,
+    active: true,
+    projectId: 2607,
+    year: 2026,
+    month: 6,
+    createdAt: "2026-06-30T12:00:00.000Z",
+    images: [
+      {
+        id: 260711,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.frontRendering,
+        videoUrl: null,
+        altText: "Front rendering of the Candela Glacē Tour activation with exterior guest areas.",
+        caption: "Front elevation rendering of the Glacē Tour activation.",
+        title: "Front Rendering",
+        sortOrder: 1,
+        imageType: "rendering",
+      },
+      {
+        id: 260712,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.backRendering,
+        videoUrl: null,
+        altText: "Back rendering of the Glacē Tour trailer graphics and guest circulation.",
+        caption: "Rear branded wall and public-facing graphics.",
+        title: "Back Rendering",
+        sortOrder: 2,
+        imageType: "rendering",
+      },
+      {
+        id: 260713,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.sideOneRendering,
+        videoUrl: null,
+        altText: "Side rendering of the Glacē Tour activation with lounge and exterior branding.",
+        caption: "Side view studying exterior circulation, lounge placement, and brand panels.",
+        title: "Side Rendering One",
+        sortOrder: 3,
+        imageType: "rendering",
+      },
+      {
+        id: 260714,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.sideTwoRendering,
+        videoUrl: null,
+        altText: "Alternate side rendering of the Glacē Tour activation and umbrella lounge area.",
+        caption: "Alternate exterior side view with lounge and signage relationships.",
+        title: "Side Rendering Two",
+        sortOrder: 4,
+        imageType: "rendering",
+      },
+      {
+        id: 260715,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.treatmentRendering,
+        videoUrl: null,
+        altText: "Rendering of a Glacē Tour treatment room with equipment and wall graphics.",
+        caption: "Treatment-room rendering for the guest facial experience.",
+        title: "Treatment Room",
+        sortOrder: 5,
+        imageType: "rendering",
+      },
+      {
+        id: 260716,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.hydrationRendering,
+        videoUrl: null,
+        altText: "Rendering of the Glacē Tour hydration station with wood wall and beverage display.",
+        caption: "Hydration area and interior hospitality moment.",
+        title: "Hydration Area",
+        sortOrder: 6,
+        imageType: "rendering",
+      },
+      {
+        id: 260717,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.surveyRendering,
+        videoUrl: null,
+        altText: "Rendering of the Glacē Tour survey and swag counter inside the activation.",
+        caption: "Survey, swag, and guest check-in counter inside the activation.",
+        title: "Survey and Swag",
+        sortOrder: 7,
+        imageType: "rendering",
+      },
+      {
+        id: 260718,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.whiteModelPlan,
+        videoUrl: null,
+        altText: "White model overhead plan of the Glacē Tour activation footprint.",
+        caption: "White model plan used to study footprint, umbrellas, and trailer relationship.",
+        title: "White Model Plan",
+        sortOrder: 8,
+        imageType: "model",
+      },
+    ],
+  },
+  {
+    id: 260702,
+    category: "live-events",
+    imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.liveExterior,
+    videoUrl: null,
+    altText:
+      "Brigette Pheloung standing beside the Candela Glacē Tour activation in New York City.",
+    displayTitle: "Glacē Activation Live Event",
+    description:
+      "Real activation documentation from the Candela Glacē Tour in New York City, paired with the rendering package to show the relationship between concept visualization and the public-facing event.",
+    sortOrder: 2,
+    active: true,
+    projectId: 2607,
+    year: 2026,
+    month: 6,
+    createdAt: "2026-06-30T12:00:00.000Z",
+    images: [
+      {
+        id: 260721,
+        imageUrl: GLACE_ACTIVATION_BLOB_IMAGES.liveTreatment,
+        videoUrl: null,
+        altText: "Real Glacē Tour treatment room with guest receiving a facial treatment.",
+        caption: "Real treatment-room documentation from the Glacē Tour activation.",
+        title: "Treatment Room Documentation",
+        sortOrder: 1,
+        imageType: "photo",
+      },
+    ],
+  },
+];
+
 const EXPERIENTIAL_SAMPLE_OVERRIDES: Record<
   string,
   Partial<Pick<LocalExperientialSample, "description" | "altText" | "imageUrl" | "videoUrl" | "images">>
@@ -742,6 +897,38 @@ type LocalExperientialProjectDefinition = {
 };
 
 const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
+  {
+    slug: "glace-activation",
+    title: "Glacē Activation",
+    sampleSlugs: ["glace-activation-renderings", "glace-activation-live-event"],
+    coverImageUrl: GLACE_ACTIVATION_BLOB_IMAGES.wideRendering,
+    coverAltText: "Wide rendering of the Candela Glacē Tour activation for Outerkind.",
+    year: 2026,
+    month: 6,
+    summary:
+      "Rendering package for the Candela Glacē Tour activation, created for Outerkind to visualize a branded facial-treatment experience before the public rollout.",
+    heroSummary:
+      "Renderings for Outerkind showing the Candela Glacē Tour as a guest-facing activation, paired with real New York City event documentation.",
+    seoTitle: "Glacē Activation Rendering | Experiential Design",
+    seoDescription:
+      "Experiential rendering package for the Candela Glacē Tour activation, created for Outerkind and paired with real New York City event documentation.",
+    sections: [
+      {
+        heading: "Rendering the Guest Experience",
+        paragraphs: [
+          "The Glacē activation renderings were developed for Outerkind as a way to communicate the full guest experience before the tour met the street: exterior presence, treatment rooms, hydration, survey and swag moments, lounge placement, and sponsor-facing visibility.",
+          "The work needed to make a mobile environment read as calm, premium, and legible while still answering practical questions about circulation, branded surfaces, and how people would understand the activation at a glance.",
+        ],
+      },
+      {
+        heading: "From Visualization to Tour",
+        paragraphs: [
+          "The portfolio pairs the renderings with real activation documentation from New York City so the project can be read as a design handoff, not just a set of presentation images.",
+          "IMAGE DISTRIBUTED FOR CANDELA GLACĒ: Brigette Pheloung, fashion entrepreneur and creator behind Acquired Style, joins Candela on the Glacē Tour in New York City, Tuesday, June 30, 2026.",
+        ],
+      },
+    ],
+  },
   {
     slug: "first-bank-lollipops",
     title: "First Bank Lollipops",
@@ -982,6 +1169,8 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
 
 function slugifyExperientialTitle(value: string) {
   return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .trim()
     .toLowerCase()
     .replace(/&/g, " and ")
@@ -1012,7 +1201,7 @@ function normalizeExperientialTitle(item: LocalExperientialProcessGalleryItem) {
 }
 
 function buildLocalExperientialSamples(): LocalExperientialSample[] {
-  return getLocalExperientialProcessGallery()
+  return [...LOCAL_EXPERIENTIAL_PROCESS_GALLERY, ...getLocalExperientialProcessGallery()]
     .filter((item): item is LocalExperientialProcessGalleryItem & { category: LocalExperientialCategory } => {
       return item.category === "rendering" || item.category === "technical-drawing" || item.category === "live-events";
     })
