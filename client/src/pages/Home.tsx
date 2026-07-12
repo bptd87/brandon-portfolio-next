@@ -747,6 +747,12 @@ function HomeIdentityCard({
           transition-delay: 380ms;
         }
 
+        @media (min-width: 768px) and (max-height: 900px) {
+          .home-hero-top {
+            margin-bottom: clamp(1.1rem, 2.4vh, 1.6rem);
+          }
+        }
+
         [data-home-mounted="true"] .home-hero-top,
         [data-home-mounted="true"] .home-hero-bottom {
           opacity: 1;
