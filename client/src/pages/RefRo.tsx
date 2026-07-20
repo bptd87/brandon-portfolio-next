@@ -161,13 +161,16 @@ export default function RefRo() {
 
         <section className="px-[clamp(1rem,3vw,2.5rem)] pb-16 md:pb-24">
           <AnimatedSection>
-            <div className="mx-auto max-w-[90rem] overflow-hidden rounded-[1.5rem] bg-[#202020] p-[clamp(0.5rem,2.5vw,2.4rem)] shadow-[0_40px_120px_rgba(44,44,44,0.2)] md:rounded-[2.5rem]">
+            <div
+              className="mx-auto max-w-[90rem] overflow-hidden rounded-[1.5rem] p-[clamp(0.5rem,2.5vw,2.4rem)] shadow-[0_40px_120px_rgba(44,44,44,0.2)] transition-colors duration-300 md:rounded-[2.5rem]"
+              style={{ backgroundColor: homeTheme.controlBg }}
+            >
               <Image
                 src={`${base}/04-presentation-editor.jpg`}
                 alt="RefRo mood-board editor with multiple pages, research images, and layout controls."
                 width={1440}
                 height={900}
-                className="h-auto w-full rounded-[1rem]"
+                className="h-auto w-full rounded-[clamp(1rem,2.2vw,2rem)]"
                 priority
               />
             </div>
@@ -215,14 +218,15 @@ export default function RefRo() {
                     ) : null}
                   </div>
                   <div
-                    className={`overflow-hidden rounded-[1.5rem] bg-[#202020] p-3 shadow-[0_30px_80px_rgba(44,44,44,0.16)] md:rounded-[2rem] md:p-5 ${index % 2 ? "lg:order-1" : ""}`}
+                    className={`overflow-hidden rounded-[1.5rem] p-3 shadow-[0_30px_80px_rgba(44,44,44,0.16)] transition-colors duration-300 md:rounded-[2rem] md:p-5 ${index % 2 ? "lg:order-1" : ""}`}
+                    style={{ backgroundColor: homeTheme.controlBg }}
                   >
                     <Image
                       src={section.image}
                       alt={section.alt}
                       width={1440}
                       height={900}
-                      className="h-auto w-full rounded-[0.8rem]"
+                      className="h-auto w-full rounded-[clamp(0.9rem,1.8vw,1.5rem)]"
                       loading="lazy"
                     />
                   </div>
