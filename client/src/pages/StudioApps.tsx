@@ -12,7 +12,6 @@ import {
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
-import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { Link } from "wouter";
 import { ArrowRight, ExternalLink, Smartphone, X } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -60,23 +59,24 @@ const converterTool: StudioApp = {
   cardMutedColor: "rgba(255,255,255,0.74)",
 };
 
+const refroApp: StudioApp = {
+  title: "RefRo",
+  shortTitle: "RefRo",
+  description:
+    "A source-aware visual research archive and mood-board studio for Mac, built to keep the idea attached to every image.",
+  image: "/assets/studio-apps/refro/04-presentation-editor.jpg",
+  icon: "/assets/studio-apps/refro/icon.png",
+  href: "/studio/apps/refro",
+  category: "Mac App",
+  tone: "Coming soon",
+  accentColor: "#2c2c2c",
+  accentTextColor: "#f5f0e7",
+  cardColor: "#2c2c2c",
+  cardTextColor: "#f5f0e7",
+  cardMutedColor: "rgba(245,240,231,0.72)",
+};
+
 const allApps: StudioApp[] = [
-  {
-    title: "RefRo",
-    shortTitle: "RefRo",
-    description:
-      "A source-aware visual research archive and mood-board studio for Mac, built to keep the idea attached to every image.",
-    image: "/assets/studio-apps/refro/04-presentation-editor.jpg",
-    icon: "/assets/studio-apps/refro/icon.png",
-    href: "/studio/apps/refro",
-    category: "Mac App",
-    tone: "Coming soon",
-    accentColor: "#2c2c2c",
-    accentTextColor: "#f5f0e7",
-    cardColor: "#2c2c2c",
-    cardTextColor: "#f5f0e7",
-    cardMutedColor: "rgba(245,240,231,0.72)",
-  },
   {
     title: "Scale Calculator",
     shortTitle: "Scale",
@@ -180,8 +180,7 @@ function getStudioAppCardStyle(app: StudioApp) {
 
 export default function StudioApps() {
   const apps = allApps;
-  const isDesktopViewport = useIsDesktopViewport();
-  const appTiles = isDesktopViewport ? apps : [...apps, converterTool];
+  const appTiles = apps;
   const [activeApp, setActiveApp] = useState<StudioApp | null>(null);
   const [isAppClosing, setIsAppClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
@@ -205,6 +204,15 @@ export default function StudioApps() {
   const softPanelStyle = {
     backgroundColor: homeTheme.accentSoft,
     color: homeTheme.ink,
+  } as CSSProperties;
+  const macFeatureStyle = {
+    "--studio-app-card": homeTheme.controlBg,
+    "--studio-app-card-text": homeTheme.controlInk,
+    "--studio-app-card-muted": `color-mix(in srgb, ${homeTheme.controlInk} 72%, transparent)`,
+    "--studio-app-accent": homeTheme.controlInk,
+    "--studio-app-accent-text": homeTheme.controlBg,
+    "--studio-app-icon-color": `color-mix(in srgb, ${homeTheme.controlInk} 76%, transparent)`,
+    borderColor: homeTheme.ghost,
   } as CSSProperties;
   const studioFrameStyle = {
     "--studio-tool-bg": STUDIO_TOOL_BASE.bg,
@@ -390,6 +398,12 @@ export default function StudioApps() {
           </AnimatedSection>
         </section>
 
+        <MacAppFeatureCard
+          app={refroApp}
+          actionLabel="View RefRo"
+          style={macFeatureStyle}
+        />
+
         <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
           <div
             className="mx-auto grid max-w-[76rem] gap-10 rounded-[2rem] p-6 shadow-[0_18px_54px_rgba(17,17,17,0.08)] md:p-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center"
@@ -462,13 +476,13 @@ export default function StudioApps() {
             {appTiles.map((app, index) => (
               <AnimatedSection
                 key={app.title}
-                className={`h-full ${app === converterTool ? "md:hidden" : ""}`}
+                className="h-full"
                 delay={index * 55}
               >
                 <Link
                   href={app.href}
                   onClick={event => handleStudioAppLink(event, app)}
-                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[1.5rem] border bg-[var(--studio-app-card)] p-3.5 text-left text-[var(--studio-app-card-text)] shadow-[0_18px_54px_rgba(17,17,17,0.08)] transition-transform hover:-translate-y-1 md:min-h-[29rem] md:p-6"
+                  className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[1.5rem] border bg-[var(--studio-app-card)] p-3.5 text-left text-[var(--studio-app-card-text)] shadow-[0_18px_54px_rgba(17,17,17,0.08)] transition-transform hover:-translate-y-1 md:min-h-[22rem] md:p-6"
                   style={getStudioAppCardStyle(app)}
                 >
                   <div>
@@ -489,7 +503,7 @@ export default function StudioApps() {
 
                   <StudioAppIcon app={app} />
 
-                  <p className="mt-4 max-w-[28rem] text-[0.8rem] leading-5 tracking-[-0.01em] text-[var(--studio-app-card-muted)] md:mt-5 md:text-[0.96rem] md:leading-6 md:tracking-[-0.015em]">
+                  <p className="mt-3 max-w-[28rem] text-[0.8rem] leading-5 tracking-[-0.01em] text-[var(--studio-app-card-muted)] md:mt-4 md:text-[0.92rem] md:leading-6 md:tracking-[-0.015em]">
                     {app.description}
                   </p>
                   <div className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.82rem] font-medium tracking-[-0.02em] text-[var(--studio-app-card-text)] md:gap-2 md:pt-6 md:text-[0.95rem]">
@@ -502,56 +516,11 @@ export default function StudioApps() {
           </div>
         </section>
 
-        {isDesktopViewport ? (
-          <section className="px-[clamp(1.5rem,5vw,6rem)] py-14 md:py-18">
-            <AnimatedSection>
-              <Link
-                href={converterTool.href}
-                className="group mx-auto grid max-w-[76rem] overflow-hidden rounded-[2rem] border bg-[var(--studio-app-card)] p-6 text-[var(--studio-app-card-text)] shadow-[0_34px_120px_rgba(17,17,17,0.16)] transition-transform hover:-translate-y-1 md:grid-cols-[minmax(0,0.78fr)_minmax(18rem,0.62fr)] md:items-center md:gap-8 md:p-8"
-                style={
-                  {
-                    "--studio-app-card": homeTheme.controlBg,
-                    "--studio-app-card-text": homeTheme.controlInk,
-                    "--studio-app-card-muted": `color-mix(in srgb, ${homeTheme.controlInk} 72%, transparent)`,
-                    "--studio-app-accent": homeTheme.controlInk,
-                    "--studio-app-accent-text": homeTheme.controlBg,
-                    "--studio-app-icon-color": `color-mix(in srgb, ${homeTheme.controlInk} 76%, transparent)`,
-                    borderColor: homeTheme.ghost,
-                  } as CSSProperties
-                }
-              >
-                <div className="min-w-0">
-                  <p className="flex flex-wrap items-center gap-2 text-[0.72rem] font-medium uppercase leading-4 tracking-[0.18em] text-[var(--studio-app-card-muted)]">
-                    <span className="rounded-full bg-[var(--studio-app-accent)] px-2 py-1 text-[var(--studio-app-accent-text)]">
-                      {converterTool.category}
-                    </span>
-                    <span>{converterTool.tone}</span>
-                  </p>
-                  <h2
-                    className="mt-4 max-w-[10ch] text-[clamp(2.6rem,5.2vw,5.2rem)] font-black uppercase leading-[0.88] tracking-[0]"
-                    style={{ fontFamily: HOME_DISPLAY_FONT }}
-                  >
-                    {converterTool.title}
-                  </h2>
-                  <p className="mt-6 max-w-2xl text-[1rem] font-medium leading-7 tracking-[0] text-[var(--studio-app-card-muted)]">
-                    {converterTool.description}
-                  </p>
-                  <div className="mt-7 inline-flex items-center gap-2 text-[0.95rem] font-medium tracking-[-0.02em] text-[var(--studio-app-card-text)]">
-                    View Mac download
-                    <ArrowRight className="h-4 w-4" />
-                  </div>
-                </div>
-
-                <div className="relative mt-6 flex h-[clamp(12rem,23vw,18rem)] items-center justify-center overflow-hidden text-[var(--studio-app-icon-color)] md:mt-0">
-                  <StudioAppIconMark
-                    icon={converterTool.icon}
-                    label={converterTool.title}
-                  />
-                </div>
-              </Link>
-            </AnimatedSection>
-          </section>
-        ) : null}
+        <MacAppFeatureCard
+          app={converterTool}
+          actionLabel="View Mac download"
+          style={macFeatureStyle}
+        />
 
         <section className="px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
           <div className="mx-auto grid max-w-[76rem] gap-10 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-end">
@@ -618,9 +587,57 @@ export default function StudioApps() {
   );
 }
 
+function MacAppFeatureCard({
+  app,
+  actionLabel,
+  style,
+}: {
+  app: StudioApp;
+  actionLabel: string;
+  style: CSSProperties;
+}) {
+  return (
+    <section className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
+      <AnimatedSection>
+        <Link
+          href={app.href}
+          className="group mx-auto grid max-w-[76rem] overflow-hidden rounded-[2rem] border bg-[var(--studio-app-card)] p-6 text-[var(--studio-app-card-text)] shadow-[0_34px_120px_rgba(17,17,17,0.16)] transition-transform hover:-translate-y-1 md:grid-cols-[minmax(0,0.78fr)_minmax(16rem,0.62fr)] md:items-center md:gap-8 md:p-8"
+          style={style}
+        >
+          <div className="min-w-0">
+            <p className="flex flex-wrap items-center gap-2 text-[0.72rem] font-medium uppercase leading-4 tracking-[0.18em] text-[var(--studio-app-card-muted)]">
+              <span className="rounded-full bg-[var(--studio-app-accent)] px-2 py-1 text-[var(--studio-app-accent-text)]">
+                {app.category}
+              </span>
+              <span>{app.tone}</span>
+            </p>
+            <h2
+              className="mt-4 max-w-[10ch] text-[clamp(2.6rem,5.2vw,5.2rem)] font-black uppercase leading-[0.88] tracking-[0]"
+              style={{ fontFamily: HOME_DISPLAY_FONT }}
+            >
+              {app.title}
+            </h2>
+            <p className="mt-6 max-w-2xl text-[1rem] font-medium leading-7 tracking-[0] text-[var(--studio-app-card-muted)]">
+              {app.description}
+            </p>
+            <div className="mt-7 inline-flex items-center gap-2 text-[0.95rem] font-medium tracking-[-0.02em] text-[var(--studio-app-card-text)]">
+              {actionLabel}
+              <ArrowRight className="h-4 w-4" />
+            </div>
+          </div>
+
+          <div className="relative mt-6 flex h-[clamp(11rem,21vw,17rem)] items-center justify-center overflow-hidden text-[var(--studio-app-icon-color)] md:mt-0">
+            <StudioAppIconMark icon={app.icon} label={app.title} />
+          </div>
+        </Link>
+      </AnimatedSection>
+    </section>
+  );
+}
+
 function StudioAppIcon({ app }: { app: StudioApp }) {
   return (
-    <div className="site-media-square relative my-4 flex aspect-square w-full items-center justify-center overflow-hidden text-[var(--studio-app-icon-color)] md:my-5">
+    <div className="site-media-square relative my-3 flex h-[7.5rem] w-full items-center justify-center overflow-hidden text-[var(--studio-app-icon-color)] md:my-4 md:h-[10rem]">
       <StudioAppIconMark icon={app.icon} label={app.title} />
     </div>
   );
