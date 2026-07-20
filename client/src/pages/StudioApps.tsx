@@ -651,7 +651,7 @@ function StudioAppIconMark({ icon, label }: { icon: string; label: string }) {
         alt={`${label} icon`}
         width={512}
         height={512}
-        className="h-[74%] w-[74%] rounded-[22%] object-cover shadow-[0_22px_50px_rgba(0,0,0,0.18)] transition-transform duration-300 group-hover:scale-[1.04] md:h-[76%] md:w-[76%]"
+        className="aspect-square h-[74%] w-auto max-w-[74%] rounded-[22%] object-cover shadow-[0_22px_50px_rgba(0,0,0,0.18)] transition-transform duration-300 group-hover:scale-[1.04] md:h-[76%] md:max-w-[76%]"
       />
     );
   }
