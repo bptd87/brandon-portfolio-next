@@ -165,14 +165,16 @@ export default function RefRo() {
               className="mx-auto max-w-[90rem] overflow-hidden rounded-[1.5rem] p-[clamp(0.5rem,2.5vw,2.4rem)] shadow-[0_40px_120px_rgba(44,44,44,0.2)] transition-colors duration-300 md:rounded-[2.5rem]"
               style={{ backgroundColor: homeTheme.controlBg }}
             >
-              <Image
-                src={`${base}/04-presentation-editor.jpg`}
-                alt="RefRo mood-board editor with multiple pages, research images, and layout controls."
-                width={1440}
-                height={900}
-                className="h-auto w-full rounded-[clamp(1rem,2.2vw,2rem)]"
-                priority
-              />
+              <div className="relative aspect-[1220/765] overflow-hidden rounded-[clamp(1rem,2.2vw,2rem)]">
+                <Image
+                  src={`${base}/04-presentation-editor.jpg`}
+                  alt="RefRo mood-board editor with multiple pages, research images, and layout controls."
+                  fill
+                  sizes="(min-width: 1440px) 1360px, 94vw"
+                  className="scale-[1.18] object-cover"
+                  priority
+                />
+              </div>
             </div>
           </AnimatedSection>
         </section>
@@ -221,14 +223,16 @@ export default function RefRo() {
                     className={`overflow-hidden rounded-[1.5rem] p-3 shadow-[0_30px_80px_rgba(44,44,44,0.16)] transition-colors duration-300 md:rounded-[2rem] md:p-5 ${index % 2 ? "lg:order-1" : ""}`}
                     style={{ backgroundColor: homeTheme.controlBg }}
                   >
-                    <Image
-                      src={section.image}
-                      alt={section.alt}
-                      width={1440}
-                      height={900}
-                      className="h-auto w-full rounded-[clamp(0.9rem,1.8vw,1.5rem)]"
-                      loading="lazy"
-                    />
+                    <div className="relative aspect-[1220/765] overflow-hidden rounded-[clamp(0.9rem,1.8vw,1.5rem)]">
+                      <Image
+                        src={section.image}
+                        alt={section.alt}
+                        fill
+                        sizes="(min-width: 1024px) 560px, 94vw"
+                        className="scale-[1.18] object-cover"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 </article>
               </AnimatedSection>
