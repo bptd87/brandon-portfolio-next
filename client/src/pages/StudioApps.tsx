@@ -1,22 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { type CSSProperties, type MouseEvent, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type MouseEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { useIsDesktopViewport } from "@/hooks/useIsDesktopViewport";
 import { Link } from "wouter";
-import {
-  ArrowRight,
-  ExternalLink,
-  Smartphone,
-  X,
-} from "lucide-react";
+import { ArrowRight, ExternalLink, Smartphone, X } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { STUDIO_TOOL_BASE } from "@/hooks/useStudioToolTheme";
-import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
+import {
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
 
 type StudioApp = {
   title: string;
@@ -40,7 +47,8 @@ const converterTool: StudioApp = {
   shortTitle: "3D Convert",
   description:
     "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
-  image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
+  image:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
   icon: "/images/site-assets/studio-apps/svg/3d-file-convert.svg",
   href: "/studio/apps/scenic-3d-converter",
   category: "Mac Tool",
@@ -54,13 +62,31 @@ const converterTool: StudioApp = {
 
 const allApps: StudioApp[] = [
   {
+    title: "RefRo",
+    shortTitle: "RefRo",
+    description:
+      "A source-aware visual research archive and mood-board studio for Mac, built to keep the idea attached to every image.",
+    image: "/assets/studio-apps/refro/04-presentation-editor.jpg",
+    icon: "/assets/studio-apps/refro/icon.png",
+    href: "/studio/apps/refro",
+    category: "Mac App",
+    tone: "Coming soon",
+    accentColor: "#2c2c2c",
+    accentTextColor: "#f5f0e7",
+    cardColor: "#2c2c2c",
+    cardTextColor: "#f5f0e7",
+    cardMutedColor: "rgba(245,240,231,0.72)",
+  },
+  {
     title: "Scale Calculator",
     shortTitle: "Scale",
     description:
       "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
     icon: "/images/site-assets/studio-apps/svg/scale-calculator.svg",
-    screenImage: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/scale-app-iphone.webp",
+    screenImage:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/scale-app-iphone.webp",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     tone: "Mobile tool",
@@ -75,7 +101,8 @@ const allApps: StudioApp[] = [
     shortTitle: "Dims",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
     icon: "/images/site-assets/studio-apps/svg/dimensions.svg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
@@ -91,7 +118,8 @@ const allApps: StudioApp[] = [
     shortTitle: "Rosco",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
     icon: "/images/site-assets/studio-apps/svg/rosco-paint.svg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
@@ -107,7 +135,8 @@ const allApps: StudioApp[] = [
     shortTitle: "Paint Match",
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
     icon: "/images/site-assets/studio-apps/svg/commercial-paint.svg",
     href: "/studio/apps/commercial-paint-matcher",
     category: "Matcher",
@@ -123,7 +152,8 @@ const allApps: StudioApp[] = [
     shortTitle: "History",
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
     icon: "/images/site-assets/studio-apps/svg/timeline.svg",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
@@ -155,7 +185,11 @@ export default function StudioApps() {
   const [activeApp, setActiveApp] = useState<StudioApp | null>(null);
   const [isAppClosing, setIsAppClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
-  const featuredApp = useMemo(() => apps[0], [apps]);
+  const featuredApp = useMemo(
+    () =>
+      apps.find(app => app.href === "/studio/apps/scale-calculator") ?? apps[0],
+    [apps]
+  );
   const { homeTheme } = useHomeTheme();
   useHomeDocumentTheme(homeTheme);
   const pageStyle = {
@@ -179,8 +213,10 @@ export default function StudioApps() {
     "--studio-tool-border": STUDIO_TOOL_BASE.border,
     "--studio-tool-panel": STUDIO_TOOL_BASE.panel,
     "--studio-tool-panel-strong": STUDIO_TOOL_BASE.panelStrong,
-    "--studio-tool-control-bg": activeApp?.accentColor ?? STUDIO_TOOL_BASE.controlBg,
-    "--studio-tool-control-ink": activeApp?.accentTextColor ?? STUDIO_TOOL_BASE.controlInk,
+    "--studio-tool-control-bg":
+      activeApp?.accentColor ?? STUDIO_TOOL_BASE.controlBg,
+    "--studio-tool-control-ink":
+      activeApp?.accentTextColor ?? STUDIO_TOOL_BASE.controlInk,
     backgroundColor: "rgba(44, 44, 44, 0.62)",
     color: STUDIO_TOOL_BASE.ink,
     fontFamily: HOME_BODY_FONT,
@@ -204,7 +240,12 @@ export default function StudioApps() {
     setActiveApp(app);
   }
 
-  function handleStudioAppLink(event: MouseEvent<HTMLAnchorElement>, app: StudioApp) {
+  function handleStudioAppLink(
+    event: MouseEvent<HTMLAnchorElement>,
+    app: StudioApp
+  ) {
+    if (app.href === "/studio/apps/refro") return;
+
     if (
       typeof window !== "undefined" &&
       !window.matchMedia("(max-width: 767px)").matches
@@ -245,7 +286,8 @@ export default function StudioApps() {
     const originalBodyLeft = document.body.style.left;
     const originalBodyRight = document.body.style.right;
     const originalBodyWidth = document.body.style.width;
-    const originalBodyOverscrollBehavior = document.body.style.overscrollBehavior;
+    const originalBodyOverscrollBehavior =
+      document.body.style.overscrollBehavior;
 
     document.documentElement.style.overflow = "hidden";
     document.documentElement.style.height = "100%";
@@ -281,7 +323,10 @@ export default function StudioApps() {
   }, [activeApp]);
 
   return (
-    <div className="min-h-screen transition-colors duration-500" style={pageStyle}>
+    <div
+      className="min-h-screen transition-colors duration-500"
+      style={pageStyle}
+    >
       <SEO
         title="Studio Apps for Scenic Design"
         description="Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research."
@@ -293,37 +338,51 @@ export default function StudioApps() {
       <Header />
       <PublishingTopBar active="apps" tone="dark" />
 
-      <main className="pb-0" style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}>
+      <main
+        className="pb-0"
+        style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
+      >
         <section className="px-[clamp(1.5rem,5vw,6rem)] pb-14 pt-28 md:pb-20 md:pt-32">
           <AnimatedSection>
             <div className="mx-auto max-w-[76rem]">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(22rem,0.58fr)] lg:items-end">
                 <div>
-                  <p className="text-[0.8rem] font-black uppercase tracking-[0.16em]" style={mutedStyle}>Studio Apps</p>
-                  <h1 className="mt-5 max-w-[12ch] text-[clamp(3.2rem,7.2vw,7rem)] font-black uppercase leading-[0.86] tracking-[0]" style={displayStyle}>
+                  <p
+                    className="text-[0.8rem] font-black uppercase tracking-[0.16em]"
+                    style={mutedStyle}
+                  >
+                    Studio Apps
+                  </p>
+                  <h1
+                    className="mt-5 max-w-[12ch] text-[clamp(3.2rem,7.2vw,7rem)] font-black uppercase leading-[0.86] tracking-[0]"
+                    style={displayStyle}
+                  >
                     Scenic tools for fast studio work.
                   </h1>
                 </div>
                 <div className="max-w-[34rem] lg:justify-self-end">
-                  <p className="text-[clamp(1.05rem,1.55vw,1.35rem)] font-medium leading-[1.35] tracking-[0]" style={mutedStyle}>
-                    Five mobile studio tools for scale conversion, 3D printing,
-                    paint, reference, and research, plus a Mac converter for 3D
-                    handoffs when the workflow needs to leave the browser.
+                  <p
+                    className="text-[clamp(1.05rem,1.55vw,1.35rem)] font-medium leading-[1.35] tracking-[0]"
+                    style={mutedStyle}
+                  >
+                    Mobile studio tools for scale, paint, and reference, plus
+                    purpose-built Mac apps for visual research and 3D handoffs.
                   </p>
                   <div className="mt-7 hidden grid-cols-3 gap-3 text-center sm:grid">
-                    {["Scale", "Paint", "Reference"].map(
-                      (item) => (
-                        <div
-                          key={item}
-                          className="rounded-[1.25rem] px-3 py-4 shadow-[0_18px_48px_rgba(17,17,17,0.08)]"
-                          style={softPanelStyle}
+                    {["Scale", "Paint", "Reference"].map(item => (
+                      <div
+                        key={item}
+                        className="rounded-[1.25rem] px-3 py-4 shadow-[0_18px_48px_rgba(17,17,17,0.08)]"
+                        style={softPanelStyle}
+                      >
+                        <p
+                          className="text-[0.72rem] font-black uppercase tracking-[0.14em]"
+                          style={mutedStyle}
                         >
-                          <p className="text-[0.72rem] font-black uppercase tracking-[0.14em]" style={mutedStyle}>
-                            {item}
-                          </p>
-                        </div>
-                      )
-                    )}
+                          {item}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -332,24 +391,39 @@ export default function StudioApps() {
         </section>
 
         <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
-          <div className="mx-auto grid max-w-[76rem] gap-10 rounded-[2rem] p-6 shadow-[0_18px_54px_rgba(17,17,17,0.08)] md:p-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center" style={softPanelStyle}>
+          <div
+            className="mx-auto grid max-w-[76rem] gap-10 rounded-[2rem] p-6 shadow-[0_18px_54px_rgba(17,17,17,0.08)] md:p-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center"
+            style={softPanelStyle}
+          >
             <AnimatedSection>
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.78rem] font-black uppercase tracking-[0.16em]" style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}>
+                <div
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.78rem] font-black uppercase tracking-[0.16em]"
+                  style={{
+                    backgroundColor: homeTheme.controlBg,
+                    color: homeTheme.controlInk,
+                  }}
+                >
                   <Smartphone className="h-4 w-4" />
                   Mobile Studio Tool
                 </div>
-                <h2 className="mt-7 max-w-[10ch] text-[clamp(2.6rem,5.6vw,5.6rem)] font-black uppercase leading-[0.88] tracking-[0]" style={displayStyle}>
+                <h2
+                  className="mt-7 max-w-[10ch] text-[clamp(2.6rem,5.6vw,5.6rem)] font-black uppercase leading-[0.88] tracking-[0]"
+                  style={displayStyle}
+                >
                   Scale checks for the printer bed.
                 </h2>
-                <p className="mt-7 max-w-xl text-[1rem] font-medium leading-7 tracking-[0]" style={mutedStyle}>
+                <p
+                  className="mt-7 max-w-xl text-[1rem] font-medium leading-7 tracking-[0]"
+                  style={mutedStyle}
+                >
                   The scale calculator is built for architectural and scenic
                   model making: turn full-size feet and inches into millimeters,
                   then check whether the part fits a common 3D printer bed.
                 </p>
                 <Link
                   href={featuredApp.href}
-                  onClick={(event) => handleStudioAppLink(event, featuredApp)}
+                  onClick={event => handleStudioAppLink(event, featuredApp)}
                   className="mt-8 inline-flex h-12 items-center justify-center rounded-full px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
                   style={{
                     backgroundColor: featuredApp.accentColor,
@@ -365,7 +439,7 @@ export default function StudioApps() {
             <AnimatedSection delay={90}>
               <Link
                 href={featuredApp.href}
-                onClick={(event) => handleStudioAppLink(event, featuredApp)}
+                onClick={event => handleStudioAppLink(event, featuredApp)}
                 className="group mx-auto block w-full max-w-[28rem] text-left"
               >
                 <div className="relative mx-auto aspect-[763/1574] max-w-[25rem] drop-shadow-[0_34px_80px_rgba(17,17,17,0.24)]">
@@ -393,7 +467,7 @@ export default function StudioApps() {
               >
                 <Link
                   href={app.href}
-                  onClick={(event) => handleStudioAppLink(event, app)}
+                  onClick={event => handleStudioAppLink(event, app)}
                   className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[1.5rem] border bg-[var(--studio-app-card)] p-3.5 text-left text-[var(--studio-app-card-text)] shadow-[0_18px_54px_rgba(17,17,17,0.08)] transition-transform hover:-translate-y-1 md:min-h-[29rem] md:p-6"
                   style={getStudioAppCardStyle(app)}
                 >
@@ -453,7 +527,10 @@ export default function StudioApps() {
                     </span>
                     <span>{converterTool.tone}</span>
                   </p>
-                  <h2 className="mt-4 max-w-[10ch] text-[clamp(2.6rem,5.2vw,5.2rem)] font-black uppercase leading-[0.88] tracking-[0]" style={{ fontFamily: HOME_DISPLAY_FONT }}>
+                  <h2
+                    className="mt-4 max-w-[10ch] text-[clamp(2.6rem,5.2vw,5.2rem)] font-black uppercase leading-[0.88] tracking-[0]"
+                    style={{ fontFamily: HOME_DISPLAY_FONT }}
+                  >
                     {converterTool.title}
                   </h2>
                   <p className="mt-6 max-w-2xl text-[1rem] font-medium leading-7 tracking-[0] text-[var(--studio-app-card-muted)]">
@@ -466,7 +543,10 @@ export default function StudioApps() {
                 </div>
 
                 <div className="relative mt-6 flex h-[clamp(12rem,23vw,18rem)] items-center justify-center overflow-hidden text-[var(--studio-app-icon-color)] md:mt-0">
-                  <StudioAppIconMark icon={converterTool.icon} label={converterTool.title} />
+                  <StudioAppIconMark
+                    icon={converterTool.icon}
+                    label={converterTool.title}
+                  />
                 </div>
               </Link>
             </AnimatedSection>
@@ -477,14 +557,25 @@ export default function StudioApps() {
           <div className="mx-auto grid max-w-[76rem] gap-10 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-end">
             <AnimatedSection>
               <div>
-                <p className="text-[0.8rem] font-black uppercase tracking-[0.16em]" style={mutedStyle}>Home Screen</p>
-                <h2 className="mt-5 max-w-[12ch] text-[clamp(2.5rem,5.8vw,5.6rem)] font-black uppercase leading-[0.88] tracking-[0]" style={displayStyle}>
+                <p
+                  className="text-[0.8rem] font-black uppercase tracking-[0.16em]"
+                  style={mutedStyle}
+                >
+                  Home Screen
+                </p>
+                <h2
+                  className="mt-5 max-w-[12ch] text-[clamp(2.5rem,5.8vw,5.6rem)] font-black uppercase leading-[0.88] tracking-[0]"
+                  style={displayStyle}
+                >
                   Save the tools you use most.
                 </h2>
               </div>
             </AnimatedSection>
             <AnimatedSection delay={80}>
-              <div className="grid gap-3 text-[1rem] font-medium leading-7 tracking-[0] sm:grid-cols-3" style={mutedStyle}>
+              <div
+                className="grid gap-3 text-[1rem] font-medium leading-7 tracking-[0] sm:grid-cols-3"
+                style={mutedStyle}
+              >
                 {[
                   "Open a Studio tool in Safari.",
                   "Tap Share, then Add to Home Screen.",
@@ -495,7 +586,10 @@ export default function StudioApps() {
                     className="rounded-[1.25rem] p-5"
                     style={softPanelStyle}
                   >
-                    <p className="mb-5 text-[0.76rem] font-black uppercase tracking-[0.18em]" style={mutedStyle}>
+                    <p
+                      className="mb-5 text-[0.76rem] font-black uppercase tracking-[0.18em]"
+                      style={mutedStyle}
+                    >
                       0{index + 1}
                     </p>
                     <p>{step}</p>
@@ -533,6 +627,18 @@ function StudioAppIcon({ app }: { app: StudioApp }) {
 }
 
 function StudioAppIconMark({ icon, label }: { icon: string; label: string }) {
+  if (icon.endsWith(".png")) {
+    return (
+      <Image
+        src={icon}
+        alt={`${label} icon`}
+        width={512}
+        height={512}
+        className="h-[74%] w-[74%] rounded-[22%] object-cover shadow-[0_22px_50px_rgba(0,0,0,0.18)] transition-transform duration-300 group-hover:scale-[1.04] md:h-[76%] md:w-[76%]"
+      />
+    );
+  }
+
   const maskStyle = {
     WebkitMaskImage: `url(${icon})`,
     maskImage: `url(${icon})`,
@@ -584,7 +690,10 @@ function StudioAppScreen({
             type="button"
             onClick={onBack}
             className="flex h-8 w-8 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
-            style={{ backgroundColor: app.accentColor, color: app.accentTextColor }}
+            style={{
+              backgroundColor: app.accentColor,
+              color: app.accentTextColor,
+            }}
             aria-label="Back to Studio Apps"
           >
             <X className="h-4 w-4" />

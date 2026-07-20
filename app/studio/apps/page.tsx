@@ -9,16 +9,27 @@ export const metadata = buildPageMetadata({
   description:
     "Production-focused studio tools for architectural scale conversion, 3D printing, scenic paint, model making, drafting, and research.",
   pathname: "/studio/apps",
-  image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
+  image:
+    "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
 });
 
 const studioApps = [
+  {
+    name: "RefRo: Reference Rover",
+    description:
+      "A source-aware visual research archive and mood-board studio for Mac.",
+    href: "/studio/apps/refro",
+    image: "/assets/studio-apps/refro/04-presentation-editor.jpg",
+    applicationCategory: "DesignApplication",
+    operatingSystem: "macOS 15 or later",
+  },
   {
     name: "Scenic 3D Converter",
     description:
       "Mac utility for converting 3D files into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
     href: "/studio/apps/scenic-3d-converter",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
     applicationCategory: "GraphicsApplication",
     operatingSystem: "macOS",
   },
@@ -27,7 +38,8 @@ const studioApps = [
     description:
       "Convert full-size architectural and scenic dimensions into model scale millimeters for 3D printing, model making, and drafting.",
     href: "/studio/apps/scale-calculator",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
     applicationCategory: "DesignApplication",
     operatingSystem: "Web",
   },
@@ -36,7 +48,8 @@ const studioApps = [
     description:
       "Quick reference for standard scenic, architectural, shop, furniture, and production dimensions.",
     href: "/studio/apps/dimension-reference",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
     applicationCategory: "ReferenceApplication",
     operatingSystem: "Web",
   },
@@ -45,7 +58,8 @@ const studioApps = [
     description:
       "Scenic paint calculator for Rosco Off-Broadway colors, surface coverage, and paint shop mix planning.",
     href: "/studio/apps/rosco-paint-calculator",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
     applicationCategory: "DesignApplication",
     operatingSystem: "Web",
   },
@@ -54,7 +68,8 @@ const studioApps = [
     description:
       "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
     href: "/studio/apps/commercial-paint-matcher",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
     applicationCategory: "DesignApplication",
     operatingSystem: "Web",
   },
@@ -63,7 +78,8 @@ const studioApps = [
     description:
       "Explore major design periods with visual references, color palettes, key figures, and architectural history context.",
     href: "/studio/apps/design-history-timeline",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
+    image:
+      "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
     applicationCategory: "EducationalApplication",
     operatingSystem: "Web",
   },
@@ -117,9 +133,24 @@ export default function Page() {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.brandonptdavis.com" },
-              { "@type": "ListItem", position: 2, name: "Studio", item: "https://www.brandonptdavis.com/studio" },
-              { "@type": "ListItem", position: 3, name: "Apps", item: "https://www.brandonptdavis.com/studio/apps" },
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://www.brandonptdavis.com",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Studio",
+                item: "https://www.brandonptdavis.com/studio",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: "Apps",
+                item: "https://www.brandonptdavis.com/studio/apps",
+              },
             ],
           }),
         }}
@@ -140,7 +171,9 @@ export default function Page() {
               "3D printing model scale calculator",
               "Scenic paint and drafting tools",
             ],
-            primaryImageOfPage: absoluteUrl("https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg"),
+            primaryImageOfPage: absoluteUrl(
+              "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg"
+            ),
             mainEntity: {
               "@type": "ItemList",
               name: "Studio Apps",
@@ -153,11 +186,13 @@ export default function Page() {
           }),
         }}
       />
-      {studioApps.map((app) => (
+      {studioApps.map(app => (
         <script
           key={app.href}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLd(softwareApplicationSchema(app)) }}
+          dangerouslySetInnerHTML={{
+            __html: jsonLd(softwareApplicationSchema(app)),
+          }}
         />
       ))}
       <NextPathProvider currentPath="/studio/apps">
