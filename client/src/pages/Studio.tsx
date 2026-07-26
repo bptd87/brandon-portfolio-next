@@ -1,12 +1,8 @@
 "use client";
 
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useMemo } from "react";
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  ExternalLink,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, ExternalLink, X } from "lucide-react";
 import { Link } from "wouter";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -15,128 +11,96 @@ import Header from "@/components/Header";
 import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { HOME_BODY_FONT, HOME_DISPLAY_FONT, useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 import {
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "@shared/learningPortal";
+  HOME_BODY_FONT,
+  HOME_DISPLAY_FONT,
+  useHomeDocumentTheme,
+  useHomeTheme,
+} from "@/lib/homeTheme";
+import { RETIRED_LEARNING_ARTICLE_SLUG_SET } from "@shared/learningPortal";
 import { getTutorialArticles } from "@shared/articleTutorials";
 import { getLocalArticles } from "@shared/localArticles";
 
 const apps = [
   {
-    title: "Scenic 3D Converter",
-    shortTitle: "3D Convert",
+    title: "Foli",
+    shortTitle: "Foli",
     description:
-      "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
-    icon: "/images/site-assets/studio-apps/svg/3d-file-convert.svg",
-    href: "/studio/apps/scenic-3d-converter",
-    category: "Mac Tool",
-    tone: "Download",
-    cta: "View Mac download",
+      "A connected creative archive for organizing completed work across portfolios, resumes, presentations, and publishing workflows.",
+    image:
+      "https://www.brandonptdavis.com/images/site-assets/studio-apps/native-icons/foli.jpg",
+    icon: "/images/site-assets/studio-apps/native-icons/foli.jpg",
+    href: "https://brandonptdavis.app/apps/foli",
+    category: "macOS",
+    tone: "In development",
+    cta: "View on app site",
     launchMode: "page",
-    accentColor: "#5f88a8",
-    accentTextColor: "#ffffff",
-    cardColor: "#5f88a8",
-    cardTextColor: "#ffffff",
-    cardMutedColor: "rgba(255,255,255,0.74)",
+    accentColor: "#151515",
+    accentTextColor: "#f7f3eb",
+    cardColor: "#151515",
+    cardTextColor: "#f7f3eb",
+    cardMutedColor: "rgba(247,243,235,0.72)",
   },
   {
-    title: "Scale Calculator",
-    shortTitle: "Scale",
+    title: "RefRo",
+    shortTitle: "RefRo",
     description:
-      "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scale-calculator-card-2026.jpg",
-    icon: "/images/site-assets/studio-apps/svg/scale-calculator.svg",
-    href: "/studio/apps/scale-calculator",
-    category: "Calculator",
-    tone: "Mobile tool",
-    cta: "Launch app",
-    launchMode: "app",
-    accentColor: "#ff6f00",
-    accentTextColor: "#20180f",
-    cardColor: "#b7653f",
-    cardTextColor: "#ffffff",
-    cardMutedColor: "rgba(255,255,255,0.74)",
+      "A source-aware visual research archive and mood-board studio that keeps context attached to every image.",
+    image:
+      "https://www.brandonptdavis.com/images/site-assets/studio-apps/native-icons/refro.jpg",
+    icon: "/images/site-assets/studio-apps/native-icons/refro.jpg",
+    href: "https://brandonptdavis.app/apps/refro",
+    category: "macOS",
+    tone: "Coming soon",
+    cta: "View on app site",
+    launchMode: "page",
+    accentColor: "#292525",
+    accentTextColor: "#f5eee6",
+    cardColor: "#292525",
+    cardTextColor: "#f5eee6",
+    cardMutedColor: "rgba(245,238,230,0.72)",
   },
   {
-    title: "Dimension Reference",
-    shortTitle: "Dims",
+    title: "ArchMM",
+    shortTitle: "ArchMM",
     description:
-      "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/dimension-reference-card-2026.jpg",
-    icon: "/images/site-assets/studio-apps/svg/dimensions.svg",
-    href: "/studio/apps/dimension-reference",
-    category: "Reference",
-    tone: "Shop reference",
-    cta: "Open reference",
-    launchMode: "app",
-    accentColor: "#052f8b",
-    accentTextColor: "#a8f4ff",
-    cardColor: "#c98f24",
-    cardTextColor: "#17120b",
-    cardMutedColor: "rgba(23,18,11,0.68)",
+      "An architectural scale and model-millimeter calculator for iPhone, built for drafting, model making, and 3D printing.",
+    image:
+      "https://www.brandonptdavis.com/images/site-assets/studio-apps/native-icons/archmm.png",
+    icon: "/images/site-assets/studio-apps/native-icons/archmm.png",
+    href: "https://brandonptdavis.app/apps/archmm",
+    category: "iPhone",
+    tone: "Coming soon",
+    cta: "View on app site",
+    launchMode: "page",
+    accentColor: "#403b35",
+    accentTextColor: "#f8f1e8",
+    cardColor: "#403b35",
+    cardTextColor: "#f8f1e8",
+    cardMutedColor: "rgba(248,241,232,0.72)",
   },
   {
-    title: "Rosco Paint Calculator",
-    shortTitle: "Rosco",
+    title: "PaintHex",
+    shortTitle: "PaintHex",
     description:
-      "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/rosco-paint-calculator-card-2026.jpg",
-    icon: "/images/site-assets/studio-apps/svg/rosco-paint.svg",
-    href: "/studio/apps/rosco-paint-calculator",
-    category: "Calculator",
-    tone: "Paint shop",
-    cta: "Launch app",
-    launchMode: "app",
-    accentColor: "#dc30ff",
-    accentTextColor: "#ffe3ff",
-    cardColor: "#be6241",
-    cardTextColor: "#ffffff",
-    cardMutedColor: "rgba(255,255,255,0.74)",
-  },
-  {
-    title: "Commercial Paint Matcher",
-    shortTitle: "Paint Match",
-    description:
-      "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/commercial-paint-matcher-card-2026.jpg",
-    icon: "/images/site-assets/studio-apps/svg/commercial-paint.svg",
-    href: "/studio/apps/commercial-paint-matcher",
-    category: "Matcher",
-    tone: "Paint library",
-    cta: "Launch app",
-    launchMode: "app",
-    accentColor: "#003f1c",
-    accentTextColor: "#baff00",
-    cardColor: "#003f1c",
-    cardTextColor: "#ffffff",
-    cardMutedColor: "rgba(255,255,255,0.74)",
-  },
-  {
-    title: "Design History Timeline",
-    shortTitle: "History",
-    description:
-      "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/design-history-timeline-card-2026.jpg",
-    icon: "/images/site-assets/studio-apps/svg/timeline.svg",
-    href: "/studio/apps/design-history-timeline",
-    category: "Reference",
-    tone: "Research",
-    cta: "Open timeline",
-    launchMode: "app",
-    accentColor: "#dc30ff",
-    accentTextColor: "#ffe3ff",
-    cardColor: "#dc30ff",
-    cardTextColor: "#ffffff",
-    cardMutedColor: "rgba(255,255,255,0.74)",
+      "Color matching, Rosco recipes, quantity planning, and paint-shop organization across Mac, iPad, and iPhone.",
+    image:
+      "https://www.brandonptdavis.com/images/site-assets/studio-apps/native-icons/painthex.png",
+    icon: "/images/site-assets/studio-apps/native-icons/painthex.png",
+    href: "https://brandonptdavis.app/apps/painthex",
+    category: "Mac · iPad · iPhone",
+    tone: "In development",
+    cta: "View on app site",
+    launchMode: "page",
+    accentColor: "#233323",
+    accentTextColor: "#f1f5e9",
+    cardColor: "#233323",
+    cardTextColor: "#f1f5e9",
+    cardMutedColor: "rgba(241,245,233,0.72)",
   },
 ] as const;
 
 type StudioTool = (typeof apps)[number];
-
-const studioToolCardClass =
-  "group flex h-full min-h-[28rem] w-full flex-col overflow-hidden rounded-[1.75rem] border bg-[var(--studio-app-card)] p-5 text-left text-[var(--studio-app-card-text)] shadow-[0_18px_54px_rgba(17,17,17,0.12)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)] md:min-h-[30rem] md:p-6";
 
 const studioLinks = [
   {
@@ -144,18 +108,22 @@ const studioLinks = [
     href: "/articles",
     category: "Writing",
     imageTitle: "Articles",
-    description: "Process notes, scenic design practice, drafting decisions, and production-facing writing.",
+    description:
+      "Process notes, scenic design practice, drafting decisions, and production-facing writing.",
     cta: "Read articles",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-articles-cover.png",
+    image:
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-articles-cover.png",
   },
   {
     title: "Scenic Directory",
     href: "/studio/directory",
     category: "Reference",
     imageTitle: "Directory",
-    description: "A curated shelf of resources, archives, organizations, and research references.",
+    description:
+      "A curated shelf of resources, archives, organizations, and research references.",
     cta: "Browse directory",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-directory-cover.png",
+    image:
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-directory-cover.png",
   },
 ] as const;
 
@@ -175,29 +143,18 @@ function getArticleTimestamp(value?: string | Date | null) {
   return Number.isNaN(date.getTime()) ? 0 : date.getTime();
 }
 
-function getStudioAppCardStyle(app: StudioTool) {
-  return {
-    "--studio-app-card": `color-mix(in srgb, ${app.accentColor} 86%, black)`,
-    "--studio-app-card-text": app.accentTextColor,
-    "--studio-app-card-muted": `color-mix(in srgb, ${app.accentTextColor} 72%, transparent)`,
-    "--studio-app-accent": app.accentTextColor,
-    "--studio-app-accent-text": app.accentColor,
-    "--studio-app-icon-color": `color-mix(in srgb, ${app.accentColor} 18%, white)`,
-    borderColor: `color-mix(in srgb, ${app.accentColor} 72%, black)`,
-  } as CSSProperties;
-}
-
 export default function Studio() {
-  const closeTimerRef = useRef<number | null>(null);
-  const [activeApp, setActiveApp] = useState<StudioTool | null>(null);
-  const [isAppClosing, setIsAppClosing] = useState(false);
   const { homeTheme } = useHomeTheme();
   useHomeDocumentTheme(homeTheme);
   const latestArticles = useMemo(
     () =>
       [...getLocalArticles(), ...getTutorialArticles()]
-        .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
-        .sort((a, b) => getArticleTimestamp(b.publishedAt || b.createdAt) - getArticleTimestamp(a.publishedAt || a.createdAt))
+        .filter(article => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+        .sort(
+          (a, b) =>
+            getArticleTimestamp(b.publishedAt || b.createdAt) -
+            getArticleTimestamp(a.publishedAt || a.createdAt)
+        )
         .slice(0, 3),
     []
   );
@@ -221,97 +178,11 @@ export default function Studio() {
     color: homeTheme.ink,
   } as CSSProperties;
 
-  function openStudioApp(app: StudioTool) {
-    if (app.launchMode === "page") {
-      window.location.href = app.href;
-      return;
-    }
-
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 767px)").matches
-    ) {
-      window.location.href = app.href;
-      return;
-    }
-
-    if (closeTimerRef.current) {
-      window.clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-    }
-
-    setIsAppClosing(false);
-    setActiveApp(app);
-  }
-
-  function closeStudioApp() {
-    if (!activeApp || isAppClosing) return;
-
-    setIsAppClosing(true);
-    closeTimerRef.current = window.setTimeout(() => {
-      setActiveApp(null);
-      setIsAppClosing(false);
-      closeTimerRef.current = null;
-    }, 220);
-  }
-
-  useEffect(() => {
-    return () => {
-      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!activeApp) return;
-
-    const scrollY = window.scrollY;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    const originalHtmlHeight = document.documentElement.style.height;
-    const originalHtmlOverscrollBehavior =
-      document.documentElement.style.overscrollBehavior;
-    const originalOverflow = document.body.style.overflow;
-    const originalBodyPosition = document.body.style.position;
-    const originalBodyTop = document.body.style.top;
-    const originalBodyLeft = document.body.style.left;
-    const originalBodyRight = document.body.style.right;
-    const originalBodyWidth = document.body.style.width;
-    const originalBodyOverscrollBehavior = document.body.style.overscrollBehavior;
-
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.height = "100%";
-    document.documentElement.style.overscrollBehavior = "none";
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
-    document.body.style.overscrollBehavior = "none";
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") closeStudioApp();
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.documentElement.style.overflow = originalHtmlOverflow;
-      document.documentElement.style.height = originalHtmlHeight;
-      document.documentElement.style.overscrollBehavior =
-        originalHtmlOverscrollBehavior;
-      document.body.style.overflow = originalOverflow;
-      document.body.style.position = originalBodyPosition;
-      document.body.style.top = originalBodyTop;
-      document.body.style.left = originalBodyLeft;
-      document.body.style.right = originalBodyRight;
-      document.body.style.width = originalBodyWidth;
-      document.body.style.overscrollBehavior = originalBodyOverscrollBehavior;
-      window.scrollTo(0, scrollY);
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [activeApp]);
-
   return (
-    <div className="min-h-screen transition-colors duration-500" style={pageStyle}>
+    <div
+      className="min-h-screen transition-colors duration-500"
+      style={pageStyle}
+    >
       <SEO
         title="Studio | Articles, Apps & Directory"
         description="Studio hub for articles, design tools, and curated scenic design references by Brandon PT Davis."
@@ -331,8 +202,10 @@ export default function Studio() {
         collectionPage={{
           name: "Scenic Design Studio Index",
           url: "https://www.brandonptdavis.com/studio",
-          description: "Studio hub for scenic design articles, tools, and references.",
-          about: "Scenic design education and workflow resources by Brandon PT Davis.",
+          description:
+            "Studio hub for scenic design articles, tools, and references.",
+          about:
+            "Scenic design education and workflow resources by Brandon PT Davis.",
           primaryImageOfPage: studioLinks[0].image,
           mainEntity: {
             name: "Published Resources",
@@ -404,7 +277,10 @@ export default function Studio() {
               <Link
                 href="/articles"
                 className="inline-flex h-11 items-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.04em] shadow-[0_10px_28px_rgba(17,17,17,0.1)] transition-transform hover:-translate-y-0.5"
-                style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
+                style={{
+                  backgroundColor: homeTheme.controlBg,
+                  color: homeTheme.controlInk,
+                }}
               >
                 Articles
               </Link>
@@ -439,11 +315,17 @@ export default function Studio() {
                         />
                       ) : null}
                     </div>
-                      <div
-                        className="flex min-h-[12.5rem] flex-1 flex-col px-5 py-5 sm:px-6"
-                        style={{ backgroundColor: swatch.background, color: swatch.text }}
+                    <div
+                      className="flex min-h-[12.5rem] flex-1 flex-col px-5 py-5 sm:px-6"
+                      style={{
+                        backgroundColor: swatch.background,
+                        color: swatch.text,
+                      }}
+                    >
+                      <p
+                        className="text-[0.86rem] font-black uppercase tracking-[0.04em]"
+                        style={{ color: swatch.muted }}
                       >
-                      <p className="text-[0.86rem] font-black uppercase tracking-[0.04em]" style={{ color: swatch.muted }}>
                         {article.categoryName || "Article"}
                       </p>
                       <h3 className="mt-4 line-clamp-3 max-w-[20rem] text-[clamp(1.18rem,1.38vw,1.48rem)] font-black leading-[1.02] tracking-[0]">
@@ -461,7 +343,10 @@ export default function Studio() {
           <Link
             href="/studio/directory"
             className="group grid overflow-hidden rounded-[2rem] shadow-[0_18px_54px_rgba(17,17,17,0.13)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,17,17,0.16)] md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
-            style={{ backgroundColor: homeTheme.controlBg, color: homeTheme.controlInk }}
+            style={{
+              backgroundColor: homeTheme.controlBg,
+              color: homeTheme.controlInk,
+            }}
           >
             <div className="flex min-h-[24rem] flex-col px-6 py-7 sm:px-8 sm:py-9 md:min-h-[30rem]">
               <p className="text-[0.9rem] font-black uppercase tracking-[0.06em] opacity-70">
@@ -469,12 +354,17 @@ export default function Studio() {
               </p>
               <h2
                 className="mt-8 max-w-[12ch] text-[clamp(3rem,6vw,6.4rem)] font-black uppercase leading-[0.82] tracking-[0]"
-                style={{ fontFamily: HOME_DISPLAY_FONT, fontStretch: "condensed" }}
+                style={{
+                  fontFamily: HOME_DISPLAY_FONT,
+                  fontStretch: "condensed",
+                }}
               >
                 DIRECTORY
               </h2>
               <p className="mt-7 max-w-[34rem] text-[1.02rem] font-medium leading-7 tracking-[0] opacity-72">
-                A curated set of theatre organizations, archives, software references, suppliers, and production resources for scenic design work.
+                A curated set of theatre organizations, archives, software
+                references, suppliers, and production resources for scenic
+                design work.
               </p>
               <span className="mt-auto inline-flex items-center gap-2 pt-8 text-[1rem] font-black uppercase tracking-[0.04em]">
                 Browse directory
@@ -494,44 +384,46 @@ export default function Studio() {
         </section>
 
         <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
-          <div className="mx-auto max-w-[76rem]">
-            <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-              <h2
-                className="max-w-[11ch] text-[clamp(2.4rem,5vw,5.4rem)] font-black uppercase leading-[0.84] tracking-[0]"
-                style={displayStyle}
-              >
-                APPS
+          <a
+            href="https://brandonptdavis.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mx-auto grid max-w-[76rem] overflow-hidden rounded-[2rem] p-7 shadow-[0_20px_64px_rgba(17,17,17,0.12)] transition-transform duration-300 hover:-translate-y-1 md:grid-cols-[minmax(0,0.8fr)_minmax(20rem,0.55fr)] md:items-center md:gap-10 md:p-10"
+            style={{
+              backgroundColor: homeTheme.controlBg,
+              color: homeTheme.controlInk,
+            }}
+            aria-label="Visit the Brandon PT Davis app site"
+          >
+            <div>
+              <p className="text-[0.78rem] font-bold uppercase tracking-[0.14em] opacity-60">
+                Brandon PT Davis Apps
+              </p>
+              <h2 className="mt-5 max-w-[12ch] text-[clamp(2.5rem,5vw,5rem)] font-bold leading-[0.92] tracking-[-0.055em]">
+                Creative tools, built for Apple platforms.
               </h2>
-              <Link
-                href="/studio/apps"
-                className="inline-flex h-11 w-fit items-center rounded-full px-5 text-[0.9rem] font-black uppercase tracking-[0.04em] transition-transform hover:-translate-y-0.5 md:justify-self-end"
-                style={softPanelStyle}
-              >
-                View all apps
-              </Link>
+              <span className="mt-8 inline-flex items-center gap-2 text-[1rem] font-semibold">
+                Visit app site
+                <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </span>
             </div>
-          </div>
 
-          <div className="mx-auto grid max-w-[76rem] auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {apps.map((app, index) => (
-              <AnimatedSection key={app.href} className="h-full">
-                {app.launchMode === "page" ? (
-                  <Link href={app.href} className={studioToolCardClass} style={getStudioAppCardStyle(app)}>
-                    <StudioToolCardContent app={app} />
-                  </Link>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => openStudioApp(app)}
-                    className={studioToolCardClass}
-                    style={getStudioAppCardStyle(app)}
-                  >
-                    <StudioToolCardContent app={app} />
-                  </button>
-                )}
-              </AnimatedSection>
-            ))}
-          </div>
+            <div className="mt-9 grid grid-cols-2 gap-4 md:mt-0 md:gap-5">
+              {apps.map(app => (
+                <Image
+                  key={app.title}
+                  src={app.icon}
+                  alt={`${app.title} app icon`}
+                  width={512}
+                  height={512}
+                  quality={92}
+                  unoptimized
+                  sizes="(min-width: 768px) 10rem, 38vw"
+                  className="aspect-square w-full rounded-[22%] object-cover shadow-[0_16px_42px_rgba(0,0,0,0.24)] transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+              ))}
+            </div>
+          </a>
         </section>
       </main>
 
@@ -540,11 +432,6 @@ export default function Studio() {
         backgroundColor={homeTheme.footerBg}
         displayTextColor={homeTheme.footerDisplay}
         textColor={homeTheme.footerInk}
-      />
-      <StudioAppScreen
-        app={activeApp}
-        isClosing={isAppClosing}
-        onBack={closeStudioApp}
       />
     </div>
   );
@@ -561,8 +448,8 @@ function StudioToolCardContent({ app }: { app: StudioTool }) {
           <span>{app.tone}</span>
         </p>
         <h3
-          className="mt-3 max-w-[10ch] text-[clamp(1.9rem,3.4vw,3rem)] font-black uppercase leading-[0.95] tracking-[0]"
-          style={{ fontFamily: HOME_DISPLAY_FONT }}
+          className="mt-3 max-w-[12ch] text-[clamp(1.9rem,3.4vw,3rem)] font-bold leading-[0.95] tracking-[-0.045em]"
+          style={{ fontFamily: HOME_BODY_FONT }}
         >
           {app.title}
         </h3>
@@ -593,6 +480,20 @@ function StudioToolIcon({ app }: { app: StudioTool }) {
 }
 
 function StudioToolIconMark({ icon, label }: { icon: string; label: string }) {
+  if (/\.(?:png|jpe?g|webp)$/i.test(icon)) {
+    return (
+      <Image
+        src={icon}
+        alt={`${label} app icon`}
+        width={512}
+        height={512}
+        quality={92}
+        sizes="(min-width: 1280px) 20rem, (min-width: 768px) 40vw, 88vw"
+        className="h-[78%] w-[78%] rounded-[22%] object-cover shadow-[0_22px_52px_rgba(0,0,0,0.22)] transition-transform duration-300 group-hover:scale-[1.025]"
+      />
+    );
+  }
+
   const maskStyle = {
     WebkitMaskImage: `url(${icon})`,
     maskImage: `url(${icon})`,
@@ -641,7 +542,10 @@ function StudioAppScreen({
             type="button"
             onClick={onBack}
             className="flex h-7 w-7 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
-            style={{ backgroundColor: app.accentColor, color: app.accentTextColor }}
+            style={{
+              backgroundColor: app.accentColor,
+              color: app.accentTextColor,
+            }}
             aria-label="Back to Studio"
           >
             <X className="h-3.5 w-3.5 opacity-0 transition-opacity hover:opacity-70" />

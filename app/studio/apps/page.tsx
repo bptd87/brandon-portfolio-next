@@ -1,6 +1,7 @@
 import StudioAppsPage from "../../../client/src/pages/StudioApps";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../../lib/metadata";
+import Script from "next/script";
 
 export const dynamic = "force-static";
 
@@ -126,7 +127,9 @@ function jsonLd(data: unknown) {
 export default function Page() {
   return (
     <>
-      <script
+      <Script
+        id="studio-apps-breadcrumb-schema"
+        strategy="afterInteractive"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: jsonLd({
@@ -155,7 +158,9 @@ export default function Page() {
           }),
         }}
       />
-      <script
+      <Script
+        id="studio-apps-collection-schema"
+        strategy="afterInteractive"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: jsonLd({
@@ -186,9 +191,11 @@ export default function Page() {
           }),
         }}
       />
-      {studioApps.map(app => (
-        <script
+      {studioApps.map((app, index) => (
+        <Script
           key={app.href}
+          id={`studio-app-schema-${index + 1}`}
+          strategy="afterInteractive"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: jsonLd(softwareApplicationSchema(app)),

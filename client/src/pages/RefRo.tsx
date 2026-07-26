@@ -147,6 +147,14 @@ export default function RefRo() {
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <WaitlistButton />
                   <a
+                    href="https://brandonptdavis.app/apps/refro"
+                    className="inline-flex min-h-12 items-center gap-2 rounded-full px-5 font-semibold"
+                    style={{ backgroundColor: homeTheme.accentSoft }}
+                  >
+                    Visit RefRo on the app site
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                  <a
                     href="#research"
                     className="inline-flex min-h-12 items-center gap-2 rounded-full px-5 font-semibold"
                     style={{ backgroundColor: homeTheme.accentSoft }}
@@ -316,6 +324,12 @@ export default function RefRo() {
               <WaitlistButton light />
             </div>
             <div className="mt-9 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-semibold text-white/68">
+              <a
+                href="https://brandonptdavis.app/apps/refro"
+                className="inline-flex items-center gap-1.5 hover:text-white"
+              >
+                RefRo App Site <ExternalLink className="h-3.5 w-3.5" />
+              </a>
               <a href="/studio/apps/refro/support" className="hover:text-white">
                 Support
               </a>
@@ -326,7 +340,7 @@ export default function RefRo() {
                 href="/studio/apps"
                 className="inline-flex items-center gap-1.5 hover:text-white"
               >
-                All Apps <ExternalLink className="h-3.5 w-3.5" />
+                All Apps <ArrowRight className="h-3.5 w-3.5" />
               </a>
             </div>
           </div>

@@ -1040,7 +1040,7 @@ function HomeIdentityCard({
                           src={card.image || ""}
                           alt={`${card.title} scenic design by Brandon PT Davis`}
                           fill
-                          quality={index < 2 ? 76 : 70}
+                          quality={index < 2 ? 78 : 70}
                           priority={index < 2}
                           loading={index < 2 ? "eager" : "lazy"}
                           fetchPriority={index < 2 ? "high" : "auto"}
@@ -1209,6 +1209,9 @@ function HomeMinimalGallery({
 
     const handlePointerDown = (event: PointerEvent) => {
       if (event.button !== 0) return;
+      if ((event.target as HTMLElement).closest("[data-home-feature-button]")) {
+        return;
+      }
       isDragging = true;
       lockDrag = false;
       didDrag = false;
@@ -1679,7 +1682,6 @@ function HomeMinimalGallery({
           {carouselItems.map((project, index) => {
             const meta = [project.client, project.year].filter(Boolean).join(" / ");
 
-            const projectHref = getProjectPath(project);
             const isDuplicateSlide = index >= carouselProjects.length;
 
             return (
@@ -1706,7 +1708,7 @@ function HomeMinimalGallery({
                       src={project.coverImageUrl || ""}
                       alt={`${project.title} scenic design by Brandon PT Davis`}
                       fill
-                      quality={index < carouselProjects.length ? 76 : 68}
+                      quality={index < carouselProjects.length ? 78 : 70}
                       priority={false}
                       loading="lazy"
                       fetchPriority="auto"
@@ -1720,11 +1722,12 @@ function HomeMinimalGallery({
                     />
                   </div>
                   <div className="mt-4 flex justify-center">
-                    <a
-                      href={projectHref}
+                    <button
+                      type="button"
                       data-home-feature-button
                       aria-label={`View ${project.title}`}
                       tabIndex={isDuplicateSlide ? -1 : undefined}
+                      onClick={() => setActivePortfolioProject(project)}
                       className="home-featured-button inline-flex max-w-[92%] items-center justify-center rounded-full px-8 py-4 text-center text-[1rem] font-normal uppercase leading-none shadow-[0_0.65rem_1.3rem_rgba(0,0,0,0.12)] transition-transform hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
                       style={{
                         backgroundColor: theme.accentSoft,
@@ -1732,7 +1735,7 @@ function HomeMinimalGallery({
                       }}
                     >
                       {project.title}
-                    </a>
+                    </button>
                   </div>
                   {meta ? <span className="sr-only">{meta}</span> : null}
                 </article>

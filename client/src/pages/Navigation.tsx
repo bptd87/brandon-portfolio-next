@@ -121,69 +121,36 @@ const featuredArticleLinks: NavigationFeatureItem[] = [
 
 const studioAppLinks: NavigationFeatureItem[] = [
   {
-    title: "Scale Calculator",
-    href: "/studio/apps/scale-calculator",
-    label: "Drafting",
-    shortTitle: "Scale",
-    color: "#b7653f",
-    textColor: "#ffffff",
-    mutedColor: "rgba(255,255,255,0.74)",
-    accentColor: "#d06934",
-    accentTextColor: "#17120b",
+    title: "Foli",
+    href: "https://brandonptdavis.app/apps/foli",
+    label: "macOS",
+    shortTitle: "Foli",
     description:
-      "Convert real-world dimensions into common scenic design and architectural drafting scales.",
+      "A connected creative archive for organizing completed work and publishing workflows.",
   },
   {
-    title: "Dimension Reference",
-    href: "/studio/apps/dimension-reference",
-    label: "Reference",
-    shortTitle: "Dims",
-    color: "#c98f24",
-    textColor: "#17120b",
-    mutedColor: "rgba(23,18,11,0.68)",
-    accentColor: "#c9891d",
-    accentTextColor: "#17120b",
+    title: "RefRo",
+    href: "https://brandonptdavis.app/apps/refro",
+    label: "macOS",
+    shortTitle: "RefRo",
     description:
-      "Quick checks for common theatre, drafting, furniture, and scenic construction dimensions.",
+      "A source-aware visual research archive and mood-board studio for Mac.",
   },
   {
-    title: "Rosco Paint Calculator",
-    href: "/studio/apps/rosco-paint-calculator",
-    label: "Paint Shop",
-    shortTitle: "Rosco",
-    color: "#be6241",
-    textColor: "#ffffff",
-    mutedColor: "rgba(255,255,255,0.74)",
-    accentColor: "#3f5d62",
-    accentTextColor: "#ffffff",
+    title: "ArchMM",
+    href: "https://brandonptdavis.app/apps/archmm",
+    label: "iPhone",
+    shortTitle: "ArchMM",
     description:
-      "Calculate Rosco scenic paint mixes and color matching workflows.",
+      "An architectural scale and model-millimeter calculator for iPhone.",
   },
   {
-    title: "Commercial Paint Matcher",
-    href: "/studio/apps/commercial-paint-matcher",
-    label: "Paint Library",
-    shortTitle: "Paint Match",
-    color: "#758967",
-    textColor: "#ffffff",
-    mutedColor: "rgba(255,255,255,0.74)",
-    accentColor: "#758967",
-    accentTextColor: "#ffffff",
+    title: "PaintHex",
+    href: "https://brandonptdavis.app/apps/painthex",
+    label: "Mac · iPad · iPhone",
+    shortTitle: "PaintHex",
     description:
-      "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries.",
-  },
-  {
-    title: "Design History Timeline",
-    href: "/studio/apps/design-history-timeline",
-    label: "Research",
-    shortTitle: "History",
-    color: "#8a5432",
-    textColor: "#ffffff",
-    mutedColor: "rgba(255,255,255,0.74)",
-    accentColor: "#8a5432",
-    accentTextColor: "#ffffff",
-    description:
-      "Explore major design periods with visual references, palettes, and historical context.",
+      "Color matching, paint recipes, quantity planning, and paint-shop organization.",
   },
 ];
 
@@ -260,7 +227,8 @@ function getSectionCards(projects: LocalScenicProject[]): SectionCard[] {
     {
       label: "STUDIO",
       href: "/studio",
-      image: "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
+      image:
+        "https://geybz3ysejafe4kj.public.blob.vercel-storage.com/images/site-assets/assets/studio-apps/icons/scenic-3d-converter-card-2026.jpg",
       items: ["Articles", "Tutorials", "Apps"],
       background: SITE_CARD_COLORS.green.background,
       text: SITE_CARD_COLORS.green.text,
@@ -302,7 +270,7 @@ function NavigationCard({ card }: { card: SectionCard }) {
             className="mt-3 flex max-w-[22rem] flex-wrap gap-x-4 gap-y-1 text-[clamp(0.9rem,1.45vw,1.18rem)] font-black uppercase leading-[0.95] tracking-[0.035em]"
             style={{ color: card.accent }}
           >
-            {card.items.map((item) => (
+            {card.items.map(item => (
               <span key={item}>{item}</span>
             ))}
           </span>
@@ -355,12 +323,13 @@ function RecentScenicDesign({
   theme: HomeColorTheme;
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activeProject = activeIndex === null ? null : projects[activeIndex] || null;
+  const activeProject =
+    activeIndex === null ? null : projects[activeIndex] || null;
   const floatingImages = useMemo<NavFloatingImage[]>(() => {
     if (activeProject) {
       const mediaImages = activeProject.media
-        .filter((item) => item.type === "image" && item.imageUrl)
-        .map((item) => ({
+        .filter(item => item.type === "image" && item.imageUrl)
+        .map(item => ({
           url: item.imageUrl || "",
           alt: item.altText || `${activeProject.title} scenic design`,
         }));
@@ -374,7 +343,10 @@ function RecentScenicDesign({
           ]
         : [];
 
-      return [...mediaImages, ...fallbackImage].slice(0, floatingImageFrames.length);
+      return [...mediaImages, ...fallbackImage].slice(
+        0,
+        floatingImageFrames.length
+      );
     }
 
     return [];
@@ -391,7 +363,8 @@ function RecentScenicDesign({
       <div className="relative min-h-[clamp(34rem,58vw,45rem)] w-full">
         <div className="pointer-events-none absolute inset-0 z-10 hidden md:block">
           {floatingImages.map((image, index) => {
-            const frame = floatingImageFrames[index % floatingImageFrames.length];
+            const frame =
+              floatingImageFrames[index % floatingImageFrames.length];
             return (
               <div
                 key={`${activeProject?.slug || "default"}-${image.url}-${index}`}
@@ -458,7 +431,8 @@ function RecentScenicDesign({
                 onBlur={() => setActiveIndex(null)}
                 className="group py-1 md:py-2"
                 style={{
-                  color: activeIndex === null || isActive ? theme.ink : theme.muted,
+                  color:
+                    activeIndex === null || isActive ? theme.ink : theme.muted,
                 }}
               >
                 <span
@@ -529,7 +503,10 @@ function NavigationArticleCards({ theme }: { theme: HomeColorTheme }) {
                   </span>
                   <span
                     className="mt-4 block text-[0.88rem] font-medium leading-[1.28]"
-                    style={{ color: item.mutedColor, fontFamily: HOME_BODY_FONT }}
+                    style={{
+                      color: item.mutedColor,
+                      fontFamily: HOME_BODY_FONT,
+                    }}
                   >
                     {item.description}
                   </span>
@@ -555,13 +532,7 @@ function NavigationArticleCards({ theme }: { theme: HomeColorTheme }) {
   );
 }
 
-function NavigationStudioApps({
-  theme,
-  onOpenApp,
-}: {
-  theme: HomeColorTheme;
-  onOpenApp: (app: NavigationFeatureItem) => void;
-}) {
+function NavigationStudioApps({ theme }: { theme: HomeColorTheme }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
@@ -580,7 +551,7 @@ function NavigationStudioApps({
           className="mb-7 text-[clamp(2rem,4.2vw,3.6rem)] font-semibold uppercase leading-[0.9] tracking-[0.01em]"
           style={{ color: theme.ink }}
         >
-          STUDIO APPS
+          NATIVE APPS
         </h2>
 
         <div className="flex flex-col items-center">
@@ -588,10 +559,11 @@ function NavigationStudioApps({
             const isActive = index === activeIndex;
 
             return (
-              <button
+              <a
                 key={item.href}
-                type="button"
-                onClick={() => onOpenApp(item)}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 onMouseEnter={() => setActiveIndex(index)}
                 onMouseOver={() => setActiveIndex(index)}
                 onPointerEnter={() => setActiveIndex(index)}
@@ -599,12 +571,13 @@ function NavigationStudioApps({
                 onBlur={() => setActiveIndex(null)}
                 className="group py-1 text-center md:py-2"
                 style={{
-                  color: activeIndex === null || isActive ? theme.ink : theme.muted,
+                  color:
+                    activeIndex === null || isActive ? theme.ink : theme.muted,
                 }}
               >
                 <span
-                  className="block text-[clamp(1.65rem,3.1vw,3.15rem)] font-black uppercase leading-[0.82] tracking-[0.01em] transition-[opacity,transform] duration-300 group-hover:scale-[1.025]"
-                  style={{ fontFamily: HOME_DISPLAY_FONT }}
+                  className="block text-[clamp(1.65rem,3.1vw,3.15rem)] font-bold leading-[0.9] tracking-[-0.045em] transition-[opacity,transform] duration-200 group-hover:scale-[1.015]"
+                  style={{ fontFamily: HOME_BODY_FONT }}
                 >
                   {item.title}
                 </span>
@@ -616,13 +589,15 @@ function NavigationStudioApps({
                 >
                   {item.description}
                 </span>
-              </button>
+              </a>
             );
           })}
         </div>
 
-        <Link
-          href="/studio/apps"
+        <a
+          href="https://brandonptdavis.app"
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-8 inline-flex rounded-full px-6 py-3 text-[0.78rem] font-black uppercase leading-none tracking-[0.04em] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
           style={{
             backgroundColor: theme.controlBg,
@@ -630,8 +605,8 @@ function NavigationStudioApps({
             fontFamily: HOME_BODY_FONT,
           }}
         >
-          ALL APPS
-        </Link>
+          VISIT APP SITE
+        </a>
       </div>
     </section>
   );
@@ -687,7 +662,7 @@ function NavigationAbout({ theme }: { theme: HomeColorTheme }) {
             { label: "Resume", href: "/resume" },
             { label: "Creative", href: "/creative-statement" },
             { label: "Teaching", href: "/about/teaching" },
-          ].map((item) => (
+          ].map(item => (
             <Link
               key={item.href}
               href={item.href}
@@ -770,41 +745,27 @@ function NavigationAppScreen({
 
 export default function Navigation({ initialProjects }: NavigationProps) {
   const { homeTheme } = useHomeTheme();
-  const [activeStudioApp, setActiveStudioApp] = useState<NavigationFeatureItem | null>(null);
   const [navigationMounted, setNavigationMounted] = useState(false);
 
   const recentProjects = useMemo(
     () =>
       sortScenicProjectsChronologically(initialProjects)
-        .filter((project) => Boolean(project.coverImageUrl))
+        .filter(project => Boolean(project.coverImageUrl))
         .slice(0, 6),
     [initialProjects]
   );
-  const sectionCards = useMemo(() => getSectionCards(recentProjects), [recentProjects]);
+  const sectionCards = useMemo(
+    () => getSectionCards(recentProjects),
+    [recentProjects]
+  );
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setNavigationMounted(true));
+    const frame = window.requestAnimationFrame(() =>
+      setNavigationMounted(true)
+    );
 
     return () => window.cancelAnimationFrame(frame);
   }, []);
-
-  useEffect(() => {
-    if (!activeStudioApp) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveStudioApp(null);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [activeStudioApp]);
 
   return (
     <div
@@ -832,21 +793,19 @@ export default function Navigation({ initialProjects }: NavigationProps) {
         }
 
         @keyframes nav-load-in {
-          0% { opacity: 0; transform: translateY(0.75rem) scaleY(0.94); filter: blur(8px); }
-          64% { opacity: 1; transform: translateY(-0.16rem) scaleY(1.02); filter: blur(0); }
-          100% { opacity: 1; transform: translateY(0) scaleY(1); filter: blur(0); }
+          0% { opacity: 0; transform: translateY(0.35rem); }
+          100% { opacity: 1; transform: translateY(0); }
         }
 
         .nav-load-item {
           opacity: 0;
-          transform: translateY(0.75rem) scaleY(0.94);
-          transform-origin: bottom;
-          will-change: opacity, transform, filter;
+          transform: translateY(0.35rem);
+          will-change: opacity, transform;
         }
 
         [data-navigation-mounted="true"] .nav-load-item {
-          animation: nav-load-in 820ms cubic-bezier(0.16, 1.22, 0.32, 1) both;
-          animation-delay: var(--nav-load-delay, 0ms);
+          animation: nav-load-in 320ms ease-out both;
+          animation-delay: 0ms;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -860,7 +819,10 @@ export default function Navigation({ initialProjects }: NavigationProps) {
       `}</style>
 
       <main className="relative z-10">
-        <div className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
+        <div
+          className="relative z-10"
+          style={{ backgroundColor: homeTheme.bg }}
+        >
           <section
             id="navigation-menu"
             className="mx-auto flex w-full max-w-[82rem] flex-col justify-center px-5 pb-[clamp(4rem,7vw,6rem)] pt-[clamp(8rem,12vw,11rem)] md:px-8"
@@ -883,7 +845,7 @@ export default function Navigation({ initialProjects }: NavigationProps) {
               className="nav-load-item mx-auto mt-12 grid w-full max-w-[62rem] gap-5 md:grid-cols-2"
               style={{ "--nav-load-delay": "220ms" } as CSSProperties}
             >
-              {sectionCards.map((card) => (
+              {sectionCards.map(card => (
                 <NavigationCard key={card.label} card={card} />
               ))}
             </div>
@@ -895,22 +857,11 @@ export default function Navigation({ initialProjects }: NavigationProps) {
 
           <NavigationArticleCards theme={homeTheme} />
 
-          <NavigationStudioApps
-            theme={homeTheme}
-            onOpenApp={setActiveStudioApp}
-          />
+          <NavigationStudioApps theme={homeTheme} />
         </div>
 
-        <Footer
-          tone="light"
-          variant="immersive"
-        />
+        <Footer tone="light" variant="immersive" />
       </main>
-
-      <NavigationAppScreen
-        app={activeStudioApp}
-        onBack={() => setActiveStudioApp(null)}
-      />
     </div>
   );
 }
