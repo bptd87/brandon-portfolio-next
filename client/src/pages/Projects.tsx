@@ -646,24 +646,35 @@ export default function Projects({
                   </PopoverTrigger>
                   <PopoverContent
                     align="center"
-                    className="w-[min(24rem,calc(100vw-2rem))] rounded-3xl border-0 bg-white/95 p-5 shadow-2xl"
+                    className="w-[min(24rem,calc(100vw-2rem))] overflow-hidden rounded-3xl border p-5 shadow-2xl"
+                    style={{
+                      backgroundColor: homeTheme.bg,
+                      borderColor: homeTheme.accentSoft,
+                      color: homeTheme.ink,
+                    }}
                   >
                     <div className="space-y-4">
                       <div className="flex items-center justify-between gap-3">
                         <div>
                           <p
-                            className="text-sm font-black uppercase tracking-[0.04em] text-[#111111]"
-                            style={{ fontFamily: HOME_DISPLAY_FONT }}
+                            className="text-sm font-black uppercase tracking-[0.04em]"
+                            style={{
+                              color: homeTheme.ink,
+                              fontFamily: HOME_DISPLAY_FONT,
+                            }}
                           >
                             Categories
                           </p>
-                          <p className="mt-1 text-xs text-black/52">Choose the scenic work type.</p>
+                          <p className="mt-1 text-xs" style={{ color: homeTheme.muted }}>
+                            Choose the scenic work type.
+                          </p>
                         </div>
                         {selectedSubcategory !== "all" ? (
                           <button
                             type="button"
                             onClick={() => setSelectedSubcategory("all")}
-                            className="text-xs text-black/55 transition-colors hover:text-black"
+                            className="text-xs transition-opacity hover:opacity-70"
+                            style={{ color: homeTheme.muted }}
                           >
                             Clear
                           </button>
@@ -710,7 +721,12 @@ export default function Projects({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="end"
-                    className="w-56 rounded-2xl border-0 bg-white/95 p-2 text-[#111111] shadow-2xl"
+                    className="w-56 overflow-hidden rounded-2xl border p-2 shadow-2xl"
+                    style={{
+                      backgroundColor: homeTheme.bg,
+                      borderColor: homeTheme.accentSoft,
+                      color: homeTheme.ink,
+                    }}
                   >
                     {SORT_OPTIONS.map((option) => {
                       const SortIcon = option.icon;

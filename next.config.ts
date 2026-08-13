@@ -9,6 +9,7 @@ const withMDX = createMDX({
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   typedRoutes: false,
   outputFileTracingRoot: projectRoot,

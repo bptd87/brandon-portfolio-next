@@ -78,9 +78,21 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg?v=4", type: "image/svg+xml" },
+      {
+        url: "/favicon-light.png?v=5",
+        type: "image/png",
+        sizes: "64x64",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon-dark.png?v=5",
+        type: "image/png",
+        sizes: "64x64",
+        media: "(prefers-color-scheme: dark)",
+      },
     ],
-    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon-light.png?v=5",
+    apple: [{ url: "/apple-touch-icon.png?v=5", sizes: "180x180", type: "image/png" }],
   },
   category: "portfolio",
 };
@@ -91,104 +103,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isProduction = process.env.NODE_ENV === "production";
-  const themeBootScript = `
-    (function () {
-      try {
-        var themes = [
-          {
-            bg: "#ffffff",
-            ink: "#2c2c2c",
-            muted: "rgba(44,44,44,0.68)",
-            ghost: "#737373",
-            accent: "#2c2c2c",
-            accentSoft: "rgba(44,44,44,0.08)",
-            controlBg: "#2c2c2c",
-            controlInk: "#ffffff",
-            footerBg: "#cbcbcb",
-            footerDisplay: "rgba(44,44,44,0.7)",
-            footerInk: "#2c2c2c"
-          },
-          {
-            bg: "#e9e1cf",
-            ink: "#2c2c2c",
-            muted: "rgba(255,111,0,0.78)",
-            ghost: "#ff6f00",
-            accent: "#ff6f00",
-            accentSoft: "rgba(255,111,0,0.12)",
-            controlBg: "#ff6f00",
-            controlInk: "#171008",
-            footerBg: "#ded4bf",
-            footerDisplay: "#ff6f00",
-            footerInk: "#2c2c2c"
-          },
-          {
-            bg: "#1385f6",
-            ink: "#a8f4ff",
-            muted: "rgba(3,41,118,0.88)",
-            ghost: "#052f8b",
-            accent: "#a8f4ff",
-            accentSoft: "rgba(168,244,255,0.14)",
-            controlBg: "#052f8b",
-            controlInk: "#a8f4ff",
-            footerBg: "#0d6ed5",
-            footerDisplay: "#052f8b",
-            footerInk: "#a8f4ff"
-          },
-          {
-            bg: "#35ad62",
-            ink: "#baff00",
-            muted: "rgba(0,87,37,0.72)",
-            ghost: "#005725",
-            accent: "#baff00",
-            accentSoft: "rgba(186,255,0,0.14)",
-            controlBg: "#003f1c",
-            controlInk: "#baff00",
-            footerBg: "#2d9655",
-            footerDisplay: "#baff00",
-            footerInk: "#003f1c"
-          },
-          {
-            bg: "#3f0050",
-            ink: "#ffe3ff",
-            muted: "rgba(222,48,255,0.78)",
-            ghost: "#dc30ff",
-            accent: "#dc30ff",
-            accentSoft: "rgba(220,48,255,0.16)",
-            controlBg: "#dc30ff",
-            controlInk: "#2f003e",
-            footerBg: "#2f003e",
-            footerDisplay: "#dc30ff",
-            footerInk: "#ffe3ff"
-          }
-        ];
-        var stored = window.localStorage.getItem("brandon-home-theme-index");
-        var index = Number.parseInt(stored || "0", 10);
-        if (!Number.isFinite(index) || index < 0 || index >= themes.length) index = 0;
-        if (window.localStorage.getItem("brandon-home-theme-version") !== "2") {
-          var legacyThemeMap = [0, 2, 1, 3, 4];
-          index = legacyThemeMap[index] || 0;
-          window.localStorage.setItem("brandon-home-theme-index", String(index));
-          window.localStorage.setItem("brandon-home-theme-version", "2");
-        }
-        var theme = themes[index];
-        document.documentElement.style.setProperty("--home-theme-bg", theme.bg);
-        document.documentElement.style.setProperty("--home-theme-ink", theme.ink);
-        document.documentElement.style.setProperty("--home-theme-muted", theme.muted);
-        document.documentElement.style.setProperty("--home-theme-ghost", theme.ghost);
-        document.documentElement.style.setProperty("--home-theme-accent", theme.accent);
-        document.documentElement.style.setProperty("--home-theme-accent-soft", theme.accentSoft);
-        document.documentElement.style.setProperty("--home-theme-control-bg", theme.controlBg);
-        document.documentElement.style.setProperty("--home-theme-control-ink", theme.controlInk);
-        document.documentElement.style.setProperty("--home-theme-footer-bg", theme.footerBg);
-        document.documentElement.style.setProperty("--home-theme-footer-display", theme.footerDisplay);
-        document.documentElement.style.setProperty("--home-theme-footer-ink", theme.footerInk);
-        document.documentElement.style.backgroundColor = theme.bg;
-        document.documentElement.style.color = theme.ink;
-        document.documentElement.style.colorScheme = "light";
-      } catch (error) {}
-    })();
-  `;
-
   return (
     <html
       lang="en"
@@ -202,11 +116,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: themeBootScript,
-          }}
-        />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg?v=5" color="#174d46" />
         <JsonLdScript
           id="site-entity-json-ld"
           data={[
@@ -217,6 +127,7 @@ export default function RootLayout({
         />
       </head>
       <body
+        data-paper-texture="folded"
         className="min-h-screen"
         style={{
           backgroundColor: "var(--home-theme-bg, #ffffff)",

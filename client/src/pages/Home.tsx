@@ -2788,6 +2788,7 @@ export default function Home({
   return (
     <div
       data-page-shell="home"
+      data-reveal-footer-page
       data-home-scroll-root
       className="flex min-h-screen flex-col transition-colors duration-500"
       style={{
@@ -2809,24 +2810,26 @@ export default function Home({
         url="https://www.brandonptdavis.com"
       />
 
-      <Header />
+      <div
+        data-reveal-paper-surface
+        className="relative z-10 flex min-h-screen shrink-0 flex-col"
+        style={{ backgroundColor: homeTheme.bg }}
+      >
+        <Header />
 
-      <main className="flex-1" style={{ backgroundColor: homeTheme.bg }}>
+        <main className="flex-1">
         {projectsLoading ? (
           <ProjectGridSkeleton />
         ) : featuredProject ? (
-          <>
-            <div className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
-              <HomeIdentityCard projects={projects} theme={homeTheme} />
-              <HomeMinimalGallery projects={projects} theme={homeTheme} />
-            </div>
-            <Footer
-              tone="light"
-              variant="immersive"
-            />
-          </>
+          <div>
+            <HomeIdentityCard projects={projects} theme={homeTheme} />
+            <HomeMinimalGallery projects={projects} theme={homeTheme} />
+          </div>
         ) : null}
-      </main>
+        </main>
+      </div>
+
+      {featuredProject ? <Footer tone="light" variant="reveal" /> : null}
     </div>
   );
 }

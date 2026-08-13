@@ -414,6 +414,7 @@ export default function RenderingPortfolio() {
           </button>
 
           <div
+            data-paper-panel
             className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[1.5rem] py-[clamp(4.5rem,7vw,6rem)]"
             style={{
               backgroundColor: homeTheme.bg,
@@ -439,6 +440,9 @@ export default function RenderingPortfolio() {
                   <img
                     src={image.url}
                     alt={image.altText || selectedItem.title}
+                    loading={index === selectedImageIndex ? "eager" : "lazy"}
+                    fetchPriority={index === selectedImageIndex ? "high" : "low"}
+                    decoding="async"
                     draggable={false}
                     className="max-h-[78vh] max-w-full select-none rounded-[0.8rem] object-contain"
                   />

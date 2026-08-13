@@ -290,7 +290,8 @@ function ProjectMediaBlock({
                     src={tile.imageUrl}
                     alt={tile.altText}
                     className={`block h-full w-full transition-opacity duration-500 hover:opacity-90 ${objectClass}`}
-                    loading="lazy"
+                    loading={currentImageIndex < 2 ? "eager" : "lazy"}
+                    fetchPriority={currentImageIndex < 2 ? "high" : "auto"}
                     decoding="async"
                   />
                 </div>
@@ -554,6 +555,7 @@ export default function ExperientialProjectDetail({
             ×
           </button>
           <div
+            data-paper-panel
             className="relative h-full w-full overflow-hidden rounded-[1.65rem] shadow-[0_2rem_6rem_rgba(0,0,0,0.28)]"
             style={{ backgroundColor: homeTheme.bg }}
             onClick={(event) => event.stopPropagation()}
@@ -572,6 +574,9 @@ export default function ExperientialProjectDetail({
                     <img
                       src={item.imageUrl}
                       alt={item.altText}
+                      loading={index === lightboxIndex ? "eager" : "lazy"}
+                      fetchPriority={index === lightboxIndex ? "high" : "low"}
+                      decoding="async"
                       className="max-h-full w-auto max-w-full rounded-[1.1rem] object-contain"
                       draggable={false}
                     />

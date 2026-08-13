@@ -278,6 +278,7 @@ export default function Becoming() {
             &times;
           </button>
           <div
+            data-paper-panel
             className="relative flex h-full w-full items-center overflow-hidden rounded-[1.5rem] py-[clamp(4.5rem,7vw,6rem)]"
             style={{
               backgroundColor: homeTheme.bg,
@@ -305,6 +306,9 @@ export default function Becoming() {
                     alt={photo.alt}
                     width={photo.width}
                     height={photo.height}
+                    priority={index === selectedPhotoIndex}
+                    loading={index === selectedPhotoIndex ? "eager" : "lazy"}
+                    fetchPriority={index === selectedPhotoIndex ? "high" : "low"}
                     sizes="(max-width: 768px) 78vw, 56rem"
                     draggable={false}
                     className="max-h-[78vh] w-auto max-w-full select-none rounded-[0.8rem] object-contain"

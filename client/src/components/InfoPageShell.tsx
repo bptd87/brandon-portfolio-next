@@ -63,8 +63,8 @@ export default function InfoPageShell({
         <div className="relative z-10" style={{ backgroundColor: homeTheme.bg }}>
           <nav
             aria-label="Site information navigation"
-            className="sticky top-[72px] z-30 border-b border-border backdrop-blur-xl"
-            style={{ backgroundColor: `color-mix(in srgb, ${homeTheme.bg} 90%, transparent)` }}
+            className="sticky top-[72px] z-30 border-b border-border"
+            style={{ backgroundColor: "transparent" }}
           >
             <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col items-center justify-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-center md:gap-4">
               <Link

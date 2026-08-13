@@ -2248,7 +2248,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         </div>
       </article>
 
-      <Footer tone="light" variant="standard" />
+      <Footer tone="light" />
     </div>
   );
 }

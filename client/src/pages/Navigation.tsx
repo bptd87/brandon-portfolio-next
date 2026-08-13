@@ -770,6 +770,7 @@ export default function Navigation({ initialProjects }: NavigationProps) {
   return (
     <div
       data-page-shell="navigation"
+      data-reveal-footer-page
       data-navigation-mounted={navigationMounted ? "true" : "false"}
       className="min-h-screen transition-colors duration-500"
       style={{
@@ -784,7 +785,6 @@ export default function Navigation({ initialProjects }: NavigationProps) {
         keywords="Brandon PT Davis navigation, scenic design portfolio, studio tools, scenic designer"
         url="https://www.brandonptdavis.com/navigation"
       />
-      <Header />
       <style>{`
         @keyframes nav-image-pop {
           0% { opacity: 0; transform: scale(0.68) translateY(24px) rotate(-3deg); }
@@ -818,11 +818,14 @@ export default function Navigation({ initialProjects }: NavigationProps) {
         }
       `}</style>
 
-      <main className="relative z-10">
-        <div
-          className="relative z-10"
-          style={{ backgroundColor: homeTheme.bg }}
-        >
+      <div
+        data-reveal-paper-surface
+        className="relative z-10"
+        style={{ backgroundColor: homeTheme.bg }}
+      >
+        <Header />
+        <main>
+          <div>
           <section
             id="navigation-menu"
             className="mx-auto flex w-full max-w-[82rem] flex-col justify-center px-5 pb-[clamp(4rem,7vw,6rem)] pt-[clamp(8rem,12vw,11rem)] md:px-8"
@@ -858,10 +861,11 @@ export default function Navigation({ initialProjects }: NavigationProps) {
           <NavigationArticleCards theme={homeTheme} />
 
           <NavigationStudioApps theme={homeTheme} />
-        </div>
+          </div>
+        </main>
+      </div>
 
-        <Footer tone="light" variant="immersive" />
-      </main>
+      <Footer tone="light" variant="reveal" />
     </div>
   );
 }

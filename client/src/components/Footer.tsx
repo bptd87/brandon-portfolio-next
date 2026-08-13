@@ -29,14 +29,14 @@ export default function Footer({
   className = "",
   displayTextColor,
   textColor,
-  variant = "immersive",
+  variant = "standard",
 }: {
   tone?: "dark" | "light";
   backgroundColor?: string;
   className?: string;
   displayTextColor?: string;
   textColor?: string;
-  variant?: "immersive" | "standard";
+  variant?: "immersive" | "reveal" | "standard";
 }) {
   const { homeTheme } = useHomeTheme();
   const phantomRef = useRef<HTMLDivElement | null>(null);
@@ -61,7 +61,7 @@ export default function Footer({
   };
 
   useEffect(() => {
-    if (variant !== "immersive") return undefined;
+    if (variant !== "reveal") return undefined;
 
     const footer = footerRef.current;
     const phantom = phantomRef.current;
@@ -94,18 +94,21 @@ export default function Footer({
       animationFrame = 0;
 
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
-      const scrollTop = homeScrollRoot
-        ? homeScrollRoot.scrollTop
-        : window.scrollY || document.documentElement.scrollTop;
-      const phantomTop = phantom.offsetTop;
-      const start = phantomTop - viewportHeight;
-      const end = phantomTop;
-      const progress = Math.min(Math.max((scrollTop - start) / (end - start), 0), 1);
+      const scrollbarGutter = homeScrollRoot
+        ? Math.max(homeScrollRoot.offsetWidth - homeScrollRoot.clientWidth, 0)
+        : 0;
+      const phantomViewportTop = phantom.getBoundingClientRect().top;
+      const progress = Math.min(
+        Math.max((viewportHeight - phantomViewportTop) / viewportHeight, 0),
+        1
+      );
       const titleBottom = title.offsetTop + title.clientHeight;
       const offsetY = (1 - progress) * Math.max(viewportHeight - titleBottom, 0);
 
       footer.style.setProperty("--footer-scale-y", progress.toFixed(4));
       footer.style.setProperty("--footer-offset-y", offsetY.toFixed(2));
+      footer.style.setProperty("--footer-scrollbar-gutter", `${scrollbarGutter}px`);
+      footer.style.visibility = progress > 0 ? "visible" : "hidden";
     };
 
     const requestUpdate = () => {
@@ -136,10 +139,14 @@ export default function Footer({
     };
   }, [variant]);
 
-  if (variant !== "immersive") {
+  if (variant !== "reveal") {
     return (
       <footer
-        className={`footer relative left-1/2 ml-[-50vw] flex min-h-[clamp(24rem,48vw,38rem)] w-screen flex-col items-center justify-end gap-7 overflow-hidden px-6 pb-12 pt-[clamp(7rem,14vw,11rem)] text-center transition-[background-color,color] duration-500 ${className}`}
+        className={`footer relative left-1/2 ml-[-50vw] flex w-screen flex-col items-center justify-end gap-7 overflow-hidden px-6 pb-12 pt-[clamp(7rem,14vw,11rem)] text-center transition-[background-color,color] duration-500 ${
+          variant === "immersive"
+            ? "min-h-[100dvh]"
+            : "min-h-[clamp(24rem,48vw,38rem)]"
+        } ${className}`}
         style={{
           backgroundColor: resolvedBackgroundColor,
           color: resolvedTextColor,
@@ -156,7 +163,10 @@ export default function Footer({
             color: resolvedDisplayTextColor,
             fontFamily:
               '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
-            fontSize: "clamp(5.5rem, 24vw, 23rem)",
+            fontSize:
+              variant === "immersive"
+                ? "clamp(8rem, 26vw, 28rem)"
+                : "clamp(5.5rem, 24vw, 23rem)",
             fontWeight: 900,
             fontStretch: "condensed",
             letterSpacing: "-0.012em",
@@ -232,7 +242,7 @@ export default function Footer({
       <footer
         ref={footerRef}
         onWheelCapture={handleFooterWheel}
-        className={`footer pointer-events-none fixed inset-x-0 bottom-0 z-0 flex min-h-[100dvh] w-full flex-col items-center justify-end gap-8 overflow-hidden px-0 py-16 text-center transition-[background-color,color,opacity] duration-500 ${className}`}
+        className={`footer pointer-events-none fixed bottom-0 left-0 z-0 flex min-h-[100dvh] flex-col items-center justify-end gap-8 overflow-hidden px-0 py-16 text-center transition-[background-color,color,opacity] duration-500 ${className}`}
         style={
           {
             backgroundColor: resolvedBackgroundColor,
@@ -241,9 +251,12 @@ export default function Footer({
             fontFamily:
               '"Futura Now Headline", "Futura Condensed Extra Bold", "Futura Condensed", Futura, Impact, "Arial Narrow", "Arial Black", ui-sans-serif, system-ui, sans-serif',
             fontStretch: "condensed",
+            right: "var(--footer-scrollbar-gutter, 0px)",
             transform: "translateY(calc(var(--footer-offset-y) * 1px))",
+            visibility: "hidden",
             "--footer-scale-y": 0,
             "--footer-offset-y": 120,
+            "--footer-scrollbar-gutter": "0px",
           } as CSSProperties
         }
       >

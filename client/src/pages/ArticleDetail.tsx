@@ -2923,12 +2923,7 @@ function ArticleDetailContent({
         </section>
       )}
 
-      <div
-        className="relative z-20"
-        style={{ backgroundColor: homeTheme.bg, color: homeTheme.ink }}
-      >
-        <Footer tone="light" variant="standard" />
-      </div>
+      <Footer tone="light" />
 
       <style>{`
         .article-detail-page {
