@@ -1568,6 +1568,10 @@ function HomeMinimalGallery({
           will-change: transform, opacity;
         }
 
+        .home-featured-button-clone::before {
+          content: attr(data-label);
+        }
+
         [data-featured-inview="true"] .home-featured-button {
           animation: home-featured-button-in 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
           animation-delay: calc(var(--home-feature-delay, 0) * 80ms + 340ms);
@@ -1696,6 +1700,7 @@ function HomeMinimalGallery({
                   } as CSSProperties
                 }
                 aria-hidden={isDuplicateSlide ? "true" : undefined}
+                data-nosnippet={isDuplicateSlide ? "" : undefined}
               >
                 <article className="flex h-full flex-col items-center justify-center gap-4">
                   <div
@@ -1706,7 +1711,11 @@ function HomeMinimalGallery({
                   >
                     <Image
                       src={project.coverImageUrl || ""}
-                      alt={`${project.title} scenic design by Brandon PT Davis`}
+                      alt={
+                        isDuplicateSlide
+                          ? ""
+                          : `${project.title} scenic design by Brandon PT Davis`
+                      }
                       fill
                       quality={index < carouselProjects.length ? 78 : 70}
                       priority={false}
@@ -1725,16 +1734,21 @@ function HomeMinimalGallery({
                     <button
                       type="button"
                       data-home-feature-button
-                      aria-label={`View ${project.title}`}
+                      aria-label={
+                        isDuplicateSlide ? undefined : `View ${project.title}`
+                      }
+                      data-label={isDuplicateSlide ? project.title : undefined}
                       tabIndex={isDuplicateSlide ? -1 : undefined}
                       onClick={() => setActivePortfolioProject(project)}
-                      className="home-featured-button inline-flex max-w-[92%] items-center justify-center rounded-full px-8 py-4 text-center text-[1rem] font-normal uppercase leading-none shadow-[0_0.65rem_1.3rem_rgba(0,0,0,0.12)] transition-transform hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+                      className={`home-featured-button inline-flex max-w-[92%] items-center justify-center rounded-full px-8 py-4 text-center text-[1rem] font-normal uppercase leading-none shadow-[0_0.65rem_1.3rem_rgba(0,0,0,0.12)] transition-transform hover:scale-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 ${
+                        isDuplicateSlide ? "home-featured-button-clone" : ""
+                      }`}
                       style={{
                         backgroundColor: theme.accentSoft,
                         color: theme.ink,
                       }}
                     >
-                      {project.title}
+                      {isDuplicateSlide ? null : project.title}
                     </button>
                   </div>
                   {meta ? <span className="sr-only">{meta}</span> : null}
@@ -1830,16 +1844,6 @@ function HomeMinimalGallery({
                     </div>
                   </div>
                 </div>
-                <div className="sr-only">
-                  <h2 className="font-sans text-[1.1rem] font-medium leading-tight">
-                    {project.title}
-                  </h2>
-                  {meta ? (
-                    <p className="mt-1 text-[0.82rem] leading-tight">
-                      {meta}
-                    </p>
-                  ) : null}
-                </div>
               </article>
             </button>
           );
@@ -1871,7 +1875,7 @@ function HomeMinimalGallery({
           onClick={() => setActivePortfolioProject(null)}
         >
           <div
-            className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-[clamp(1.5rem,3vw,2.8rem)] shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
+            className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-none shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
             style={{ backgroundColor: theme.bg }}
             onClick={event => event.stopPropagation()}
           >

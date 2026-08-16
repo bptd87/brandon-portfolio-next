@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { Link } from "wouter";
 
 import Header from "@/components/Header";
@@ -19,7 +19,7 @@ import {
   useHomeTheme,
 } from "@/lib/homeTheme";
 
-import { ArrowRight, Download, Award, Users } from "lucide-react";
+import { ArrowRight, Download, Award } from "lucide-react";
 import {
   ASSISTANT_SCENIC_DESIGN_PATH,
   assistantScenicDesignEntries,
@@ -42,51 +42,6 @@ const RESUME_SECTION_CLASS =
   "mb-16 pt-7 md:pt-8";
 
 const USA_829_LOGO_SRC = "/images/about/icons/usa-829-logo.png";
-const UCI_LOGO_SRC =
-  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/uci-logo-real.png";
-const RESUME_METRIC_CARD_CLASS =
-  "group relative isolate flex min-h-[11.25rem] flex-col overflow-hidden rounded-[1.65rem] p-6 text-white shadow-[0_18px_46px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:-translate-y-1 md:min-h-[11.75rem] md:p-7";
-const RESUME_METRIC_GLOW_CLASS =
-  "pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_16%_0%,rgba(255,255,255,0.06),transparent_32%),radial-gradient(circle_at_88%_4%,rgba(139,92,246,0.12),transparent_44%)]";
-const RESUME_METRIC_MARK_CLASS = "flex h-[3.35rem] items-start md:h-[3.5rem]";
-const RESUME_METRIC_LABEL_CLASS =
-  "text-[0.78rem] font-black uppercase tracking-[0.08em] text-white/58";
-const RESUME_METRIC_TITLE_CLASS =
-  "mt-2 text-[clamp(1.2rem,1.5vw,1.75rem)] font-black uppercase leading-[0.94] tracking-[0] text-white";
-const RESUME_METRIC_BODY_CLASS =
-  "mt-2 max-w-[17rem] text-[0.9rem] font-medium leading-[1.38] tracking-[-0.02em] text-white/68";
-
-type ResumeMetricCardProps = {
-  label: string;
-  title: string;
-  body: string;
-  children: ReactNode;
-  glow?: string;
-  surfaceClassName?: string;
-};
-
-function ResumeMetricCard({
-  label,
-  title,
-  body,
-  children,
-  glow = "",
-  surfaceClassName = "bg-black",
-}: ResumeMetricCardProps) {
-  return (
-    <article className={`${RESUME_METRIC_CARD_CLASS} ${surfaceClassName}`}>
-      <div className={`${RESUME_METRIC_GLOW_CLASS} ${glow}`} aria-hidden="true" />
-      <div className={RESUME_METRIC_MARK_CLASS}>{children}</div>
-      <div className="mt-auto pt-5">
-        <p className={RESUME_METRIC_LABEL_CLASS}>{label}</p>
-        <h3 className={RESUME_METRIC_TITLE_CLASS} style={{ fontFamily: HOME_DISPLAY_FONT }}>
-          {title}
-        </h3>
-        <p className={RESUME_METRIC_BODY_CLASS}>{body}</p>
-      </div>
-    </article>
-  );
-}
 
 const SCENIC_CREDITS: ResumeYearSection[] = [
   {
@@ -385,58 +340,6 @@ export default function Resume() {
                 </div>
               </div>
 
-              <div className="mt-12 grid gap-5 lg:grid-cols-3 xl:gap-6">
-                <ResumeMetricCard
-                  label="Education"
-                  title="MFA Scenic Design"
-                  body="University of California, Irvine."
-                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(73,103,132,0.34),transparent_40%)]"
-                  surfaceClassName="bg-[#496784]"
-                >
-                  <div className="relative h-12 w-12 opacity-95 transition-transform duration-500 group-hover:scale-[1.05] md:h-14 md:w-14">
-                    <Image
-                      src={UCI_LOGO_SRC}
-                      alt="University of California, Irvine seal"
-                      fill
-                      sizes="3.5rem"
-                      className="object-contain object-left-top drop-shadow-[0_10px_18px_rgba(0,0,0,0.35)]"
-                    />
-                  </div>
-                </ResumeMetricCard>
-
-                <ResumeMetricCard
-                  label="Union"
-                  title="United Scenic Artists Local USA 829"
-                  body="Professional scenic design membership since 2023."
-                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(168,72,44,0.34),transparent_40%)]"
-                  surfaceClassName="bg-[#a8482c]"
-                >
-                  <div className="relative h-12 w-[6.5rem] opacity-95 transition-transform duration-500 group-hover:scale-[1.05] md:h-14 md:w-28">
-                    <Image
-                      src={USA_829_LOGO_SRC}
-                      alt="United Scenic Artists Local USA 829 logo"
-                      fill
-                      sizes="7rem"
-                      className="object-contain object-left-top drop-shadow-[0_10px_18px_rgba(0,0,0,0.35)]"
-                    />
-                  </div>
-                </ResumeMetricCard>
-
-                <ResumeMetricCard
-                  label="Production Count"
-                  title="Realized scenic designs"
-                  body="Across regional theatre, summer stock, and academic production."
-                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(93,116,77,0.34),transparent_40%)]"
-                  surfaceClassName="bg-[#5d744d]"
-                >
-                  <div className="flex items-start gap-2 text-white">
-                    <span className="text-[clamp(2.55rem,3.1vw,3rem)] font-semibold leading-[0.9] tracking-[-0.08em]">
-                      130+
-                    </span>
-                    <Users className="mt-1.5 h-5 w-5 text-white/42" aria-hidden="true" />
-                  </div>
-                </ResumeMetricCard>
-              </div>
             </div>
           </AnimatedSection>
 
@@ -550,6 +453,19 @@ export default function Resume() {
               ))}
             </div>
           </AnimatedSection>
+
+          <div
+            className="flex justify-center pb-4 pt-12 md:pt-20"
+            aria-label="United Scenic Artists Local USA 829"
+          >
+            <Image
+              src={USA_829_LOGO_SRC}
+              alt="United Scenic Artists Local USA 829 logo"
+              width={132}
+              height={72}
+              className="h-auto w-[7.5rem] object-contain opacity-80"
+            />
+          </div>
         </div>
 
       </section>

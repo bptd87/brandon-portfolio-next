@@ -887,7 +887,7 @@ export default function Projects({
           onClick={() => closeProjectQuickView()}
         >
           <div
-            className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-[clamp(1.5rem,3vw,2.8rem)] shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
+            className="relative h-[calc(100dvh-clamp(1.1rem,3vw,2.5rem))] w-full overflow-hidden rounded-none shadow-[0_2rem_5rem_rgba(0,0,0,0.28)]"
             style={{ backgroundColor: homeTheme.bg }}
             onClick={(event) => event.stopPropagation()}
           >

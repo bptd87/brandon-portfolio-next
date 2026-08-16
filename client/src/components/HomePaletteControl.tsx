@@ -2,10 +2,7 @@
 
 import { Palette } from "lucide-react";
 
-import {
-  HOME_COLOR_THEMES,
-  type HomeColorTheme,
-} from "@/lib/homeTheme";
+import { HOME_COLOR_THEMES, type HomeColorTheme } from "@/lib/homeTheme";
 
 export default function HomePaletteControl({
   activeTheme,
@@ -82,6 +79,7 @@ export default function HomePaletteControl({
           style={{
             backgroundColor: activeTheme.controlBg,
             color: activeTheme.controlInk,
+            border: activeTheme.controlBorder,
             boxShadow: "0 0.8rem 2rem rgba(0,0,0,0.2)",
           }}
         >

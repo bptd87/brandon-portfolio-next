@@ -9,7 +9,8 @@ import HomePaletteControl from "@/components/HomePaletteControl";
 import { useHomeDocumentTheme, useHomeTheme } from "@/lib/homeTheme";
 
 const NAV_BUTTON_TOP = "top-[clamp(1.25rem,2.4vw,2.25rem)]";
-const NAV_BUTTON_RIGHT = "calc(clamp(1.25rem, 2.4vw, 2.25rem) - (100vw - 100%))";
+const NAV_BUTTON_RIGHT =
+  "calc(clamp(1.25rem, 2.4vw, 2.25rem) - (100vw - 100%))";
 const AVATAR_CALM_SRC = "/images/site-assets/brand/brandon-avatar-calm.png";
 const AVATAR_SCREAM_SRC = "/images/site-assets/brand/brandon-avatar-scream.png";
 
@@ -17,7 +18,9 @@ export default function Header() {
   const pathname = usePathname() || "/";
   const { homeTheme, homeThemeIndex, setHomeThemeIndex } = useHomeTheme();
   const [paletteOpen, setPaletteOpen] = useState(false);
-  const [isPortfolioQuickView, setIsPortfolioQuickView] = useState<boolean | null>(null);
+  const [isPortfolioQuickView, setIsPortfolioQuickView] = useState<
+    boolean | null
+  >(null);
   const isNavigationRoute = pathname === "/navigation";
   const targetHref = isNavigationRoute ? "/" : "/navigation";
   const label = isNavigationRoute ? "Return home" : "Open navigation";
@@ -43,17 +46,22 @@ export default function Header() {
             right: NAV_BUTTON_RIGHT,
             backgroundColor: homeTheme.controlBg,
             color: homeTheme.controlInk,
+            border: homeTheme.controlBorder,
             boxShadow: "0 0.8rem 2rem rgba(0,0,0,0.2)",
           }}
         >
           <span aria-hidden="true" className="site-avatar">
             <span
               className="site-avatar-image site-avatar-image--calm"
-              style={{ "--avatar-src": `url(${AVATAR_CALM_SRC})` } as CSSProperties}
+              style={
+                { "--avatar-src": `url(${AVATAR_CALM_SRC})` } as CSSProperties
+              }
             />
             <span
               className="site-avatar-image site-avatar-image--scream"
-              style={{ "--avatar-src": `url(${AVATAR_SCREAM_SRC})` } as CSSProperties}
+              style={
+                { "--avatar-src": `url(${AVATAR_SCREAM_SRC})` } as CSSProperties
+              }
             />
           </span>
         </Link>
@@ -64,7 +72,7 @@ export default function Header() {
         activeThemeIndex={homeThemeIndex}
         isOpen={paletteOpen}
         onOpenChange={setPaletteOpen}
-        onThemeChange={(index) => {
+        onThemeChange={index => {
           setHomeThemeIndex(index);
           setPaletteOpen(false);
         }}
